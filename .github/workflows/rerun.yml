@@ -1,0 +1,22 @@
+name: rerun-offline-units
+on:
+  push:
+  schedule:
+    - cron: "17 3 * * 1"   # 毎週月曜 03:17 UTC — 環境が変わっても再実行できることを確かめ続ける
+  workflow_dispatch:
+jobs:
+  rerun:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Re-execute offline ExecutionUnits and compare with recorded expected values
+        run: python3 rerun.py --json rerun_results.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rerun_results
+          path: rerun_results.json
