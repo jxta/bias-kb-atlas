@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="kbfig" viewBox="0 0 720 364" width="720" height="364" font-family="'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic',Meiryo,sans-serif" font-size="11" fill="#111" role="img" aria-label="知識基盤 bias-kb のしくみ — 主張を再実行可能な計算に接地する">
+  <title>知識基盤 bias-kb のしくみ — 主張を再実行可能な計算に接地する</title>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker>
+    <marker id="ahs" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker>
+    <marker id="ahd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker>
+  </defs>
+  <style>
+    #kbfig .box{fill:#fff;stroke:#111;stroke-width:1.3}
+    #kbfig .shade{fill:#d9d9d9;stroke:#111;stroke-width:1.3}
+    #kbfig .light{fill:#f3f3f3;stroke:#111;stroke-width:1.2}
+    #kbfig .dash{fill:#fff;stroke:#555;stroke-width:1.2;stroke-dasharray:4 3}
+    #kbfig .band{fill:none;stroke:#999;stroke-width:1;stroke-dasharray:2 3}
+    #kbfig .ttl{font-weight:700;font-size:12px}
+    #kbfig .big{font-weight:700;font-size:13.5px}
+    #kbfig .sm{font-size:9.5px;fill:#333}
+    #kbfig .xs{font-size:8.5px;fill:#444}
+    #kbfig .ln{stroke:#111;stroke-width:1.2;fill:none}
+    #kbfig .lnd{stroke:#555;stroke-width:1.2;fill:none;stroke-dasharray:4 3}
+    #kbfig .hot{cursor:pointer}
+    #kbfig .hot:hover .box,#kbfig .hot:hover .shade,#kbfig .hot:hover .light,#kbfig .hot:hover .dash{stroke-width:2.4}
+    #kbfig .hot.on .box,#kbfig .hot.on .shade,#kbfig .hot.on .light,#kbfig .hot.on .dash{stroke-width:2.6;stroke:#000}
+  </style>
+
+  <!-- 上段: 役割（読み書きする側） -->
+  <g class="hot" data-key="human">
+    <rect class="box" x="12" y="10" width="176" height="44" rx="3"/>
+    <text class="ttl" x="100" y="27" text-anchor="middle">人間の研究者</text>
+    <text class="sm" x="100" y="43" text-anchor="middle">問題設定・解釈・最終判断（merge）</text>
+  </g>
+  <g class="hot" data-key="agents">
+    <rect class="box" x="204" y="10" width="196" height="44" rx="3"/>
+    <text class="ttl" x="302" y="27" text-anchor="middle">AI エージェント（統率AI・実行AI）</text>
+    <text class="sm" x="302" y="43" text-anchor="middle">計算して証拠を生み、記録層に書く</text>
+  </g>
+  <g class="hot" data-key="meta">
+    <rect class="box" x="416" y="10" width="160" height="44" rx="3"/>
+    <text class="ttl" x="496" y="27" text-anchor="middle">別の AI（meta-AI）</text>
+    <text class="sm" x="496" y="43" text-anchor="middle">独立に再計算して検収・裁定</text>
+  </g>
+  <line class="ln" x1="100" y1="55" x2="100" y2="67" marker-start="url(#ahs)" marker-end="url(#ahs)"/>
+  <line class="ln" x1="302" y1="55" x2="302" y2="67" marker-start="url(#ahs)" marker-end="url(#ahs)"/>
+  <line class="ln" x1="496" y1="55" x2="496" y2="67" marker-start="url(#ahs)" marker-end="url(#ahs)"/>
+
+  <!-- 知識基盤の外枠 -->
+  <rect class="box" x="12" y="68" width="564" height="288" rx="3"/>
+  <text class="big" x="24" y="86">知識基盤 bias-kb</text>
+  <text class="xs" x="564" y="86" text-anchor="end">8 型のノードと型付きリンク（すべて JSON の記録層）</text>
+
+  <!-- 知識グラフ帯 -->
+  <g class="hot" data-key="kg">
+    <rect class="band" x="22" y="94" width="544" height="112" rx="3"/>
+    <text class="ttl" x="30" y="108">知識グラフ</text>
+  </g>
+  <g class="hot" data-key="obj">
+    <rect class="box" x="34" y="120" width="84" height="40" rx="6"/>
+    <text x="76" y="137" text-anchor="middle" font-size="11.5" font-weight="700">対象 O</text>
+    <text class="xs" x="76" y="152" text-anchor="middle">族・体・census 表</text>
+  </g>
+  <g class="hot" data-key="measure">
+    <line class="ln" x1="120" y1="140" x2="138" y2="140" marker-end="url(#ah)"/><text class="xs" x="129" y="133" text-anchor="middle">計測</text>
+    <rect class="box" x="140" y="120" width="112" height="40" rx="6"/>
+    <text x="196" y="137" text-anchor="middle" font-size="11.5" font-weight="700">量 Q ・ 証拠 E</text>
+    <text class="xs" x="196" y="152" text-anchor="middle">計測値と、その記録</text>
+  </g>
+  <g class="hot" data-key="claim">
+    <line class="ln" x1="254" y1="131" x2="330" y2="131" marker-end="url(#ah)"/><text class="xs" x="292" y="125" text-anchor="middle">支持</text>
+    <rect class="shade" x="332" y="120" width="92" height="40" rx="6"/>
+    <text x="378" y="137" text-anchor="middle" font-size="11.5" font-weight="700">主張 C</text>
+    <text class="xs" x="378" y="152" text-anchor="middle">状態（確立・棄却…）</text>
+  </g>
+  <g class="hot" data-key="counter">
+    <rect x="254" y="142" width="76" height="24" fill="#fff" fill-opacity="0"/>
+    <line class="lnd" x1="254" y1="150" x2="330" y2="150" marker-end="url(#ahd)"/><text class="xs" x="292" y="164" text-anchor="middle">反証（棄却も残す）</text>
+  </g>
+  <g class="hot" data-key="hyp">
+    <rect class="dash" x="446" y="100" width="116" height="36" rx="6"/>
+    <text x="504" y="115" text-anchor="middle" font-size="11" font-weight="700" fill="#333">登録 P ・ 仮説 H</text>
+    <text class="xs" x="504" y="129" text-anchor="middle">予測を走行前に凍結</text>
+    <line class="lnd" x1="446" y1="122" x2="426" y2="130" marker-end="url(#ahd)"/>
+    <text class="xs" x="443" y="113" text-anchor="end">登録</text>
+  </g>
+  <g class="hot" data-key="lessons">
+    <rect class="box" x="446" y="160" width="116" height="36" rx="6"/>
+    <text x="504" y="175" text-anchor="middle" font-size="11.5" font-weight="700">教訓 L</text>
+    <text class="xs" x="504" y="189" text-anchor="middle">失敗・修正を規則へ</text>
+    <line class="lnd" x1="424" y1="152" x2="446" y2="170" marker-end="url(#ahd)"/>
+  </g>
+
+  <!-- 双方向リンク -->
+  <g class="hot" data-key="bidir">
+    <rect x="200" y="206" width="150" height="34" fill="#fff" fill-opacity="0"/>
+    <line class="ln" x1="196" y1="208" x2="196" y2="240" marker-start="url(#ah)" marker-end="url(#ah)" stroke-width="1.6"/>
+    <text class="ttl" x="206" y="219">双方向リンク</text>
+    <text class="xs" x="206" y="232">証拠 grounded_in ⇄ 実行単位 verifies（両方向を記録層に書く）</text>
+  </g>
+
+  <!-- 再実行可能な研究 帯 -->
+  <rect class="band" x="22" y="244" width="544" height="104" rx="3"/>
+  <text class="ttl" x="30" y="258">再実行可能な研究</text>
+  <g class="hot" data-key="record">
+    <rect class="light" x="34" y="268" width="104" height="70" rx="4"/>
+    <text x="86" y="283" text-anchor="middle" font-size="11" font-weight="700">記録層</text>
+    <text class="xs" x="86" y="297" text-anchor="middle">ノード JSON（private）</text>
+    <text class="xs" x="86" y="309" text-anchor="middle">CI: 参照整合・接地律</text>
+    <text class="xs" x="86" y="321" text-anchor="middle">双方向律・凍結律</text>
+    <text class="xs" x="86" y="333" text-anchor="middle">公開抜粋は規則で生成</text>
+  </g>
+  <g class="hot" data-key="pkg">
+    <rect class="box" x="156" y="268" width="250" height="70" rx="6"/>
+    <text x="281" y="283" text-anchor="middle" font-size="11.5" font-weight="700">実行単位 X（tier で粒度を限定）</text>
+    <rect class="light" x="164" y="292" width="56" height="38"/><text class="xs" x="192" y="308" text-anchor="middle">コード</text><text class="xs" x="192" y="320" text-anchor="middle">entry</text>
+    <rect class="light" x="224" y="292" width="56" height="38"/><text class="xs" x="252" y="308" text-anchor="middle">データ</text><text class="xs" x="252" y="320" text-anchor="middle">inputs＋sha256</text>
+    <rect class="light" x="284" y="292" width="56" height="38"/><text class="xs" x="312" y="308" text-anchor="middle">環境</text><text class="xs" x="312" y="320" text-anchor="middle">env</text>
+    <rect class="light" x="344" y="292" width="56" height="38"/><text class="xs" x="372" y="308" text-anchor="middle">来歴</text><text class="xs" x="372" y="320" text-anchor="middle">prov・PR</text>
+  </g>
+  <g class="hot" data-key="artifact">
+    <line class="ln" x1="408" y1="303" x2="434" y2="303" marker-end="url(#ah)"/>
+    <rect class="box" x="436" y="280" width="122" height="46" rx="6"/>
+    <text x="497" y="297" text-anchor="middle" font-size="11.5" font-weight="700">成果物・期待値</text>
+    <text class="xs" x="497" y="311" text-anchor="middle">sha256 で凍結、再実行して</text>
+    <text class="xs" x="497" y="321" text-anchor="middle">一致を記録（k4）</text>
+  </g>
+
+  <!-- 右列: 確かめられること -->
+  <text class="ttl" x="648" y="27" text-anchor="middle">確かめられること</text>
+  <g class="hot" data-key="eval1">
+    <line class="ln" x1="578" y1="303" x2="588" y2="303" marker-end="url(#ah)"/>
+    <rect class="box" x="590" y="262" width="118" height="80" rx="3"/>
+    <text x="649" y="282" text-anchor="middle" font-size="11.5" font-weight="700">再実行できる</text>
+    <text class="sm" x="649" y="300" text-anchor="middle">rerun.py・CI</text>
+    <text class="xs" x="649" y="314" text-anchor="middle">入力 sha256 を照合 →</text>
+    <text class="xs" x="649" y="326" text-anchor="middle">実行 → 期待値と比較</text>
+  </g>
+  <g class="hot" data-key="eval2">
+    <line class="ln" x1="578" y1="139" x2="588" y2="180" marker-end="url(#ah)"/>
+    <rect class="box" x="590" y="146" width="118" height="80" rx="3"/>
+    <text x="649" y="166" text-anchor="middle" font-size="11.5" font-weight="700">根拠まで辿れる</text>
+    <text class="sm" x="649" y="184" text-anchor="middle">主張 → 証拠 → 実行単位</text>
+    <text class="xs" x="649" y="198" text-anchor="middle">→ 再実行結果（接地タブ）</text>
+    <text class="xs" x="649" y="210" text-anchor="middle">別の AI の独立再集計も X</text>
+  </g>
+  <g class="hot" data-key="eval3">
+    <line class="ln" x1="564" y1="118" x2="588" y2="86" marker-end="url(#ah)"/>
+    <rect class="shade" x="590" y="40" width="118" height="80" rx="3"/>
+    <text x="649" y="60" text-anchor="middle" font-size="11.5" font-weight="700">予測が先に凍結</text>
+    <text class="xs" x="649" y="78" text-anchor="middle">蓄積 → 予測 → 的中・棄却</text>
+    <text class="xs" x="649" y="92" text-anchor="middle">後から合わせられない</text>
+    <text class="xs" x="649" y="104" text-anchor="middle">（登録・判定）</text>
+  </g>
+</svg>
