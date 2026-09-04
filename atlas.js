@@ -47,8 +47,9 @@
 
   // ------------------------------------------------------------------ state & routing
   const allDates = [...new Set(NODES.map(n => n._date).filter(Boolean))].sort();
+  const defaultView = () => META.profile === "public-grounding" ? ((META.guide && META.guide.rows && META.guide.rows.length) ? "guide" : "grounding") : "atlas";
   const state = {
-    view: META.profile === "public-grounding" ? "grounding" : "atlas", line: null, node: null, trail: [], trailPos: -1,
+    view: defaultView(), line: null, node: null, trail: [], trailPos: -1,
     f: { types: new Set(TYPES), statuses: new Set([...STATUSES, "none"]), lines: new Set(LINES.map(l => l.id)), tiers: new Set(["full", "accept", "spot", "none"]), d0: 0, d1: allDates.length - 1, actors: new Set(["統率", "meta", "other"]) },
     colorMode: "type", filtersOpen: window.innerWidth > 1100, inspOpen: window.innerWidth > 1100, graphColor: "line", graphFocus: null, graphDepth: 2, tlDay: null,
   };
@@ -75,7 +76,7 @@
   let suppressHash = false;
   function readHash() {
     const p = new URLSearchParams(location.hash.replace(/^#/, ""));
-    state.view = p.get("v") || (PUBLIC ? "grounding" : "atlas"); state.line = p.get("line"); const nd = p.get("node");
+    state.view = p.get("v") || defaultView(); state.line = p.get("line"); const nd = p.get("node");
     if (nd && byId.has(nd)) selectNode(nd, false); else if (!nd) state.node = null;
     if (p.get("focus")) state.graphFocus = p.get("focus");
   }
@@ -115,7 +116,8 @@
   const K4 = META.k4 || {};
   const BUNDLED = new Set(META.bundled || []);
   const PUBREPO = META.public_repo ? "https://github.com/" + META.public_repo : "";
-  const VIEWS = [["grounding", "接地"], ["atlas", "俯瞰"], ["lines", "研究線"], ["timeline", "時間"], ["graph", "グラフ"], ["lessons", "教訓"], ["protocols", "登録・判定"], ["table", "表"]];
+  const HAS_GUIDE = !!(META.guide && META.guide.rows && META.guide.rows.length);
+  const VIEWS = [...(HAS_GUIDE ? [["guide", "案内"]] : []), ["grounding", "接地"], ["atlas", "俯瞰"], ["lines", "研究線"], ["timeline", "時間"], ["graph", "グラフ"], ["lessons", "教訓"], ["protocols", "登録・判定"], ["table", "表"]];
   $("#tabs").innerHTML = VIEWS.map(([k, l]) => `<button class="tab" data-v="${k}">${l}</button>`).join("");
   $("#tabs").addEventListener("click", e => { const b = e.target.closest(".tab"); if (b) go(b.dataset.v); });
   $("#btnFilters").onclick = () => { state.filtersOpen = !state.filtersOpen; layout(); };
@@ -140,7 +142,8 @@
     document.documentElement.dataset.theme = saved || (sys ? "dark" : "light");
     $("#btnTheme").onclick = () => { const t = document.documentElement.dataset.theme === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = t; try { localStorage.setItem("atlas-theme", t); } catch (e) { } render(); };
   })();
-  function layout() { const b = $("#body"); b.classList.toggle("nofilters", !state.filtersOpen); b.classList.toggle("noinsp", !state.inspOpen); }
+  function layout() { const b = $("#body"); b.classList.toggle("nofilters", !state.filtersOpen); b.classList.toggle("noinsp", !state.inspOpen); document.documentElement.style.setProperty("--hdr-h", ($(".hdr").offsetHeight || 52) + "px"); }
+  window.addEventListener("resize", () => layout());
   // splitter for inspector width
   (function splitter() {
     const sp = $("#split"); let dragging = false, w = 440;
@@ -248,7 +251,43 @@
   }
   function renderStage() {
     const stage = $("#stage"); stage.innerHTML = "";
-    ({ grounding: viewGrounding, atlas: viewAtlas, lines: viewLines, timeline: viewTimeline, graph: viewGraph, lessons: viewLessons, protocols: viewProtocols, table: viewTable }[state.view] || viewAtlas)(stage);
+    ({ guide: viewGuide, grounding: viewGrounding, atlas: viewAtlas, lines: viewLines, timeline: viewTimeline, graph: viewGraph, lessons: viewLessons, protocols: viewProtocols, table: viewTable }[state.view] || viewAtlas)(stage);
+  }
+
+  // ---------- 案内（研究計画調書 図２ との対応） ----------
+  function viewGuide(stage) {
+    const G = META.guide; if (!G || !G.rows || !G.rows.length) { viewGrounding(stage); return; }
+    const rowHtml = G.rows.map(r => `<tr id="gr-${esc(r.key)}" data-key="${esc(r.key)}"><td class="gfig">${esc(r.fig)}</td><td class="gkb">${md(r.kb)}</td><td class="gex">${(r.nodes || []).map(id => chip(id)).join("") || '<span class="muted small">—</span>'}${r.view ? `<div style="margin-top:5px"><button class="iconbtn small" data-go="${esc(r.view)}">${esc(r.view_label || r.view)} →</button></div>` : ""}</td></tr>`).join("");
+    const steps = (G.steps || []).map(s => `<li><b>${esc(s.title)}</b> — ${md(s.text)}${s.node ? ` <button class="iconbtn small" data-trace="${esc(s.node)}">開く</button>` : ""}</li>`).join("");
+    stage.innerHTML = `<div class="pad guide">
+      <h2 class="vt">${esc(G.title)}</h2>
+      <p class="vsub">${esc(G.source)}</p>
+      <div class="card gfigure">${G.svg || ""}</div>
+      <div class="card" style="padding:0;overflow:auto;margin-top:12px"><table class="tbl gtbl"><thead><tr><th>図２の要素</th><th>この知識基盤での実体</th><th>実例（クリックで詳細）／見る場所</th></tr></thead><tbody>${rowHtml}</tbody></table></div>
+      <div class="card" style="margin-top:12px"><h3 class="ct">３分で確かめる</h3><ol class="gsteps">${steps}</ol></div>
+      <p class="small muted" style="margin-top:8px">この案内は生成器（<code>kb_atlas.py</code> の <code>GUIDE</code>）が埋め込んだもので、実例のノード ID は生成時に記録層で実在を確認している。図の要素・実例・「→」ボタンはすべてこのページ内のビューへ移動する。</p>
+    </div>`;
+    const svg = stage.querySelector(".gfigure svg");
+    const rowOf = (key) => stage.querySelector(`#gr-${CSS.escape(key)}`);
+    if (svg) svg.querySelectorAll(".hot").forEach(h => {
+      h.addEventListener("click", e => {
+        e.stopPropagation(); const key = h.dataset.key, tr = rowOf(key); if (!tr) return;
+        svg.querySelectorAll(".hot").forEach(x => x.classList.toggle("on", x === h));
+        stage.querySelectorAll(".gtbl tr.on").forEach(x => x.classList.remove("on")); tr.classList.add("on");
+        tr.scrollIntoView({ block: "center", behavior: "smooth" });
+        const row = G.rows.find(r => r.key === key); if (row && row.nodes && row.nodes.length) open(row.nodes[0]);
+      });
+      h.addEventListener("mouseenter", () => { const tr = rowOf(h.dataset.key); if (tr) tr.classList.add("hl"); });
+      h.addEventListener("mouseleave", () => { const tr = rowOf(h.dataset.key); if (tr) tr.classList.remove("hl"); });
+    });
+    stage.querySelectorAll(".gtbl tr[data-key]").forEach(tr => {
+      tr.addEventListener("mouseenter", () => { if (svg) { const h = svg.querySelector(`.hot[data-key="${tr.dataset.key}"]`); if (h) h.classList.add("on"); } });
+      tr.addEventListener("mouseleave", () => { if (svg) { const h = svg.querySelector(`.hot[data-key="${tr.dataset.key}"]`); if (h && !tr.classList.contains("on")) h.classList.remove("on"); } });
+    });
+    stage.addEventListener("click", e => {
+      const g = e.target.closest("[data-go]"); if (g) { e.stopPropagation(); go(g.dataset.go); return; }
+      const b = e.target.closest("[data-trace]"); if (b) { e.stopPropagation(); open(b.dataset.trace); }
+    });
   }
 
   // ---------- 接地 ----------
