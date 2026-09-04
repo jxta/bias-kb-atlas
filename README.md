@@ -12,35 +12,37 @@
 
 ## 何を示すためのものか
 
-科研費研究計画（Open Science for AI）の核心
-「知識グラフ上の各主張を、それを生んだ再現可能な研究に双方向リンクで接地させ、AI の推論が常に再実行可能な証拠に遡れる構造とする」
-が、進行中の研究で実際に動いていることを、閲覧者自身が確かめられるようにしています。
+この知識基盤の設計目標は、**主張を、それを生んだ再実行可能な計算に双方向のリンクで接地させ、推論が常に再実行可能な証拠まで遡れるようにする**ことです。
+それが進行中の研究で実際に動いていることを、閲覧者自身が確かめられるようにしています。
 
-## 研究計画調書の図２との対応
+## しくみ — 図と実例の対応
 
-研究計画調書の図２「提案する知識基盤の構造」（下は単色で再描画したもの）の各要素は、この知識基盤ではすでに次の形で動いています。
-Atlas の最初のタブ **「案内」** に同じ対応表があり、図の要素をクリックすると実例のノードが開きます（https://jxta.github.io/bias-kb-atlas/#v=guide ）。
+下の図は、この知識基盤のしくみを一枚にしたものです。Atlas の最初のタブ **「案内」** に同じ図と対応表があり、
+図の要素をクリックすると実例のノードが開きます（https://jxta.github.io/bias-kb-atlas/#v=guide ）。
 
-<p align="center"><img src="docs/fig2.svg" alt="提案する知識基盤の構造（研究計画調書 図２ の再描画）" width="720"></p>
+<p align="center"><img src="docs/overview.svg" alt="知識基盤 bias-kb のしくみ — 主張を再実行可能な計算に接地する" width="720"></p>
 
-| 図２の要素 | この知識基盤での実体 | 実例（Atlas で開く） |
+| 図の要素 | この知識基盤での実体 | 実例（Atlas で開く） |
 |---|---|---|
-| **AIエージェント**（生成・検証・修正） | 3 役の AI が記録層を読み書きする — 実行AI（mdx で計算し証拠を生む）・統率AI（記録層にノードを書き主張を立てる）・meta-AI（独立に再計算して検収・裁定）。誰が書いたかは `prov.asserted_by`、修正は教訓 L として残る | [X-q8-crosstab-accept](https://jxta.github.io/bias-kb-atlas/#v=guide&node=X-q8-crosstab-accept)（meta-AI の独立再集計）、[L-middle-law-self-refutation](https://jxta.github.io/bias-kb-atlas/#v=guide&node=L-middle-law-self-refutation) |
-| **人間の研究者**（問題設定・解釈・最終判断） | 問題設定は ORDER（指示書）と実行前登録に、最終判断は PR の merge に置く（merge = 横山承認、AI は merge しない）。詳細パネルの「来歴」に PR 番号と承認者 | [P-o19-registration](https://jxta.github.io/bias-kb-atlas/#v=guide&node=P-o19-registration) |
-| **知識グラフ**（実例：素数の偏り） | 8 型のノード（O 対象・Q 量・E 証拠・C 主張・H 仮説・P 登録・X 実行単位・L 教訓）と型付きリンク。CI が参照整合・接地律・双方向律・凍結律を検査 | [俯瞰](https://jxta.github.io/bias-kb-atlas/#v=atlas)・[グラフ](https://jxta.github.io/bias-kb-atlas/#v=graph) |
-| Q8拡大体（対象） | 対象ノード O。図の実例そのもの: 数体 Q8（8T5）の全数族と census 表 | [O-nf-q8-8t5](https://jxta.github.io/bias-kb-atlas/#v=guide&node=O-nf-q8-8t5) |
-| 計測 → 係数の計測列 | 量 Q（関数等式符号 W、中心零点位数 m）と証拠 E（計測結果）。E は `quantities` で Q を、`about` で対象を指す | [Q-root-number](https://jxta.github.io/bias-kb-atlas/#v=guide&node=Q-root-number)、[E-q8-w-crosstab](https://jxta.github.io/bias-kb-atlas/#v=guide&node=E-q8-w-crosstab) |
-| 支持 → **主張：ずれ** | 主張 C は `supported_by` で証拠を指し、証拠は `grounded_in` で実行単位を指す。実例: Q8 の解析済 40,125 体で「中心消滅 ⇔ W=−1」（完全対角）。走行前に凍結した予測どおりに的中したので `registered-hit` | [C-q8-w-diagonal](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-q8-w-diagonal)、[C-1q-law](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-1q-law) |
-| 予想・理論値 C（破線） | 仮説 H と、判定帯まで走行前に凍結する事前登録 P（sha256 で凍結） | [P-q8-step2-w1](https://jxta.github.io/bias-kb-atlas/#v=guide&node=P-q8-step2-w1)、[H-d19-registered](https://jxta.github.io/bias-kb-atlas/#v=guide&node=H-d19-registered) |
-| 反例（破線） | `refuted_by` で結び、主張は `rejected` として残す。実例: 中央係数則は e=10 の直接計算 −6024 ≠ −5880 で自己反証し、教訓に昇格 | [C-middle-law-false](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-middle-law-false)、[E-middle-e10](https://jxta.github.io/bias-kb-atlas/#v=guide&node=E-middle-e10) |
-| **双方向リンク** | 証拠 `grounded_in` ⇄ 実行単位 `verifies` を記録層に両方向で書く（P2）。主張 ⇄ 証拠の逆向きは CI が `backlinks.json` に導出し「双方向律」で照合。詳細パネルの ⇄ 印 | [E-census-d17](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=E-census-d17) ⇄ [X-census-d17-spot](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=X-census-d17-spot) |
-| **再現可能パッケージ**（コード・データ・環境・来歴） | 実行単位 X: `entry`（コード＝1 コマンド）・`inputs` の sha256（データ）・`env`（環境）・`prov`（来歴）。`tier`（full／accept／spot）で再実行の範囲とコストを限定（P3） | [X-census-d17-spot](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=X-census-d17-spot)（詳細パネルの「再実行」枠） |
-| 研究データ基盤（NII RDC / GakuNin RDM） | 現状は GitHub（private の記録層と、この公開抜粋）。GakuNin RDM との統合は計画の第２年度の項目で未実装 | — |
-| **①再現**（手順から結果を再現） | `rerun.py` が入力 sha256 を照合し `entry` を実行して `expected` と比較。GitHub Actions が push ごと・毎週に実行（3 環境で 7/7 一致） | [Actions](https://github.com/jxta/bias-kb-atlas/actions/workflows/rerun.yml)、下の「再実行する」 |
-| **②検証**（主張から根拠を検証） | 「接地」タブ: 主張 → 証拠 → 実行単位 → 再実行結果を 1 行で。「辿る」で根拠の鎖（登録 → 主張 → 証拠 → 実行 → 教訓） | [接地](https://jxta.github.io/bias-kb-atlas/#v=grounding) |
-| **③派生**（蓄積から新知見へ派生） | 蓄積（d=11〜17 の census）から d=19 の「境界超過の符号反転」を予測し、判定帯を走行前に登録 → 本走 → 帯内で的中（`registered-hit`）。抜粋内の登録的中 5 件 | [C-d19-sign-reversal](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-d19-sign-reversal)、[登録・判定](https://jxta.github.io/bias-kb-atlas/#v=protocols) |
+| **人間の研究者**（問題設定・解釈・最終判断） | 問題設定は指示書（ORDER）と実行前登録に、最終判断は PR の merge に置く（merge は人間だけが行い、AI は merge しない）。詳細パネルの「来歴」に PR 番号と承認者 | [P-o19-registration](https://jxta.github.io/bias-kb-atlas/#v=guide&node=P-o19-registration) |
+| **AI エージェント**（統率AI・実行AI） | 実行AI が計算して証拠を生み、統率AI が記録層にノードを書いて主張を立てる。誰が書いたかは `prov.asserted_by` | [X-census-d17](https://jxta.github.io/bias-kb-atlas/#v=guide&node=X-census-d17) → [E-census-d17](https://jxta.github.io/bias-kb-atlas/#v=guide&node=E-census-d17) → [C-1q-law](https://jxta.github.io/bias-kb-atlas/#v=guide&node=C-1q-law) |
+| **別の AI**（meta-AI） | 記録層だけを読んで独立に再計算・再集計し、検収と裁定を行う。その再計算も実行単位 X として残る | [X-q8-crosstab-accept](https://jxta.github.io/bias-kb-atlas/#v=guide&node=X-q8-crosstab-accept) |
+| **知識グラフ** | 8 型のノード（O 対象・Q 量・E 証拠・C 主張・H 仮説・P 登録・X 実行単位・L 教訓）と型付きリンク。CI が参照整合・接地律・双方向律・凍結律を検査 | [俯瞰](https://jxta.github.io/bias-kb-atlas/#v=atlas)・[グラフ](https://jxta.github.io/bias-kb-atlas/#v=graph) |
+| 対象 O | 計測の対象（族・体・census 表）。実例: 数体 Q8（8T5）の全数族 | [O-nf-q8-8t5](https://jxta.github.io/bias-kb-atlas/#v=guide&node=O-nf-q8-8t5) |
+| 計測 → 量 Q・証拠 E | 計測される量（関数等式符号 W、中心零点位数 m）と、その記録。E は `quantities` で Q を、`about` で対象を指す | [Q-root-number](https://jxta.github.io/bias-kb-atlas/#v=guide&node=Q-root-number)、[E-q8-w-crosstab](https://jxta.github.io/bias-kb-atlas/#v=guide&node=E-q8-w-crosstab) |
+| 支持 → **主張 C** | `supported_by` で証拠を指し、状態を持つ。実例: Q8 の解析済 40,125 体で「中心消滅 ⇔ W=−1」（完全対角）— 走行前に凍結した予測どおりの的中で `registered-hit` | [C-q8-w-diagonal](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-q8-w-diagonal)、[C-1q-law](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-1q-law) |
+| 反証（棄却も残す） | `refuted_by` で結び、主張は `rejected` のまま残す。実例: 中央係数則は e=10 の直接計算 −6024 ≠ −5880 で自己反証し、教訓に昇格 | [C-middle-law-false](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-middle-law-false)、[E-middle-e10](https://jxta.github.io/bias-kb-atlas/#v=guide&node=E-middle-e10) |
+| 登録 P・仮説 H（予測を走行前に凍結） | 判定帯まで走行前に凍結する事前登録（ファイルの sha256 で凍結）と仮説。予想は後から合わせられない形で先に書く | [P-q8-step2-w1](https://jxta.github.io/bias-kb-atlas/#v=guide&node=P-q8-step2-w1)、[H-d19-registered](https://jxta.github.io/bias-kb-atlas/#v=guide&node=H-d19-registered) |
+| 教訓 L | 失敗や修正を規則に昇格させたもの（`taught_by` で元の証拠を指す） | [L-middle-law-self-refutation](https://jxta.github.io/bias-kb-atlas/#v=guide&node=L-middle-law-self-refutation)、[教訓](https://jxta.github.io/bias-kb-atlas/#v=lessons) |
+| **双方向リンク** | 証拠 `grounded_in` ⇄ 実行単位 `verifies` を記録層に両方向で書く。主張 ⇄ 証拠の逆向きは CI が `backlinks.json` に導出し「双方向律」で照合。詳細パネルの ⇄ 印 | [E-census-d17](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=E-census-d17) ⇄ [X-census-d17-spot](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=X-census-d17-spot) |
+| **実行単位 X**（コード・データ・環境・来歴） | `entry`（コード＝1 コマンド）・`inputs` の sha256（データ）・`env`（環境）・`prov`（来歴）。`tier`（full／accept／spot）で再実行の範囲とコストを限定 | [X-census-d17-spot](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=X-census-d17-spot)（詳細パネルの「再実行」枠） |
+| 成果物・期待値 | sha256 で凍結し、再実行して一致を記録（k4） | [X-census-d17-spot](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=X-census-d17-spot) |
+| 記録層 | ノード JSON（private リポジトリ）。公開抜粋は規則で生成し、手で選ばない | `kb/nodes.json`、[表](https://jxta.github.io/bias-kb-atlas/#v=table) |
+| **再実行できる** | `rerun.py` が入力 sha256 を照合し `entry` を実行して `expected` と比較。CI が push ごと・毎週に実行（3 環境で 7/7 一致） | [Actions](https://github.com/jxta/bias-kb-atlas/actions/workflows/rerun.yml)、下の「再実行する」 |
+| **根拠まで辿れる** | 「接地」タブ: 主張 → 証拠 → 実行単位 → 再実行結果を 1 行で。「辿る」で根拠の鎖（登録 → 主張 → 証拠 → 実行 → 教訓） | [接地](https://jxta.github.io/bias-kb-atlas/#v=grounding) |
+| **予測が先に凍結**（蓄積 → 予測 → 的中・棄却） | 蓄積（d=11〜17 の census）から d=19 の「境界超過の符号反転」を予測し、判定帯を走行前に登録 → 本走 → 帯内で的中（`registered-hit`）。抜粋内の登録的中 5 件 | [C-d19-sign-reversal](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-d19-sign-reversal)、[登録・判定](https://jxta.github.io/bias-kb-atlas/#v=protocols) |
 
-**３分で確かめる**: (1) [接地タブ](https://jxta.github.io/bias-kb-atlas/#v=grounding)で `C-1q-law` の行 — 証拠 4 件と実行単位、再実行 PASS。(2) [X-census-d17-spot](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=X-census-d17-spot) の「再実行」枠のコマンドを手元で走らせる（下の「再実行する」）。(3) [C-d19-sign-reversal](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-d19-sign-reversal) の根拠の鎖に、実行前登録 → 本走 → 的中が並ぶ。(4) [C-middle-law-false](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-middle-law-false) — 反例で棄却された主張も消えていない。(5) 詳細パネル「来歴」の主張者・承認者・PR 番号 — 記録層への反映は merge（横山承認）だけで起きる。
+**３分で確かめる**: (1) [接地タブ](https://jxta.github.io/bias-kb-atlas/#v=grounding)で `C-1q-law` の行 — 証拠 4 件と実行単位、再実行 PASS。(2) [X-census-d17-spot](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=X-census-d17-spot) の「再実行」枠のコマンドを手元で走らせる（下の「再実行する」）。(3) [C-d19-sign-reversal](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-d19-sign-reversal) の根拠の鎖に、実行前登録 → 本走 → 的中が並ぶ。(4) [C-middle-law-false](https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-middle-law-false) — 反例で棄却された主張も消えていない。(5) 詳細パネル「来歴」の主張者・承認者・PR 番号 — 記録層への反映は merge（人間の承認）だけで起きる。
 
 | 原理 | KB での実装 | このリポジトリで確かめる方法 |
 |---|---|---|
@@ -85,7 +87,7 @@ kb/nodes.json              抜粋 100 ノードの記録（型・状態・リン
 rerun.py                   offline 実行単位の再実行器（kb/nodes.json を読む）
 subprojects/hurwitz_ea/    関数体 census の凍結集計 (d=11,13,15,17) と検証スクリプト 2 本
 subprojects/q8_drh/...     D4 対照群 970 体の零点データ（Q8 KS 二側検定の入力）
-docs/fig2.svg              研究計画調書 図２ の再描画（案内タブと上の対応表に使用）
+docs/overview.svg              しくみの図（案内タブと上の対応表に使用）
 .github/workflows/rerun.yml  再実行 CI
 ```
 
