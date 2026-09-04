@@ -254,7 +254,7 @@
     ({ guide: viewGuide, grounding: viewGrounding, atlas: viewAtlas, lines: viewLines, timeline: viewTimeline, graph: viewGraph, lessons: viewLessons, protocols: viewProtocols, table: viewTable }[state.view] || viewAtlas)(stage);
   }
 
-  // ---------- 案内（研究計画調書 図２ との対応） ----------
+  // ---------- 案内（この知識基盤のしくみ — 図と実例の対応） ----------
   function viewGuide(stage) {
     const G = META.guide; if (!G || !G.rows || !G.rows.length) { viewGrounding(stage); return; }
     const rowHtml = G.rows.map(r => `<tr id="gr-${esc(r.key)}" data-key="${esc(r.key)}"><td class="gfig">${esc(r.fig)}</td><td class="gkb">${md(r.kb)}</td><td class="gex">${(r.nodes || []).map(id => chip(id)).join("") || '<span class="muted small">—</span>'}${r.view ? `<div style="margin-top:5px"><button class="iconbtn small" data-go="${esc(r.view)}">${esc(r.view_label || r.view)} →</button></div>` : ""}</td></tr>`).join("");
@@ -263,7 +263,7 @@
       <h2 class="vt">${esc(G.title)}</h2>
       <p class="vsub">${esc(G.source)}</p>
       <div class="card gfigure">${G.svg || ""}</div>
-      <div class="card" style="padding:0;overflow:auto;margin-top:12px"><table class="tbl gtbl"><thead><tr><th>図２の要素</th><th>この知識基盤での実体</th><th>実例（クリックで詳細）／見る場所</th></tr></thead><tbody>${rowHtml}</tbody></table></div>
+      <div class="card" style="padding:0;overflow:auto;margin-top:12px"><table class="tbl gtbl"><thead><tr><th>図の要素</th><th>この知識基盤での実体</th><th>実例（クリックで詳細）／見る場所</th></tr></thead><tbody>${rowHtml}</tbody></table></div>
       <div class="card" style="margin-top:12px"><h3 class="ct">３分で確かめる</h3><ol class="gsteps">${steps}</ol></div>
       <p class="small muted" style="margin-top:8px">この案内は生成器（<code>kb_atlas.py</code> の <code>GUIDE</code>）が埋め込んだもので、実例のノード ID は生成時に記録層で実在を確認している。図の要素・実例・「→」ボタンはすべてこのページ内のビューへ移動する。</p>
     </div>`;
@@ -315,7 +315,7 @@
     const cloneCmd = PUBLIC && PUBREPO ? `git clone ${PUBREPO}.git && cd ${esc(META.public_repo.split("/")[1])} && python3 rerun.py` : `git clone git@github.com:${esc(META.repo)}.git && cd ${esc(META.repo.split("/")[1])} && python3 knowledge/tools/kb_k4.py`;
     stage.innerHTML = `<div class="pad">
       <h2 class="vt">接地 — 主張から再実行可能な証拠へ</h2>
-      <p class="vsub">「知識グラフ上の各主張を、それを生んだ再現可能な研究に双方向リンクで接地させ、AI の推論が常に再実行可能な証拠に遡れる構造とする」を、この KB がどう実装しているかを、表示中のノードで実測する。</p>
+      <p class="vsub">主張を、それを生んだ再実行可能な計算に双方向のリンクで接地させ、推論が常に再実行可能な証拠まで遡れるようにする — この設計を bias-kb がどう実装しているかを、表示中のノードで実測する。</p>
       <div class="grid g3" style="margin-bottom:12px">
         <div class="card"><h3 class="ct">P1 計算接地</h3><div class="small">主張 <code>supported_by</code>→ 証拠 <code>grounded_in</code>→ 実行単位（<code>entry</code> コマンド・<code>inputs</code> の sha256・<code>expected</code>・<code>env</code>）。CI の R9 検査「接地律」が、証拠を持たない主張と実行単位を持たない証拠を拒否する。</div></div>
         <div class="card"><h3 class="ct">P2 双方向性</h3><div class="small">証拠 <code>grounded_in</code> ⇄ 実行単位 <code>verifies</code> は記録層に<b>両方向</b>で書く（下の実測）。主張 ⇄ 証拠の逆向きは <code>backlinks.json</code> を CI が導出し「双方向律」で照合。この画面の「入るリンク」がその逆リンク。</div></div>
