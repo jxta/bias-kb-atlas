@@ -220,7 +220,7 @@ pre.raw.cmd { max-height: none; font-size: 12px; margin: 4px 0 6px; }
 .reexec .inp .sha { word-break: break-all; margin-top: 2px; }
 .reexec .inp .sha code { font-size: 11px; }
 
-/* 案内（図２との対応） */
+/* 案内（しくみの図と実例の対応） */
 .guide .gfigure { background: #fff; padding: 10px 12px; display: flex; justify-content: center; }
 .guide .gfigure svg { width: 100%; max-width: min(820px, 100%); height: auto; display: block; }
 .gtbl td.gfig { width: 200px; font-weight: 600; }
