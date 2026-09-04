@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="fig2" viewBox="0 0 660 340" width="660" height="340" font-family="'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic',Meiryo,sans-serif" font-size="11" fill="#111" role="img" aria-label="提案する知識基盤の構造（研究計画調書 図２ の再描画）">
+  <title>提案する知識基盤の構造（研究計画調書 図２ の再描画）</title>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker>
+    <marker id="ahs" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker>
+    <marker id="ahd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker>
+  </defs>
+  <style>
+    #fig2 .box{fill:#fff;stroke:#111;stroke-width:1.3}
+    #fig2 .shade{fill:#d9d9d9;stroke:#111;stroke-width:1.3}
+    #fig2 .light{fill:#f1f1f1;stroke:#111;stroke-width:1.3}
+    #fig2 .dash{fill:#fff;stroke:#555;stroke-width:1.2;stroke-dasharray:4 3}
+    #fig2 .dot{fill:#fff;stroke:#111;stroke-width:1;stroke-dasharray:1.5 2.5}
+    #fig2 .ttl{font-weight:700;font-size:12px}
+    #fig2 .big{font-weight:700;font-size:14px;letter-spacing:.35em}
+    #fig2 .sm{font-size:9.5px;fill:#333}
+    #fig2 .ln{stroke:#111;stroke-width:1.2;fill:none}
+    #fig2 .lnd{stroke:#555;stroke-width:1.2;fill:none;stroke-dasharray:4 3}
+    #fig2 .hot{cursor:pointer}
+    #fig2 .hot:hover .box,#fig2 .hot:hover .shade,#fig2 .hot:hover .light,#fig2 .hot:hover .dash{stroke-width:2.4}
+    #fig2 .hot.on .box,#fig2 .hot.on .shade,#fig2 .hot.on .light,#fig2 .hot.on .dash{stroke-width:2.6;stroke:#000}
+  </style>
+
+  <!-- 左: AIエージェント -->
+  <g class="hot" data-key="agents">
+    <rect class="box" x="8" y="46" width="114" height="206" rx="2"/>
+    <text class="ttl" x="65" y="64" text-anchor="middle">AIエージェント</text>
+    <rect class="light" x="22" y="78" width="86" height="34"/><text x="65" y="100" text-anchor="middle" font-size="12">生成</text>
+    <rect class="light" x="22" y="124" width="86" height="34"/><text x="65" y="146" text-anchor="middle" font-size="12">検証</text>
+    <rect class="light" x="22" y="170" width="86" height="34"/><text x="65" y="192" text-anchor="middle" font-size="12">修正</text>
+    <text x="65" y="238" text-anchor="middle" font-size="10.5">読み書きする</text>
+  </g>
+  <line class="ln" x1="124" y1="150" x2="150" y2="150" marker-start="url(#ah)" marker-end="url(#ah)"/>
+
+  <!-- 中央: 知識基盤 -->
+  <rect class="box" x="152" y="8" width="330" height="264" rx="2"/>
+  <text class="big" x="317" y="27" text-anchor="middle">知識基盤</text>
+
+  <g class="hot" data-key="kg">
+    <rect class="box" x="165" y="37" width="304" height="118" rx="1"/>
+    <text class="ttl" x="176" y="53">知識グラフ（実例：素数の偏り）</text>
+  </g>
+  <!-- 知識グラフの中身 -->
+  <g class="hot" data-key="obj"><ellipse class="box" cx="216" cy="84" rx="42" ry="15"/><text x="216" y="88" text-anchor="middle" font-size="11.5">Q8拡大体</text></g>
+  <g class="hot" data-key="measure">
+    <line class="ln" x1="259" y1="84" x2="294" y2="84" marker-end="url(#ah)"/><text x="276" y="77" text-anchor="middle" class="sm">計測</text>
+    <ellipse class="box" cx="345" cy="84" rx="50" ry="15"/><text x="345" y="88" text-anchor="middle" font-size="11.5">係数の計測列</text>
+  </g>
+  <g class="hot" data-key="hyp"><ellipse class="dash" cx="226" cy="130" rx="50" ry="14"/><text x="226" y="134" text-anchor="middle" font-size="11" fill="#333">予想・理論値C</text></g>
+  <g class="hot" data-key="counter"><rect x="262" y="94" width="50" height="26" fill="#fff" fill-opacity="0"/><line class="lnd" x1="309" y1="97" x2="265" y2="118" marker-end="url(#ahd)"/><text x="273" y="103" text-anchor="middle" class="sm">反例</text></g>
+  <g class="hot" data-key="claim"><line class="ln" x1="362" y1="98" x2="385" y2="114" marker-end="url(#ah)"/><text x="386" y="101" class="sm">支持</text><ellipse class="shade" cx="400" cy="130" rx="42" ry="14"/><text x="400" y="134" text-anchor="middle" font-size="11.5" font-weight="700">主張：ずれ</text></g>
+
+  <g class="hot" data-key="bidir">
+    <rect x="165" y="158" width="304" height="26" fill="#fff" fill-opacity="0"/>
+    <path d="M232,163 l7,10 h-14 z M246,173 l-7,-10 h14 z" fill="#111"/>
+    <text class="ttl" x="317" y="176" text-anchor="middle">双方向リンク</text>
+    <path d="M388,163 l7,10 h-14 z M402,173 l-7,-10 h14 z" fill="#111"/>
+  </g>
+
+  <g class="hot" data-key="pkg">
+    <rect class="box" x="165" y="187" width="304" height="72" rx="1"/>
+    <text class="ttl" x="176" y="203">再現可能パッケージ（LC4RR・ノートブック単位）</text>
+    <rect class="dot" x="178" y="212" width="88" height="38"/><text x="222" y="228" text-anchor="middle" font-size="10">コード・データ</text><text x="222" y="242" text-anchor="middle" font-size="10">環境・来歴</text>
+    <rect class="dot" x="273" y="212" width="88" height="38"/><text x="317" y="228" text-anchor="middle" font-size="10">コード・データ</text><text x="317" y="242" text-anchor="middle" font-size="10">環境・来歴</text>
+    <rect class="dot" x="368" y="212" width="88" height="38"/><text x="412" y="228" text-anchor="middle" font-size="10">コード・データ</text><text x="412" y="242" text-anchor="middle" font-size="10">環境・来歴</text>
+  </g>
+
+  <!-- 下: 研究データ基盤 -->
+  <g class="hot" data-key="rdm">
+    <line class="ln" x1="317" y1="288" x2="317" y2="274" marker-end="url(#ah)"/>
+    <rect class="shade" x="152" y="289" width="330" height="44" rx="2" fill="#e6e6e6"/>
+    <text class="ttl" x="317" y="307" text-anchor="middle">研究データ基盤</text>
+    <text x="317" y="324" text-anchor="middle" font-size="10.5">NII RDC / GakuNin RDM</text>
+  </g>
+
+  <!-- 右: 人間の研究者 -->
+  <g class="hot" data-key="human">
+    <line class="ln" x1="483" y1="36" x2="499" y2="36" marker-start="url(#ahs)" marker-end="url(#ahs)"/>
+    <rect class="box" x="500" y="8" width="152" height="60" rx="2"/>
+    <text class="ttl" x="576" y="26" text-anchor="middle">人間の研究者</text>
+    <text x="576" y="43" text-anchor="middle" class="sm">問題設定・解釈・最終判断</text>
+    <text x="576" y="58" text-anchor="middle" class="sm">Human-in-the-loop</text>
+  </g>
+
+  <!-- 右: 別のAIによる評価 -->
+  <rect class="box" x="500" y="80" width="152" height="192" rx="2"/>
+  <text class="ttl" x="576" y="98" text-anchor="middle">別のAIによる評価</text>
+  <g class="hot" data-key="eval1">
+    <line class="ln" x1="484" y1="131" x2="510" y2="131" marker-end="url(#ah)"/>
+    <rect class="box" x="512" y="108" width="128" height="44"/>
+    <text x="576" y="125" text-anchor="middle" font-size="12" font-weight="700">①再現</text>
+    <text x="576" y="142" text-anchor="middle" class="sm">手順から結果を再現</text>
+  </g>
+  <g class="hot" data-key="eval2">
+    <line class="ln" x1="484" y1="181" x2="510" y2="181" marker-end="url(#ah)"/>
+    <rect class="box" x="512" y="158" width="128" height="44"/>
+    <text x="576" y="175" text-anchor="middle" font-size="12" font-weight="700">②検証</text>
+    <text x="576" y="192" text-anchor="middle" class="sm">主張から根拠を検証</text>
+  </g>
+  <g class="hot" data-key="eval3">
+    <line class="ln" x1="484" y1="231" x2="510" y2="231" marker-end="url(#ah)"/>
+    <rect class="shade" x="512" y="208" width="128" height="44"/>
+    <text x="576" y="225" text-anchor="middle" font-size="12" font-weight="700">③派生</text>
+    <text x="576" y="242" text-anchor="middle" class="sm">蓄積から新知見へ派生</text>
+  </g>
+</svg>
