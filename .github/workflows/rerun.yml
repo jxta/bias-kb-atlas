@@ -6,7 +6,7 @@ on:
     - cron: "17 3 * * 1"   # 毎週月曜 03:17 UTC — 環境が変わっても再実行できることを確かめ続ける
   workflow_dispatch:
 permissions:
-  contents: write          # 派生ファイル（n/・kb/kb.jsonld・llms.txt）と kb/rerun-latest.json を commit するため
+  contents: write          # 派生ファイル（kb/nodes.json・n/・kb/kb.jsonld・llms.txt）と kb/rerun-latest.json を commit するため
 concurrency:
   group: rerun-latest
   cancel-in-progress: false
@@ -21,6 +21,35 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
+      # 抜粋の実体は kb/parts/（1 行 1 ノードの JSONL ＋ meta.json）で受け取り、ここで kb/nodes.json に組み立てる。
+      # 分割の理由: 記録層からの抜粋は 1 ファイルだと大きく、行単位のほうが差分が読める（どのノードが変わったかが diff に出る）。
+      # 図（meta.guide.svg）は docs/overview.svg と同一なので parts では空にし、ここで注入する（重複を持たない）。
+      - name: Assemble kb/nodes.json from kb/parts/
+        run: |
+          set -e
+          if ls kb/parts/nodes.*.jsonl >/dev/null 2>&1; then
+            python3 - <<'PY'
+          import json, glob, os
+          meta = json.load(open('kb/parts/meta.json', encoding='utf-8'))
+          if not meta.get('guide', {}).get('svg') and os.path.exists('docs/overview.svg'):
+              meta['guide']['svg'] = open('docs/overview.svg', encoding='utf-8').read()
+          nodes = []
+          for p in sorted(glob.glob('kb/parts/nodes.*.jsonl')):
+              for line in open(p, encoding='utf-8'):
+                  line = line.strip()
+                  if line:
+                      nodes.append(json.loads(line))
+          out = json.dumps({"meta": meta, "nodes": nodes}, ensure_ascii=False, separators=(',', ':'))
+          prev = open('kb/nodes.json', encoding='utf-8').read() if os.path.exists('kb/nodes.json') else ''
+          if out != prev:
+              open('kb/nodes.json', 'w', encoding='utf-8').write(out)
+              print('kb/nodes.json rebuilt: %d nodes, %d bytes' % (len(nodes), len(out.encode())))
+          else:
+              print('kb/nodes.json already up to date (%d nodes)' % len(nodes))
+          PY
+          else
+            echo "kb/parts/ not present — keeping kb/nodes.json as committed"
+          fi
       - name: Rebuild derived pages from kb/nodes.json (n/<id>.html|json, kb/kb.jsonld, kb/backlinks.json, llms.txt, sitemap.txt)
         run: python3 build_site.py
       - name: Re-execute offline ExecutionUnits and compare with recorded expected values
@@ -39,16 +68,16 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # rerun-latest.json は生成時刻だけの差分では commit しない（結果の内容が変わったときだけ）
           if git show HEAD:kb/rerun-latest.json >/tmp/prev.json 2>/dev/null; then
-            python3 - <<'EOF2' || git checkout -- kb/rerun-latest.json
-          import json,sys
-          a=json.load(open('/tmp/prev.json')); b=json.load(open('kb/rerun-latest.json'))
-          key=lambda d:[(r['id'],r['status'],r.get('got'),r.get('want')) for r in d.get('results',[])]
-          same = key(a)==key(b) and a.get('n_pass')==b.get('n_pass') and a.get('python')==b.get('python') and a.get('kb_generated_at')==b.get('kb_generated_at')
+            python3 - <<'PY' || git checkout -- kb/rerun-latest.json
+          import json, sys
+          a = json.load(open('/tmp/prev.json')); b = json.load(open('kb/rerun-latest.json'))
+          key = lambda d: [(r['id'], r['status'], r.get('got'), r.get('want')) for r in d.get('results', [])]
+          same = key(a) == key(b) and a.get('n_pass') == b.get('n_pass') and a.get('python') == b.get('python') and a.get('kb_generated_at') == b.get('kb_generated_at')
           sys.exit(0 if not same else 1)
-          EOF2
+          PY
           fi
           git add -A n kb llms.txt sitemap.txt
           if git diff --cached --quiet; then echo "nothing to commit"; exit 0; fi
-          git commit -m "CI: derived pages + kb/rerun-latest.json (rerun ${{ steps.rerun.outcome }}) [skip ci]"
+          git commit -m "CI: kb/nodes.json（kb/parts/ から組み立て）＋ 派生ページ ＋ kb/rerun-latest.json（rerun ${{ steps.rerun.outcome }}） [skip ci]"
           git pull --rebase origin main
           git push origin HEAD:main
