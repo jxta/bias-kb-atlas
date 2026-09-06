@@ -14,8 +14,11 @@
   }
   boot(JSON.parse(inline.textContent));
   function boot(DATA) {
-  const META = DATA.meta, NODES = DATA.nodes;
-  const byId = new Map(NODES.map(n => [n.id, n]));
+  // 公開抜粋では、抜粋外の隣接ノードが「型だけのスタブ」（_stub: true、匿名 ID）として同梱される。
+  // NODES は実ノードのみ（集計・表・検索の母数）。byId はスタブも含む（リンク表示・近傍のため）。
+  const META = DATA.meta, NODES = DATA.nodes.filter(n => !n._stub), STUBS = DATA.nodes.filter(n => n._stub);
+  const byId = new Map(DATA.nodes.map(n => [n.id, n]));
+  const isStub = (id) => { const n = byId.get(id); return !!(n && n._stub); };
   const REPO = "https://github.com/" + (META.repo || "jxta/ai4math-lab");
   const TYPES = ["Object", "Quantity", "Evidence", "Claim", "Hypothesis", "Protocol", "ExecutionUnit", "Lesson"];
   const TLET = { Object: "O", Quantity: "Q", Evidence: "E", Claim: "C", Hypothesis: "H", Protocol: "P", ExecutionUnit: "X", Lesson: "L" };
@@ -40,7 +43,9 @@
   const plain = (s) => String(s || "").replace(/\*\*/g, "").replace(/`/g, "");
   const textOf = (n) => n.statement || n.definition || n.entry || "";
   const k4Of = (xid) => K4[xid] || null;
-  const k4Badge = (xid) => { const r = k4Of(xid); if (!r) return `<span class="badge" style="background:${css("--s-none")}" title="k4 記録なし">再実行記録なし</span>`; const c = r.status === "PASS" ? statusColor("established") : r.status === "PENDING" ? statusColor("provisional") : statusColor("rejected"); const t = r.status === "PASS" ? `再実行 PASS（got ${r.got} / want ${r.want}）` : r.note || r.status; return `<span class="badge" style="background:${c}" title="${esc(t)}">${r.status === "PASS" ? "再実行 PASS" : r.status === "PENDING" ? "再実行 保留（mdx）" : esc(r.status)}</span>`; };
+  const k4Badge = (xid) => { const r = k4Of(xid); if (!r) return `<span class="badge" style="background:${css("--s-none")}" title="k4（記録層側の一斉再実行）の記録なし">再実行記録なし</span>`; const c = r.status === "PASS" ? statusColor("established") : r.status === "PENDING" ? statusColor("provisional") : statusColor("rejected"); const t = r.status === "PASS" ? `再実行 PASS（got ${r.got} / want ${r.want}）` : r.status === "PENDING" ? "非公開・未再実行: mdx 上の本走（full tier）で、この束からは再実行できない。記録層側でも再実行一致はまだ確定していない" : (r.note || r.status); return `<span class="badge" style="background:${c}" title="${esc(t)}">${r.status === "PASS" ? "再実行 PASS" : r.status === "PENDING" ? "非公開・未再実行" : esc(r.status)}</span>`; };
+  // 「offline」は記録層の宣言、「_bundled」はこの束に凍結入力が全部そろい実際に再実行できるか（生成時に判定）
+  const rerunable = (x) => !!((x.env || {}).offline && x._bundled !== false);
   const reciprocal = (a, b) => { const A = byId.get(a), B = byId.get(b); if (!A || !B) return false; return B._out.some(e => e.to === a); };
   const repoLink = (path) => { if (!path) return ""; const pth = String(path).replace(/^annex:\s*/, ""); if (PUBLIC) { return BUNDLED.has(pth) && PUBREPO ? `<a href="${PUBREPO}/blob/main/${esc(pth)}" target="_blank" rel="noopener"><code>${esc(pth)}</code></a> <span class="badge" style="background:${statusColor("established")}">同梱</span>` : `<code>${esc(pth)}</code> <span class="muted small">（非公開リポジトリ内）</span>`; } return `<a href="${REPO}/blob/main/${esc(pth)}" target="_blank" rel="noopener"><code>${esc(pth)}</code></a>`; };
   const prLink = (p) => { if (p == null || p === "") return ""; const m = String(p).match(/^#?(\d{1,5})$/); return m ? `<a href="${REPO}/pull/${m[1]}" target="_blank" rel="noopener">#${m[1]}</a>` : `<span class="muted">${esc(p)}</span>`; };
@@ -51,7 +56,7 @@
   const state = {
     view: defaultView(), line: null, node: null, trail: [], trailPos: -1,
     f: { types: new Set(TYPES), statuses: new Set([...STATUSES, "none"]), lines: new Set(LINES.map(l => l.id)), tiers: new Set(["full", "accept", "spot", "none"]), d0: 0, d1: allDates.length - 1, actors: new Set(["統率", "meta", "other"]) },
-    colorMode: "type", filtersOpen: window.innerWidth > 1100, inspOpen: window.innerWidth > 1100, graphColor: "line", graphFocus: null, graphDepth: 2, tlDay: null,
+    colorMode: "type", filtersOpen: window.innerWidth > 1100, inspOpen: window.innerWidth > 1100, graphColor: "line", graphFocus: null, graphDepth: 2, tlDay: null, showStubs: false,
   };
   function actorOf(n) { const a = ((n.prov || {}).asserted_by || ""); return a.startsWith("統率") ? "統率" : a.includes("meta") ? "meta" : "other"; }
   function tierOf(n) { return n.tier || "none"; }
@@ -98,7 +103,9 @@
   const app = document.getElementById("app");
   app.innerHTML = `
   <header class="hdr">
-    <div class="brand"><b>bias-kb Atlas</b><small>${esc(META.version || "")} · ${fmtN(NODES.length)} nodes · ${esc((META.generated_at || "").slice(0, 10))}</small></div>
+    <div class="brand"><b>bias-kb Atlas</b><small id="fresh">${META.profile === "public-grounding"
+      ? `記録層 <b>${fmtN(META.stats.full_n || 0)}</b> ／ 抜粋 <b>${fmtN(NODES.length)}</b> ／ 同期 ${esc((META.generated_at || "").slice(0, 10))}${META.source_ref ? ` <span class="muted" title="記録層の元コミット">(${esc(String(META.source_ref).slice(0, 7))})</span>` : ""}<span id="rerunHdr" title="公開バンドルの CI（rerun.yml）が最後に offline 単位を再実行した結果（kb/rerun-latest.json）"></span>`
+      : `${esc(META.version || "")} · ${fmtN(NODES.length)} nodes · ${esc((META.generated_at || "").slice(0, 10))}`}</small></div>
     <nav class="tabs" id="tabs"></nav>
     <div class="search"><input id="q" placeholder="ID・ラベル・本文を検索（/ でフォーカス）" autocomplete="off"><span class="kbd">/</span><div class="drop" id="drop"></div></div>
     <button class="iconbtn" id="btnFilters" title="フィルタ列の表示切替">⛭ フィルタ</button>
@@ -107,7 +114,7 @@
     <button class="iconbtn" id="btnHelp" title="凡例・使い方">?</button>
   </header>
   <div class="help" id="help" hidden><div class="helpbox"><div class="helphd"><b>bias-kb Atlas — 凡例と使い方</b><button class="iconbtn" id="helpClose">✕</button></div><div class="helpbd" id="helpBody"></div></div></div>
-  ${META.profile === "public-grounding" ? `<div class="banner" id="banner"><b>公開抜粋</b> — 知識基盤 bias-kb（private リポジトリ <code>${esc(META.repo)}</code>、${esc((META.generated_at || "").slice(0, 10))} 時点 ${fmtN(META.stats.full_n || 0)} ノード）から、<b>主張 → 証拠 → 再実行可能な実行単位</b> の鎖に関わる ${fmtN(NODES.length)} ノードを規則で抜き出したものです（関数体 census 線と Q8 の W 層）。offline 実行単位の凍結入力は同梱され、<code>python3 rerun.py</code> で再実行できます${META.public_repo ? `（<a href="https://github.com/${esc(META.public_repo)}" target="_blank" rel="noopener">${esc(META.public_repo)}</a>）` : ""}。</div>` : ""}
+  ${META.profile === "public-grounding" ? `<div class="banner" id="banner"><b>公開抜粋</b> — 知識基盤 bias-kb（private リポジトリ <code>${esc(META.repo)}</code>、${esc((META.generated_at || "").slice(0, 10))} 時点 ${fmtN(META.stats.full_n || 0)} ノード）から、<b>主張 → 証拠 → 再実行可能な実行単位</b> の鎖に関わる ${fmtN(NODES.length)} ノードを規則で抜き出したものです（関数体 census 線と Q8 の W 層）。抜粋外の隣接ノードは型だけの<b>非公開スタブ</b>（${fmtN(STUBS.length)} 件、点線）として残し、「証拠はあるが非公開」と「根拠がない」を区別します。offline 実行単位の凍結入力は同梱され、<code>python3 rerun.py</code> で再実行できます${META.public_repo ? `（<a href="https://github.com/${esc(META.public_repo)}" target="_blank" rel="noopener">${esc(META.public_repo)}</a>）` : ""}。各ノードは JS なしの単体ページ <code>n/&lt;id&gt;.html</code>／<code>.json</code> でも読めます（<a href="n/index.html">一覧</a>・<a href="llms.txt">llms.txt</a>）。</div>` : ""}
   <div class="body" id="body"><aside class="rail" id="rail"></aside><main class="stage" id="stage"></main><aside class="insp" id="insp"><div class="splitter" id="split"></div><div id="inspBody"></div></aside></div>
   <div class="tt" id="tt"></div>`;
   const $ = (s, r = document) => r.querySelector(s);
@@ -117,6 +124,19 @@
   const BUNDLED = new Set(META.bundled || []);
   const PUBREPO = META.public_repo ? "https://github.com/" + META.public_repo : "";
   const HAS_GUIDE = !!(META.guide && META.guide.rows && META.guide.rows.length);
+  const SITE = (META.site_url || "").replace(/\/$/, "");
+  const BINDER = META.public_repo ? `https://mybinder.org/v2/gh/${META.public_repo}/main?urlpath=lab/tree/README.md` : "";
+  const CODESPACES = META.public_repo ? `https://codespaces.new/${META.public_repo}?quickstart=1` : "";
+  // 最終再実行（公開バンドルの CI が書く kb/rerun-latest.json）— 無ければ静かに省く
+  let RERUN = null;
+  if (PUBLIC && META.rerun_latest && !inline) {
+    fetch(META.rerun_latest, { cache: "no-store" }).then(r => r.ok ? r.json() : null).then(j => {
+      if (!j || !Array.isArray(j.results)) return; RERUN = j;
+      const np = j.results.filter(r => r.status === "PASS").length, nt = j.results.filter(r => r.status !== "NOT-BUNDLED").length;
+      const el = $("#rerunHdr"); if (el) el.innerHTML = ` ／ 最終再実行 <b style="color:${np === nt ? "var(--ok, #15803d)" : "var(--bad, #b91c1c)"}">${np}/${nt} PASS</b> <span class="muted">${esc((j.generated_at || "").slice(0, 10))}${j.python ? " · Python " + esc(j.python) : ""}</span>`;
+      if (state.view === "grounding") renderStage();
+    }).catch(() => { });
+  }
   const VIEWS = [...(HAS_GUIDE ? [["guide", "案内"]] : []), ["grounding", "接地"], ["atlas", "俯瞰"], ["lines", "研究線"], ["timeline", "時間"], ["graph", "グラフ"], ["lessons", "教訓"], ["protocols", "登録・判定"], ["table", "表"]];
   $("#tabs").innerHTML = VIEWS.map(([k, l]) => `<button class="tab" data-v="${k}">${l}</button>`).join("");
   $("#tabs").addEventListener("click", e => { const b = e.target.closest(".tab"); if (b) go(b.dataset.v); });
@@ -167,6 +187,11 @@
   document.addEventListener("keydown", e => {
     if (e.key === "/" && document.activeElement !== $("#q")) { e.preventDefault(); $("#q").focus(); $("#q").select(); }
     if (e.key === "Escape") { $("#drop").classList.remove("show"); $("#q").blur(); }
+    // キーボード操作: フォーカス中のノードチップ・図のホット領域・行を Enter／Space で開く（マウスと同じ）
+    if ((e.key === "Enter" || e.key === " ") && document.activeElement && document.activeElement !== $("#q") && !/^(BUTTON|A|INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) {
+      const el = document.activeElement.closest ? document.activeElement.closest("[data-node],[data-key].hot,[data-line]") : null;
+      if (el) { e.preventDefault(); el.dispatchEvent(new MouseEvent("click", { bubbles: true })); }
+    }
   });
 
   // ------------------------------------------------------------------ search
@@ -204,7 +229,8 @@
   function badgeLine(l) { return `<span class="badge" data-line="${l}" style="background:${lineColor(l)};cursor:pointer" title="研究線ビューへ">${esc((lineById.get(l) || {}).short || l)}</span>`; }
   function chip(id, extra = "") {
     const n = byId.get(id); if (!n) return `<span class="chip"><span class="id">${esc(id)}</span></span>`;
-    return `<span class="chip" data-node="${id}" title="${esc(short(n.label, 200))}"><span class="dot" style="background:${typeColor(n.type)}"></span><span class="id">${esc(id)}</span><span class="t">${esc(short(n.label, 70))}</span>${extra}</span>`;
+    if (n._stub) return `<span class="chip stub" data-node="${id}" tabindex="0" role="link" title="記録層に存在するが公開抜粋に含まれないノード（型だけ公開。ID は実 ID の sha256 先頭 10 桁）"><span class="dot" style="background:${typeColor(n.type)}"></span><span class="id">${esc(TLET[n.type])} 非公開</span><span class="t">${esc(n.label)}</span>${extra}</span>`;
+    return `<span class="chip" data-node="${id}" tabindex="0" role="link" title="${esc(short(n.label, 200))}"><span class="dot" style="background:${typeColor(n.type)}"></span><span class="id">${esc(id)}</span><span class="t">${esc(short(n.label, 70))}</span>${extra}</span>`;
   }
   function card(n, o = {}) {
     return `<div class="nodecard${state.node === n.id ? " sel" : ""}" data-node="${n.id}"><div class="h">${badgeType(n)}${badgeStatus(n)}<span class="id">${esc(n.id)}</span></div><div class="lbl">${esc(short(n.label, o.len || 140))}</div><div class="meta"><span>${esc(n._date)}</span>${o.line !== false ? `<span>${esc((lineById.get(n._line) || {}).short || "")}</span>` : ""}${n.tier ? `<span>tier ${esc(n.tier)}</span>` : ""}<span>次数 ${n._deg}</span></div></div>`;
@@ -258,28 +284,45 @@
   function viewGuide(stage) {
     const G = META.guide; if (!G || !G.rows || !G.rows.length) { viewGrounding(stage); return; }
     const rowHtml = G.rows.map(r => `<tr id="gr-${esc(r.key)}" data-key="${esc(r.key)}"><td class="gfig">${esc(r.fig)}</td><td class="gkb">${md(r.kb)}</td><td class="gex">${(r.nodes || []).map(id => chip(id)).join("") || '<span class="muted small">—</span>'}${r.view ? `<div style="margin-top:5px"><button class="iconbtn small" data-go="${esc(r.view)}">${esc(r.view_label || r.view)} →</button></div>` : ""}</td></tr>`).join("");
-    const steps = (G.steps || []).map(s => `<li><b>${esc(s.title)}</b> — ${md(s.text)}${s.node ? ` <button class="iconbtn small" data-trace="${esc(s.node)}">開く</button>` : ""}</li>`).join("");
+    // ３分で確かめる — ツアー形式（進行状態・コマンドのコピー・期待出力・最後に「確かめたこと」の要約）。状態は端末内だけに保存。
+    const STEPS = G.steps || [];
+    const tourKey = "atlas-tour-" + (META.generated_at || "").slice(0, 10);
+    const done = (() => { try { return new Set(JSON.parse(localStorage.getItem(tourKey) || "[]")); } catch (e) { return new Set(); } })();
+    const saveTour = () => { try { localStorage.setItem(tourKey, JSON.stringify([...done])); } catch (e) { } };
+    const stepHtml = (s, i) => `<li class="tstep${done.has(i) ? " done" : ""}" data-step="${i}">
+        <div class="thead"><label class="tchk"><input type="checkbox" data-chk="${i}" ${done.has(i) ? "checked" : ""} aria-label="ステップ ${i + 1} を確かめた"> <b>${i + 1}. ${esc(s.title)}</b></label>${s.node ? ` <button class="iconbtn small" data-trace="${esc(s.node)}">開く</button>` : ""}${s.view && s.view !== "guide" ? ` <button class="iconbtn small" data-go="${esc(s.view)}">${esc(({ grounding: "接地", protocols: "登録・判定", table: "表", graph: "グラフ", lessons: "教訓", lines: "研究線" })[s.view] || s.view)} →</button>` : ""}</div>
+        <div class="tbody">${md(s.text)}
+        ${s.cmd ? `<div class="tcmd"><pre class="raw cmd">${esc(s.cmd)}</pre><button class="iconbtn small" data-copy="${i}">⧉ コマンドをコピー</button>${BINDER ? ` <a class="iconbtn small" href="${BINDER}" target="_blank" rel="noopener" title="ブラウザ内の JupyterLab でこのリポジトリを開く（手元に Python が無くても再実行できる）">Binder で開く</a>` : ""}${CODESPACES ? ` <a class="iconbtn small" href="${CODESPACES}" target="_blank" rel="noopener" title="GitHub Codespaces でこのリポジトリを開く">Codespaces</a>` : ""}</div>` : ""}
+        ${s.expect ? `<div class="small muted" style="margin-top:6px">期待される出力（一致すれば PASS）:</div><pre class="raw texp">${esc(s.expect)}</pre>` : ""}
+        ${s.check ? `<div class="small tcheck">確かめる点: ${esc(s.check)}</div>` : ""}</div></li>`;
+    const tourSummary = () => { const k = [...done].filter(i => i < STEPS.length).sort(); return `<div class="tsum${k.length === STEPS.length && STEPS.length ? " all" : ""}"><div class="tprog"><i style="width:${STEPS.length ? Math.round(100 * k.length / STEPS.length) : 0}%"></i></div><div class="small"><b>${k.length} / ${STEPS.length}</b> 確かめた${k.length ? ` — あなたが確かめたこと: ${k.map(i => esc(STEPS[i].check || STEPS[i].title)).join("；")}` : "。上から順に、各ステップの「開く」で実例へ移動し、確かめたらチェックを入れる。"}${k.length === STEPS.length && STEPS.length ? " — 主張から証拠・実行・登録・来歴まで、記録層の鎖を一周した。" : ""}</div></div>`; };
     stage.innerHTML = `<div class="pad guide">
       <h2 class="vt">${esc(G.title)}</h2>
       <p class="vsub">${esc(G.source)}</p>
-      <div class="card gfigure">${G.svg || ""}</div>
+      <div class="card gfigure" role="group" aria-label="知識基盤のしくみの図。要素はキーボードでも選べる">${G.svg || ""}</div>
       <div class="card" style="padding:0;overflow:auto;margin-top:12px"><table class="tbl gtbl"><thead><tr><th>図の要素</th><th>この知識基盤での実体</th><th>実例（クリックで詳細）／見る場所</th></tr></thead><tbody>${rowHtml}</tbody></table></div>
-      <div class="card" style="margin-top:12px"><h3 class="ct">３分で確かめる</h3><ol class="gsteps">${steps}</ol></div>
-      <p class="small muted" style="margin-top:8px">この案内は生成器（<code>kb_atlas.py</code> の <code>GUIDE</code>）が埋め込んだもので、実例のノード ID は生成時に記録層で実在を確認している。図の要素・実例・「→」ボタンはすべてこのページ内のビューへ移動する。</p>
+      <div class="card tour" style="margin-top:12px"><h3 class="ct">３分で確かめる <span class="muted small">— ツアー（進み具合はこの端末だけに保存）</span></h3><div id="tsum">${tourSummary()}</div><ol class="gsteps">${STEPS.map(stepHtml).join("")}</ol></div>
+      <p class="small muted" style="margin-top:8px">この案内は生成器（<code>kb_atlas.py</code> の <code>GUIDE</code>）が埋め込んだもので、実例のノード ID は生成時に記録層で実在を確認している。図の要素・実例・「→」ボタンはすべてこのページ内のビューへ移動する。${PUBLIC ? `機械可読の入口: <a href="llms.txt">llms.txt</a>・<a href="kb/kb.jsonld">kb/kb.jsonld</a>・<a href="n/index.html">ノード単体ページ</a>。` : ""}</p>
     </div>`;
     const svg = stage.querySelector(".gfigure svg");
     const rowOf = (key) => stage.querySelector(`#gr-${CSS.escape(key)}`);
     if (svg) svg.querySelectorAll(".hot").forEach(h => {
+      const row = G.rows.find(r => r.key === h.dataset.key);
+      h.setAttribute("tabindex", "0"); h.setAttribute("role", "button"); h.setAttribute("aria-label", (row ? row.fig : h.dataset.key) + " — 対応表の行と実例を開く");
       h.addEventListener("click", e => {
         e.stopPropagation(); const key = h.dataset.key, tr = rowOf(key); if (!tr) return;
         svg.querySelectorAll(".hot").forEach(x => x.classList.toggle("on", x === h));
         stage.querySelectorAll(".gtbl tr.on").forEach(x => x.classList.remove("on")); tr.classList.add("on");
         tr.scrollIntoView({ block: "center", behavior: "smooth" });
-        const row = G.rows.find(r => r.key === key); if (row && row.nodes && row.nodes.length) open(row.nodes[0]);
+        if (row && row.nodes && row.nodes.length) open(row.nodes[0]);
       });
       h.addEventListener("mouseenter", () => { const tr = rowOf(h.dataset.key); if (tr) tr.classList.add("hl"); });
       h.addEventListener("mouseleave", () => { const tr = rowOf(h.dataset.key); if (tr) tr.classList.remove("hl"); });
+      h.addEventListener("focus", () => { const tr = rowOf(h.dataset.key); if (tr) tr.classList.add("hl"); });
+      h.addEventListener("blur", () => { const tr = rowOf(h.dataset.key); if (tr) tr.classList.remove("hl"); });
     });
+    stage.querySelectorAll("input[data-chk]").forEach(cb => cb.addEventListener("change", () => { const i = +cb.dataset.chk; if (cb.checked) done.add(i); else done.delete(i); saveTour(); cb.closest(".tstep").classList.toggle("done", cb.checked); $("#tsum").innerHTML = tourSummary(); }));
+    stage.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); const t = STEPS[+b.dataset.copy].cmd || ""; const ok = () => { b.textContent = "✓ コピーしました"; setTimeout(() => { b.textContent = "⧉ コマンドをコピー"; }, 1200); }; if (navigator.clipboard) navigator.clipboard.writeText(t).then(ok, () => window.prompt("コマンド:", t)); else window.prompt("コマンド:", t); }));
     stage.querySelectorAll(".gtbl tr[data-key]").forEach(tr => {
       tr.addEventListener("mouseenter", () => { if (svg) { const h = svg.querySelector(`.hot[data-key="${tr.dataset.key}"]`); if (h) h.classList.add("on"); } });
       tr.addEventListener("mouseleave", () => { if (svg) { const h = svg.querySelector(`.hot[data-key="${tr.dataset.key}"]`); if (h && !tr.classList.contains("on")) h.classList.remove("on"); } });
@@ -304,15 +347,18 @@
     const vis = VISIBLE; const claims = vis.filter(n => n.type === "Claim" || (n.type === "Hypothesis" && (n.supported_by || []).length));
     const rows = claims.map(c => ({ c, ch: chainOf(c) }));
     const grounded = rows.filter(r => r.ch.xs.length).length, withPass = rows.filter(r => r.ch.pass).length;
-    const Xall = vis.filter(n => n.type === "ExecutionUnit"); const Xoff = Xall.filter(x => (x.env || {}).offline);
-    const k4pass = Xoff.filter(x => (k4Of(x.id) || {}).status === "PASS").length;
+    const Xall = vis.filter(n => n.type === "ExecutionUnit"); const Xoff = Xall.filter(x => (x.env || {}).offline); const Xrun = Xoff.filter(rerunable);
+    const k4pass = Xrun.filter(x => (k4Of(x.id) || {}).status === "PASS").length;
+    const Xpend = Xall.filter(x => (k4Of(x.id) || {}).status === "PENDING").length, Xnone = Xall.filter(x => !k4Of(x.id)).length, Xnb = Xoff.length - Xrun.length;
+    const claimsPending = rows.filter(r => !r.ch.pass && r.ch.xs.length).length;
     const Eall = vis.filter(n => n.type === "Evidence"); let pairs = 0, bidir = 0; Eall.forEach(E => (E.grounded_in || []).forEach(x => { if (!byId.has(x)) return; pairs++; if ((byId.get(x).verifies || []).includes(E.id)) bidir++; }));
     const arts = Eall.flatMap(E => E.artifacts || []); const artsSha = arts.filter(a => a.sha256).length, artsVer = arts.filter(a => a.sha_verified === "verified").length;
     const Pfrozen = vis.filter(n => n.type === "Protocol" && n.frozen).length, hits = vis.filter(n => n.status === "registered-hit").length;
     const order = { "registered-hit": 0, established: 1, supported: 2, promoted: 2, provisional: 3, open: 4, challenged: 5, rejected: 6, "rejected-recorded": 6 };
     rows.sort((a, b) => (b.ch.pass - a.ch.pass) || ((order[a.c.status] ?? 9) - (order[b.c.status] ?? 9)) || (b.c._date || "").localeCompare(a.c._date || ""));
-    const kp = (v, l, s = "") => `<div class="card kpi"><div class="v">${v}</div><div class="l">${l}</div>${s ? `<div class="s">${s}</div>` : ""}</div>`;
+    const kp = (v, l, s = "", def = "") => `<div class="card kpi"${def ? ` title="${esc(def)}"` : ""}><div class="v">${v}</div><div class="l">${l}${def ? ` <span class="def" aria-label="定義">ⓘ</span>` : ""}</div>${s ? `<div class="s">${s}</div>` : ""}</div>`;
     const cloneCmd = PUBLIC && PUBREPO ? `git clone ${PUBREPO}.git && cd ${esc(META.public_repo.split("/")[1])} && python3 rerun.py` : `git clone git@github.com:${esc(META.repo)}.git && cd ${esc(META.repo.split("/")[1])} && python3 knowledge/tools/kb_k4.py`;
+    const rerunBox = RERUN ? (() => { const np = RERUN.results.filter(r => r.status === "PASS").length, nb = RERUN.results.filter(r => r.status === "NOT-BUNDLED").length, nt = RERUN.results.length - nb; return `<div class="small" style="margin-top:8px"><b>CI の最終再実行</b>（<a href="${esc(META.rerun_latest)}">kb/rerun-latest.json</a>、${esc((RERUN.generated_at || "").slice(0, 16).replace("T", " "))} UTC${RERUN.python ? "、Python " + esc(RERUN.python) : ""}${RERUN.commit ? "、commit " + esc(String(RERUN.commit).slice(0, 7)) : ""}）: <b style="color:${np === nt ? "var(--ok, #15803d)" : "var(--bad, #b91c1c)"}">${np}/${nt} PASS</b>${nb ? `、未同梱 ${nb}` : ""} — ${RERUN.results.map(r => `<code title="${esc(r.status)}${r.got ? " got " + esc(r.got) : ""}">${esc(r.id)}</code> ${r.status === "PASS" ? "✓" : r.status === "NOT-BUNDLED" ? "–" : "✗"}`).join(" ")}</div>`; })() : (PUBLIC ? `<div class="small muted" style="margin-top:8px">CI の最終再実行結果（kb/rerun-latest.json）は次回の CI 実行後にここへ出る。</div>` : "");
     stage.innerHTML = `<div class="pad">
       <h2 class="vt">接地 — 主張から再実行可能な証拠へ</h2>
       <p class="vsub">主張を、それを生んだ再実行可能な計算に双方向のリンクで接地させ、推論が常に再実行可能な証拠まで遡れるようにする — この設計を bias-kb がどう実装しているかを、表示中のノードで実測する。</p>
@@ -322,12 +368,13 @@
         <div class="card"><h3 class="ct">P3 実行粒度</h3><div class="small">実行単位は <code>tier</code>（full = 本走・accept = 受入・spot = 抽出照合）で再実行の範囲とコストを限定。offline 単位は 1 コマンドで再実行でき、<code>kb_k4.py</code> が全単位を再走して一致率を記録する（k4）。</div></div>
       </div>
       <div class="grid g4" style="margin-bottom:12px">
-        ${kp(`${claims.length ? Math.round(100 * grounded / claims.length) : 0}%`, "構造接地率（主張 → 証拠 → 実行単位）", `${grounded}/${claims.length} 主張`)}
-        ${kp(`${pairs ? Math.round(100 * bidir / pairs) : 0}%`, "双方向ペア（grounded_in ⇄ verifies）", `${bidir}/${pairs} 組が記録層に両方向あり`)}
-        ${kp(`${k4pass}<span class="muted small"> / ${Xoff.length}</span>`, "offline 実行単位の再実行一致（k4）", `本走（full）${Xall.filter(x => x.tier === "full").length} · 受入/抽出 ${Xall.filter(x => x.tier !== "full").length}`)}
-        ${kp(`${artsVer}<span class="muted small"> / ${artsSha}</span>`, "sha256 実照合済みの成果物", `凍結登録 ${Pfrozen} · 登録的中 ${hits} · 再実行 PASS を持つ主張 ${withPass}`)}
+        ${kp(`${claims.length ? Math.round(100 * grounded / claims.length) : 0}%`, "構造接地率", `${grounded}/${claims.length} 主張が 証拠 → 実行単位 の鎖を持つ`, "定義: 主張 supported_by → 証拠 grounded_in → 実行単位 のリンクが記録層で閉じている主張の割合。鎖が「書かれている」ことだけを見る指標で、再実行して一致したかどうかは含まない。")}
+        ${kp(`${claims.length ? Math.round(100 * withPass / claims.length) : 0}%`, "再実行一致（k4 実測）", `${withPass}/${claims.length} 主張が 再実行 PASS の単位まで辿れる · 非公開・未再実行のみ ${claimsPending}`, "定義: 鎖の先の実行単位に、再実行して記録の期待値と一致した記録（k4 PASS）が 1 本以上ある主張の割合。構造接地率とは別の量で、こちらが「根拠まで実際に辿れた」実測値。PENDING（非公開・未再実行）は一致にも不一致にも数えない。")}
+        ${kp(`${pairs ? Math.round(100 * bidir / pairs) : 0}%`, "双方向ペア（grounded_in ⇄ verifies）", `${bidir}/${pairs} 組が記録層に両方向あり`, "定義: 証拠 → 実行単位（grounded_in）の各リンクについて、実行単位 → 証拠（verifies）が記録層にも書かれている割合。CI の双方向律が照合する。")}
+        ${kp(`${k4pass}<span class="muted small"> / ${Xrun.length}</span>`, "同梱 offline 単位の再実行一致", `非公開・未再実行（mdx 本走）${Xpend} · 記録なし ${Xnone}${Xnb ? ` · 入力未同梱 ${Xnb}` : ""} · sha 実照合 ${artsVer}/${artsSha} · 凍結登録 ${Pfrozen} · 登録的中 ${hits}`, "定義: この束に凍結入力がそろい 1 コマンドで再実行できる実行単位のうち、k4（記録層側の一斉再実行）で PASS のもの。「非公開・未再実行」= mdx 上の本走で、この束からは再実行できず、記録層側の再実行一致もまだ確定していない単位。正直に別枠で数える。")}
       </div>
-      <div class="card" style="margin-bottom:12px"><h3 class="ct">再実行のしかた</h3><div class="small">各実行単位の <code>entry</code> をリポジトリ直下で実行し、<code>expected</code> と比べる。まとめて走らせるには:</div><pre class="raw" style="max-height:none">${esc(cloneCmd)}</pre><div class="small muted">実行単位カードの「再実行」欄に、個別のコマンド・入力の sha256・期待値・k4 の記録（got / want）を示す。</div></div>
+      ${Xpend || Xnb ? `<div class="card pend" style="margin-bottom:12px"><h3 class="ct">非公開・未再実行の単位 — ${Xpend + Xnb}</h3><div class="small">${Xpend ? `<b>${Xpend}</b> 単位は mdx 計算機上の本走（full tier: 全数 census など）で、この束には凍結入力を同梱していない。記録・sha256・登録帯は各ノードにあるが、再実行一致（k4）はまだ確定していない（PENDING）。` : ""}${Xnb ? ` <b>${Xnb}</b> 単位は記録層では offline だが、凍結入力が大きすぎる／annex にあるため同梱できず、<code>rerun.py</code> は NOT-BUNDLED として集計から外す。` : ""} これらを「一致」に数えていない点が、上の 2 つの率の差になる。</div><div style="margin-top:6px">${Xall.filter(x => (k4Of(x.id) || {}).status === "PENDING" || ((x.env || {}).offline && !rerunable(x))).map(x => `${chip(x.id)} <span class="badge" style="background:${css("--muted")}">${esc(x.tier || "?")}</span>`).join(" ")}</div></div>` : ""}
+      <div class="card" style="margin-bottom:12px"><h3 class="ct">再実行のしかた</h3><div class="small">各実行単位の <code>entry</code> をリポジトリ直下で実行し、<code>expected</code> と比べる。まとめて走らせるには:</div><pre class="raw" style="max-height:none">${esc(cloneCmd)}</pre><div class="small muted">実行単位カードの「再実行」欄に、個別のコマンド・入力の sha256・期待値・k4 の記録（got / want）を示す。${BINDER ? ` 手元に Python が無ければ <a href="${BINDER}" target="_blank" rel="noopener">Binder</a>（ブラウザ内 JupyterLab）か <a href="${CODESPACES}" target="_blank" rel="noopener">GitHub Codespaces</a> でリポジトリを開いて同じコマンドを実行できる。` : ""}</div>${rerunBox}</div>
       <div class="card" style="padding:0;overflow:auto"><table class="tbl"><thead><tr><th>主張</th><th>状態</th><th>証拠</th><th>実行単位（tier・再実行）</th><th>成果物 sha</th><th>登録</th><th></th></tr></thead><tbody>
       ${rows.map(({ c, ch }) => `<tr data-node="${c.id}" class="${state.node === c.id ? "sel" : ""}"><td><code>${esc(c.id)}</code><div class="small">${esc(short(c.label, 70))}</div></td><td>${badgeStatus(c)}</td><td>${ch.evs.map(e => chip(e)).join("") || "—"}</td><td>${ch.xs.map(x => `<div style="margin:2px 0">${chip(x.id)} <span class="badge" style="background:${css("--muted")}">${esc(x.tier || "?")}</span> ${k4Badge(x.id)}</div>`).join("") || '<span class="muted">—</span>'}</td><td class="nowrap">${ch.sha ? `${ch.verified}/${ch.sha} 実照合` : "—"}</td><td>${ch.ps.map(p => chip(p)).join("") || "—"}</td><td><button class="iconbtn small" data-trace="${c.id}">辿る</button></td></tr>`).join("")}</tbody></table></div></div>`;
     stage.addEventListener("click", e => { const b = e.target.closest("[data-trace]"); if (b) { e.stopPropagation(); open(b.dataset.trace); } });
@@ -496,21 +543,24 @@
       <div class="toolbar"><span class="hint">色:</span><span class="seg" id="gcol">${[["line", "研究線"], ["type", "型"], ["status", "状態"]].map(([k, l]) => `<button data-gc="${k}" class="${state.graphColor === k ? "on" : ""}">${l}</button>`).join("")}</span>
         <span class="hint">近傍の深さ:</span><span class="seg" id="gdep">${[1, 2, 3].map(k => `<button data-gd="${k}" class="${state.graphDepth === k ? "on" : ""}">${k}</button>`).join("")}</span>
         ${state.graphFocus ? `<span class="chip" id="gclear">中心: <code>${esc(state.graphFocus)}</code> ✕ 解除</span>` : ""}
+        ${STUBS.length ? `<label class="small" style="margin-left:10px;cursor:pointer" title="記録層に存在するが公開抜粋に含まれない隣接ノード（型だけ公開）を点線の円で示す"><input type="checkbox" id="gstubs" ${state.showStubs ? "checked" : ""}> 非公開スタブを表示（${fmtN(STUBS.length)}）</label>` : ""}
         <span class="right legend" id="glegend"></span></div>
       <div class="graphwrap card" style="padding:0"><svg id="gsvg"></svg><div class="ov" id="gov"></div></div></div>`;
     $("#gcol").onclick = e => { const b = e.target.closest("[data-gc]"); if (b) { state.graphColor = b.dataset.gc; render(); } };
     $("#gdep").onclick = e => { const b = e.target.closest("[data-gd]"); if (b) { state.graphDepth = +b.dataset.gd; render(); } };
     const gc = $("#gclear"); if (gc) gc.onclick = () => { state.graphFocus = null; render(); };
-    // subgraph
+    const gs = $("#gstubs"); if (gs) gs.onchange = () => { state.showStubs = gs.checked; render(); };
+    // subgraph（スタブは表示を選んだときだけ、表示中ノードに隣接するものを加える）
     let nodes = vis, edgeList = [];
+    if (state.showStubs && STUBS.length) { const extra = STUBS.filter(s => s._out.some(e => visSet.has(e.to)) || s._in.some(e => visSet.has(e.from))); nodes = vis.concat(extra); extra.forEach(s => visSet.add(s.id)); }
     const adj = new Map();
-    for (const n of vis) for (const e of n._out) if (visSet.has(e.to)) { edgeList.push({ source: n.id, target: e.to, rel: e.rel }); (adj.get(n.id) || adj.set(n.id, new Set()).get(n.id)).add(e.to); (adj.get(e.to) || adj.set(e.to, new Set()).get(e.to)).add(n.id); }
+    for (const n of nodes) for (const e of n._out) if (visSet.has(e.to)) { edgeList.push({ source: n.id, target: e.to, rel: e.rel }); (adj.get(n.id) || adj.set(n.id, new Set()).get(n.id)).add(e.to); (adj.get(e.to) || adj.set(e.to, new Set()).get(e.to)).add(n.id); }
     if (state.graphFocus && byId.has(state.graphFocus)) {
       const keep = new Set([state.graphFocus]); let frontier = [state.graphFocus];
-      for (let d = 0; d < state.graphDepth; d++) { const nf = []; for (const id of frontier) for (const m of (byId.get(id)._out.map(e => e.to).concat(byId.get(id)._in.map(e => e.from)))) if (!keep.has(m) && byId.has(m)) { keep.add(m); nf.push(m); } frontier = nf; if (keep.size > 400) break; }
-      nodes = NODES.filter(n => keep.has(n.id)); const ks = new Set(nodes.map(n => n.id)); edgeList = []; for (const n of nodes) for (const e of n._out) if (ks.has(e.to)) edgeList.push({ source: n.id, target: e.to, rel: e.rel });
+      for (let d = 0; d < state.graphDepth; d++) { const nf = []; for (const id of frontier) { if (isStub(id)) continue; for (const m of (byId.get(id)._out.map(e => e.to).concat(byId.get(id)._in.map(e => e.from)))) if (!keep.has(m) && byId.has(m) && (state.showStubs || !isStub(m))) { keep.add(m); nf.push(m); } } frontier = nf; if (keep.size > 400) break; }
+      nodes = DATA.nodes.filter(n => keep.has(n.id) && (state.showStubs || !n._stub)); const ks = new Set(nodes.map(n => n.id)); edgeList = []; for (const n of nodes) for (const e of n._out) if (ks.has(e.to)) edgeList.push({ source: n.id, target: e.to, rel: e.rel });
     }
-    const colorOf = n => state.graphColor === "line" ? lineColor(n._line) : state.graphColor === "type" ? typeColor(n.type) : (n.status ? statusColor(n.status) : css("--s-none"));
+    const colorOf = n => n._stub ? "none" : state.graphColor === "line" ? lineColor(n._line) : state.graphColor === "type" ? typeColor(n.type) : (n.status ? statusColor(n.status) : css("--s-none"));
     const lg = $("#glegend"); lg.innerHTML = state.graphColor === "line" ? LINES.map(l => `<span class="it"><span class="sw" style="background:${lineColor(l.id)}"></span>${esc(l.short)}</span>`).join("") : state.graphColor === "type" ? TYPES.map(t => `<span class="it"><span class="sw" style="background:${typeColor(t)}"></span>${TLET[t]}</span>`).join("") : STATUSES.map(s => `<span class="it"><span class="sw" style="background:${statusColor(s)}"></span>${SJA[s]}</span>`).join("");
     $("#gov").innerHTML = `<b>${fmtN(nodes.length)}</b> ノード · <b>${fmtN(edgeList.length)}</b> リンク${state.graphFocus ? ` · 中心 <code>${esc(state.graphFocus)}</code>` : ""}`;
     const host = $("#gsvg"); const W = host.clientWidth || 1000, H = Math.max(500, window.innerHeight - 190);
@@ -523,7 +573,7 @@
     for (let i = 0, k = nodes.length > 300 ? 220 : 300; i < k; i++) sim.tick();
     const link = root.append("g").attr("stroke", css("--line")).attr("stroke-opacity", 0.7).selectAll("line").data(links).join("line").attr("stroke-width", l => l.rel === "related" ? 0.6 : 1.1).attr("stroke-dasharray", l => l.rel === "related" ? "2,3" : null)
       .attr("x1", l => l.source.x).attr("y1", l => l.source.y).attr("x2", l => l.target.x).attr("y2", l => l.target.y);
-    const node = root.append("g").selectAll("circle").data(simNodes).join("circle").attr("data-nid", d => d.id).attr("data-stroke", "#fff").attr("data-sw", 0.8).attr("r", d => d.r).attr("cx", d => d.x).attr("cy", d => d.y).attr("fill", d => colorOf(d.n)).attr("stroke", d => d.id === state.node ? css("--ink") : "#fff").attr("stroke-width", d => d.id === state.node ? 2.5 : 0.8).style("cursor", "pointer");
+    const node = root.append("g").selectAll("circle").data(simNodes).join("circle").attr("data-nid", d => d.id).attr("data-stroke", d => d.n._stub ? css("--muted") : "#fff").attr("data-sw", 0.8).attr("r", d => d.r).attr("cx", d => d.x).attr("cy", d => d.y).attr("fill", d => colorOf(d.n)).attr("stroke", d => d.id === state.node ? css("--ink") : d.n._stub ? css("--muted") : "#fff").attr("stroke-width", d => d.id === state.node ? 2.5 : 0.8).attr("stroke-dasharray", d => d.n._stub ? "2,2" : null).style("cursor", "pointer");
     const label = root.append("g").selectAll("text").data(simNodes.filter(d => d.r > 8 || d.id === state.node || d.id === state.graphFocus)).join("text").text(d => d.id).attr("x", d => d.x + d.r + 2).attr("y", d => d.y + 3).style("font-size", "10px").style("fill", css("--muted")).style("pointer-events", "none");
     node.on("mouseover", (e, d) => { showTT(nodeTT(d.n), e); const nb = adj.get(d.id) || new Set(); node.attr("opacity", o => o === d || nb.has(o.id) ? 1 : 0.15); link.attr("stroke-opacity", l => l.source === d || l.target === d ? 1 : 0.08).attr("stroke", l => l.source === d || l.target === d ? css("--accent") : css("--line")); })
       .on("mousemove", moveTT).on("mouseout", () => { hideTT(); node.attr("opacity", 1); link.attr("stroke-opacity", 0.7).attr("stroke", css("--line")); })
@@ -578,6 +628,18 @@
     if (!state.node) { host.innerHTML = `<div class="empty"><b>詳細パネル</b>俯瞰の葉・カード・チップ・検索結果をクリックすると、ここにノードの全内容・根拠の鎖・近傍が出ます。</div>`; return; }
     const n = byId.get(state.node); const prov = n.prov || {};
     const canBack = state.trailPos > 0, canFwd = state.trailPos < state.trail.length - 1;
+    if (n._stub) {  // 非公開スタブ: 型と隣接だけを示す（実 ID・本文は出さない）
+      const nb = [...n._out.map(e => ({ id: e.to, rel: e.rel, dir: "out" })), ...n._in.map(e => ({ id: e.from, rel: e.rel, dir: "in" }))];
+      host.innerHTML = `<div class="top"><div class="nav"><button class="iconbtn" id="iBack" ${canBack ? "" : "disabled"} title="戻る">←</button><button class="iconbtn" id="iFwd" ${canFwd ? "" : "disabled"} title="進む">→</button><span class="sp"></span><button class="iconbtn" id="iClose" title="閉じる">✕</button></div>
+        <div class="ident">${badgeType(n)}<span class="badge" style="background:${css("--muted")}">非公開</span><code>${esc(n.id)}</code></div><div class="title">${esc(n.label)}</div></div>
+        <div class="bd"><div class="stmt">このノードは記録層（private リポジトリ）に存在するが、公開抜粋の選択規則に入っていない。<b>型だけを公開</b>し、本文・実 ID は出さない。ID の <code>~</code> 以降は実 ID の sha256 先頭 10 桁で、記録層を持つ側は同じ計算で照合できる。<br><br>スタブを残す理由: 公開ノードから見て「証拠・主張が<b>ある</b>が非公開」なのか「<b>無い</b>」のかを区別できるようにするため。</div>
+        <h5>公開ノードとの関係 <span class="muted">${nb.length}</span></h5>${nb.map(m => `<div style="margin:3px 0"><span class="hint">${m.dir === "out" ? "→" : "←"} ${esc(REL_JA[m.rel] || m.rel)}</span> ${chip(m.id)}</div>`).join("") || '<div class="hint">—</div>'}
+        <details class="sec" style="margin-top:12px"><summary>生の JSON<span class="n"></span></summary><pre class="raw">${esc(JSON.stringify({ id: n.id, type: n.type, stub: true }, null, 1))}</pre></details></div>`;
+      $("#iBack").onclick = () => { if (canBack) { state.trailPos--; state.node = state.trail[state.trailPos]; render(); } };
+      $("#iFwd").onclick = () => { if (canFwd) { state.trailPos++; state.node = state.trail[state.trailPos]; render(); } };
+      $("#iClose").onclick = () => { state.node = null; state.inspOpen = false; render(); };
+      host.parentElement.scrollTop = 0; return;
+    }
     const outG = d3.groups(n._out, e => e.rel), inG = d3.groups(n._in, e => e.rel);
     const linksHtml = (groups, dir) => groups.length ? groups.map(([rel, es]) => `<div class="grp"><div class="rel">${dir === "out" ? "→" : "←"} ${esc(REL_JA[rel] || rel)} <code>${esc(rel)}</code> <span class="muted">${es.length}</span></div>${es.map(e => { const other = dir === "out" ? e.to : e.from; const rec = reciprocal(n.id, other); return chip(other, rec ? `<span title="記録層に逆向きのリンクもある（双方向）" style="color:var(--accent);font-weight:700">⇄</span>` : ""); }).join("")}</div>`).join("") : `<div class="hint">—</div>`;
     const fields = [];
@@ -607,8 +669,8 @@
       const r = k4Of(n.id); const off = (n.env || {}).offline;
       const cmd = `${PUBLIC && PUBREPO ? `git clone ${PUBREPO}.git && cd ${META.public_repo.split("/")[1]}\n` : `cd ${META.repo.split("/")[1]}   # ${META.repo}\n`}${n.entry || ""}`;
       reexec = `<h5>再実行 — この単位を走らせて期待値と比べる</h5><div class="reexec">
-        <div class="row2"><span class="badge" style="background:${css("--muted")}">tier ${esc(n.tier || "?")}</span> ${off ? `<span class="badge" style="background:${statusColor("established")}">offline: 同梱データだけで再実行可</span>` : `<span class="badge" style="background:${statusColor("provisional")}">本走系（mdx／大規模データ）</span>`} ${k4Badge(n.id)}</div>
-        <div class="small muted" style="margin:6px 0 2px">コマンド（リポジトリ直下で）</div><pre class="raw cmd" id="cmdbox">${esc(cmd)}</pre><button class="iconbtn small" id="copyCmd">⧉ コマンドをコピー</button>
+        <div class="row2"><span class="badge" style="background:${css("--muted")}">tier ${esc(n.tier || "?")}</span> ${off ? (rerunable(n) ? `<span class="badge" style="background:${statusColor("established")}">offline: 同梱データだけで再実行可</span>` : `<span class="badge" style="background:${statusColor("provisional")}" title="${esc((n._missing_inputs || []).join(", "))}">offline だが凍結入力は未同梱（大きすぎる／annex）— この束からは再実行不可</span>`) : `<span class="badge" style="background:${statusColor("provisional")}">本走系（mdx／大規模データ）— 非公開・未再実行</span>`} ${k4Badge(n.id)}</div>
+        <div class="small muted" style="margin:6px 0 2px">コマンド（リポジトリ直下で）</div><pre class="raw cmd" id="cmdbox">${esc(cmd)}</pre><button class="iconbtn small" id="copyCmd">⧉ コマンドをコピー</button>${PUBLIC && BINDER && rerunable(n) ? ` <a class="iconbtn small" href="${BINDER}" target="_blank" rel="noopener" title="ブラウザ内の JupyterLab でリポジトリを開く">Binder</a> <a class="iconbtn small" href="${CODESPACES}" target="_blank" rel="noopener">Codespaces</a>` : ""}
         ${n.inputs ? `<div class="small muted" style="margin:8px 0 2px">入力（凍結 sha256）</div>${(Array.isArray(n.inputs) ? n.inputs : [n.inputs]).map(x => typeof x === "string" ? `<div class="inp"><code>${esc(x)}</code></div>` : `<div class="inp">${repoLink(x.ref || x.path || "")}<div class="sha">${x.sha256 ? `<code>${esc(x.sha256)}</code> <span class="muted">(${esc(x.sha_kind || "")})</span>` : '<span class="muted">sha 記録なし</span>'}${x.sha_verified ? ` <span class="badge" style="background:${x.sha_verified === "verified" ? statusColor("established") : statusColor("provisional")}">${esc(x.sha_verified)}</span>` : ""}</div></div>`).join("")}` : ""}
         ${n.expected ? `<div class="small muted" style="margin:8px 0 2px">期待値（expected）</div><div class="vals"><table>${(Array.isArray(n.expected) ? n.expected : [n.expected]).map(x => `<tr><td>${esc(x.name || "")}</td><td><code>${esc(typeof x.value === "object" ? JSON.stringify(x.value) : x.value)}</code>${x.tolerance ? ` <span class="muted">許容: ${esc(x.tolerance)}</span>` : ""}</td></tr>`).join("")}</table></div>` : ""}
         ${r ? `<div class="small muted" style="margin:8px 0 2px">k4 再実行の記録（knowledge/index/k4_results.md）</div><div class="vals"><table><tr><td>status</td><td><b>${esc(r.status)}</b></td></tr>${r.got ? `<tr><td>got</td><td><code>${esc(r.got)}</code></td></tr><tr><td>want</td><td><code>${esc(r.want)}</code></td></tr>` : ""}${r.note ? `<tr><td>note</td><td>${esc(r.note)}</td></tr>` : ""}</table></div>` : ""}
@@ -636,7 +698,7 @@
       ${fields.length ? `<h5>フィールド</h5><div class="kv">${fields.join("")}</div>` : ""}
       <div class="links"><h5>出るリンク <span class="muted">${n._out.length}</span></h5>${linksHtml(outG, "out")}<h5>入るリンク（逆リンク） <span class="muted">${n._in.length}</span></h5>${linksHtml(inG, "in")}</div>
       ${arts ? `<h5>成果物（artifacts）</h5>${arts}` : ""}
-      <h5>来歴（prov）</h5><div class="kv"><div class="k">主張者</div><div class="v">${esc(prov.asserted_by || "")}</div><div class="k">受入</div><div class="v">${esc(prov.accepted_by || "—")}</div><div class="k">日付</div><div class="v">${esc(prov.date || "")}</div>${statu ? `<div class="k">STATU</div><div class="v">${statu}</div>` : ""}${prs ? `<div class="k">PR</div><div class="v">${prs}</div>` : ""}<div class="k">可視性</div><div class="v">${esc(prov.visibility || "")}</div><div class="k">記録</div><div class="v">${PUBLIC ? `<code>${esc(n._src)}</code> <span class="muted small">（非公開リポジトリ内。抜粋は kb/nodes.json に同梱）</span>` : `<a href="${REPO}/blob/main/${esc(n._src)}" target="_blank" rel="noopener"><code>${esc(n._src)}</code></a>`}</div></div>
+      <h5>来歴（prov）</h5><div class="kv"><div class="k">主張者</div><div class="v">${esc(prov.asserted_by || "")}</div><div class="k">受入</div><div class="v">${esc(prov.accepted_by || "—")}</div><div class="k">日付</div><div class="v">${esc(prov.date || "")}</div>${statu ? `<div class="k">STATU</div><div class="v">${statu}</div>` : ""}${prs ? `<div class="k">PR</div><div class="v">${prs}</div>` : ""}<div class="k">可視性</div><div class="v">${esc(prov.visibility || "")}</div><div class="k">記録</div><div class="v">${PUBLIC ? `<code>${esc(n._src)}</code> <span class="muted small">（非公開リポジトリ内。抜粋は kb/nodes.json に同梱）</span>` : `<a href="${REPO}/blob/main/${esc(n._src)}" target="_blank" rel="noopener"><code>${esc(n._src)}</code></a>`}</div>${PUBLIC ? `<div class="k">単体ページ</div><div class="v"><a href="n/${esc(n.id)}.html" target="_blank" rel="noopener">n/${esc(n.id)}.html</a> · <a href="n/${esc(n.id)}.json" target="_blank" rel="noopener">JSON-LD</a>${SITE ? ` · <span class="muted small">引用用 URL:</span> <code class="small">${esc(SITE)}/n/${esc(n.id)}.html</code>` : ""}</div>` : ""}</div>
       <details class="sec" style="margin-top:12px"><summary>生の JSON<span class="n"></span></summary><pre class="raw">${esc(JSON.stringify(stripDerived(n), null, 1))}</pre></details>
     </div>`;
     const cc = $("#copyCmd"); if (cc) cc.onclick = () => { const t = $("#cmdbox").textContent; const done = () => { cc.textContent = "✓ コピーしました"; setTimeout(() => { cc.textContent = "⧉ コマンドをコピー"; }, 1200); }; if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, () => window.prompt("コマンド:", t)); else window.prompt("コマンド:", t); };
@@ -663,7 +725,7 @@
     show.forEach((m, i) => { const a = -Math.PI / 2 + (2 * Math.PI * i) / show.length; m.x = cx + R * Math.cos(a); m.y = cy + R * Math.sin(a); m.a = a; });
     svg.append("g").selectAll("line").data(show).join("line").attr("x1", cx).attr("y1", cy).attr("x2", d => d.x).attr("y2", d => d.y).attr("stroke", d => d.dir === "out" ? css("--accent") : css("--line")).attr("stroke-width", 1).attr("stroke-dasharray", d => d.rel === "related" ? "2,3" : null).attr("opacity", .8);
     const g = svg.append("g").selectAll("g").data(show).join("g").attr("transform", d => `translate(${d.x},${d.y})`).style("cursor", "pointer").on("click", (e, d) => open(d.id)).on("mouseover", (e, d) => showTT(nodeTT(byId.get(d.id)) + `<br><span style="opacity:.8">${d.dir === "out" ? "→" : "←"} ${esc(REL_JA[d.rel] || d.rel)}</span>`, e)).on("mousemove", moveTT).on("mouseout", hideTT);
-    g.append("circle").attr("r", 6).attr("fill", d => typeColor(byId.get(d.id).type)).attr("stroke", "#fff");
+    g.append("circle").attr("r", 6).attr("fill", d => byId.get(d.id)._stub ? "none" : typeColor(byId.get(d.id).type)).attr("stroke", d => byId.get(d.id)._stub ? typeColor(byId.get(d.id).type) : "#fff").attr("stroke-dasharray", d => byId.get(d.id)._stub ? "2,2" : null);
     if (show.length <= 24) g.append("text").text(d => short(d.id, 22)).attr("x", d => Math.cos(d.a) >= 0 ? 9 : -9).attr("y", 3).attr("text-anchor", d => Math.cos(d.a) >= 0 ? "start" : "end").style("font-size", "9.5px").style("fill", css("--muted")).style("font-family", css("--mono"));
     else svg.append("text").attr("x", 8).attr("y", H - 8).style("font-size", "10px").style("fill", css("--muted")).text(`${show.length} 件（ホバーで名前）`);
     svg.append("circle").attr("cx", cx).attr("cy", cy).attr("r", 11).attr("fill", typeColor(n.type)).attr("stroke", css("--ink")).attr("stroke-width", 1.5);
@@ -698,7 +760,7 @@
     const path = d3.linkHorizontal().x(d => d[0]).y(d => d[1]);
     svg.append("g").selectAll("path").data(edges).join("path").attr("d", e => { const a = e[0], b = e[1]; const left = a.x < b.x; return path({ source: [left ? a.x + a.w : a.x, a.y + a.h / 2], target: [left ? b.x : b.x + b.w, b.y + b.h / 2] }); }).attr("fill", "none").attr("stroke", css("--line")).attr("stroke-width", 1.2).attr("stroke-dasharray", e => e[2] === "related" ? "2,3" : null);
     const g = svg.append("g").selectAll("g").data([...pos].map(([id, p]) => ({ id, p, n: byId.get(id) }))).join("g").attr("transform", d => `translate(${d.p.x},${d.p.y})`).style("cursor", "pointer").on("click", (e, d) => open(d.id)).on("mouseover", (e, d) => showTT(nodeTT(d.n), e)).on("mousemove", moveTT).on("mouseout", hideTT);
-    g.append("rect").attr("width", d => d.p.w).attr("height", d => d.p.h).attr("rx", 6).attr("fill", css("--panel")).attr("stroke", d => d.id === n.id ? css("--ink") : (d.n.status ? statusColor(d.n.status) : typeColor(d.n.type))).attr("stroke-width", d => d.id === n.id ? 2 : 1.2);
+    g.append("rect").attr("width", d => d.p.w).attr("height", d => d.p.h).attr("rx", 6).attr("fill", css("--panel")).attr("stroke", d => d.id === n.id ? css("--ink") : d.n._stub ? css("--muted") : (d.n.status ? statusColor(d.n.status) : typeColor(d.n.type))).attr("stroke-width", d => d.id === n.id ? 2 : 1.2).attr("stroke-dasharray", d => d.n._stub ? "3,3" : null);
     g.append("rect").attr("width", 5).attr("height", d => d.p.h).attr("rx", 2).attr("fill", d => typeColor(d.n.type));
     const maxc = Math.floor((colW - 22) / 6.2);
     g.append("text").attr("x", 10).attr("y", 14).style("font-size", "9.5px").style("font-family", css("--mono")).style("fill", css("--ink")).text(d => short(d.id, maxc));
