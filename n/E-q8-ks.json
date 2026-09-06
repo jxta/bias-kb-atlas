@@ -1,0 +1,103 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "E-q8-ks",
+ "type": "Evidence",
+ "label": "Q8 対角則 / D4 対照 0/970",
+ "values": {
+  "q8_master": 50257,
+  "q8_analyzed": 40125,
+  "d4_control": 970,
+  "d4_positive": 0
+ },
+ "artifacts": [
+  {
+   "path": "subprojects/hurwitz_ea/frozen/d4_wp1.json",
+   "role": "D4 対照（凍結）",
+   "location": "repo",
+   "sha256": "81c5175b3dc4d4ffea9e4a7f25ef32ef0be5e7c291720c2e0fa025e47f4137e7",
+   "sha_kind": "content"
+  },
+  {
+   "path": "subprojects/q8/data_node1/lmfdb_8T5_extended_v3.csv",
+   "role": "Q8 T-C（annex, recorded-only）",
+   "location": "annex",
+   "sha256": "a30c92c165c9c356f426894e2cd7b79b6ef336d01c510c7192b334e50e4f343a",
+   "sha_kind": "raw",
+   "sha_verified": "verified"
+  }
+ ],
+ "grounded_in": [
+  "X-q8-ks"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-09",
+  "visibility": "bias-shared",
+  "statu": [
+   "0042",
+   "0043",
+   "0082"
+  ],
+  "pr": [
+   "#109"
+  ]
+ },
+ "measures": {
+  "quantity": "Q-nonabelian-commutator",
+  "on": "O-nf-q8-8t5"
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=E-q8-ks",
+  "page": "E-q8-ks.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-08-09",
+  "links_out": [
+   {
+    "rel": "grounded_in",
+    "to": "X-q8-ks",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "supported_by",
+    "from": "C-nonabelian-dictionary",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "taught_by",
+    "from": "L-monitor-predicate-fragile",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "taught_by",
+    "from": "L-parallel-timeout-headroom",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "verifies",
+    "from": "X-q8-ks",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "verifies",
+    "from": "X-q8-ks-twosided",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "L-parallel-timeout-headroom",
+ "type": "Lesson",
+ "label": "並列度は timeout 余裕で判断",
+ "statement": "O-13/O-19 競合で 36 IQF が timeout。原因はスループットでなく timeout 余裕不足。並列可否は throughput でなく各ジョブの timeout headroom で判断し、24h timeout 再走で回収。",
+ "taught_by": [
+  "E-q8-ks"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-13",
+  "visibility": "bias-shared",
+  "statu": [
+   "0059"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=L-parallel-timeout-headroom",
+  "page": "L-parallel-timeout-headroom.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-08-13",
+  "links_out": [
+   {
+    "rel": "taught_by",
+    "to": "E-q8-ks",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

@@ -1,0 +1,39 @@
+# bias-kb Atlas — public excerpt (claims grounded in re-executable evidence)
+
+> A machine-readable excerpt of a research knowledge base (bias-kb) in which every claim is linked, in both directions, to the evidence and the re-executable computation that produced it. 100 nodes selected by rule from a record layer of 719 nodes (private repository `jxta/ai4math-lab`, ref 1887f14); generated 2026-09-04T01:21:13Z. Nothing here is hand-picked; the selection rule and the generator live in `knowledge/tools/kb_atlas.py`.
+
+## Start here
+
+- Site (interactive Atlas, hash routing `#v=<view>&node=<id>`): ./
+- One node, no JavaScript: ./n/<id>.html — machine-readable twin: ./n/<id>.json (JSON-LD, `@context` = ./kb/context.jsonld)
+- Whole excerpt as JSON-LD: ./kb/kb.jsonld (context embedded; `@graph` = raw record-layer nodes + redacted stubs)
+- Whole excerpt with derived fields (`_line`, `_in`, `_out`, `_deg`, `_stub`): ./kb/nodes.json (what the Atlas renders)
+- Backlinks with `bidir` flags (is the inverse link also written in the record layer?): ./kb/backlinks.json
+- Node schema (JSON Schema 2020-12): ./kb/schema.json · JSON-LD context: ./kb/context.jsonld
+- Re-execution results from CI (latest run, written by `.github/workflows/rerun.yml`): ./kb/rerun-latest.json
+- Node index: ./n/index.html · sitemap: ./sitemap.txt
+
+## How to walk the graph
+
+Node types (letter = id prefix): O Object, Q Quantity, E Evidence, C Claim, H Hypothesis, P Protocol (pre-registration, frozen before the run), X ExecutionUnit (code + data sha256 + env + provenance), L Lesson.
+Link fields: `about` `quantities` `supported_by` `refuted_by` `registered_by` `derives_from` `supersedes` `superseded_by` `promoted_to` `related` `grounded_in` `supports` `refutes` `verifies` `taught_by` `constrains`.
+The grounding chain: C.supported_by → E.grounded_in → X (with X.verifies → E written explicitly, so the pair is bidirectional in the record layer). Claims that were refuted keep `status: rejected` and point to the counter-evidence via `refuted_by`; nothing is deleted.
+Redacted neighbours: ids of the form `<T>-~<10 hex>` (e.g. `E-~1a2b3c4d5e`, `"stub": true`) are nodes that exist in the record layer but are not in this excerpt; only the type is public. They distinguish "evidence exists but is private" from "no evidence". The hash is sha256 of the real id (first 10 hex), so the holder of the record layer can match them.
+Provenance: `prov.asserted_by` (who wrote the node), `prov.accepted_by` (who reviewed), `prov.date`, `prov.pr`, `prov.statu`, `prov.visibility`.
+
+## Re-execute (offline units bundled here: 0)
+
+    git clone https://github.com/jxta/bias-kb-atlas.git && cd bias-kb-atlas
+    pip install -r requirements.txt && python3 rerun.py          # checks input sha256, runs each `entry`, compares with `expected`
+    python3 rerun.py X-census-d17-spot                             # one unit
+
+Units: . Declared offline but not re-executable from this bundle because a frozen input is too large to ship or is annexed (rerun.py reports them as NOT-BUNDLED, not as failures): X-a1-mobius, X-boundary-closedform, X-census-d11-spot, X-census-d13-spot, X-census-d15-spot, X-census-d17-spot, X-q8-ks. Full-tier units (large runs on the mdx supercomputer) are not bundled; their records, sha256 and registration bands are in the node JSON, and their k4 re-run status is `PENDING` = not re-executable from this bundle (private, not yet re-run here).
+
+## Counts
+
+Claim 16, Evidence 15, ExecutionUnit 20, Hypothesis 3, Lesson 11, Object 17, Protocol 4, Quantity 14; claims 16 (status: established 9, provisional 1, registered-hit 5, rejected 1); redacted stubs 0.
+
+## Optional
+
+- Human guide (Japanese) with the figure of the mechanism: ./#v=guide · README: https://github.com/jxta/bias-kb-atlas#readme
+- Interpretation rule for `k4` results: PASS = re-executed and matched the recorded expected value; PENDING = not re-executed in this environment; MISMATCH/ERR = please open an issue.

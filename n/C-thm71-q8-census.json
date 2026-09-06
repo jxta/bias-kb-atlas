@@ -1,0 +1,87 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "C-thm71-q8-census",
+ "type": "Claim",
+ "label": "Thm7.1 Q8 census 全23 PASS",
+ "statement": "全23で ⟨a_p²−2⟩∈[−1.0071,−1.0005]≈ν=−1。W=+1⟺m_ρ=0 全成立。",
+ "status": "established",
+ "supported_by": [
+  "E-q8-note"
+ ],
+ "counterpoints": "",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-06-10",
+  "visibility": "bias-shared"
+ },
+ "about": [
+  "O-q8-8t5-census"
+ ],
+ "quantities": [
+  "Q-avg-ap2-minus2"
+ ],
+ "related": [],
+ "_atlas": {
+  "url": "#v=grounding&node=C-thm71-q8-census",
+  "page": "C-thm71-q8-census.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-06-10",
+  "links_out": [
+   {
+    "rel": "about",
+    "to": "O-q8-8t5-census",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "to": "Q-avg-ap2-minus2",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-q8-note",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "related",
+    "from": "C-nonabelian-dictionary",
+    "bidir": true,
+    "stub": false
+   },
+   {
+    "rel": "taught_by",
+    "from": "L-population-definition",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": {
+   "evidence": [
+    "E-q8-note"
+   ],
+   "execution_units": [
+    {
+     "id": "X-q8-note",
+     "tier": "full",
+     "offline": false,
+     "bundled": false,
+     "stub": false,
+     "rerun": null
+    }
+   ],
+   "protocols": []
+  },
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

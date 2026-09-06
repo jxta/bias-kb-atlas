@@ -1,0 +1,63 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "X-q8-note",
+ "type": "ExecutionUnit",
+ "label": "Q8 ノート census（Thm7.1 + DRH）",
+ "tier": "full",
+ "entry": "Q8 23体で ⟨a_p²−2⟩(p≤10⁶) と Prop6.2 和則・Ci 対数周期フィットを検証",
+ "inputs": [
+  {
+   "ref": "subprojects/q8_drh/"
+  }
+ ],
+ "expected": [
+  {
+   "name": "avg_ap2",
+   "value": "[−1.0071,−1.0005]",
+   "tolerance": "≈ν=−1"
+  }
+ ],
+ "env": {
+  "tool": "gp/sage/julia",
+  "note": "mdx run"
+ },
+ "verifies": [
+  "E-q8-note"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-06-10",
+  "visibility": "bias-shared"
+ },
+ "independence": "真 Frobenius idealprimedec",
+ "_atlas": {
+  "url": "#v=grounding&node=X-q8-note",
+  "page": "X-q8-note.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-06-10",
+  "links_out": [
+   {
+    "rel": "verifies",
+    "to": "E-q8-note",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "grounded_in",
+    "from": "E-q8-note",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

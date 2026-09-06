@@ -1,0 +1,58 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "L-direction-preregistration",
+ "type": "Lesson",
+ "label": "R11 方向起動規律: 方向の最初の実験は P-ノード凍結後に走らせる",
+ "statement": "meta §3 提案 R11。研究方向(H-dir-*)の最初の実験は、mdx 投入前に実行前登録の P-ノード(予測値・判定帯・検出力の凍結)を確定してから走らせる。registered-hit 5 件(d11/d15/d17/Q8 W対角/d19)が価値の源泉であることを kb 自身が示す。murmuration 系は L-null-design-dry-run(検出力の凍結前確認, T2 の教訓)を登録に必ず含める。方向 H ノードは進捗に応じ status 遷移を記録し、campaign 終了ごとに directions.html の readiness を更新する。",
+ "taught_by": [
+  "C-d11-registered-hit",
+  "C-d15-registered-hit",
+  "C-registered-prediction-method"
+ ],
+ "prov": {
+  "asserted_by": "meta-AI 提案 (統率AI 転記)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-24",
+  "visibility": "bias-shared",
+  "statu": [
+   "0081"
+  ],
+  "pr": [
+   "#239"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=L-direction-preregistration",
+  "page": "L-direction-preregistration.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-24",
+  "links_out": [
+   {
+    "rel": "taught_by",
+    "to": "C-d11-registered-hit",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "taught_by",
+    "to": "C-d15-registered-hit",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "taught_by",
+    "to": "C-registered-prediction-method",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

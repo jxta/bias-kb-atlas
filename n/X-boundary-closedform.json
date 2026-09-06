@@ -1,0 +1,72 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "X-boundary-closedform",
+ "type": "ExecutionUnit",
+ "label": "閉形式 O(g,q) の記号評価",
+ "tier": "spot",
+ "entry": "python3 subprojects/hurwitz_ea/verify_boundary_1overq.py",
+ "inputs": [
+  {
+   "ref": "subprojects/hurwitz_ea/verify_boundary_1overq.py"
+  }
+ ],
+ "expected": [
+  {
+   "name": "closedform_vs_census",
+   "value": "match",
+   "tolerance": "1/q法則 corollary, 比 ~1.0-1.1"
+  }
+ ],
+ "env": {
+  "tool": "python3/sympy",
+  "offline": true,
+  "k4_status": "mdx再構築 2026-08-25: corollary(1/q法則) O=E-M~1/((q-1)q^g) census照合 PASS(g=5,6,7); 完全T_e閉形式の直接照合は別途"
+ },
+ "verifies": [
+  "E-boundary-closedform"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-12",
+  "visibility": "bias-shared",
+  "statu": [
+   "0056",
+   "0087"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=X-boundary-closedform",
+  "page": "X-boundary-closedform.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-12",
+  "links_out": [
+   {
+    "rel": "verifies",
+    "to": "E-boundary-closedform",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "grounded_in",
+    "from": "E-boundary-closedform",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": {
+   "status": "PASS",
+   "got": "closedform_vs_census(1/q law): match",
+   "want": "match",
+   "note": ""
+  },
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

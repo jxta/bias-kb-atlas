@@ -1,0 +1,80 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "C-ks-duality-dual",
+ "type": "Claim",
+ "label": "族KS対称型=個々FSの双対（5族確定）",
+ "statement": "dihedral(ν+1)→USp、order3(FS0)→Unitary、EC/genus2(ν−1)→SO_even。",
+ "status": "established",
+ "supported_by": [
+  "E-ks-duality"
+ ],
+ "counterpoints": "θ-unfold で degree 交絡を解消（naive は artifact）。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-07-15",
+  "visibility": "bias-shared"
+ },
+ "about": [
+  "O-fs-family"
+ ],
+ "quantities": [
+  "Q-ks-duality",
+  "Q-theta-unfold"
+ ],
+ "_atlas": {
+  "url": "#v=grounding&node=C-ks-duality-dual",
+  "page": "C-ks-duality-dual.html",
+  "line": "O-fs-family",
+  "date": "2026-07-15",
+  "links_out": [
+   {
+    "rel": "about",
+    "to": "O-fs-family",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "to": "Q-ks-duality",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "to": "Q-theta-unfold",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-ks-duality",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [],
+  "grounding": {
+   "evidence": [
+    "E-ks-duality"
+   ],
+   "execution_units": [
+    {
+     "id": "X-ks-duality",
+     "tier": "full",
+     "offline": false,
+     "bundled": false,
+     "stub": false,
+     "rerun": null
+    }
+   ],
+   "protocols": []
+  },
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

@@ -1,0 +1,77 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "E-middle-e10",
+ "type": "Evidence",
+ "label": "中央係数則 反例（-6024≠-5880）",
+ "values": {
+  "e": 10,
+  "sum_observed": -6024,
+  "predicted": -5880,
+  "verdict": "middle-law FALSE (holds only e=2,6)"
+ },
+ "artifacts": [
+  {
+   "path": "subprojects/hurwitz_ea/o29_coefficient_sum_closed_form.md",
+   "role": "中央係数則の自己反証記録",
+   "location": "repo"
+  }
+ ],
+ "grounded_in": [
+  "X-middle-e10"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-13",
+  "visibility": "bias-shared",
+  "statu": [
+   "0062",
+   "0063"
+  ]
+ },
+ "measures": {
+  "quantity": "Q-middle-law-false",
+  "on": "O-ff-q3-family"
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=E-middle-e10",
+  "page": "E-middle-e10.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-13",
+  "links_out": [
+   {
+    "rel": "grounded_in",
+    "to": "X-middle-e10",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "supported_by",
+    "from": "C-middle-law-false",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "taught_by",
+    "from": "L-middle-law-self-refutation",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "verifies",
+    "from": "X-middle-e10",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

@@ -1,0 +1,39 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "Q-nonabelian-commutator",
+ "type": "Quantity",
+ "label": "合同決定クラス条件 |C|=|[G,G]|（非可換辞書 O-30）",
+ "definition": "クラス C が合同で決まる ⟺ |C|=|[G,G]|。Q8/D4=3/5, A4=2/4, S4=0/5, A5=0。機構三分: 二次（Q8/D4）・三次（A4）・なし（S4）。列直交で証明、A4/S4 体で Chebotarev 密度により確認。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-13",
+  "visibility": "bias-shared",
+  "statu": [
+   "0060",
+   "0061"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=Q-nonabelian-commutator",
+  "page": "Q-nonabelian-commutator.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-08-13",
+  "links_out": [],
+  "links_in": [
+   {
+    "rel": "quantities",
+    "from": "C-nonabelian-dictionary",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

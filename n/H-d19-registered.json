@@ -1,0 +1,63 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "H-d19-registered",
+ "type": "Hypothesis",
+ "label": "d=19 負バイアス（登録→census 帯内 PASS・昇格済）",
+ "statement": "O-19 census は登録値 −2.4253e-05 ± 3e-06（負）を示すと予測。全群込み閉形式 Σ 側 −2.4311e-05 が登録帯内。→ STATU 0059 §1: census 774,840,978 実測 −2.4300e-05 帯内 PASS・符号反転的中を確認。（k1-d 時の『確認 STATU 未着・的中未確定』は記録層 0059 と不一致＝meta 検収 2026-08-23 で訂正）。C-d19-sign-reversal へ昇格。",
+ "status": "promoted",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons、検収訂正 2026-08-23)",
+  "date": "2026-08-12",
+  "visibility": "bias-shared",
+  "statu": [
+   "0058",
+   "0059"
+  ]
+ },
+ "about": [
+  "O-ff-q3-family"
+ ],
+ "quantities": [
+  "Q-d19-registered"
+ ],
+ "promoted_to": "C-d19-sign-reversal",
+ "_atlas": {
+  "url": "#v=grounding&node=H-d19-registered",
+  "page": "H-d19-registered.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-12",
+  "links_out": [
+   {
+    "rel": "about",
+    "to": "O-ff-q3-family",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "to": "Q-d19-registered",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "promoted_to",
+    "to": "C-d19-sign-reversal",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [],
+  "grounding": {
+   "evidence": [],
+   "execution_units": [],
+   "protocols": []
+  },
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

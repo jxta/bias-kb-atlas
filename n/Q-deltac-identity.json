@@ -1,0 +1,41 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "Q-deltac-identity",
+ "type": "Quantity",
+ "label": "Q8 Δ_C 厳密恒等式（O-18）",
+ "definition": "χ₁χ₂χ₃=1（判別式の積が平方）から指示関数が厳密展開でき、中心化項 −|C|/8=−1/4 が定数項を打ち消して Delta_{±i}=(1/4)(T_1−T_2−T_3), Delta_1+Delta_{-1}=(1/4)(T_1+T_2+T_3)。位数4の3類は合同条件のみで完全決定、8次体は中心 {1}/{−1} 分離にのみ必要。8次多項式不使用の Python が gp を全1,775体・200 u点で 2.3e-13 再現。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-12",
+  "visibility": "bias-shared",
+  "statu": [
+   "0058"
+  ],
+  "pr": [
+   "#181"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=Q-deltac-identity",
+  "page": "Q-deltac-identity.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-08-12",
+  "links_out": [],
+  "links_in": [
+   {
+    "rel": "quantities",
+    "from": "C-deltac-identity",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

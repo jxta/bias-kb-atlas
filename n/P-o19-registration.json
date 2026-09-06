@@ -1,0 +1,53 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "P-o19-registration",
+ "type": "Protocol",
+ "label": "O-19 d=19 決定的検定の実行前登録（ORDER 0008 凍結）",
+ "statement": "登録値 −2.4253e-05 ± 3e-06（負・deg 6 族のみから導出）、帯 [−2.7253e-05, −2.1253e-05]。『正のままなら 0056 §3 の機構を撤回する』を明記。O-13 完走後投入・タイムアウト余裕の走行条件付き。",
+ "frozen": {
+  "path": ".bus/STATU/inbox/0008-yokoyama-order-q8-deltac-d19-iqf-h.md",
+  "frozen_at": "2026-08-12",
+  "pr": "commit 081d278"
+ },
+ "derives_from": [
+  "P-registered-prediction"
+ ],
+ "prov": {
+  "asserted_by": "横山・meta-AI（ORDER 0008）",
+  "accepted_by": "meta-AI (bias-commons、転記 2026-08-23)",
+  "date": "2026-08-12",
+  "visibility": "bias-shared",
+  "statu": [
+   "0059"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=P-o19-registration",
+  "page": "P-o19-registration.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-12",
+  "links_out": [
+   {
+    "rel": "derives_from",
+    "to": "P-registered-prediction",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "registered_by",
+    "from": "C-d19-sign-reversal",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

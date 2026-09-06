@@ -1,0 +1,55 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "H-middle-weil-sum",
+ "type": "Hypothesis",
+ "label": "中央係数の均された Weil 和",
+ "statement": "Σ_{deg β=e} S0(β)=-e·N_q(e)（S0=F_q 部分空間上の二次指標和, Gauss/Soto-Andrade 型）。中央係数則の破綻を説明する正しい定式化候補。",
+ "status": "open",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-13",
+  "visibility": "bias-shared",
+  "statu": [
+   "0063"
+  ]
+ },
+ "about": [
+  "O-ff-q3-family"
+ ],
+ "quantities": [
+  "Q-middle-law-false"
+ ],
+ "_atlas": {
+  "url": "#v=grounding&node=H-middle-weil-sum",
+  "page": "H-middle-weil-sum.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-13",
+  "links_out": [
+   {
+    "rel": "about",
+    "to": "O-ff-q3-family",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "to": "Q-middle-law-false",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [],
+  "grounding": {
+   "evidence": [],
+   "execution_units": [],
+   "protocols": []
+  },
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

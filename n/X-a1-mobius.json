@@ -1,0 +1,72 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "X-a1-mobius",
+ "type": "ExecutionUnit",
+ "label": "A_1 Möbius 閉形式の直接照合",
+ "tier": "spot",
+ "entry": "python3 subprojects/hurwitz_ea/verify_a1_mobius.py",
+ "inputs": [
+  {
+   "ref": "subprojects/hurwitz_ea/verify_a1_mobius.py"
+  }
+ ],
+ "expected": [
+  {
+   "name": "A1_closedform_match",
+   "value": "match",
+   "tolerance": "exact(documented 4例)"
+  }
+ ],
+ "env": {
+  "tool": "python3/sympy",
+  "offline": true,
+  "k4_status": "mdx再構築 2026-08-25: o29 §1 Möbius 閉形式 documented 4例 PASS"
+ },
+ "verifies": [
+  "E-a1-mobius"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-13",
+  "visibility": "bias-shared",
+  "statu": [
+   "0058",
+   "0087"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=X-a1-mobius",
+  "page": "X-a1-mobius.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-13",
+  "links_out": [
+   {
+    "rel": "verifies",
+    "to": "E-a1-mobius",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "grounded_in",
+    "from": "E-a1-mobius",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": {
+   "status": "PASS",
+   "got": "A1_closedform_match: match",
+   "want": "match",
+   "note": ""
+  },
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

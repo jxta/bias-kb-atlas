@@ -1,0 +1,78 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "X-q8-ks",
+ "type": "ExecutionUnit",
+ "label": "Q8 対 D4 KS 二側検定",
+ "tier": "accept",
+ "entry": "python3 -c \"import json;d=json.load(open('subprojects/q8_drh/results/pillarB/q8_ks_harvest/d4_wp1.json'));print(sum(1 for r in d if r.get('zeros') and min(r['zeros'])<0.05))\"",
+ "inputs": [
+  {
+   "ref": "subprojects/q8_drh/results/pillarB/q8_ks_harvest/d4_wp1.json",
+   "sha256": "81c5175b3dc4d4ffea9e4a7f25ef32ef0be5e7c291720c2e0fa025e47f4137e7",
+   "sha_kind": "content"
+  }
+ ],
+ "expected": [
+  {
+   "name": "d4_central_zero_count",
+   "value": 0,
+   "tolerance": "exact (0/970)"
+  }
+ ],
+ "env": {
+  "tool": "python3",
+  "offline": true,
+  "k4_status": "mdx re-run verified 2026-08-25"
+ },
+ "verifies": [
+  "E-q8-ks"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-09",
+  "visibility": "bias-shared",
+  "statu": [
+   "0042",
+   "0043",
+   "0086"
+  ],
+  "pr": [
+   "#109"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=X-q8-ks",
+  "page": "X-q8-ks.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-08-09",
+  "links_out": [
+   {
+    "rel": "verifies",
+    "to": "E-q8-ks",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "grounded_in",
+    "from": "E-q8-ks",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": {
+   "status": "PASS",
+   "got": "0",
+   "want": "0",
+   "note": ""
+  },
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

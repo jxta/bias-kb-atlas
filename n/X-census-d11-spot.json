@@ -1,0 +1,74 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "X-census-d11-spot",
+ "type": "ExecutionUnit",
+ "tier": "spot",
+ "label": "census d=11 凍結集計からの境界余剰 再計算（offline spot）",
+ "entry": "python3 -c \"import json;a=json.load(open('subprojects/hurwitz_ea/ea_d11_aggregates.json'));print(a['boundary_excess_n2g'])\"",
+ "inputs": [
+  {
+   "ref": "subprojects/hurwitz_ea/ea_d11_aggregates.json",
+   "sha256": "c9ae5cfdb7480fcc2c8294d7c50b6d1962e3fe7c973bfd4efe7eab3f8d2ed100",
+   "sha_kind": "content"
+  }
+ ],
+ "expected": [
+  {
+   "name": "boundary_excess",
+   "value": -0.49076650925398013,
+   "tolerance": "exact(transcribed)"
+  }
+ ],
+ "env": {
+  "tool": "python3",
+  "offline": true
+ },
+ "verifies": [
+  "E-census-d11"
+ ],
+ "independence": "凍結 JSON の記録値の直読（census 本走と独立、mdx 不要）",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-06",
+  "visibility": "bias-shared",
+  "statu": [
+   "0034",
+   "0078"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=X-census-d11-spot",
+  "page": "X-census-d11-spot.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-06",
+  "links_out": [
+   {
+    "rel": "verifies",
+    "to": "E-census-d11",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "grounded_in",
+    "from": "E-census-d11",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": {
+   "status": "PASS",
+   "got": "-0.49076650925398013",
+   "want": "-0.49076650925398013",
+   "note": ""
+  },
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

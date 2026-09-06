@@ -1,0 +1,47 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "O-nf-d4-control",
+ "type": "Object",
+ "label": "D_4 USp 対照族（970 体）",
+ "statement": "D_4（8T? USp）対照族 970 体。Q8 の KS 二側検定の対照（D_4 で 0/970）。",
+ "artifacts": [
+  {
+   "path": "subprojects/hurwitz_ea/frozen/d4_wp1.json",
+   "sha256": "81c5175b3dc4d4ffea9e4a7f25ef32ef0be5e7c291720c2e0fa025e47f4137e7",
+   "sha_kind": "content",
+   "location": "repo",
+   "role": "D4 対照集計（凍結）"
+  }
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-09",
+  "visibility": "bias-shared",
+  "statu": [
+   "0043"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=O-nf-d4-control",
+  "page": "O-nf-d4-control.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-08-09",
+  "links_out": [],
+  "links_in": [
+   {
+    "rel": "about",
+    "from": "C-nonabelian-dictionary",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

@@ -1,0 +1,57 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "P-q8-step2-w1",
+ "type": "Protocol",
+ "label": "ORDER_Q8_STEP2 w1 三層凍結＋事前登録（判定帯 [494,556]・W 層予測）",
+ "statement": "T-A/T-B/T-C の三層 sha 凍結、T-B 決定的抽出規則（i≡0 mod 50 先頭 1000）、突合判定帯＝厳密二項 p=0.525 n=1000 α=0.05 → [494,556]、W 層予測＝中心消滅⇔W=−1 全数・W=+1 偶数二重零 0 件。判定帯は meta が厳密有理数で独立検算し一致（DIRECTIVE 0042）。",
+ "frozen": {
+  "path": "subprojects/hurwitz_ea/q8_step2_w1_freeze.md",
+  "frozen_at": "2026-08-09",
+  "pr": "#109"
+ },
+ "derives_from": [
+  "P-census-exec-a"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "statu": [
+   "0042"
+  ],
+  "pr": [
+   "#109",
+   "#111"
+  ],
+  "date": "2026-08-09",
+  "visibility": "bias-shared"
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=P-q8-step2-w1",
+  "page": "P-q8-step2-w1.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-08-09",
+  "links_out": [
+   {
+    "rel": "derives_from",
+    "to": "P-census-exec-a",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "registered_by",
+    "from": "C-q8-w-diagonal",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

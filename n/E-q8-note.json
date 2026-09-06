@@ -1,0 +1,67 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "E-q8-note",
+ "type": "Evidence",
+ "label": "Thm7.1 Q8 census 全23 PASS + DRH(B) 支持",
+ "values": {
+  "thm71": "23/23 PASS",
+  "drh_relerr": "<2%",
+  "median_pin": "0.60%"
+ },
+ "artifacts": [
+  {
+   "path": "subprojects/q8_drh/",
+   "role": "Q8 DRH census",
+   "location": "repo"
+  }
+ ],
+ "grounded_in": [
+  "X-q8-note"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-06-10",
+  "visibility": "bias-shared"
+ },
+ "measures": {
+  "quantity": "Q-avg-ap2-minus2",
+  "on": "O-q8-8t5-census"
+ },
+ "statement": "全23で ⟨a_p²−2⟩∈[−1.0071,−1.0005](p≤10⁶)≈ν=−1、W=+1⟺m_ρ=0 全成立。DRH(B) 全23@1e8+8体@1e10、Prop6.2 和則 relerr<2%、Ci フィットで median 0.60% pin。drift=ν マスター表(FS三分類×次元2-5×7群): SL(2,3) drift−1、八面体ν=0、F21複素3次元ν=0。発見: 総実W−1=5体・CM W+1=2体(signature と解析的階数は独立)。",
+ "_atlas": {
+  "url": "#v=grounding&node=E-q8-note",
+  "page": "E-q8-note.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-06-10",
+  "links_out": [
+   {
+    "rel": "grounded_in",
+    "to": "X-q8-note",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "supported_by",
+    "from": "C-thm71-q8-census",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "verifies",
+    "from": "X-q8-note",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

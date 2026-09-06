@@ -1,0 +1,106 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "C-d19-sign-reversal",
+ "type": "Claim",
+ "label": "d=19 で境界超過の符号反転を実行前登録どおり的中（n=6 問題の実験決着）",
+ "statement": "q=3, d=19 (g=9) の全数 census 774,840,978 体で、1体あたり超過（Σ側）実測 −2.4300e-05 が登録帯 [−2.7253e-05, −2.1253e-05] の内側（登録値 −2.4253e-05±3e-06、走行前凍結）。d13–d17 の +1.8e-06 からの符号反転予測が確認され、全群込み閉形式との差 4.10e-10。窓条件 d mod 12 ∈ [0,7] の端 idx=7 で −q·Σ_P A_5 が符号を変える機構（0056 §3）は撤回不要と確定。",
+ "status": "registered-hit",
+ "counterpoints": "O-19 は指示より早期に投入された（自己申告・STATU 0059 §5）。36体が rc=137 で一旦欠落し 24h 延長で 36/36 再走回復後の全数値。登録凍結は .bus ORDER 0008（inbox commit 081d278）方式で横山 merge 方式ではない。census 集計 sha は recorded-only（k4 実照合待ち）。",
+ "about": [
+  "O-ff-q3-d19"
+ ],
+ "quantities": [
+  "Q-d19-registered"
+ ],
+ "supported_by": [
+  "E-census-d19"
+ ],
+ "registered_by": [
+  "P-o19-registration"
+ ],
+ "derivation_hooks": [
+  "d=21 以降の窓指数遷移の追試",
+  "g=9 out-of-sample（比 0.99990）の独立 Claim 化",
+  "n=6 機構の他 q への外挿"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8、STATU 0059)",
+  "accepted_by": "meta-AI (bias-commons、検収転記 2026-08-23)",
+  "date": "2026-08-13",
+  "visibility": "bias-shared",
+  "statu": [
+   "0058",
+   "0059"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=C-d19-sign-reversal",
+  "page": "C-d19-sign-reversal.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-13",
+  "links_out": [
+   {
+    "rel": "about",
+    "to": "O-ff-q3-d19",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "to": "Q-d19-registered",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-census-d19",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "registered_by",
+    "to": "P-o19-registration",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "promoted_to",
+    "from": "H-d19-registered",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "taught_by",
+    "from": "L-extraction-vs-record",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": {
+   "evidence": [
+    "E-census-d19"
+   ],
+   "execution_units": [
+    {
+     "id": "X-census-d19",
+     "tier": "full",
+     "offline": false,
+     "bundled": false,
+     "stub": false,
+     "rerun": null
+    }
+   ],
+   "protocols": [
+    "P-o19-registration"
+   ]
+  },
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

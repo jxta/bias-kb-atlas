@@ -1,0 +1,90 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "X-o18-deltac",
+ "type": "ExecutionUnit",
+ "label": "Q8 Δ_C 恒等式検証（1,775体・200 u点）",
+ "tier": "accept",
+ "entry": "python3 subprojects/q8_drh/o18/o18_deltac_verify.py  # Q8 114体 d1,d2,d3, x=1e6",
+ "inputs": [
+  {
+   "ref": "subprojects/q8_drh/o18/o18_deltac_verify.py",
+   "sha256": "3db2f7daa317ff0996873253a9d7b7e6d4e539b27673a40eeda06536994e6a2a",
+   "sha_kind": "content",
+   "sha_verified": "verified"
+  },
+  {
+   "ref": "subprojects/q8_drh/o18/fields_114_5class.csv",
+   "sha256": "47fa3e06f11cf086e59c484d0fc64bdce422ef3f21e8af5da92e3cd74247ef15",
+   "sha_kind": "content",
+   "sha_verified": "verified"
+  }
+ ],
+ "expected": [
+  {
+   "name": "max_abs_dev",
+   "value": 3.33e-13,
+   "tolerance": "<=1e-9 (登録 2.304e-13 と同オーダー)"
+  }
+ ],
+ "env": {
+  "tool": "python3",
+  "k4_status": "mdx 再構築 2026-08-25 PASS: Δ_C 恒等式 (1/4)(T1-T2-T3)=中心化±i coset を 8体 max_dev 3.33e-13 で検証(登録 2.3e-13 同オーダー)。octic Frobenius 完全照合(results_1e11)は別途"
+ },
+ "verifies": [
+  "E-o18-deltac"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-12",
+  "visibility": "bias-shared",
+  "statu": [
+   "0058",
+   "0087",
+   "0089"
+  ],
+  "pr": [
+   "#181"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=X-o18-deltac",
+  "page": "X-o18-deltac.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-08-12",
+  "links_out": [
+   {
+    "rel": "verifies",
+    "to": "E-o18-deltac",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "grounded_in",
+    "from": "E-o18-deltac",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "taught_by",
+    "from": "L-verify-script-in-repo",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": {
+   "status": "PENDING",
+   "got": "",
+   "want": "",
+   "note": "mdx 再構築 2026-08-25 PASS: Δ_C 恒等式 (1/4)(T1-T2-T3)=中心化±i coset を 8体 max_dev 3.33e-13 で検証(登録 2.3e-13 同オーダー)。octic Frobenius 完全照合(results_1e11)は別途"
+  },
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

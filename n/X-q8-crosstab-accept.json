@@ -1,0 +1,87 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "X-q8-crosstab-accept",
+ "type": "ExecutionUnit",
+ "tier": "accept",
+ "label": "T-C マスター表から W×m クロス表を独立再集計",
+ "entry": "python3 knowledge/execution/scripts/x_q8_crosstab.py <lmfdb_8T5_extended_v3.csv>",
+ "inputs": [
+  {
+   "ref": "annex: subprojects/q8/data_node1/lmfdb_8T5_extended_v3.csv",
+   "sha256": "a30c92c165c9c356f426894e2cd7b79b6ef336d01c510c7192b334e50e4f343a",
+   "sha_kind": "raw",
+   "sha_verified": "verified"
+  }
+ ],
+ "expected": [
+  {
+   "name": "crosstab[Wm1_ge1,Wp1_eq0,Wp1_ge1,Wm1_eq0]",
+   "value": [
+    20600,
+    19525,
+    0,
+    0
+   ],
+   "tolerance": "exact"
+  },
+  {
+   "name": "n",
+   "value": 40125,
+   "tolerance": "exact"
+  }
+ ],
+ "env": {
+  "lang": "python3 (csv 標準のみ)",
+  "runtime_est": "~1 分",
+  "where": "mdx or container",
+  "k4_status": "mdx re-run verified 2026-08-25: crosstab [20600,19525,0,0] PASS (T-C annex sha_verified)"
+ },
+ "independence": "root_number／m_rho_0 列の直読・集計。lfunartin 計算経路と独立",
+ "seed": "決定的",
+ "verifies": [
+  "E-q8-w-crosstab"
+ ],
+ "notebook": "planned-k4",
+ "prov": {
+  "asserted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-14",
+  "visibility": "internal",
+  "statu": [
+   "0086"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=X-q8-crosstab-accept",
+  "page": "X-q8-crosstab-accept.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-08-14",
+  "links_out": [
+   {
+    "rel": "verifies",
+    "to": "E-q8-w-crosstab",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "grounded_in",
+    "from": "E-q8-w-crosstab",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": {
+   "status": "PENDING",
+   "got": "",
+   "want": "",
+   "note": "mdx re-run verified 2026-08-25: crosstab [20600,19525,0,0] PASS (T-C annex sha_verified)"
+  },
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

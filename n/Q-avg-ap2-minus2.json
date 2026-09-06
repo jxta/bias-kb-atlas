@@ -1,0 +1,35 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "Q-avg-ap2-minus2",
+ "type": "Quantity",
+ "label": "Thm7.1 平均量 ⟨a_p²−2⟩",
+ "definition": "≈ν=−1(symplectic)、p≤10⁶ で [−1.0071,−1.0005]。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-06-10",
+  "visibility": "bias-shared"
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=Q-avg-ap2-minus2",
+  "page": "Q-avg-ap2-minus2.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-06-10",
+  "links_out": [],
+  "links_in": [
+   {
+    "rel": "quantities",
+    "from": "C-thm71-q8-census",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

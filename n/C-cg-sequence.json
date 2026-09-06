@@ -1,0 +1,72 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "C-cg-sequence",
+ "type": "Claim",
+ "label": "c(g) 整数列（Theorem 2）",
+ "statement": "境界余剰の対称極限 c(g)=+1,+1,-1,0,0,…（g≥4 で 0）。記号評価で厳密。",
+ "status": "established",
+ "supported_by": [
+  "E-boundary-closedform"
+ ],
+ "counterpoints": "有限 g の記号評価。漸近的挙動は 1/q 法則で被覆。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-12",
+  "visibility": "bias-shared",
+  "statu": [
+   "0057"
+  ]
+ },
+ "quantities": [
+  "Q-cg-sequence"
+ ],
+ "_atlas": {
+  "url": "#v=grounding&node=C-cg-sequence",
+  "page": "C-cg-sequence.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-12",
+  "links_out": [
+   {
+    "rel": "quantities",
+    "to": "Q-cg-sequence",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-boundary-closedform",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [],
+  "grounding": {
+   "evidence": [
+    "E-boundary-closedform"
+   ],
+   "execution_units": [
+    {
+     "id": "X-boundary-closedform",
+     "tier": "spot",
+     "offline": true,
+     "bundled": false,
+     "stub": false,
+     "rerun": {
+      "status": "PASS",
+      "got": "closedform_vs_census(1/q law): match",
+      "want": "match",
+      "note": ""
+     }
+    }
+   ],
+   "protocols": []
+  },
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

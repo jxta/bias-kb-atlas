@@ -1,0 +1,74 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "P-registered-prediction",
+ "type": "Protocol",
+ "label": "事前登録予測プロトコル（register-then-verify）",
+ "definition": "census/測定の実行前に予測値 E_pred と判定帯を登録文書に凍結し、走行後に実測と照合する。d11（定理 vs 現象論の判別）・d15（定理の外挿精度）で的中。帰無設計は凍結前 dry-run で検出力を確認（登録教訓4号）。",
+ "frozen": {
+  "path": "subprojects/hurwitz_ea/registrations/",
+  "pr": "#181"
+ },
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-12",
+  "visibility": "bias-shared",
+  "statu": [
+   "0034",
+   "0048",
+   "0058"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=P-registered-prediction",
+  "page": "P-registered-prediction.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-12",
+  "links_out": [],
+  "links_in": [
+   {
+    "rel": "registered_by",
+    "from": "C-d11-registered-hit",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "registered_by",
+    "from": "C-d15-registered-hit",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "registered_by",
+    "from": "C-d17-registered-hit",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "registered_by",
+    "from": "C-registered-prediction-method",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "registered_by",
+    "from": "E-d15-regpred",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "derives_from",
+    "from": "P-o19-registration",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

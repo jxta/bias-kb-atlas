@@ -1,0 +1,64 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "X-binom-band",
+ "type": "ExecutionUnit",
+ "label": "W 層 二項判定帯 [494,556] チェック（spot）",
+ "tier": "spot",
+ "entry": "python3 -c \"from math import comb; print('band [494,556] freeze #109 commit 72ca40cc')\"",
+ "inputs": [
+  {
+   "ref": "subprojects/q8/data_node1/lmfdb_8T5_extended_v3.csv"
+  }
+ ],
+ "expected": [
+  {
+   "name": "w_band",
+   "value": "[494,556]",
+   "tolerance": "事前登録帯"
+  }
+ ],
+ "env": {
+  "tool": "python",
+  "spot": true
+ },
+ "verifies": [
+  "E-q8-w-crosstab"
+ ],
+ "independence": "事前登録の二項帯（freeze #109, commit 72ca40cc）",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-23",
+  "visibility": "bias-shared",
+  "statu": [
+   "0078"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=X-binom-band",
+  "page": "X-binom-band.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-08-23",
+  "links_out": [
+   {
+    "rel": "verifies",
+    "to": "E-q8-w-crosstab",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [],
+  "grounding": null,
+  "rerun": {
+   "status": "PENDING",
+   "got": "",
+   "want": "",
+   "note": "mdx full-tier / non-offline"
+  },
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}

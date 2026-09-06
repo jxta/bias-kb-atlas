@@ -1,0 +1,41 @@
+{
+ "@context": "../kb/context.jsonld",
+ "id": "O-ff-q3-d5",
+ "type": "Object",
+ "label": "F_3(t) 二次指標 全数族 世代 d=5（g=2, C1=162）",
+ "statement": "deg d=5 の平方自由モニック全数族。C1=2·3^4=162。",
+ "derives_from": [
+  "O-ff-q3-family"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-04",
+  "visibility": "bias-shared",
+  "statu": [
+   "0030"
+  ]
+ },
+ "_atlas": {
+  "url": "#v=grounding&node=O-ff-q3-d5",
+  "page": "O-ff-q3-d5.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-04",
+  "links_out": [
+   {
+    "rel": "derives_from",
+    "to": "O-ff-q3-family",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 719,
+   "source_ref": "1887f14",
+   "generated_at": "2026-09-04T01:21:13Z"
+  }
+ }
+}
