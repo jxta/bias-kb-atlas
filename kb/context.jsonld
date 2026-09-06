@@ -1,0 +1,109 @@
+{
+ "@context": {
+  "lrr": "https://nii.ac.jp/ns/lrr#",
+  "schema": "https://schema.org/",
+  "prov": "lrr:provenance",
+  "lmfdb": "https://www.lmfdb.org/",
+  "id": "@id",
+  "type": "@type",
+  "label": "schema:name",
+  "statement": "schema:description",
+  "about": {
+   "@id": "schema:about",
+   "@type": "@id"
+  },
+  "supported_by": {
+   "@id": "lrr:supportedBy",
+   "@type": "@id"
+  },
+  "refuted_by": {
+   "@id": "lrr:refutedBy",
+   "@type": "@id"
+  },
+  "grounded_in": {
+   "@id": "lrr:groundedIn",
+   "@type": "@id"
+  },
+  "registered_by": {
+   "@id": "lrr:registeredBy",
+   "@type": "@id"
+  },
+  "derives_from": {
+   "@id": "w3prov:wasDerivedFrom",
+   "@type": "@id"
+  },
+  "supersedes": {
+   "@id": "lrr:supersedes",
+   "@type": "@id"
+  },
+  "verifies": {
+   "@id": "lrr:verifies",
+   "@type": "@id"
+  },
+  "sameAs": {
+   "@id": "schema:sameAs",
+   "@type": "@id"
+  },
+  "lmfdb_label": "lrr:lmfdbLabel",
+  "asserted_by": "w3prov:wasAttributedTo",
+  "date": "w3prov:generatedAtTime",
+  "w3prov": "http://www.w3.org/ns/prov#",
+  "quantities": {
+   "@id": "lrr:quantities",
+   "@type": "@id"
+  },
+  "promoted_to": {
+   "@id": "lrr:promotedTo",
+   "@type": "@id"
+  },
+  "superseded_by": {
+   "@id": "lrr:supersededBy",
+   "@type": "@id"
+  },
+  "related": {
+   "@id": "lrr:related",
+   "@type": "@id"
+  },
+  "supports": {
+   "@id": "lrr:supports",
+   "@type": "@id"
+  },
+  "refutes": {
+   "@id": "lrr:refutes",
+   "@type": "@id"
+  },
+  "taught_by": {
+   "@id": "lrr:taughtBy",
+   "@type": "@id"
+  },
+  "constrains": {
+   "@id": "lrr:constrains",
+   "@type": "@id"
+  },
+  "Object": "lrr:Object",
+  "Quantity": "lrr:Quantity",
+  "Evidence": "lrr:Evidence",
+  "Claim": "lrr:Claim",
+  "Hypothesis": "lrr:Hypothesis",
+  "Protocol": "lrr:Protocol",
+  "ExecutionUnit": "lrr:ExecutionUnit",
+  "Lesson": "lrr:Lesson",
+  "status": "lrr:status",
+  "tier": "lrr:tier",
+  "entry": "lrr:entry",
+  "expected": "lrr:expected",
+  "inputs": "lrr:inputs",
+  "artifacts": "lrr:artifacts",
+  "values": "lrr:values",
+  "counterpoints": "lrr:counterpoints",
+  "definition": "lrr:definition",
+  "frozen": "lrr:frozen",
+  "env": "lrr:env",
+  "accepted_by": "lrr:acceptedBy",
+  "visibility": "lrr:visibility",
+  "statu": "lrr:statu",
+  "pr": "lrr:pullRequest",
+  "stub": "lrr:redactedNode",
+  "@base": "https://jxta.github.io/bias-kb-atlas/n/"
+ }
+}
