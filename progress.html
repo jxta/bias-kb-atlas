@@ -1,0 +1,107 @@
+<!doctype html><html lang=ja><head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>研究の現在地 — bias-kb 公開抜粋</title><style>
+:root{--ink:#111;--mid:#666;--faint:#c9c9c9;--bg:#fff;--rule:#e3e3e3}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:14px/1.65 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif}
+main{max-width:1120px;margin:0 auto;padding:34px 22px 80px}
+h1{font-size:22px;font-weight:600;margin:0 0 2px;letter-spacing:.02em}
+.sub{color:var(--mid);margin:0 0 26px;font-size:13px}
+h2{font-size:14px;font-weight:600;margin:38px 0 4px;padding-bottom:5px;border-bottom:1px solid var(--ink)}
+h2 .n{color:var(--mid);font-weight:400}
+.lead{color:var(--mid);margin:6px 0 14px;font-size:13px}
+.none{color:var(--mid);font-size:13px;padding:10px 0}
+.kpis{display:flex;flex-wrap:wrap;gap:26px;margin:14px 0 4px;padding:14px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.kpi b{display:block;font-size:24px;font-weight:600;line-height:1.2}
+.kpi span{color:var(--mid);font-size:12px}
+.cols{display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start}
+.cols>*{flex:1 1 320px;min-width:0}
+figure{margin:0 0 10px}
+figcaption{font-size:12px;color:var(--mid);margin-bottom:2px}
+.cap b{color:var(--ink)}
+svg{display:block;overflow:visible}
+.grid{stroke:var(--rule);stroke-width:1}
+.lane{stroke:var(--faint);stroke-width:1}
+.tick{font-size:10px;fill:var(--mid)}
+.lane-label{font-size:11px;fill:var(--ink)}
+.reg{fill:none;stroke:var(--mid);stroke-width:1.2}
+.mk{font-size:13px;fill:var(--ink);cursor:default}
+.mk.star{font-size:15px}
+.mk.plain{fill:var(--mid)}
+.mk.instr,.mk.bad{fill:var(--ink)}
+.ln{fill:none;stroke-width:1.4}
+.ln.inst{stroke:var(--faint)}
+.ln.mech{stroke:var(--ink)}
+.pt{stroke:none}.pt.inst{fill:var(--faint)}.pt.mech{fill:var(--ink)}
+.pt.susp{stroke:var(--ink);stroke-width:1.2;fill:#fff}
+.gb{fill:var(--faint)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{font-weight:500;text-align:left}
+.grid th,.grid td{border-bottom:1px solid var(--rule);padding:7px 8px}
+.grid thead th{font-size:11px;color:var(--mid);border-bottom:1px solid var(--ink);vertical-align:bottom}
+.grid td{text-align:right;font-variant-numeric:tabular-nums}
+.grid .tot,.grid .sum{font-weight:600}
+.debt th{padding:7px 10px 7px 0;border-bottom:1px solid var(--rule);width:38%}
+.debt td{padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:baseline}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.den{color:var(--mid)}
+.why{color:var(--mid);font-size:12px}
+.types th{padding:3px 10px 3px 0;width:96px;font-size:12px}
+.types td{padding:3px 0}
+.types .num{width:52px;padding-right:10px}
+.bar span{display:block;height:8px;background:var(--ink)}
+.lessons{list-style:none;padding:0;margin:0}
+.lessons li{padding:5px 0;border-bottom:1px solid var(--rule);font-size:13px}
+.lid{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--mid);margin-right:8px}
+.src{color:var(--mid);font-size:12px}
+.more{color:var(--mid)}
+.legend{font-size:12px;color:var(--mid);margin:8px 0 0}
+.legend b{color:var(--ink);font-weight:600}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--rule);color:var(--mid);font-size:12px}
+@media print{body{font-size:11px}main{padding:0}}
+</style></head><body><main>
+<h1>研究の現在地 — bias-kb 公開抜粋</h1>
+<p class=sub>公開抜粋 100 ノードから生成（記録層は非公開）　生成 2026-09-06 09:02Z
+　記録の範囲 2026-06-10 〜 2026-08-25</p>
+<div class=kpis><div class=kpi><b>100</b><span>ノード</span></div><div class=kpi><b>2</b><span>判定</span></div><div class=kpi><b>0</b><span>うち ★</span></div><div class=kpi><b>4</b><span>登録</span></div></div>
+
+<h2>研究線のレーンと予測台帳</h2>
+<p class=lead>この抜粋には研究線に属するノード（登録と凍結判定の系列）が入っていないため、線ごとの推移は出せない。抜粋の選択規則が研究内容側のノードを外しているためで、以下の面は抜粋の範囲で言えることに限っている。</p>
+
+<h2>主張の棚卸し <span class=n>— 言っていることは、いま確かめられるか</span></h2>
+<table class=grid><thead><tr><th>状態</th><th>accept/spot に到達（即再実行できる）</th><th>full-tier のみ（mdx 本走が要る）</th><th>実行単位に届かない</th><th>計</th></tr></thead><tbody><tr><th>established</th><td>7</td><td>2</td><td>·</td><td class=tot>9</td></tr><tr><th>registered-hit</th><td>4</td><td>1</td><td>·</td><td class=tot>5</td></tr><tr><th>rejected</th><td>1</td><td>·</td><td>·</td><td class=tot>1</td></tr><tr><th>provisional</th><td>1</td><td>·</td><td>·</td><td class=tot>1</td></tr><tr class=sum><th>計</th><td>13</td><td>3</td><td>0</td><td class=tot>16</td></tr></tbody></table>
+
+<h2>未払いの借り <span class=n>— 分かっているが、まだ払っていないもの</span></h2>
+<table class=debt><tbody><tr><th>主張が即再実行できる</th><td class=num>13<span class=den> / 16</span></td><td class=num>81%</td><td class=why>残りは full-tier。k4 の再実行で accept/spot に上げる</td></tr><tr><th>成果物が sha256 で凍結</th><td class=num>8<span class=den> / 17</span></td><td class=num>47%</td><td class=why>凍結していない成果物は後から差し替えられる</td></tr><tr><th>実行単位の入力が凍結</th><td class=num>9<span class=den> / 21</span></td><td class=num>43%</td><td class=why>同上（再実行の同一性）</td></tr><tr><th>うち実ファイルと照合済み</th><td class=num>3<span class=den> / 21</span></td><td class=num>14%</td><td class=why>記録だけのものは照合していない</td></tr><tr><th>量に規約が書かれている</th><td class=num>0<span class=den> / 14</span></td><td class=num>0%</td><td class=why>因子 2・r vs r−1・窓の取り方 — 事故が起きた箇所</td></tr><tr><th>実行単位にノートブックがある</th><td class=num>1<span class=den> / 20</span></td><td class=num>5%</td><td class=why>接地の粒度をノートブックとする設計との乖離</td></tr><tr><th>実行単位が手元で再実行できる</th><td class=num>9<span class=den> / 20</span></td><td class=num>45%</td><td class=why>offline でないものは計算機環境が要る</td></tr></tbody></table>
+
+<h2>いま何が積まれているか</h2>
+<div class=cols><div><table class=types><tbody><tr><th>対象 O</th><td class=num>17</td><td class=bar><span style="width:85.0%"></span></td></tr><tr><th>量 Q</th><td class=num>14</td><td class=bar><span style="width:70.0%"></span></td></tr><tr><th>仮説 H</th><td class=num>3</td><td class=bar><span style="width:15.0%"></span></td></tr><tr><th>登録 P</th><td class=num>4</td><td class=bar><span style="width:20.0%"></span></td></tr><tr><th>実行 X</th><td class=num>20</td><td class=bar><span style="width:100.0%"></span></td></tr><tr><th>証拠 E</th><td class=num>15</td><td class=bar><span style="width:75.0%"></span></td></tr><tr><th>主張 C</th><td class=num>16</td><td class=bar><span style="width:80.0%"></span></td></tr><tr><th>教訓 L</th><td class=num>11</td><td class=bar><span style="width:55.0%"></span></td></tr></tbody></table></div>
+<div><figure><figcaption>日ごとに積まれたノード数</figcaption><svg viewBox="0 0 1040 150" width="100%" role="img" aria-label="日ごとに積まれたノード数">
+<line class="grid" x1="42" y1="124" x2="1028" y2="124"/>
+<text class="tick" x="36" y="21" text-anchor="end">19</text>
+<line class="grid" x1="42" y1="16" x2="1028" y2="16"/>
+<g><title>2026-06-10　6 ノード</title><rect class="gb" x="36.9" y="88.6" width="10.2" height="35.4"/></g>
+<g><title>2026-07-15　6 ノード</title><rect class="gb" x="491.0" y="88.6" width="10.2" height="35.4"/></g>
+<g><title>2026-08-04　3 ノード</title><rect class="gb" x="750.4" y="106.3" width="10.2" height="17.7"/></g>
+<g><title>2026-08-05　3 ノード</title><rect class="gb" x="763.4" y="106.3" width="10.2" height="17.7"/></g>
+<g><title>2026-08-06　9 ノード</title><rect class="gb" x="776.4" y="70.9" width="10.2" height="53.1"/></g>
+<g><title>2026-08-08　9 ノード</title><rect class="gb" x="802.3" y="70.9" width="10.2" height="53.1"/></g>
+<g><title>2026-08-09　5 ノード</title><rect class="gb" x="815.3" y="94.5" width="10.2" height="29.5"/></g>
+<g><title>2026-08-10　2 ノード</title><rect class="gb" x="828.3" y="112.2" width="10.2" height="11.8"/></g>
+<g><title>2026-08-11　4 ノード</title><rect class="gb" x="841.2" y="100.4" width="10.2" height="23.6"/></g>
+<g><title>2026-08-12　19 ノード</title><rect class="gb" x="854.2" y="12.0" width="10.2" height="112.0"/></g>
+<g><title>2026-08-13　18 ノード</title><rect class="gb" x="867.2" y="17.9" width="10.2" height="106.1"/></g>
+<g><title>2026-08-14　1 ノード</title><rect class="gb" x="880.2" y="118.1" width="10.2" height="5.9"/></g>
+<g><title>2026-08-23　12 ノード</title><rect class="gb" x="996.9" y="53.3" width="10.2" height="70.7"/></g>
+<g><title>2026-08-24　2 ノード</title><rect class="gb" x="1009.9" y="112.2" width="10.2" height="11.8"/></g>
+<g><title>2026-08-25　1 ノード</title><rect class="gb" x="1022.9" y="118.1" width="10.2" height="5.9"/></g>
+<text class="tick" x="42" y="144">2026-06-10</text><text class="tick" x="1028" y="144" text-anchor="end">2026-08-25</text></svg></figure></div></div>
+
+<h2>失敗から出た規則 <span class=n>— 教訓</span></h2>
+<p class=lead>棄却と失敗を残すことがこの知識基盤の主な資産。多くの登録・判定に効いている順。</p>
+<ul class=lessons><li><span class=lid>L-direction-preregistration</span> R11 方向起動規律: 方向の最初の実験は P-ノード凍結後に走らせる<span class=src>　4 件の登録・判定から</span></li><li><span class=lid>L-honest-attribution</span> 主項の帰属を正直に（Rudnick）<span class=src>　2 件の登録・判定から</span></li><li><span class=lid>L-middle-law-self-refutation</span> 少数例外挿の自己反証（中央係数則）※ORDER_KB 必須<span class=src>　2 件の登録・判定から</span></li><li><span class=lid>L-novelty-search-scope</span> 新規性 claim は探索範囲を明示する<span class=src>　2 件の登録・判定から</span></li><li><span class=lid>L-extraction-vs-record</span> 知識化は記録層からの転記であり、要約器の出力を記録層より優先してはならない<span class=src>　2 件の登録・判定から</span></li><li><span class=lid>L-population-definition</span> 母集団定義（T-B）の明示<span class=src>　2 件の登録・判定から</span></li><li><span class=lid>L-deltac-novelty-self-negation</span> Δ_C 一般形の新規性を自ら否定（Aoki–Koyama Thm 3.1）※ORDER_KB 必須<span class=src>　1 件の登録・判定から</span></li><li><span class=lid>L-monitor-predicate-fragile</span> monitor 述語の二重故障（早期投入）<span class=src>　1 件の登録・判定から</span></li><li><span class=lid>L-parallel-timeout-headroom</span> 並列度は timeout 余裕で判断<span class=src>　1 件の登録・判定から</span></li><li><span class=lid>L-byte-fidelity</span> バイト忠実性（CRLF・gz 内容 sha）<span class=src>　1 件の登録・判定から</span></li><li><span class=lid>L-verify-script-in-repo</span> 検証スクリプトは作成時点で repo に置く（/tmp 常駐禁止・規約 R6-2）<span class=src>　1 件の登録・判定から</span></li></ul>
+
+<footer>生成: knowledge/tools/kb_progress.py（手編集禁止）。
+判定と台帳の出どころは構造化欄 → values.ledger → statement の散文の順に見ている（kb_ledger.py）。</footer>
+</main></body></html>
