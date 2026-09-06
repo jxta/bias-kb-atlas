@@ -1,0 +1,128 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "O-ff-q3-family",
+ "type": "Object",
+ "label": "関数体 F_3(t) 二次指標族（Rudnick 超楕円アンサンブル、親）",
+ "statement": "F_3[t] の平方自由モニック多項式 D（deg d=2g+1）が定める二次指標族。全世代 O-ff-q3-d5…d17 の親。定義=計画書 v1.1・EXEC_A_v2。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-05",
+  "visibility": "bias-shared",
+  "statu": [
+   "0030"
+  ]
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=O-ff-q3-family",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/O-ff-q3-family.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-05",
+  "links_out": [],
+  "links_in": [
+   {
+    "rel": "about",
+    "from": "C-1q-law",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "about",
+    "from": "C-boundary-closedform",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "about",
+    "from": "C-~da9c96064a",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~1ea6617091",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-registered-prediction-method",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "about",
+    "from": "H-d19-registered",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "about",
+    "from": "H-middle-weil-sum",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "related",
+    "from": "O-~fd55ec0fec",
+    "bidir": true,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-ff-q3-d11",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-ff-q3-d13",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-ff-q3-d15",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-ff-q3-d17",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-ff-q3-d19",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-ff-q3-d5",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-ff-q3-d7",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-ff-q3-d9",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

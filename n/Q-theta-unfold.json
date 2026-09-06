@@ -1,0 +1,41 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "Q-theta-unfold",
+ "type": "Quantity",
+ "label": "proper θ(T)/π unfolding",
+ "definition": "Λ=C^{s/2}∏Γ_ℝ(s+μ_j)L、μ_j を lfunparams から実取得。degree 交絡・archimedean artifact を解消。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-07-15",
+  "visibility": "bias-shared"
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=Q-theta-unfold",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/Q-theta-unfold.html",
+  "line": "O-fs-family",
+  "date": "2026-07-15",
+  "links_out": [],
+  "links_in": [
+   {
+    "rel": "quantities",
+    "from": "C-ks-duality-dual",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "from": "C-~942e01d4cf",
+    "bidir": false,
+    "stub": true
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

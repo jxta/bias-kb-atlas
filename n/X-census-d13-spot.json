@@ -1,0 +1,74 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "X-census-d13-spot",
+ "type": "ExecutionUnit",
+ "tier": "spot",
+ "label": "census d=13 凍結集計からの境界余剰 再計算（offline spot）",
+ "entry": "python3 -c \"import json;a=json.load(open('subprojects/hurwitz_ea/ea_d13_aggregates.json'));print(a['boundary_excess_n2g'])\"",
+ "inputs": [
+  {
+   "ref": "subprojects/hurwitz_ea/ea_d13_aggregates.json",
+   "sha256": "9496aaeb94787031203aa8e99dfe08654fa45bd6b6ab400d8592cc4d5127c0c3",
+   "sha_kind": "content"
+  }
+ ],
+ "expected": [
+  {
+   "name": "boundary_excess",
+   "value": -0.4949126864583562,
+   "tolerance": "exact(transcribed)"
+  }
+ ],
+ "env": {
+  "tool": "python3",
+  "offline": true
+ },
+ "verifies": [
+  "E-census-d13"
+ ],
+ "independence": "凍結 JSON の記録値の直読（census 本走と独立、mdx 不要）",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-06",
+  "visibility": "bias-shared",
+  "statu": [
+   "0078",
+   "0030"
+  ]
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=X-census-d13-spot",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/X-census-d13-spot.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-06",
+  "links_out": [
+   {
+    "rel": "verifies",
+    "to": "E-census-d13",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "grounded_in",
+    "from": "E-census-d13",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": {
+   "status": "PASS",
+   "got": "-0.4949126864583562",
+   "want": "-0.4949126864583562",
+   "note": ""
+  },
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

@@ -1,0 +1,77 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "X-middle-e10",
+ "type": "ExecutionUnit",
+ "label": "中央係数 Σ_P A_5 の直接計算（e=10）",
+ "tier": "accept",
+ "entry": "F_3, deg P=10 の全既約に対し A_5(P) を直接総和し -N_q(10) と照合",
+ "inputs": [
+  {
+   "ref": "subprojects/hurwitz_ea/o29_coefficient_sum_closed_form.md"
+  }
+ ],
+ "expected": [
+  {
+   "name": "sum_A5_e10",
+   "value": -6024,
+   "tolerance": "exact"
+  },
+  {
+   "name": "predicted_-Nq10",
+   "value": -5880,
+   "tolerance": "exact"
+  }
+ ],
+ "env": {
+  "tool": "pari",
+  "k4_status": "mdx full-tier re-run 2026-09-05 (batch 2, J10, mdx-01) PASS（gp: ΣA₅=−6024 ≠ −N₃(10)=−5880）; report: t2/k4_rerun_2026-09-05_batch2/REPORT.md"
+ },
+ "verifies": [
+  "E-middle-e10"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-13",
+  "visibility": "bias-shared",
+  "statu": [
+   "0062",
+   "0063",
+   "0086"
+  ]
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=X-middle-e10",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/X-middle-e10.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-13",
+  "links_out": [
+   {
+    "rel": "verifies",
+    "to": "E-middle-e10",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "grounded_in",
+    "from": "E-middle-e10",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": {
+   "status": "PENDING",
+   "got": "",
+   "want": "",
+   "note": "mdx full-tier re-run 2026-09-05 (batch 2, J10, mdx-01) PASS（gp: ΣA₅=−6024 ≠ −N₃(10)=−5880）; report: t2/k4_rerun_2026-09-05_batch2/REPORT.md"
+  },
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

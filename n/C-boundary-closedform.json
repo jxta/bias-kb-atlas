@@ -1,0 +1,205 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "C-boundary-closedform",
+ "type": "Claim",
+ "label": "境界 O 項の閉形式（Theorem 1・厳密）",
+ "statement": "超楕円境界余剰の O 項は閉形式 O(g,q)（Q-boundary-oterm）で厳密に与えられる。Rudnick の最上位係数 A_{e-1}=-q^{e/2-1}（関数等式・根符号+1）＋初等母関数のみを使用し、一般 A_j は不要。",
+ "status": "established",
+ "supported_by": [
+  "E-boundary-closedform",
+  "E-census-d11",
+  "E-census-d13",
+  "E-census-d15"
+ ],
+ "counterpoints": "主項・根符号は Rudnick に帰属（正直に明記）。新規性は n=2g 二次項の閉形式化。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-12",
+  "visibility": "bias-shared",
+  "statu": [
+   "0056",
+   "0057"
+  ]
+ },
+ "about": [
+  "O-ff-q3-family"
+ ],
+ "quantities": [
+  "Q-boundary-oterm",
+  "Q-1q-law"
+ ],
+ "related": [
+  "Q-~a980deff15",
+  "C-~f3185d2c43"
+ ],
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-boundary-closedform",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/C-boundary-closedform.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-12",
+  "links_out": [
+   {
+    "rel": "about",
+    "to": "O-ff-q3-family",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "to": "Q-boundary-oterm",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "to": "Q-1q-law",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-boundary-closedform",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-census-d11",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-census-d13",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-census-d15",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "related",
+    "to": "Q-~a980deff15",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "related",
+    "to": "C-~f3185d2c43",
+    "bidir": false,
+    "stub": true
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "related",
+    "from": "C-~1ea6617091",
+    "bidir": true,
+    "stub": true
+   },
+   {
+    "rel": "taught_by",
+    "from": "L-honest-attribution",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": {
+   "evidence": [
+    "E-boundary-closedform",
+    "E-census-d11",
+    "E-census-d13",
+    "E-census-d15"
+   ],
+   "execution_units": [
+    {
+     "id": "X-boundary-closedform",
+     "tier": "spot",
+     "offline": true,
+     "bundled": true,
+     "stub": false,
+     "rerun": {
+      "status": "PASS",
+      "got": "closedform_vs_census(1/q law): match",
+      "want": "match",
+      "note": ""
+     }
+    },
+    {
+     "id": "X-census-d11",
+     "tier": "full",
+     "offline": false,
+     "bundled": false,
+     "stub": false,
+     "rerun": null
+    },
+    {
+     "id": "X-census-d11-spot",
+     "tier": "spot",
+     "offline": true,
+     "bundled": true,
+     "stub": false,
+     "rerun": {
+      "status": "PASS",
+      "got": "-0.49076650925398013",
+      "want": "-0.49076650925398013",
+      "note": ""
+     }
+    },
+    {
+     "id": "X-census-d13",
+     "tier": "full",
+     "offline": false,
+     "bundled": false,
+     "stub": false,
+     "rerun": null
+    },
+    {
+     "id": "X-census-d13-spot",
+     "tier": "spot",
+     "offline": true,
+     "bundled": true,
+     "stub": false,
+     "rerun": {
+      "status": "PASS",
+      "got": "-0.4949126864583562",
+      "want": "-0.4949126864583562",
+      "note": ""
+     }
+    },
+    {
+     "id": "X-census-d15",
+     "tier": "full",
+     "offline": false,
+     "bundled": false,
+     "stub": false,
+     "rerun": null
+    },
+    {
+     "id": "X-census-d15-spot",
+     "tier": "spot",
+     "offline": true,
+     "bundled": true,
+     "stub": false,
+     "rerun": {
+      "status": "PASS",
+      "got": "-0.4989715075302701",
+      "want": "-0.4989715075302701",
+      "note": ""
+     }
+    }
+   ],
+   "protocols": []
+  },
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

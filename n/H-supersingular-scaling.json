@@ -1,0 +1,69 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "H-supersingular-scaling",
+ "type": "Hypothesis",
+ "label": "m_D=2 層の増大則（24→72）",
+ "statement": "m_D=2（超特異）層の個体数が d13=24 → d15=72 と増大。世代スケーリング則の存在を仮説として登録（要 d17 層抽出）。",
+ "status": "open",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-08",
+  "visibility": "bias-shared",
+  "statu": [
+   "0048"
+  ]
+ },
+ "about": [
+  "O-ff-d13-m2-layer",
+  "O-ff-d15-m2-layer"
+ ],
+ "quantities": [
+  "Q-census-count"
+ ],
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=H-supersingular-scaling",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/H-supersingular-scaling.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-08",
+  "links_out": [
+   {
+    "rel": "about",
+    "to": "O-ff-d13-m2-layer",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "about",
+    "to": "O-ff-d15-m2-layer",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "to": "Q-census-count",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "related",
+    "from": "O-ff-d17-m2-layer",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "grounding": {
+   "evidence": [],
+   "execution_units": [],
+   "protocols": []
+  },
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

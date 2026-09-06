@@ -1,0 +1,239 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "O-fs-family",
+ "type": "Object",
+ "label": "FS 統一則 研究族（L関数横断）",
+ "statement": "偏り勾配 slope=−½·FS(ρ)−m を motive→base-change→genuine automorphic まで貫通検証する L関数横断の親族。FS=Frobenius–Schur 指標(±1/0)、m=ord_{s=½}L。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-07-15",
+  "visibility": "bias-shared"
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=O-fs-family",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/O-fs-family.html",
+  "line": "O-fs-family",
+  "date": "2026-07-15",
+  "links_out": [],
+  "links_in": [
+   {
+    "rel": "about",
+    "from": "C-~c476864325",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~e6cf3a1ca9",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~b69286b468",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~8a1a784864",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~f3185d2c43",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~da9c96064a",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-ks-duality-dual",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "about",
+    "from": "C-~b9d6f2f945",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~770058d2d4",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~01bca45541",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~0ceefec61b",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~1ea6617091",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~4629cdeaa1",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~942e01d4cf",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "H-~7edddd8206",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "H-~980b933fef",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "H-~0a18cf4c9f",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "H-~bf1691830c",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "H-~beda36b557",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~05643f3352",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~6fee6bda63",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~4ef56aca1f",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~5041cc444e",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~8547f78344",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~b2546a9eae",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "related",
+    "from": "O-~fd55ec0fec",
+    "bidir": true,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~81a9e15371",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~2d580a8b0b",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~558618c70a",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~0641972365",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~506ed88b26",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~5fc034130b",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~1b6c8281a4",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~7751208392",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~77fe1dcc63",
+    "bidir": false,
+    "stub": true
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

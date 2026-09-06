@@ -1,0 +1,57 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "O-ff-d15-m2-layer",
+ "type": "Object",
+ "label": "d=15 の m_D=2 層（72 個体、全行 repo 凍結）",
+ "statement": "世代 d=15 で m_D=2 を持つ 72 個体の層。全行が ea_d15_aggregates.json の m_gt0_rows に凍結。受入 72/72。24→72 の増加は H-supersingular-scaling の観察対象。",
+ "derives_from": [
+  "O-ff-q3-d15"
+ ],
+ "artifacts": [
+  {
+   "path": "subprojects/hurwitz_ea/ea_d15_aggregates.json",
+   "sha256": "964e8ac7758e39523066825cb3cc346256e915e4b9c3ddb1114bc9862c7715d4",
+   "sha_kind": "content",
+   "location": "repo",
+   "role": "72 個体の全行（凍結）"
+  }
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-08",
+  "visibility": "bias-shared",
+  "statu": [
+   "0048"
+  ]
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=O-ff-d15-m2-layer",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/O-ff-d15-m2-layer.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-08",
+  "links_out": [
+   {
+    "rel": "derives_from",
+    "to": "O-ff-q3-d15",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "about",
+    "from": "H-supersingular-scaling",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

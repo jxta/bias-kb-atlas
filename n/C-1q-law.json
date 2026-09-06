@@ -1,0 +1,176 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "C-1q-law",
+ "type": "Claim",
+ "label": "1/q 法則（境界余剰の主漸近）",
+ "statement": "O(g,q) ~ 1/[(q-1)q^g]。census d11–d17 の実測境界余剰と整合。",
+ "status": "established",
+ "supported_by": [
+  "E-census-d11",
+  "E-census-d13",
+  "E-census-d15",
+  "E-census-d17"
+ ],
+ "counterpoints": "q^{2g}-2g N_q(2g)=q^g+下位 の初等評価に依存。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-12",
+  "visibility": "bias-shared",
+  "statu": [
+   "0056"
+  ]
+ },
+ "about": [
+  "O-ff-q3-family"
+ ],
+ "quantities": [
+  "Q-1q-law"
+ ],
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-1q-law",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/C-1q-law.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-12",
+  "links_out": [
+   {
+    "rel": "about",
+    "to": "O-ff-q3-family",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "to": "Q-1q-law",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-census-d11",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-census-d13",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-census-d15",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-census-d17",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [],
+  "grounding": {
+   "evidence": [
+    "E-census-d11",
+    "E-census-d13",
+    "E-census-d15",
+    "E-census-d17"
+   ],
+   "execution_units": [
+    {
+     "id": "X-census-d11",
+     "tier": "full",
+     "offline": false,
+     "bundled": false,
+     "stub": false,
+     "rerun": null
+    },
+    {
+     "id": "X-census-d11-spot",
+     "tier": "spot",
+     "offline": true,
+     "bundled": true,
+     "stub": false,
+     "rerun": {
+      "status": "PASS",
+      "got": "-0.49076650925398013",
+      "want": "-0.49076650925398013",
+      "note": ""
+     }
+    },
+    {
+     "id": "X-census-d13",
+     "tier": "full",
+     "offline": false,
+     "bundled": false,
+     "stub": false,
+     "rerun": null
+    },
+    {
+     "id": "X-census-d13-spot",
+     "tier": "spot",
+     "offline": true,
+     "bundled": true,
+     "stub": false,
+     "rerun": {
+      "status": "PASS",
+      "got": "-0.4949126864583562",
+      "want": "-0.4949126864583562",
+      "note": ""
+     }
+    },
+    {
+     "id": "X-census-d15",
+     "tier": "full",
+     "offline": false,
+     "bundled": false,
+     "stub": false,
+     "rerun": null
+    },
+    {
+     "id": "X-census-d15-spot",
+     "tier": "spot",
+     "offline": true,
+     "bundled": true,
+     "stub": false,
+     "rerun": {
+      "status": "PASS",
+      "got": "-0.4989715075302701",
+      "want": "-0.4989715075302701",
+      "note": ""
+     }
+    },
+    {
+     "id": "X-census-d17",
+     "tier": "full",
+     "offline": false,
+     "bundled": false,
+     "stub": false,
+     "rerun": null
+    },
+    {
+     "id": "X-census-d17-spot",
+     "tier": "spot",
+     "offline": true,
+     "bundled": true,
+     "stub": false,
+     "rerun": {
+      "status": "PASS",
+      "got": "-0.4994337027369984",
+      "want": "-0.4994337027369984",
+      "note": ""
+     }
+    }
+   ],
+   "protocols": []
+  },
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

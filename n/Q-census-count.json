@@ -1,0 +1,38 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "Q-census-count",
+ "type": "Quantity",
+ "label": "census 母数 2·3^{d-1}",
+ "definition": "F_3[t] deg d 平方自由モニック全数 C1=2·3^{d-1}。d5=162, d7=1458, d9=13122, d11=118098, d13=1062882, d15=9565938, d17=86093442。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-04",
+  "visibility": "bias-shared",
+  "statu": [
+   "0030"
+  ]
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=Q-census-count",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/Q-census-count.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-04",
+  "links_out": [],
+  "links_in": [
+   {
+    "rel": "quantities",
+    "from": "H-supersingular-scaling",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

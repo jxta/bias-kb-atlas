@@ -1,0 +1,60 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "O-q8-8t5-census",
+ "type": "Object",
+ "label": "Q8=8T5 census 表（~50,000体）",
+ "statement": "γ₁₋₂₀+m_rho_0+L値。chebyshev-bias 例選定の一次ソース。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-06-10",
+  "visibility": "bias-shared"
+ },
+ "derives_from": [
+  "O-dihedral-artin-family"
+ ],
+ "related": [
+  "O-~4ef56aca1f"
+ ],
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=O-q8-8t5-census",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/O-q8-8t5-census.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-06-10",
+  "links_out": [
+   {
+    "rel": "derives_from",
+    "to": "O-dihedral-artin-family",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "related",
+    "to": "O-~4ef56aca1f",
+    "bidir": false,
+    "stub": true
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "about",
+    "from": "C-~9df8de63fb",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-thm71-q8-census",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

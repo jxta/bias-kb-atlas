@@ -1,0 +1,48 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "L-population-definition",
+ "type": "Lesson",
+ "label": "母集団定義（T-B）の明示",
+ "statement": "検定の母集団(T-A/T-B/w層)を取り違えると p 値の意味が変わる。T-B 母集団の両側 p=0.002052795540172312 は T-B の定義(m_ρ 計算済 40,125 の部分集合)を明示して初めて解釈可能。母集団定義を凍結記録に必ず添える。",
+ "taught_by": [
+  "E-~cd8c94c2ad",
+  "C-thm71-q8-census"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-23",
+  "visibility": "bias-shared",
+  "statu": [
+   "0078"
+  ]
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=L-population-definition",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/L-population-definition.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-08-23",
+  "links_out": [
+   {
+    "rel": "taught_by",
+    "to": "E-~cd8c94c2ad",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "taught_by",
+    "to": "C-thm71-q8-census",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

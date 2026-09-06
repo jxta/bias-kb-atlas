@@ -1,0 +1,97 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "C-deltac-identity",
+ "type": "Claim",
+ "label": "Q8 Δ_C 厳密恒等式（結果は真、新規性は主張しない）",
+ "statement": "Delta_{±i}=(1/4)(T_1−T_2−T_3), Delta_1+Delta_{-1}=(1/4)(T_1+T_2+T_3) は厳密恒等式。位数4の3類は合同のみで決定。8次多項式不使用 Python が gp を 2.3e-13 再現。",
+ "status": "established",
+ "supported_by": [
+  "E-o18-deltac"
+ ],
+ "counterpoints": "★新規性は主張しない: Δ=(2/h)Σ_{ψ≠1}S_ψ と Δ_C 一般形は Aoki–Koyama (arXiv:2203.12266) Theorem 3.1 / 2.2 が先行（青木先生ご自身の論文）。残る価値は族統計の前処理と Q8 の具体的帰結のみ。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-12",
+  "visibility": "bias-shared",
+  "statu": [
+   "0058"
+  ],
+  "pr": [
+   "#181"
+  ]
+ },
+ "about": [
+  "O-nf-q8-8t5"
+ ],
+ "quantities": [
+  "Q-deltac-identity"
+ ],
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-deltac-identity",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/C-deltac-identity.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-08-12",
+  "links_out": [
+   {
+    "rel": "about",
+    "to": "O-nf-q8-8t5",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "to": "Q-deltac-identity",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-o18-deltac",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "taught_by",
+    "from": "L-deltac-novelty-self-negation",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "taught_by",
+    "from": "L-novelty-search-scope",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": {
+   "evidence": [
+    "E-o18-deltac"
+   ],
+   "execution_units": [
+    {
+     "id": "X-o18-deltac",
+     "tier": "accept",
+     "offline": false,
+     "bundled": false,
+     "stub": false,
+     "rerun": {
+      "status": "PENDING",
+      "got": "",
+      "want": "",
+      "note": "mdx full-tier re-run 2026-09-05 PASS 1/1（ORDER 0013 夜間計画 (c) J4/J5、mdx-01; 記録体数は旧 qf1/batch_rest で再現、report: t2/k4_rerun_2026-09-05/REPORT.md）"
+     }
+    }
+   ],
+   "protocols": []
+  },
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

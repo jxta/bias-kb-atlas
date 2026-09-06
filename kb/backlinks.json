@@ -13,5 +13,1574 @@
   "related": "related"
  },
  "note": "target id -> incoming links. bidir = the inverse link is also written in the record layer; stub = the source is a redacted (private) node.",
- "backlinks": {}
+ "backlinks": {
+  "C-boundary-closedform": [
+   {
+    "from": "C-~1ea6617091",
+    "rel": "related",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "L-honest-attribution",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "C-d11-registered-hit": [
+   {
+    "from": "L-direction-preregistration",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "C-d15-registered-hit": [
+   {
+    "from": "L-direction-preregistration",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "C-d19-sign-reversal": [
+   {
+    "from": "H-d19-registered",
+    "rel": "promoted_to",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "L-extraction-vs-record",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "C-deltac-identity": [
+   {
+    "from": "L-deltac-novelty-self-negation",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "L-novelty-search-scope",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "C-ks-duality-dual": [
+   {
+    "from": "C-~0ceefec61b",
+    "rel": "related",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~9d27ec41f5",
+    "rel": "related",
+    "bidir": false,
+    "stub": true
+   }
+  ],
+  "C-middle-law-false": [
+   {
+    "from": "L-middle-law-self-refutation",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "C-nonabelian-dictionary": [
+   {
+    "from": "C-~da9c96064a",
+    "rel": "related",
+    "bidir": false,
+    "stub": true
+   }
+  ],
+  "C-novelty-n2g": [
+   {
+    "from": "L-honest-attribution",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "L-novelty-search-scope",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "C-q8-w-diagonal": [
+   {
+    "from": "E-q8-w-crosstab",
+    "rel": "supports",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "C-registered-prediction-method": [
+   {
+    "from": "L-direction-preregistration",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "C-thm71-q8-census": [
+   {
+    "from": "C-nonabelian-dictionary",
+    "rel": "related",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "L-population-definition",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "C-~f3185d2c43": [
+   {
+    "from": "C-boundary-closedform",
+    "rel": "related",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "E-a1-mobius": [
+   {
+    "from": "C-a1-mobius",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "X-a1-mobius",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "E-boundary-closedform": [
+   {
+    "from": "C-boundary-closedform",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-cg-sequence",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-novelty-n2g",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "X-boundary-closedform",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "E-census-d11": [
+   {
+    "from": "C-1q-law",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-boundary-closedform",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-d11-registered-hit",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "X-census-d11",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   },
+   {
+    "from": "X-census-d11-spot",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "E-census-d13": [
+   {
+    "from": "C-1q-law",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-boundary-closedform",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "X-census-d13",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   },
+   {
+    "from": "X-census-d13-spot",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "E-census-d15": [
+   {
+    "from": "C-1q-law",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-boundary-closedform",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-d15-registered-hit",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "X-census-d15",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   },
+   {
+    "from": "X-census-d15-spot",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "E-census-d17": [
+   {
+    "from": "C-1q-law",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-d17-registered-hit",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "X-census-d17",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   },
+   {
+    "from": "X-census-d17-spot",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "E-census-d19": [
+   {
+    "from": "C-d19-sign-reversal",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "X-census-d19",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "E-d15-regpred": [
+   {
+    "from": "C-registered-prediction-method",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-~7d498a9d57",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~90243b1c6b",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "H-~117b286a47",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "X-d15-regpred",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "E-ks-duality": [
+   {
+    "from": "C-ks-duality-dual",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-~00c03fd213",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~0ceefec61b",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~4629cdeaa1",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~942e01d4cf",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~da04b361d2",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "X-ks-duality",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "E-middle-e10": [
+   {
+    "from": "C-middle-law-false",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "L-middle-law-self-refutation",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "X-middle-e10",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "E-o18-deltac": [
+   {
+    "from": "C-deltac-identity",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "X-o18-deltac",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "E-q8-ks": [
+   {
+    "from": "C-nonabelian-dictionary",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "L-monitor-predicate-fragile",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "L-parallel-timeout-headroom",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "X-q8-ks",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   },
+   {
+    "from": "X-q8-ks-twosided",
+    "rel": "verifies",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "E-q8-note": [
+   {
+    "from": "C-thm71-q8-census",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-~9df8de63fb",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~c7897ab848",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~cc3dce7737",
+    "rel": "supported_by",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "X-q8-note",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "E-q8-w-crosstab": [
+   {
+    "from": "C-q8-w-diagonal",
+    "rel": "supported_by",
+    "bidir": true,
+    "stub": false
+   },
+   {
+    "from": "L-byte-fidelity",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "L-extraction-vs-record",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "X-binom-band",
+    "rel": "verifies",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "X-q8-crosstab-accept",
+    "rel": "verifies",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "E-~cd8c94c2ad": [
+   {
+    "from": "L-population-definition",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "H-supersingular-scaling": [
+   {
+    "from": "O-ff-d17-m2-layer",
+    "rel": "related",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "L-direction-preregistration": [
+   {
+    "from": "O-~5142628b27",
+    "rel": "related",
+    "bidir": false,
+    "stub": true
+   }
+  ],
+  "L-novelty-search-scope": [
+   {
+    "from": "H-~980b933fef",
+    "rel": "related",
+    "bidir": false,
+    "stub": true
+   }
+  ],
+  "L-~8d81f80c7b": [
+   {
+    "from": "L-direction-preregistration",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "O-dihedral-artin-family": [
+   {
+    "from": "C-~1ea6617091",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~576d391e34",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~6d1d56fae8",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~c4298b355c",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~cc3dce7737",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~da9c96064a",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~dd227466f6",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~ebdd40fca0",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "H-~04a863a967",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "H-~21ba2a6e67",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "H-~62efc6eaab",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "H-~a0bd25b07d",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "H-~e28a877bc2",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-q8-8t5-census",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "O-~044d1b1cad",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~1ead12183f",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~3da8cb7ba2",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~43583251d5",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~4bf924b13a",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~80bd6947d5",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~ba27ff2a52",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~fd55ec0fec",
+    "rel": "related",
+    "bidir": false,
+    "stub": true
+   }
+  ],
+  "O-ff-d13-m2-layer": [
+   {
+    "from": "H-supersingular-scaling",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "O-ff-d15-m2-layer": [
+   {
+    "from": "H-supersingular-scaling",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "O-ff-q3-d11": [
+   {
+    "from": "C-d11-registered-hit",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "O-ff-q3-d13": [
+   {
+    "from": "O-ff-d13-m2-layer",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "O-ff-q3-d15": [
+   {
+    "from": "C-d15-registered-hit",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "O-ff-d15-m2-layer",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "O-ff-q3-d17": [
+   {
+    "from": "C-d17-registered-hit",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "O-ff-d17-m2-layer",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "O-ff-q3-d19": [
+   {
+    "from": "C-d19-sign-reversal",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "O-ff-q3-family": [
+   {
+    "from": "C-1q-law",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-boundary-closedform",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-registered-prediction-method",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-~1ea6617091",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~da9c96064a",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "H-d19-registered",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "H-middle-weil-sum",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "O-ff-q3-d11",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "O-ff-q3-d13",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "O-ff-q3-d15",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "O-ff-q3-d17",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "O-ff-q3-d19",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "O-ff-q3-d5",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "O-ff-q3-d7",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "O-ff-q3-d9",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "O-~fd55ec0fec",
+    "rel": "related",
+    "bidir": false,
+    "stub": true
+   }
+  ],
+  "O-fs-family": [
+   {
+    "from": "C-ks-duality-dual",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-~01bca45541",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~0ceefec61b",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~1ea6617091",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~4629cdeaa1",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~770058d2d4",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~8a1a784864",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~942e01d4cf",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~b69286b468",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~b9d6f2f945",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~c476864325",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~da9c96064a",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~e6cf3a1ca9",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "C-~f3185d2c43",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "H-~0a18cf4c9f",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "H-~7edddd8206",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "H-~980b933fef",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "H-~beda36b557",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "H-~bf1691830c",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~05643f3352",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~0641972365",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~1b6c8281a4",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~2d580a8b0b",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~4ef56aca1f",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~5041cc444e",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~506ed88b26",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~558618c70a",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~5fc034130b",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~6fee6bda63",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~7751208392",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~77fe1dcc63",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~81a9e15371",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~8547f78344",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~b2546a9eae",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "O-~fd55ec0fec",
+    "rel": "related",
+    "bidir": false,
+    "stub": true
+   }
+  ],
+  "O-nf-d4-control": [
+   {
+    "from": "C-nonabelian-dictionary",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "O-nf-q8-8t5": [
+   {
+    "from": "C-deltac-identity",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-nonabelian-dictionary",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-q8-w-diagonal",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "O-q8-8t5-census": [
+   {
+    "from": "C-thm71-q8-census",
+    "rel": "about",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-~9df8de63fb",
+    "rel": "about",
+    "bidir": false,
+    "stub": true
+   }
+  ],
+  "O-~4ef56aca1f": [
+   {
+    "from": "O-nf-q8-8t5",
+    "rel": "related",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "O-q8-8t5-census",
+    "rel": "related",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "P-census-exec-a": [
+   {
+    "from": "P-q8-step2-w1",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "E-census-d11",
+    "rel": "registered_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "E-census-d13",
+    "rel": "registered_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "E-census-d15",
+    "rel": "registered_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "E-census-d17",
+    "rel": "registered_by",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "P-o19-registration": [
+   {
+    "from": "C-d19-sign-reversal",
+    "rel": "registered_by",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "P-q8-step2-w1": [
+   {
+    "from": "C-q8-w-diagonal",
+    "rel": "registered_by",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "P-registered-prediction": [
+   {
+    "from": "P-o19-registration",
+    "rel": "derives_from",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-d11-registered-hit",
+    "rel": "registered_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-d15-registered-hit",
+    "rel": "registered_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-d17-registered-hit",
+    "rel": "registered_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-registered-prediction-method",
+    "rel": "registered_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-~39dd6aae71",
+    "rel": "registered_by",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "E-d15-regpred",
+    "rel": "registered_by",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "E-~db72786f21",
+    "rel": "registered_by",
+    "bidir": false,
+    "stub": true
+   }
+  ],
+  "Q-1q-law": [
+   {
+    "from": "C-1q-law",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-boundary-closedform",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-d11-registered-hit",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-d15-registered-hit",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-d17-registered-hit",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "Q-a1-mobius": [
+   {
+    "from": "C-a1-mobius",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "Q-avg-ap2-minus2": [
+   {
+    "from": "C-thm71-q8-census",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "Q-boundary-oterm": [
+   {
+    "from": "C-boundary-closedform",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-novelty-n2g",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "Q-census-count": [
+   {
+    "from": "H-supersingular-scaling",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "Q-cg-sequence": [
+   {
+    "from": "C-cg-sequence",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "Q-d19-registered": [
+   {
+    "from": "C-d19-sign-reversal",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "H-d19-registered",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "Q-deltac-identity": [
+   {
+    "from": "C-deltac-identity",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "Q-ks-duality": [
+   {
+    "from": "C-ks-duality-dual",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-~0ceefec61b",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "from": "Q-~3955e22c2e",
+    "rel": "related",
+    "bidir": false,
+    "stub": true
+   }
+  ],
+  "Q-m-central": [
+   {
+    "from": "C-q8-w-diagonal",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "Q-middle-law-false": [
+   {
+    "from": "C-middle-law-false",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "H-middle-weil-sum",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "Q-nonabelian-commutator": [
+   {
+    "from": "C-nonabelian-dictionary",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "Q-root-number": [
+   {
+    "from": "C-q8-w-diagonal",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "Q-theta-unfold": [
+   {
+    "from": "C-ks-duality-dual",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "from": "C-~942e01d4cf",
+    "rel": "quantities",
+    "bidir": false,
+    "stub": true
+   }
+  ],
+  "Q-~178d988049": [
+   {
+    "from": "C-thm71-q8-census",
+    "rel": "related",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "Q-~a980deff15": [
+   {
+    "from": "C-boundary-closedform",
+    "rel": "related",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "X-a1-mobius": [
+   {
+    "from": "E-a1-mobius",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-boundary-closedform": [
+   {
+    "from": "E-boundary-closedform",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-census-d11": [
+   {
+    "from": "E-census-d11",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-census-d11-spot": [
+   {
+    "from": "E-census-d11",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-census-d13": [
+   {
+    "from": "E-census-d13",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-census-d13-spot": [
+   {
+    "from": "E-census-d13",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-census-d15": [
+   {
+    "from": "E-census-d15",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-census-d15-spot": [
+   {
+    "from": "E-census-d15",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-census-d17": [
+   {
+    "from": "E-census-d17",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-census-d17-spot": [
+   {
+    "from": "E-census-d17",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-census-d19": [
+   {
+    "from": "E-census-d19",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-d15-regpred": [
+   {
+    "from": "E-d15-regpred",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-ks-duality": [
+   {
+    "from": "E-ks-duality",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-middle-e10": [
+   {
+    "from": "E-middle-e10",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-o18-deltac": [
+   {
+    "from": "E-o18-deltac",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   },
+   {
+    "from": "L-verify-script-in-repo",
+    "rel": "taught_by",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "X-q8-crosstab-accept": [
+   {
+    "from": "E-q8-w-crosstab",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-q8-ks": [
+   {
+    "from": "E-q8-ks",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "X-q8-ks-twosided": [
+   {
+    "from": "E-q8-ks-twosided",
+    "rel": "grounded_in",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "X-q8-note": [
+   {
+    "from": "E-q8-note",
+    "rel": "grounded_in",
+    "bidir": true,
+    "stub": false
+   }
+  ]
+ }
 }

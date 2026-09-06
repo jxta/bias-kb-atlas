@@ -1,0 +1,76 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "E-o18-deltac",
+ "type": "Evidence",
+ "label": "Δ_C 恒等式=gp 測定 2.3e-13 一致、共分散 負",
+ "values": {
+  "fields": 1775,
+  "conductors": 11,
+  "max_abs_dev": 2.304e-13,
+  "covariance": -3.694e-07,
+  "floor": 0.000898,
+  "passed": "4/5",
+  "band_out": "pred#4 {5,8,44} vs {5,8,12}"
+ },
+ "artifacts": [
+  {
+   "path": "subprojects/q8/o18_result.md",
+   "role": "O-18 結果（PASS 4/5）",
+   "location": "repo"
+  }
+ ],
+ "grounded_in": [
+  "X-o18-deltac"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-12",
+  "visibility": "bias-shared",
+  "statu": [
+   "0058"
+  ],
+  "pr": [
+   "#181"
+  ]
+ },
+ "measures": {
+  "quantity": "Q-deltac-identity",
+  "on": "O-nf-q8-8t5"
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=E-o18-deltac",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/E-o18-deltac.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-08-12",
+  "links_out": [
+   {
+    "rel": "grounded_in",
+    "to": "X-o18-deltac",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "supported_by",
+    "from": "C-deltac-identity",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "verifies",
+    "from": "X-o18-deltac",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "L-extraction-vs-record",
+ "type": "Lesson",
+ "label": "知識化は記録層からの転記であり、要約器の出力を記録層より優先してはならない",
+ "statement": "d19 と実例 E-q8-w-crosstab の2件で、抽出/要約パイプラインが自分の記録層(STATU)より劣化した出力を生んだ。d19 は STATU 0059 §1 に census 774,840,978・符号反転的中が記録済みだったのに k1-d は『未確定』とし、E-q8-w-crosstab は k2 の completed 処理が values キー改名・measures 喪失・prov 置換で正本を劣化上書きした。教訓: 知識化ノードの値は必ず一次記録層(STATU/PR/凍結データ)から転記し、要約器の出力を記録より優先しない。main 上で accepted 済みノード本体の変更は meta 裁定必須(R10-2)。",
+ "taught_by": [
+  "C-d19-sign-reversal",
+  "E-q8-w-crosstab"
+ ],
+ "prov": {
+  "asserted_by": "meta-AI 検収 (統率AI 転記)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-23",
+  "visibility": "bias-shared",
+  "statu": [
+   "0074"
+  ],
+  "pr": [
+   "#233"
+  ]
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=L-extraction-vs-record",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/L-extraction-vs-record.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-23",
+  "links_out": [
+   {
+    "rel": "taught_by",
+    "to": "C-d19-sign-reversal",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "taught_by",
+    "to": "E-q8-w-crosstab",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

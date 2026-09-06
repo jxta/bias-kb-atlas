@@ -1,0 +1,45 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "Q-middle-law-false",
+ "type": "Quantity",
+ "label": "中央係数則（反例で偽と確定）",
+ "definition": "仮説 Σ_P A_{e/2}=-N_q(e) は e=2,6 でのみ成立、e=10 で破綻（Σ_P A_5=-6024 ≠ -5880）。均された Weil 和 Σ_{deg β=e}S0(β)=-e·N_q(e)（S0 は F_q 部分空間上の二次指標、Gauss/Soto-Andrade 型）へ帰着。少数例外挿の自己反証事例。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-13",
+  "visibility": "bias-shared",
+  "statu": [
+   "0062",
+   "0063"
+  ]
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=Q-middle-law-false",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/Q-middle-law-false.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-13",
+  "links_out": [],
+  "links_in": [
+   {
+    "rel": "quantities",
+    "from": "C-middle-law-false",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "from": "H-middle-weil-sum",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

@@ -1,0 +1,80 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "E-boundary-closedform",
+ "type": "Evidence",
+ "label": "閉形式=census 一致（Theorem 1）",
+ "values": {
+  "theorem": "1 (rigorous)",
+  "law": "O(g,q)~1/((q-1)q^g)"
+ },
+ "artifacts": [
+  {
+   "path": "papers/boundary_error_term/boundary_error_term.pdf",
+   "role": "証明清書（Theorem 1）",
+   "location": "repo"
+  }
+ ],
+ "grounded_in": [
+  "X-boundary-closedform"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-12",
+  "visibility": "bias-shared",
+  "statu": [
+   "0056"
+  ]
+ },
+ "measures": {
+  "quantity": "Q-boundary-oterm",
+  "on": "O-ff-q3-family"
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=E-boundary-closedform",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/E-boundary-closedform.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-12",
+  "links_out": [
+   {
+    "rel": "grounded_in",
+    "to": "X-boundary-closedform",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "supported_by",
+    "from": "C-boundary-closedform",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "from": "C-cg-sequence",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "from": "C-novelty-n2g",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "verifies",
+    "from": "X-boundary-closedform",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

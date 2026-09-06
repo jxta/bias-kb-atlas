@@ -1,6 +1,6 @@
 # bias-kb Atlas — public excerpt (claims grounded in re-executable evidence)
 
-> A machine-readable excerpt of a research knowledge base (bias-kb) in which every claim is linked, in both directions, to the evidence and the re-executable computation that produced it. 0 nodes selected by rule from a record layer of 853 nodes (private repository `jxta/ai4math-lab`, ref 593ef1e); generated 2026-09-06T01:07:58Z. Nothing here is hand-picked; the selection rule and the generator live in `knowledge/tools/kb_atlas.py`.
+> A machine-readable excerpt of a research knowledge base (bias-kb) in which every claim is linked, in both directions, to the evidence and the re-executable computation that produced it. 100 nodes selected by rule from a record layer of 853 nodes (private repository `jxta/ai4math-lab`, ref 593ef1e); generated 2026-09-06T01:07:58Z. Nothing here is hand-picked; the selection rule and the generator live in `knowledge/tools/kb_atlas.py`.
 
 ## Start here
 
@@ -21,17 +21,17 @@ The grounding chain: C.supported_by → E.grounded_in → X (with X.verifies →
 Redacted neighbours: ids of the form `<T>-~<10 hex>` (e.g. `E-~1a2b3c4d5e`, `"stub": true`) are nodes that exist in the record layer but are not in this excerpt; only the type is public. They distinguish "evidence exists but is private" from "no evidence". The hash is sha256 of the real id (first 10 hex), so the holder of the record layer can match them.
 Provenance: `prov.asserted_by` (who wrote the node), `prov.accepted_by` (who reviewed), `prov.date`, `prov.pr`, `prov.statu`, `prov.visibility`.
 
-## Re-execute (offline units bundled here: 0)
+## Re-execute (offline units bundled here: 7)
 
     git clone https://github.com/jxta/bias-kb-atlas.git && cd bias-kb-atlas
     pip install -r requirements.txt && python3 rerun.py          # checks input sha256, runs each `entry`, compares with `expected`
     python3 rerun.py X-census-d17-spot                             # one unit
 
-Units: . Full-tier units (large runs on the mdx supercomputer) are not bundled; their records, sha256 and registration bands are in the node JSON, and their k4 re-run status is `PENDING` = not re-executable from this bundle (private, not yet re-run here).
+Units: X-a1-mobius, X-boundary-closedform, X-census-d11-spot, X-census-d13-spot, X-census-d15-spot, X-census-d17-spot, X-q8-ks. Declared offline but not re-executable from this bundle because a frozen input is too large to ship or is annexed (rerun.py reports them as NOT-BUNDLED, not as failures): X-binom-band, X-q8-crosstab-accept. Full-tier units (large runs on the mdx supercomputer) are not bundled; their records, sha256 and registration bands are in the node JSON, and their k4 re-run status is `PENDING` = not re-executable from this bundle (private, not yet re-run here).
 
 ## Counts
 
-; claims 0 (status: ); redacted stubs 0.
+Claim 16, Evidence 15, ExecutionUnit 20, Hypothesis 3, Lesson 11, Object 17, Protocol 4, Quantity 14; claims 16 (status: established 9, provisional 1, registered-hit 5, rejected 1); redacted stubs 68.
 
 ## Optional
 

@@ -1,0 +1,62 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "X-ks-duality",
+ "type": "ExecutionUnit",
+ "label": "one-level density 族対称型測定",
+ "tier": "full",
+ "entry": "proper θ unfolding で族の one-level density を測り RMT(USp/SO_even/U)と照合",
+ "inputs": [
+  {
+   "ref": "subprojects/motivic_fsm/onelevel_density/"
+  }
+ ],
+ "expected": [
+  {
+   "name": "family_symmetry",
+   "value": "dihedral USp / EC SO_even / order3 U",
+   "tolerance": "SSE 比較"
+  }
+ ],
+ "env": {
+  "tool": "gp/sage/julia",
+  "note": "mdx run"
+ },
+ "verifies": [
+  "E-ks-duality"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-07-15",
+  "visibility": "bias-shared"
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=X-ks-duality",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/X-ks-duality.html",
+  "line": "O-fs-family",
+  "date": "2026-07-15",
+  "links_out": [
+   {
+    "rel": "verifies",
+    "to": "E-ks-duality",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "grounded_in",
+    "from": "E-ks-duality",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

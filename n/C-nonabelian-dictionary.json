@@ -1,0 +1,118 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "C-nonabelian-dictionary",
+ "type": "Claim",
+ "label": "非可換辞書 |C|=|[G,G]|（O-30）",
+ "statement": "クラス C が合同で決まる ⟺ |C|=|[G,G]|。Q8/D4=3/5, A4=2/4, S4=0/5, A5=0。機構は二次/三次/なしの三分。",
+ "status": "established",
+ "supported_by": [
+  "E-q8-ks"
+ ],
+ "counterpoints": "列直交で証明。A4/S4 体で Chebotarev 密度により確認。A5 は合同決定クラスなし。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-13",
+  "visibility": "bias-shared",
+  "statu": [
+   "0060",
+   "0061"
+  ]
+ },
+ "about": [
+  "O-nf-q8-8t5",
+  "O-nf-d4-control"
+ ],
+ "quantities": [
+  "Q-nonabelian-commutator"
+ ],
+ "related": [
+  "C-thm71-q8-census"
+ ],
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-nonabelian-dictionary",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/C-nonabelian-dictionary.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-08-13",
+  "links_out": [
+   {
+    "rel": "about",
+    "to": "O-nf-q8-8t5",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "about",
+    "to": "O-nf-d4-control",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "to": "Q-nonabelian-commutator",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-q8-ks",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "related",
+    "to": "C-thm71-q8-census",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "related",
+    "from": "C-~da9c96064a",
+    "bidir": true,
+    "stub": true
+   }
+  ],
+  "grounding": {
+   "evidence": [
+    "E-q8-ks"
+   ],
+   "execution_units": [
+    {
+     "id": "X-q8-ks",
+     "tier": "accept",
+     "offline": true,
+     "bundled": true,
+     "stub": false,
+     "rerun": {
+      "status": "PASS",
+      "got": "0",
+      "want": "0",
+      "note": ""
+     }
+    },
+    {
+     "id": "X-q8-ks-twosided",
+     "tier": "accept",
+     "offline": false,
+     "bundled": false,
+     "stub": false,
+     "rerun": {
+      "status": "PENDING",
+      "got": "",
+      "want": "",
+      "note": "mdx full-tier re-run 2026-09-05 (batch 2, J10, mdx-01) PASS（SO 20600/40125=0.5134、USp 2.3e-5 = d13 census 24/1,062,882）; report: t2/k4_rerun_2026-09-05_batch2/REPORT.md"
+     }
+    }
+   ],
+   "protocols": []
+  },
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

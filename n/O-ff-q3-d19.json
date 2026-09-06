@@ -1,0 +1,48 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "O-ff-q3-d19",
+ "type": "Object",
+ "label": "F_3(t) 二次指標 全数族 世代 d=19（g=9, C1=774,840,978）",
+ "statement": "deg d=19 の平方自由モニック全数族。C1=2·3^18=774840978。census 実測 nD=C1 完全一致・idfail=0・m_D 奇数=0（STATU 0059 §1）。",
+ "derives_from": [
+  "O-ff-q3-family"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons、STATU 0059 転記)",
+  "date": "2026-08-13",
+  "visibility": "bias-shared",
+  "statu": [
+   "0059"
+  ]
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=O-ff-q3-d19",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/O-ff-q3-d19.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-13",
+  "links_out": [
+   {
+    "rel": "derives_from",
+    "to": "O-ff-q3-family",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "about",
+    "from": "C-d19-sign-reversal",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

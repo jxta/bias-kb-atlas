@@ -1,0 +1,56 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "O-ff-q3-d17",
+ "type": "Object",
+ "label": "F_3(t) 二次指標 全数族 世代 d=17（g=8, C1=86,093,442）",
+ "statement": "deg d=17 の平方自由モニック全数族。C1=2·3^16=86093442。m_D=2 層 261 個体（census 完走で確定）。境界余剰 census 実測=-0.4994337027369984。",
+ "derives_from": [
+  "O-ff-q3-family"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-11",
+  "visibility": "bias-shared",
+  "statu": [
+   "0049",
+   "0050",
+   "0083"
+  ]
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=O-ff-q3-d17",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/O-ff-q3-d17.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-11",
+  "links_out": [
+   {
+    "rel": "derives_from",
+    "to": "O-ff-q3-family",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "about",
+    "from": "C-d17-registered-hit",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-ff-d17-m2-layer",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

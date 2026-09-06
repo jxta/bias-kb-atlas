@@ -1,0 +1,99 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "E-census-d13",
+ "type": "Evidence",
+ "label": "census d=13 実測（境界余剰 -0.4949126864583562）",
+ "values": {
+  "C1": 1062882,
+  "boundary_excess": -0.4949126864583562,
+  "m2_layer": 24
+ },
+ "artifacts": [
+  {
+   "path": "subprojects/hurwitz_ea/ea_d13_aggregates.json",
+   "role": "census 集計（凍結）",
+   "location": "repo",
+   "sha256": "9496aaeb94787031203aa8e99dfe08654fa45bd6b6ab400d8592cc4d5127c0c3",
+   "sha_kind": "content"
+  }
+ ],
+ "grounded_in": [
+  "X-census-d13",
+  "X-census-d13-spot"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-06",
+  "visibility": "bias-shared",
+  "statu": [
+   "0030"
+  ]
+ },
+ "measures": {
+  "quantity": "Q-1q-law",
+  "on": "O-ff-q3-d13"
+ },
+ "registered_by": [
+  "P-census-exec-a"
+ ],
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=E-census-d13",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/E-census-d13.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-06",
+  "links_out": [
+   {
+    "rel": "registered_by",
+    "to": "P-census-exec-a",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "grounded_in",
+    "to": "X-census-d13",
+    "bidir": true,
+    "stub": false
+   },
+   {
+    "rel": "grounded_in",
+    "to": "X-census-d13-spot",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "supported_by",
+    "from": "C-1q-law",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "from": "C-boundary-closedform",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "verifies",
+    "from": "X-census-d13",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "verifies",
+    "from": "X-census-d13-spot",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

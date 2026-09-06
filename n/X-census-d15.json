@@ -1,0 +1,65 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "X-census-d15",
+ "type": "ExecutionUnit",
+ "label": "census d=15（EXEC_A_v2 全数）",
+ "tier": "full",
+ "entry": "EXEC_A_v2: F_3[t] deg 15 平方自由モニック全数を A(2g)+1 で集計",
+ "inputs": [
+  {
+   "ref": "subprojects/hurwitz_ea/EXEC_A_v2.md"
+  }
+ ],
+ "expected": [
+  {
+   "name": "boundary_excess",
+   "value": -0.4989715075302701,
+   "tolerance": "exact(rational)"
+  }
+ ],
+ "env": {
+  "container": "mdx sage/pari",
+  "node": "mdx-0x"
+ },
+ "verifies": [
+  "E-census-d15"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-08",
+  "visibility": "bias-shared",
+  "statu": [
+   "0048"
+  ]
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=X-census-d15",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/X-census-d15.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-08",
+  "links_out": [
+   {
+    "rel": "verifies",
+    "to": "E-census-d15",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "grounded_in",
+    "from": "E-census-d15",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

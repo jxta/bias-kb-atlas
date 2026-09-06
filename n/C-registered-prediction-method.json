@@ -1,0 +1,91 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "C-registered-prediction-method",
+ "type": "Claim",
+ "label": "事前登録予測が2例的中（d11, d15）",
+ "statement": "走行前に E_pred を凍結し照合する事前登録検定で、d11・d15 が的中（d11=定理 vs 現象論判別、d15=定理外挿精度）。",
+ "status": "established",
+ "supported_by": [
+  "E-d15-regpred"
+ ],
+ "counterpoints": "d17 も境界的中（STATU 0050）だが層抽出は別途。d19 は登録済・census 確認待ち（未的中確定）。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-08",
+  "visibility": "bias-shared",
+  "statu": [
+   "0034",
+   "0048"
+  ]
+ },
+ "about": [
+  "O-ff-q3-family"
+ ],
+ "registered_by": [
+  "P-registered-prediction"
+ ],
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-registered-prediction-method",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/C-registered-prediction-method.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-08",
+  "links_out": [
+   {
+    "rel": "about",
+    "to": "O-ff-q3-family",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-d15-regpred",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "registered_by",
+    "to": "P-registered-prediction",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "taught_by",
+    "from": "L-direction-preregistration",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": {
+   "evidence": [
+    "E-d15-regpred"
+   ],
+   "execution_units": [
+    {
+     "id": "X-d15-regpred",
+     "tier": "accept",
+     "offline": false,
+     "bundled": false,
+     "stub": false,
+     "rerun": {
+      "status": "PENDING",
+      "got": "",
+      "want": "",
+      "note": "mdx full-tier re-run 2026-09-05 (batch 2, J10, mdx-01) PARTIAL: m_odd/n6 PASS（sha 検証済み JSON）、ρ̄=0.675 は BLOCKED（t2_qf_01.npz が到達可能な場所に無い; 00+02 のみで 0.812）; report: t2/k4_rerun_2026-09-05_batch2/REPORT.md"
+     }
+    }
+   ],
+   "protocols": [
+    "P-registered-prediction"
+   ]
+  },
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

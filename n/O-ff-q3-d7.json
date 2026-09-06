@@ -1,0 +1,42 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "O-ff-q3-d7",
+ "type": "Object",
+ "label": "F_3(t) 二次指標 全数族 世代 d=7（g=3, C1=1,458）",
+ "statement": "deg d=7 の平方自由モニック全数族。C1=2·3^6=1458。",
+ "derives_from": [
+  "O-ff-q3-family"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-05",
+  "visibility": "bias-shared",
+  "statu": [
+   "0030",
+   "0033"
+  ]
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=O-ff-q3-d7",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/O-ff-q3-d7.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-05",
+  "links_out": [
+   {
+    "rel": "derives_from",
+    "to": "O-ff-q3-family",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

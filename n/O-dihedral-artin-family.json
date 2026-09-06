@@ -1,0 +1,161 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "O-dihedral-artin-family",
+ "type": "Object",
+ "label": "二面体/Q8/高次Artin L 研究族（新規1）",
+ "statement": "2次元 Artin 表現(D3/D4 直交・Q8 斜交)の偏りと、位数≥3 中心零点の探索(negative)。FS が slope と中心位数の偶奇を同時支配。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-06-10",
+  "visibility": "bias-shared"
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=O-dihedral-artin-family",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/O-dihedral-artin-family.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-06-10",
+  "links_out": [],
+  "links_in": [
+   {
+    "rel": "about",
+    "from": "C-~6d1d56fae8",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~cc3dce7737",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~da9c96064a",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~dd227466f6",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~1ea6617091",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~c4298b355c",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~576d391e34",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "C-~ebdd40fca0",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "H-~e28a877bc2",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "H-~21ba2a6e67",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "H-~a0bd25b07d",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "H-~62efc6eaab",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "about",
+    "from": "H-~04a863a967",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~43583251d5",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "related",
+    "from": "O-~fd55ec0fec",
+    "bidir": true,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~1ead12183f",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~044d1b1cad",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~3da8cb7ba2",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~ba27ff2a52",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~4bf924b13a",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-~80bd6947d5",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "derives_from",
+    "from": "O-q8-8t5-census",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

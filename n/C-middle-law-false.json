@@ -1,0 +1,80 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "C-middle-law-false",
+ "type": "Claim",
+ "label": "中央係数則は偽（自己反証）",
+ "statement": "仮説 Σ_P A_{e/2}=-N_q(e) は e=2,6 のみ成立、e=10 で破綻（-6024≠-5880）。均された Weil 和へ帰着。",
+ "status": "rejected",
+ "supported_by": [
+  "E-middle-e10"
+ ],
+ "counterpoints": "当初 e=2,6 の二例から e≡2 mod4 全体へ外挿していた（誤り）。証明挑戦中に直接計算で反証。プロジェクトが守る『少数例外挿』ガードの実作動例。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-13",
+  "visibility": "bias-shared",
+  "statu": [
+   "0062",
+   "0063"
+  ]
+ },
+ "quantities": [
+  "Q-middle-law-false"
+ ],
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-middle-law-false",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/C-middle-law-false.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-13",
+  "links_out": [
+   {
+    "rel": "quantities",
+    "to": "Q-middle-law-false",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-middle-e10",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "taught_by",
+    "from": "L-middle-law-self-refutation",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": {
+   "evidence": [
+    "E-middle-e10"
+   ],
+   "execution_units": [
+    {
+     "id": "X-middle-e10",
+     "tier": "accept",
+     "offline": false,
+     "bundled": false,
+     "stub": false,
+     "rerun": {
+      "status": "PENDING",
+      "got": "",
+      "want": "",
+      "note": "mdx full-tier re-run 2026-09-05 (batch 2, J10, mdx-01) PASS（gp: ΣA₅=−6024 ≠ −N₃(10)=−5880）; report: t2/k4_rerun_2026-09-05_batch2/REPORT.md"
+     }
+    }
+   ],
+   "protocols": []
+  },
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

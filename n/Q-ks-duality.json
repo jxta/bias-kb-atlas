@@ -1,0 +1,47 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "Q-ks-duality",
+ "type": "Quantity",
+ "label": "族 Katz–Sarnak 対称型 = 個々 FS の双対",
+ "definition": "ν=−1(symp 個々)↔orthogonal 族 / ν=+1(orth)↔symplectic 族 / ν=0↔unitary。RMT: USp=1−sinc(2x)/SO_even=1+sinc(2x)/U=1。",
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-07-15",
+  "visibility": "bias-shared"
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=Q-ks-duality",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/Q-ks-duality.html",
+  "line": "O-fs-family",
+  "date": "2026-07-15",
+  "links_out": [],
+  "links_in": [
+   {
+    "rel": "quantities",
+    "from": "C-ks-duality-dual",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "from": "C-~0ceefec61b",
+    "bidir": false,
+    "stub": true
+   },
+   {
+    "rel": "related",
+    "from": "Q-~3955e22c2e",
+    "bidir": true,
+    "stub": true
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

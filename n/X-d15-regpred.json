@@ -1,0 +1,83 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "X-d15-regpred",
+ "type": "ExecutionUnit",
+ "label": "d15 登録予測検定（走行前登録→照合）",
+ "tier": "accept",
+ "entry": "d15 census を走行前登録の E_pred と照合、実 QF/IQF の ρ̄ と h 層別平均を測定",
+ "inputs": [
+  {
+   "ref": "subprojects/hurwitz_ea/ea_d15_aggregates.json",
+   "sha256": "964e8ac7758e39523066825cb3cc346256e915e4b9c3ddb1114bc9862c7715d4",
+   "sha_kind": "content"
+  }
+ ],
+ "expected": [
+  {
+   "name": "m_odd",
+   "value": 0,
+   "tolerance": "exact"
+  },
+  {
+   "name": "n6_E",
+   "value": -0.940474,
+   "tolerance": "exact"
+  },
+  {
+   "name": "rho_realQF",
+   "value": 0.675,
+   "tolerance": "p=0.001"
+  }
+ ],
+ "env": {
+  "container": "mdx gp/python",
+  "node": "mdx-0x",
+  "k4_status": "mdx full-tier re-run 2026-09-05 (batch 2, J10, mdx-01) PARTIAL: m_odd/n6 PASS（sha 検証済み JSON）、ρ̄=0.675 は BLOCKED（t2_qf_01.npz が到達可能な場所に無い; 00+02 のみで 0.812）; report: t2/k4_rerun_2026-09-05_batch2/REPORT.md"
+ },
+ "verifies": [
+  "E-d15-regpred"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-08",
+  "visibility": "bias-shared",
+  "statu": [
+   "0048"
+  ]
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=X-d15-regpred",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/X-d15-regpred.html",
+  "line": "O-fingerprint-family",
+  "date": "2026-08-08",
+  "links_out": [
+   {
+    "rel": "verifies",
+    "to": "E-d15-regpred",
+    "bidir": true,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "grounded_in",
+    "from": "E-d15-regpred",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": {
+   "status": "PENDING",
+   "got": "",
+   "want": "",
+   "note": "mdx full-tier re-run 2026-09-05 (batch 2, J10, mdx-01) PARTIAL: m_odd/n6 PASS（sha 検証済み JSON）、ρ̄=0.675 は BLOCKED（t2_qf_01.npz が到達可能な場所に無い; 00+02 のみで 0.812）; report: t2/k4_rerun_2026-09-05_batch2/REPORT.md"
+  },
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

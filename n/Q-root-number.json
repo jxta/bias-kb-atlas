@@ -1,0 +1,38 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "Q-root-number",
+ "type": "Quantity",
+ "label": "関数等式符号（root number）W",
+ "definition": "Λ(s)=W·Λ(1−s) の符号 W ∈ {+1,−1}。W=−1 は中心零点位数の奇数性（特に m≥1）を強制する。Q8 (8T5) 母集団では LMFDB 由来 root_number 列を一次値とし、空欄は母集団外（50,257 中 40,125 が計算済）。",
+ "prov": {
+  "asserted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-23",
+  "visibility": "bias-shared",
+  "statu": [
+   "0042",
+   "0043"
+  ]
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=Q-root-number",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/Q-root-number.html",
+  "line": "O-dihedral-artin-family",
+  "date": "2026-08-23",
+  "links_out": [],
+  "links_in": [
+   {
+    "rel": "quantities",
+    "from": "C-q8-w-diagonal",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

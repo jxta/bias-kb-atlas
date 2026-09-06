@@ -1,0 +1,108 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "C-d11-registered-hit",
+ "type": "Claim",
+ "label": "d11 登録予測 的中（registered-hit）",
+ "statement": "境界余剰 d11=−0.49076650925398013(16桁)が Rudnick 定理値 −0.4907 の事前登録を的中（純経験則 −0.4870 を棄却）。k4 offline 再検証 PASS。",
+ "status": "registered-hit",
+ "supported_by": [
+  "E-census-d11"
+ ],
+ "counterpoints": "純指数形との判別＝定理の同定（登録反証可能性）。",
+ "about": [
+  "O-ff-q3-d11"
+ ],
+ "registered_by": [
+  "P-registered-prediction"
+ ],
+ "quantities": [
+  "Q-1q-law"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-23",
+  "visibility": "bias-shared",
+  "statu": [
+   "0034",
+   "0078"
+  ]
+ },
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=C-d11-registered-hit",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/C-d11-registered-hit.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-23",
+  "links_out": [
+   {
+    "rel": "about",
+    "to": "O-ff-q3-d11",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "quantities",
+    "to": "Q-1q-law",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "supported_by",
+    "to": "E-census-d11",
+    "bidir": false,
+    "stub": false
+   },
+   {
+    "rel": "registered_by",
+    "to": "P-registered-prediction",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "taught_by",
+    "from": "L-direction-preregistration",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": {
+   "evidence": [
+    "E-census-d11"
+   ],
+   "execution_units": [
+    {
+     "id": "X-census-d11",
+     "tier": "full",
+     "offline": false,
+     "bundled": false,
+     "stub": false,
+     "rerun": null
+    },
+    {
+     "id": "X-census-d11-spot",
+     "tier": "spot",
+     "offline": true,
+     "bundled": true,
+     "stub": false,
+     "rerun": {
+      "status": "PASS",
+      "got": "-0.49076650925398013",
+      "want": "-0.49076650925398013",
+      "note": ""
+     }
+    }
+   ],
+   "protocols": [
+    "P-registered-prediction"
+   ]
+  },
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}

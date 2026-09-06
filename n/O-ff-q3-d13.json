@@ -1,0 +1,57 @@
+{
+ "@context": "https://jxta.github.io/bias-kb-atlas/kb/context.jsonld",
+ "id": "O-ff-q3-d13",
+ "type": "Object",
+ "label": "F_3(t) 二次指標 全数族 世代 d=13（g=6, C1=1,062,882）",
+ "statement": "deg d=13 の平方自由モニック全数族。C1=2·3^12=1062882。 m_D=2 層 24 個体。 境界余剰 A(2g)+1 の census 実測=-0.4949126864583562。",
+ "derives_from": [
+  "O-ff-q3-family"
+ ],
+ "prov": {
+  "asserted_by": "統率AI (Claude Opus 4.8)",
+  "accepted_by": "meta-AI (bias-commons)",
+  "date": "2026-08-06",
+  "visibility": "bias-shared",
+  "statu": [
+   "0030"
+  ]
+ },
+ "artifacts": [
+  {
+   "path": "subprojects/hurwitz_ea/ea_d13_aggregates.json",
+   "sha256": "9496aaeb94787031203aa8e99dfe08654fa45bd6b6ab400d8592cc4d5127c0c3",
+   "sha_kind": "content",
+   "location": "repo",
+   "role": "census 集計（凍結）"
+  }
+ ],
+ "_atlas": {
+  "url": "https://jxta.github.io/bias-kb-atlas/#v=grounding&node=O-ff-q3-d13",
+  "page": "https://jxta.github.io/bias-kb-atlas/n/O-ff-q3-d13.html",
+  "line": "O-ff-q3-family",
+  "date": "2026-08-06",
+  "links_out": [
+   {
+    "rel": "derives_from",
+    "to": "O-ff-q3-family",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "links_in": [
+   {
+    "rel": "derives_from",
+    "from": "O-ff-d13-m2-layer",
+    "bidir": false,
+    "stub": false
+   }
+  ],
+  "grounding": null,
+  "rerun": null,
+  "record_layer": {
+   "nodes": 853,
+   "source_ref": "593ef1e",
+   "generated_at": "2026-09-06T01:07:58Z"
+  }
+ }
+}
