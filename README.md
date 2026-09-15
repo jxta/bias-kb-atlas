@@ -1,16 +1,20 @@
 # bias-kb Atlas — 公開抜粋（主張から再実行可能な証拠へ）
 
 [![rerun-offline-units](https://github.com/jxta/bias-kb-atlas/actions/workflows/rerun.yml/badge.svg)](https://github.com/jxta/bias-kb-atlas/actions/workflows/rerun.yml)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jxta/bias-kb-atlas/main?urlpath=lab/tree/README.md)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jxta/bias-kb-atlas/main?labpath=rerun.ipynb)
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/jxta/bias-kb-atlas?quickstart=1)
 
 **閲覧**: https://jxta.github.io/bias-kb-atlas/ （静的ページ。ローカルで見るときは `python3 -m http.server` でこのディレクトリを配信して `index.html` を開く。外部依存は d3 v7.9.0 を jsDelivr から SRI 付きで読むだけ）
+**English UI**: https://jxta.github.io/bias-kb-atlas/#v=guide&lang=en （案内・接地・見出し・図のラベルが英語になる。ノード本文は記録層の言語＝日本語のまま。ヘッダの「EN／日本語」で切替）
+**研究の現在地（1 枚、JS なし）**: https://jxta.github.io/bias-kb-atlas/progress.html · **機械可読**: [`llms.txt`](https://jxta.github.io/bias-kb-atlas/llms.txt) · [`ro-crate-metadata.json`](https://jxta.github.io/bias-kb-atlas/ro-crate-metadata.json)
 
 これは、素数の偏り（Chebyshev bias）の系統的研究を複数の AI エージェントと人間で進めている
 知識基盤 **bias-kb**（private リポジトリ `jxta/ai4math-lab` の `knowledge/`）から、
 **「主張 → 証拠 → 再実行可能な実行単位」の鎖**に関わるノードを規則で抜き出した公開版です。
-記録層 853 ノード（2026-09-06、commit `593ef1e`）中 100 ノード（関数体 census 線と Q8 の W 層）。抜き出し規則は生成器
+記録層 903 ノード（2026-09-15、commit `9742090`）中 100 ノード（関数体 census 線と Q8 の W 層）。抜き出し規則は生成器
 `kb_atlas.py --profile public-grounding`（private 側 `knowledge/tools/`）に書かれており、手では選んでいません。
+抜粋は規則で「接地の鎖」に固定しているので研究が進んでも増えませんが、背後の記録層は成長しています（853 → 903 ノード、9/6 → 9/15）。
+その規模は**数だけ**を Atlas の案内タブ「記録層の規模」と `llms.txt` に出しています（型別・主張の状態・接地 151/151・双方向 167/183・k4 9/9・日ごとの増分）。
 抜粋外の隣接ノードは**型だけの非公開スタブ**（68 件、ID は実 ID の sha256 先頭 10 桁）として残し、
 「証拠・主張はあるが非公開」と「根拠がない」を区別できるようにしています。
 
@@ -68,6 +72,10 @@ The whole excerpt is reachable without JavaScript and without scraping the inter
 | [`kb/schema.json`](https://jxta.github.io/bias-kb-atlas/kb/schema.json) ／ [`kb/context.jsonld`](https://jxta.github.io/bias-kb-atlas/kb/context.jsonld) | ノードの JSON Schema（2020-12）と JSON-LD context（来歴は W3C PROV に対応づけ） |
 | [`kb/rerun-latest.json`](https://jxta.github.io/bias-kb-atlas/kb/rerun-latest.json) | CI が最後に offline 単位を再実行した結果（環境・commit・単位ごとの status/got/want） |
 | [`sitemap.txt`](https://jxta.github.io/bias-kb-atlas/sitemap.txt) | 全ノードページの URL |
+| [`ro-crate-metadata.json`](https://jxta.github.io/bias-kb-atlas/ro-crate-metadata.json) | この束の RO-Crate 1.1 記述（同梱データの sha256・スクリプト・offline 実行単位を `CreateAction`・主張を `CreativeWork`） |
+| [`rerun.ipynb`](https://github.com/jxta/bias-kb-atlas/blob/main/rerun.ipynb) | 同じ再実行と「主張 → 証拠 → 実行単位」の辿りをノートブックで（Binder バッジで手元に Python が無くても実行できる） |
+| [`progress.html`](https://jxta.github.io/bias-kb-atlas/progress.html) | 研究の現在地（主張の棚卸し・主張の生存曲線・未払いの借り・教訓）。生成器 `kb_progress.py` は private と同一 |
+| `check_site.py` | CI が push ごとに走らせる検査: context の語がすべて宣言されている・来歴が W3C PROV に展開される・dangling 0・双方向ペア・JSON Schema・派生ファイルの一致 |
 
 Walk: `C.supported_by → E.grounded_in → X` (and `X.verifies → E` written explicitly, so the pair is bidirectional). Refuted claims keep `status: rejected` and point to the counter-evidence via `refuted_by`; nothing is deleted. Ids of the form `<T>-~<10 hex>` with `"stub": true` are nodes that exist in the record layer but are outside this excerpt — only the type is public; they distinguish "evidence exists but is private" from "no evidence".
 
@@ -80,7 +88,7 @@ python3 rerun.py                     # offline 単位: 入力の sha256 照合 �
 python3 rerun.py X-census-d17-spot   # 1 単位だけ
 ```
 
-期待される出力（2026-09-06、Python 3.12）:
+期待される出力（2026-09-15、Python 3.12）:
 
 ```
 X-a1-mobius            spot   PASS            A1_closedform_match: match / match
@@ -108,14 +116,17 @@ GitHub Actions（上のバッジ）が push のたびと毎週、同じ再実行
 ## 中身
 
 ```
-index.html                 Atlas（案内・接地・俯瞰・研究線・時間・グラフ・教訓・登録・表 ＋ 詳細パネル）
+index.html                 Atlas（案内・接地・俯瞰・研究線・時間・グラフ・教訓・登録・表 ＋ 詳細パネル。#lang=en で英語 UI）
+progress.html              研究の現在地（1 枚、JS なし。kb_progress.py + kb_ledger.py + kb_g4.py — private と同一の生成器）
 n/<id>.html, n/<id>.json   ノード単体の静的ページと JSON-LD（100 ノード）、n/index.html は一覧
 kb/nodes.json              抜粋 100 ノード＋非公開スタブ 68 の記録（型・状態・リンク・来歴・凍結 sha・期待値）＋派生情報
 kb/kb.jsonld               抜粋全体の JSON-LD（context 同梱）   kb/context.jsonld  JSON-LD context
 kb/backlinks.json          逆リンク表（bidir・stub 付き）        kb/schema.json     ノードの JSON Schema
 kb/rerun-latest.json       CI の最終再実行結果（CI が commit）
-llms.txt, sitemap.txt      機械可読の入口
-rerun.py                   offline 実行単位の再実行器（kb/nodes.json を読む）
+llms.txt, sitemap.txt      機械可読の入口         ro-crate-metadata.json  束の RO-Crate 1.1 記述（CI が生成）
+rerun.py                   offline 実行単位の再実行器（kb/nodes.json を読む）   rerun.ipynb  同じことをノートブックで
+check_site.py              公開バンドルの検査（CI）   build_site.py  派生ファイルの生成器（private の kb_site.py と同一）
+.devcontainer/             GitHub Codespaces 用（pip install → rerun.py を自動実行）
 subprojects/hurwitz_ea/    関数体 census の凍結集計 (d=11,13,15,17) と検証スクリプト 2 本
 subprojects/q8_drh/...     D4 対照群 970 体の零点データ（Q8 KS 二側検定の入力）
 docs/overview.svg          しくみの図（案内タブと上の対応表に使用）
@@ -128,7 +139,17 @@ docs/overview.svg          しくみの図（案内タブと上の対応表に�
 ## 出所と生成
 
 - 記録層: `jxta/ai4math-lab`（private）`knowledge/` — 統率AI（Claude）が知識化し、meta-AI（Claude）が検収、横山（NII）が merge で承認。
-- 生成: `knowledge/tools/kb_atlas.py --profile public-grounding --assets external --public-repo jxta/bias-kb-atlas --site-url https://jxta.github.io/bias-kb-atlas --bundle-inputs`（同リポジトリ）。すべて生成物で、手編集しない。鮮度（記録層のノード数・元 commit・同期日）は Atlas のヘッダに出る。
+- 生成: `knowledge/tools/kb_atlas.py --profile public-grounding --source-ref <sha> --public-repo jxta/bias-kb-atlas --site-url https://jxta.github.io/bias-kb-atlas --emit-parts <このリポジトリ> --bundle-inputs`（同リポジトリ）。抜粋は `kb/parts/`（1 行 1 ノードの JSONL）で受け取り、CI が `kb/nodes.json` に組み立てて派生ファイルを再生成する。すべて生成物で、手編集しない。鮮度（記録層のノード数・元 commit・同期日）は Atlas のヘッダに出る。
+- 更新: 2026-09-03 接地ビュー／09-04 案内ビュー／09-06 ノード単体ページ・JSON-LD・スタブ・ツアー・現在地ページ／09-15 記録層 903 ノードに同期、英語 UI、記録層の規模、状態履歴（`status_history`）の表示、JSON-LD context を記録層の最新（82 語、来歴を W3C PROV へ）に、RO-Crate、ノートブック、CI 検査 `check_site.py`。
 - 研究: JHPCN jh261018「AI for Science of Science: 系統的素数偏り研究」（青木美穂・島根大学、横山重俊・国立情報学研究所）。
 
-*bias-kb Atlas public excerpt — claims grounded in re-executable evidence. Open `index.html`, read `llms.txt`, fetch one node as `n/<id>.json`, or run `python3 rerun.py` to re-execute the offline execution units bundled here and compare with the recorded expected values.*
+## In English
+
+**bias-kb Atlas** is the public excerpt of a research knowledge base in which every claim is grounded, by links written in both directions, in the evidence and the re-executable computation that produced it. 100 nodes are selected *by rule* (never by hand) from a private record layer of 903 nodes (2026-09-15); neighbours outside the excerpt remain as type-only private stubs, so that “evidence exists but is private” is distinguishable from “no evidence”.
+
+- **Site** (English UI: guide, grounding, headings, figure labels; node texts are in Japanese): https://jxta.github.io/bias-kb-atlas/#v=guide&lang=en
+- **Check it in 3 minutes**: open the guide tab and follow the tour — claim → evidence → execution unit → re-run PASS; re-run one unit yourself (`python3 rerun.py X-census-d17-spot`, or the Binder badge above); a prediction frozen before the run that came true; a rejected claim that is still there; the human merge as the only way into the record layer.
+- **For AI agents**: `llms.txt` (how to walk the graph), `n/<id>.json` (one node as JSON-LD, with `bidir`/`stub` flags on links and the grounding chain), `kb/kb.jsonld` (whole excerpt, context embedded, provenance mapped to W3C PROV), `kb/backlinks.json`, `ro-crate-metadata.json`, `kb/rerun-latest.json` (latest CI re-run). Every node has a stable URL `n/<id>.html` that can be cited from a paper.
+- **Re-run**: `git clone … && pip install -r requirements.txt && python3 rerun.py` — checks the sha256 of the frozen inputs, runs each `entry`, compares with `expected`; CI does the same on every push and weekly. Units that need the mdx supercomputer are shown honestly as “private · not re-run”, never as matches.
+
+*Open `index.html`, read `llms.txt`, fetch one node as `n/<id>.json`, or run `python3 rerun.py` to re-execute the offline execution units bundled here and compare with the recorded expected values.*
