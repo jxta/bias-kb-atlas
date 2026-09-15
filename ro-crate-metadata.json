@@ -200,7 +200,7 @@
    "@type": "File",
    "name": "rerun-latest.json",
    "contentSize": "5218",
-   "sha256": "067f5677eeaae0fe59117218e6ffece5034fa0ac7daa351f0b46ed0d60f93d10",
+   "sha256": "1d348397874b4b2f8c4dff2d642386671ae7d257b73c8325a60d0843e4444c63",
    "encodingFormat": "application/json"
   },
   {
@@ -231,8 +231,8 @@
    "@id": "progress.html",
    "@type": "File",
    "name": "progress.html",
-   "contentSize": "11944",
-   "sha256": "2ec39cd79fbc432855fb6aff723cb5989a1ca0973153642e0401a9391d4d589f",
+   "contentSize": "14938",
+   "sha256": "a043cd8e46435ce8c1fb0871bc149e115a0107873199c73c17c12c7dc988457a",
    "encodingFormat": "text/plain"
   },
   {
