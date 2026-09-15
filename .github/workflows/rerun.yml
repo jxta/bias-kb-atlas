@@ -6,7 +6,7 @@ on:
     - cron: "17 3 * * 1"   # 毎週月曜 03:17 UTC — 環境が変わっても再実行できることを確かめ続ける
   workflow_dispatch:
 permissions:
-  contents: write          # 派生ファイル（kb/nodes.json・n/・kb/kb.jsonld・llms.txt）と kb/rerun-latest.json を commit するため
+  contents: write          # 派生ファイル（kb/nodes.json・n/・kb/kb.jsonld・llms.txt・progress.html・ro-crate-metadata.json）と kb/rerun-latest.json を commit するため
 concurrency:
   group: rerun-latest
   cancel-in-progress: false
@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install -r requirements.txt
+      - run: pip install -r requirements.txt jsonschema
       # 抜粋の実体は kb/parts/（1 行 1 ノードの JSONL ＋ meta.json）で受け取り、ここで kb/nodes.json に組み立てる。
       # 分割の理由: 記録層からの抜粋は 1 ファイルだと大きく、行単位のほうが差分が読める（どのノードが変わったかが diff に出る）。
       # 図（meta.guide.svg）は docs/overview.svg と同一なので parts では空にし、ここで注入する（重複を持たない）。
@@ -50,11 +50,14 @@ jobs:
           else
             echo "kb/parts/ not present — keeping kb/nodes.json as committed"
           fi
-      - name: Rebuild derived pages from kb/nodes.json (n/<id>.html|json, kb/kb.jsonld, kb/backlinks.json, llms.txt, sitemap.txt)
+      - name: Rebuild derived pages from kb/nodes.json (n/<id>.html|json, kb/kb.jsonld, kb/backlinks.json, llms.txt, sitemap.txt, ro-crate-metadata.json)
         run: python3 build_site.py
-      # 「研究の現在地」1 枚もの（外部資源なし・SVG はサーバ側で描く）。抜粋から作れる面だけを出す。
+      # 「研究の現在地」1 枚もの（外部資源なし・SVG はサーバ側で描く）。抜粋から作れる面だけを出す。生成器は private と同一（kb_progress.py・kb_ledger.py・kb_g4.py）。
       - name: Rebuild progress.html (research status on one page)
-        run: python3 kb_progress.py --nodes kb/nodes.json -o progress.html --title "研究の現在地 — bias-kb 公開抜粋" --note "公開抜粋 100 ノードから生成（記録層は非公開）"
+        run: python3 kb_progress.py --nodes kb/nodes.json -o progress.html --title "研究の現在地 — bias-kb 公開抜粋" --note "公開抜粋から生成（記録層は非公開）"
+      # 機械可読の入口が壊れていないか（context の語が全部宣言されている・PROV が W3C IRI に展開される・dangling 0・双方向ペア・schema・派生ファイルの一致）
+      - name: Check the public bundle (context coverage, PROV, dangling links, bidir pairs, schema, derived files)
+        run: python3 check_site.py
       - name: Re-execute offline ExecutionUnits and compare with recorded expected values
         id: rerun
         run: python3 rerun.py --json kb/rerun-latest.json
@@ -85,7 +88,7 @@ jobs:
             sed -E 's/生成 [0-9-]+ [0-9:]+Z//' progress.html >/tmp/b.html
             if cmp -s /tmp/a.html /tmp/b.html; then git checkout -- progress.html; fi
           fi
-          git add -A n kb llms.txt sitemap.txt progress.html
+          git add -A n kb llms.txt sitemap.txt progress.html ro-crate-metadata.json
           if git diff --cached --quiet; then echo "nothing to commit"; exit 0; fi
           git commit -m "CI: kb/nodes.json（kb/parts/ から組み立て）＋ 派生ページ ＋ kb/rerun-latest.json（rerun ${{ steps.rerun.outcome }}） [skip ci]"
           git pull --rebase origin main
