@@ -216,11 +216,22 @@ def write_index(nodes, path=OUT):
     """kb_build.py --build から呼ばれる。index/ledger.json（派生物）を書く。"""
     recs = collect(nodes)
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    json.dump({"generated_by": "kb_ledger.py（kb_build.py --build から。手編集禁止）",
+    json.dump({"generated_by": "kb_ledger.py の write_index（kb_build.py --build から呼ばれる。手編集禁止）",
+               "generated_at": __import__("datetime").datetime.now(
+                   __import__("datetime").timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
                "n_nodes": len(nodes), "n_verdicts": len(recs),
                "required_from": new_from(), "series": series(recs), "verdicts": recs},
               open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     return recs
+
+
+# ★鮮度検査の必須化は ORDER 0018 §5 の 2026-09-17（それまでは warn。走行を止めないため）
+FRESH_REQUIRED_FROM = "2026-09-17"
+
+
+def _today():
+    import datetime
+    return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
 
 
 def new_from():
@@ -281,6 +292,31 @@ def main(argv=None):
                 if pt.get("suspect"):
                     warns.append(f"[ledger] 線 {d} {pt['id']}（{pt['date']}）の台帳が単調でない: {pt['suspect']}"
                                  + ("　※散文からの復元なので取り違えの可能性" if pt.get("source") == "prose" else ""))
+        # ★生成物の鮮度（ORDER 0018 §3-1）。--report/--check は**その場でノードから計算する**ので
+        #   常に緑に見えるが、俯瞰ビューと生存曲線が読むのは**ディスク上の ledger.json** である。
+        #   2026-09-07 から更新されず n_nodes 872（実体 893）・B-5 未収録のまま緑だった。
+        #   これは §2 の C（当たっていない）の新しい顔 —— 検査は動いているが当てている対象が過去のもの。
+        stale = None
+        if os.path.exists(OUT):
+            try:
+                on_disk = json.load(open(OUT, encoding="utf-8"))
+            except Exception as e:
+                stale = f"読めない（{e}）"
+            else:
+                if on_disk.get("n_nodes") != len(nodes):
+                    stale = (f"n_nodes が {on_disk.get('n_nodes')}、実体は {len(nodes)}"
+                             f"（生成 {on_disk.get('generated_at') or '時刻不明'}）")
+                elif on_disk.get("n_verdicts") != len(recs):
+                    stale = f"n_verdicts が {on_disk.get('n_verdicts')}、実体は {len(recs)}"
+        else:
+            stale = "存在しない"
+        print("[鮮度] 読んだ対象: %s（ディスク上の生成物）／その場の計算: %d nodes・%d 判定 → %s"
+              % (os.path.relpath(OUT, ROOT), len(nodes), len(recs), stale or "一致"))
+        if stale:
+            (errors if _today() >= FRESH_REQUIRED_FROM else warns).append(
+                "[ledger] 生成物 %s が古い: %s。`python3 knowledge/tools/kb_build.py --build` で再生成する"
+                % (os.path.relpath(OUT, ROOT), stale))
+
         for w in warns:
             print("WARN " + w)
         for e in errors:
