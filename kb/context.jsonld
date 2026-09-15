@@ -1,15 +1,21 @@
 {
  "@context": {
+  "@version": 1.1,
   "lrr": "https://nii.ac.jp/ns/lrr#",
   "schema": "https://schema.org/",
-  "prov": "lrr:provenance",
+  "w3prov": "http://www.w3.org/ns/prov#",
   "lmfdb": "https://www.lmfdb.org/",
   "id": "@id",
   "type": "@type",
   "label": "schema:name",
   "statement": "schema:description",
+  "direction": "lrr:direction",
   "about": {
    "@id": "schema:about",
+   "@type": "@id"
+  },
+  "quantities": {
+   "@id": "lrr:quantities",
    "@type": "@id"
   },
   "supported_by": {
@@ -20,8 +26,20 @@
    "@id": "lrr:refutedBy",
    "@type": "@id"
   },
+  "supports": {
+   "@id": "lrr:supports",
+   "@type": "@id"
+  },
+  "refutes": {
+   "@id": "lrr:refutes",
+   "@type": "@id"
+  },
   "grounded_in": {
    "@id": "lrr:groundedIn",
+   "@type": "@id"
+  },
+  "verifies": {
+   "@id": "lrr:verifies",
    "@type": "@id"
   },
   "registered_by": {
@@ -36,40 +54,16 @@
    "@id": "lrr:supersedes",
    "@type": "@id"
   },
-  "verifies": {
-   "@id": "lrr:verifies",
-   "@type": "@id"
-  },
-  "sameAs": {
-   "@id": "schema:sameAs",
-   "@type": "@id"
-  },
-  "lmfdb_label": "lrr:lmfdbLabel",
-  "asserted_by": "w3prov:wasAttributedTo",
-  "date": "w3prov:generatedAtTime",
-  "w3prov": "http://www.w3.org/ns/prov#",
-  "quantities": {
-   "@id": "lrr:quantities",
+  "superseded_by": {
+   "@id": "lrr:supersededBy",
    "@type": "@id"
   },
   "promoted_to": {
    "@id": "lrr:promotedTo",
    "@type": "@id"
   },
-  "superseded_by": {
-   "@id": "lrr:supersededBy",
-   "@type": "@id"
-  },
   "related": {
    "@id": "lrr:related",
-   "@type": "@id"
-  },
-  "supports": {
-   "@id": "lrr:supports",
-   "@type": "@id"
-  },
-  "refutes": {
-   "@id": "lrr:refutes",
    "@type": "@id"
   },
   "taught_by": {
@@ -80,6 +74,121 @@
    "@id": "lrr:constrains",
    "@type": "@id"
   },
+  "uses": {
+   "@id": "lrr:uses",
+   "@type": "@id"
+  },
+  "sameAs": {
+   "@id": "schema:sameAs",
+   "@type": "@id"
+  },
+  "lmfdb_label": "lrr:lmfdbLabel",
+  "prov": "lrr:provenance",
+  "asserted_by": "w3prov:wasAttributedTo",
+  "accepted_by": "lrr:acceptedBy",
+  "date": "w3prov:generatedAtTime",
+  "statu": "lrr:statu",
+  "pr": "lrr:pullRequest",
+  "visibility": "lrr:visibility",
+  "independent_paths": "lrr:independentPaths",
+  "status": "lrr:status",
+  "status_history": {
+   "@id": "lrr:statusHistory",
+   "@container": "@list",
+   "@context": {
+    "status": "lrr:status",
+    "date": "w3prov:generatedAtTime",
+    "by": "w3prov:wasAttributedTo",
+    "evidence": {
+     "@id": "lrr:verdictEvidence",
+     "@type": "@id"
+    },
+    "protocol": {
+     "@id": "lrr:verdictProtocol",
+     "@type": "@id"
+    },
+    "pr": "lrr:pullRequest",
+    "statu": "lrr:statu",
+    "reason": "lrr:reason",
+    "derived": "lrr:derivedEntry"
+   }
+  },
+  "counterpoints": "lrr:counterpoints",
+  "definition": "lrr:definition",
+  "convention": "lrr:convention",
+  "values": {
+   "@id": "lrr:values",
+   "@type": "@json"
+  },
+  "measures": "lrr:measures",
+  "quantity": {
+   "@id": "lrr:quantity",
+   "@type": "@id"
+  },
+  "on": {
+   "@id": "lrr:on",
+   "@type": "@id"
+  },
+  "artifacts": "lrr:artifacts",
+  "tier": "lrr:tier",
+  "entry": "lrr:entry",
+  "inputs": "lrr:inputs",
+  "expected": "lrr:expected",
+  "env": {
+   "@id": "lrr:env",
+   "@type": "@json"
+  },
+  "seed": "lrr:seed",
+  "notebook": "lrr:notebook",
+  "independence": "lrr:independence",
+  "frozen": "lrr:frozen",
+  "ref": "lrr:ref",
+  "path": "lrr:path",
+  "role": "lrr:role",
+  "location": "lrr:location",
+  "sha256": "lrr:sha256",
+  "sha_kind": "lrr:shaKind",
+  "sha_verified": "lrr:shaVerified",
+  "frozen_at": "lrr:frozenAt",
+  "name": "lrr:name",
+  "value": "lrr:value",
+  "tolerance": "lrr:tolerance",
+  "derivation_hooks": "lrr:derivationHooks",
+  "stub": "lrr:redactedNode",
+  "verdict": {
+   "@id": "lrr:verdict",
+   "@context": {
+    "name": "lrr:verdictName",
+    "qualifier": "lrr:verdictQualifier",
+    "k": "lrr:verdictK",
+    "n": "lrr:verdictN",
+    "decision_row": "lrr:decisionRow",
+    "predicted": "lrr:predictedVerdict",
+    "matched": "lrr:predictionMatched",
+    "grade": "lrr:verdictGrade",
+    "protocol": {
+     "@id": "lrr:verdictProtocol",
+     "@type": "@id"
+    },
+    "evidence": {
+     "@id": "lrr:verdictEvidence",
+     "@type": "@id"
+    },
+    "date": "w3prov:generatedAtTime"
+   }
+  },
+  "ledger": {
+   "@id": "lrr:ledger",
+   "@context": {
+    "counted": "lrr:ledgerCounted",
+    "direction": "lrr:direction",
+    "instrument": "lrr:instrumentTally",
+    "mechanism": "lrr:mechanismTally",
+    "hit": "lrr:tallyHit",
+    "n": "lrr:tallyN",
+    "note": "lrr:note"
+   }
+  },
   "Object": "lrr:Object",
   "Quantity": "lrr:Quantity",
   "Evidence": "lrr:Evidence",
@@ -88,22 +197,15 @@
   "Protocol": "lrr:Protocol",
   "ExecutionUnit": "lrr:ExecutionUnit",
   "Lesson": "lrr:Lesson",
-  "status": "lrr:status",
-  "tier": "lrr:tier",
-  "entry": "lrr:entry",
-  "expected": "lrr:expected",
-  "inputs": "lrr:inputs",
-  "artifacts": "lrr:artifacts",
-  "values": "lrr:values",
-  "counterpoints": "lrr:counterpoints",
-  "definition": "lrr:definition",
-  "frozen": "lrr:frozen",
-  "env": "lrr:env",
-  "accepted_by": "lrr:acceptedBy",
-  "visibility": "lrr:visibility",
-  "statu": "lrr:statu",
-  "pr": "lrr:pullRequest",
-  "stub": "lrr:redactedNode",
+  "supports_refutes": {
+   "@id": "lrr:supportsRefutes"
+  },
+  "supports_refutes_note": {
+   "@id": "lrr:supportsRefutesNote"
+  },
+  "decided": {
+   "@id": "lrr:decided"
+  },
   "@base": "https://jxta.github.io/bias-kb-atlas/n/"
  }
 }

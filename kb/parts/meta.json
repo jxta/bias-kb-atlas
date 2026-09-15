@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-09-06T01:07:58Z",
+ "generated_at": "2026-09-15T00:58:06Z",
  "source": "index/kb.jsonld",
- "source_ref": "593ef1e",
- "source_commit_date": "2026-09-06",
+ "source_ref": "9742090",
+ "source_commit_date": "2026-09-15",
  "version": "v1.0",
  "repo": "jxta/ai4math-lab",
  "stats": {
@@ -27,8 +27,8 @@
   "n": 100,
   "date_min": "2026-06-10",
   "date_max": "2026-08-25",
-  "full_n": 853,
-  "full_date_max": "2026-09-06",
+  "full_n": 903,
+  "full_date_max": "2026-09-14",
   "stubs": 68,
   "stub_types": {
    "Quantity": 3,
@@ -43,74 +43,74 @@
   {
    "id": "O-fs-family",
    "key": "L1",
-   "label": "① FS 統一則",
+   "label": "\u2460 FS \u7d71\u4e00\u5247",
    "short": "FS"
   },
   {
    "id": "O-qec-family",
    "key": "L2",
-   "label": "② Q 上 EC ＋ WP-A",
+   "label": "\u2461 Q \u4e0a EC \uff0b WP-A",
    "short": "QEC"
   },
   {
    "id": "O-ecnf-family",
    "key": "L3",
-   "label": "③ 数体上 EC",
+   "label": "\u2462 \u6570\u4f53\u4e0a EC",
    "short": "ECNF"
   },
   {
    "id": "O-dihedral-artin-family",
    "key": "L4",
-   "label": "④ 二面体／Q8／Artin",
+   "label": "\u2463 \u4e8c\u9762\u4f53\uff0fQ8\uff0fArtin",
    "short": "Artin"
   },
   {
    "id": "O-cubic-family",
    "key": "L5",
-   "label": "⑤ 三次体／Koyama／τ",
+   "label": "\u2464 \u4e09\u6b21\u4f53\uff0fKoyama\uff0f\u03c4",
    "short": "Cubic"
   },
   {
    "id": "O-fingerprint-family",
    "key": "L6",
-   "label": "⑥ 指紋／E-AK／T2",
+   "label": "\u2465 \u6307\u7d0b\uff0fE-AK\uff0fT2",
    "short": "Finger"
   },
   {
    "id": "O-ff-q3-family",
    "key": "L7",
-   "label": "⑦ 関数体 census",
+   "label": "\u2466 \u95a2\u6570\u4f53 census",
    "short": "FF"
   },
   {
    "id": "dir-A",
    "key": "A",
-   "label": "研究線 A — 2 次部分の系列",
+   "label": "\u7814\u7a76\u7dda A \u2014 2 \u6b21\u90e8\u5206\u306e\u7cfb\u5217",
    "short": "A"
   },
   {
    "id": "dir-B",
    "key": "B",
-   "label": "研究線 B — 二面体 Dₙ 系列",
+   "label": "\u7814\u7a76\u7dda B \u2014 \u4e8c\u9762\u4f53 D\u2099 \u7cfb\u5217",
    "short": "B"
   },
   {
    "id": "principles",
    "key": "Pr",
-   "label": "横断原理・大統一",
-   "short": "原理"
+   "label": "\u6a2a\u65ad\u539f\u7406\u30fb\u5927\u7d71\u4e00",
+   "short": "\u539f\u7406"
   },
   {
    "id": "program",
    "key": "Rt",
-   "label": "プログラム根・研究方向",
-   "short": "根"
+   "label": "\u30d7\u30ed\u30b0\u30e9\u30e0\u6839\u30fb\u7814\u7a76\u65b9\u5411",
+   "short": "\u6839"
   },
   {
    "id": "unassigned",
-   "key": "—",
-   "label": "未分類",
-   "short": "未分類"
+   "key": "\u2014",
+   "label": "\u672a\u5206\u985e",
+   "short": "\u672a\u5206\u985e"
   }
  ],
  "k4": {
@@ -172,25 +172,25 @@
    "status": "PENDING",
    "got": "",
    "want": "",
-   "note": "mdx full-tier re-run 2026-09-05 (batch 2, J10, mdx-01) PARTIAL: m_odd/n6 PASS（sha 検証済み JSON）、ρ̄=0.675 は BLOCKED（t2_qf_01.npz が到達可能な場所に無い; 00+02 のみで 0.812）; report: t2/k4_rerun_2026-09-05_batch2/REPORT.md"
+   "note": "mdx full-tier re-run 2026-09-05 (batch 2, J10, mdx-01) PARTIAL: m_odd/n6 PASS\uff08sha \u691c\u8a3c\u6e08\u307f JSON\uff09\u3001\u03c1\u0304=0.675 \u306f BLOCKED\uff08t2_qf_01.npz \u304c\u5230\u9054\u53ef\u80fd\u306a\u5834\u6240\u306b\u7121\u3044; 00+02 \u306e\u307f\u3067 0.812\uff09; report: t2/k4_rerun_2026-09-05_batch2/REPORT.md"
   },
   "X-middle-e10": {
    "status": "PENDING",
    "got": "",
    "want": "",
-   "note": "mdx full-tier re-run 2026-09-05 (batch 2, J10, mdx-01) PASS（gp: ΣA₅=−6024 ≠ −N₃(10)=−5880）; report: t2/k4_rerun_2026-09-05_batch2/REPORT.md"
+   "note": "mdx full-tier re-run 2026-09-05 (batch 2, J10, mdx-01) PASS\uff08gp: \u03a3A\u2085=\u22126024 \u2260 \u2212N\u2083(10)=\u22125880\uff09; report: t2/k4_rerun_2026-09-05_batch2/REPORT.md"
   },
   "X-o18-deltac": {
    "status": "PENDING",
    "got": "",
    "want": "",
-   "note": "mdx full-tier re-run 2026-09-05 PASS 1/1（ORDER 0013 夜間計画 (c) J4/J5、mdx-01; 記録体数は旧 qf1/batch_rest で再現、report: t2/k4_rerun_2026-09-05/REPORT.md）"
+   "note": "mdx full-tier re-run 2026-09-05 PASS 1/1\uff08ORDER 0013 \u591c\u9593\u8a08\u753b (c) J4/J5\u3001mdx-01; \u8a18\u9332\u4f53\u6570\u306f\u65e7 qf1/batch_rest \u3067\u518d\u73fe\u3001report: t2/k4_rerun_2026-09-05/REPORT.md\uff09"
   },
   "X-q8-ks-twosided": {
    "status": "PENDING",
    "got": "",
    "want": "",
-   "note": "mdx full-tier re-run 2026-09-05 (batch 2, J10, mdx-01) PASS（SO 20600/40125=0.5134、USp 2.3e-5 = d13 census 24/1,062,882）; report: t2/k4_rerun_2026-09-05_batch2/REPORT.md"
+   "note": "mdx full-tier re-run 2026-09-05 (batch 2, J10, mdx-01) PASS\uff08SO 20600/40125=0.5134\u3001USp 2.3e-5 = d13 census 24/1,062,882\uff09; report: t2/k4_rerun_2026-09-05_batch2/REPORT.md"
   }
  },
  "profile": "public-grounding",
@@ -200,191 +200,243 @@
  "rerun_latest": "kb/rerun-latest.json",
  "guide": {
   "figure": "overview.svg",
-  "title": "この知識基盤のしくみ — 図と実例の対応",
-  "source": "主張を、それを生んだ再実行可能な計算に双方向のリンクで接地させ、推論が常に再実行可能な証拠まで遡れるようにする — この設計を bias-kb がどう実装しているか。図の要素をクリックすると、対応する行と実例に移動する。",
+  "title": "\u3053\u306e\u77e5\u8b58\u57fa\u76e4\u306e\u3057\u304f\u307f \u2014 \u56f3\u3068\u5b9f\u4f8b\u306e\u5bfe\u5fdc",
+  "title_en": "How this knowledge base works \u2014 the figure and live examples",
+  "source": "\u4e3b\u5f35\u3092\u3001\u305d\u308c\u3092\u751f\u3093\u3060\u518d\u5b9f\u884c\u53ef\u80fd\u306a\u8a08\u7b97\u306b\u53cc\u65b9\u5411\u306e\u30ea\u30f3\u30af\u3067\u63a5\u5730\u3055\u305b\u3001\u63a8\u8ad6\u304c\u5e38\u306b\u518d\u5b9f\u884c\u53ef\u80fd\u306a\u8a3c\u62e0\u307e\u3067\u9061\u308c\u308b\u3088\u3046\u306b\u3059\u308b \u2014 \u3053\u306e\u8a2d\u8a08\u3092 bias-kb \u304c\u3069\u3046\u5b9f\u88c5\u3057\u3066\u3044\u308b\u304b\u3002\u56f3\u306e\u8981\u7d20\u3092\u30af\u30ea\u30c3\u30af\u3059\u308b\u3068\u3001\u5bfe\u5fdc\u3059\u308b\u884c\u3068\u5b9f\u4f8b\u306b\u79fb\u52d5\u3059\u308b\u3002",
+  "source_en": "Every claim is grounded, by links written in both directions, in the re-executable computation that produced it, so that any reasoning can be traced back to evidence that can be re-run. This page shows how bias-kb implements that design. Click an element of the figure to jump to the matching row and a live example.",
   "rows": [
    {
     "key": "human",
-    "fig": "人間の研究者（問題設定・解釈・最終判断）",
-    "kb": "問題設定は指示書（ORDER）と実行前登録に、最終判断は PR の merge に置く（merge は人間だけが行い、AI は merge しない）。詳細パネルの「来歴」に PR 番号と承認者が出る。",
+    "fig": "\u4eba\u9593\u306e\u7814\u7a76\u8005\uff08\u554f\u984c\u8a2d\u5b9a\u30fb\u89e3\u91c8\u30fb\u6700\u7d42\u5224\u65ad\uff09",
+    "fig_en": "Human researcher (problem setting, interpretation, final decision)",
+    "kb": "\u554f\u984c\u8a2d\u5b9a\u306f\u6307\u793a\u66f8\uff08ORDER\uff09\u3068\u5b9f\u884c\u524d\u767b\u9332\u306b\u3001\u6700\u7d42\u5224\u65ad\u306f PR \u306e merge \u306b\u7f6e\u304f\uff08merge \u306f\u4eba\u9593\u3060\u3051\u304c\u884c\u3044\u3001AI \u306f merge \u3057\u306a\u3044\uff09\u3002\u8a73\u7d30\u30d1\u30cd\u30eb\u306e\u300c\u6765\u6b74\u300d\u306b PR \u756a\u53f7\u3068\u627f\u8a8d\u8005\u304c\u51fa\u308b\u3002",
+    "kb_en": "Problem setting lives in written orders and in pre-registrations frozen before a run; the final decision is the merge of a pull request, which only the human performs. The provenance box of a node shows the PR number and who accepted it.",
     "nodes": [
      "P-o19-registration",
      "P-registered-prediction"
     ],
     "view": "protocols",
-    "view_label": "登録・判定"
+    "view_label": "\u767b\u9332\u30fb\u5224\u5b9a",
+    "view_label_en": "Registrations"
    },
    {
     "key": "agents",
-    "fig": "AI エージェント（統率AI・実行AI）",
-    "kb": "実行AI が計算機上で計算して証拠を生み、統率AI が記録層にノードを書いて主張を立てる。誰が書いたかは各ノードの `prov.asserted_by`。",
+    "fig": "AI \u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\uff08\u7d71\u7387AI\u30fb\u5b9f\u884cAI\uff09",
+    "fig_en": "AI agents (orchestrator, executor)",
+    "kb": "\u5b9f\u884cAI \u304c\u8a08\u7b97\u6a5f\u4e0a\u3067\u8a08\u7b97\u3057\u3066\u8a3c\u62e0\u3092\u751f\u307f\u3001\u7d71\u7387AI \u304c\u8a18\u9332\u5c64\u306b\u30ce\u30fc\u30c9\u3092\u66f8\u3044\u3066\u4e3b\u5f35\u3092\u7acb\u3066\u308b\u3002\u8ab0\u304c\u66f8\u3044\u305f\u304b\u306f\u5404\u30ce\u30fc\u30c9\u306e `prov.asserted_by`\u3002",
+    "kb_en": "The executor runs the computation and produces evidence; the orchestrator writes nodes into the record layer and states claims. `prov.asserted_by` on every node says who wrote it.",
     "nodes": [
      "X-census-d17",
      "E-census-d17",
      "C-1q-law"
     ],
     "view": "table",
-    "view_label": "表（主張者列）"
+    "view_label": "\u8868\uff08\u4e3b\u5f35\u8005\u5217\uff09",
+    "view_label_en": "Table (asserted-by column)"
    },
    {
     "key": "meta",
-    "fig": "別の AI（meta-AI）",
-    "kb": "統率AI とは別の AI が、記録層だけを読んで独立に再計算・再集計し、検収と裁定を行う。その再計算も実行単位 X として記録層に残る。",
+    "fig": "\u5225\u306e AI\uff08meta-AI\uff09",
+    "fig_en": "A different AI (meta-AI)",
+    "kb": "\u7d71\u7387AI \u3068\u306f\u5225\u306e AI \u304c\u3001\u8a18\u9332\u5c64\u3060\u3051\u3092\u8aad\u3093\u3067\u72ec\u7acb\u306b\u518d\u8a08\u7b97\u30fb\u518d\u96c6\u8a08\u3057\u3001\u691c\u53ce\u3068\u88c1\u5b9a\u3092\u884c\u3046\u3002\u305d\u306e\u518d\u8a08\u7b97\u3082\u5b9f\u884c\u5358\u4f4d X \u3068\u3057\u3066\u8a18\u9332\u5c64\u306b\u6b8b\u308b\u3002",
+    "kb_en": "An AI distinct from the orchestrator reads only the record layer, recomputes independently, and performs acceptance and arbitration. Its recomputation is itself recorded as an execution unit X.",
     "nodes": [
      "X-q8-crosstab-accept",
      "X-census-d19"
     ],
     "view": "grounding",
-    "view_label": "接地"
+    "view_label": "\u63a5\u5730",
+    "view_label_en": "Grounding"
    },
    {
     "key": "kg",
-    "fig": "知識グラフ",
-    "kb": "8 型のノード（対象 O・量 Q・証拠 E・主張 C・仮説 H・登録 P・実行単位 X・教訓 L）と型付きリンク（`about` `quantities` `supported_by` `refuted_by` `grounded_in` `verifies` `registered_by` `derives_from` …）。すべて JSON の記録層で、CI が参照整合・接地律・双方向律・凍結律を検査する。",
+    "fig": "\u77e5\u8b58\u30b0\u30e9\u30d5",
+    "fig_en": "Knowledge graph",
+    "kb": "8 \u578b\u306e\u30ce\u30fc\u30c9\uff08\u5bfe\u8c61 O\u30fb\u91cf Q\u30fb\u8a3c\u62e0 E\u30fb\u4e3b\u5f35 C\u30fb\u4eee\u8aac H\u30fb\u767b\u9332 P\u30fb\u5b9f\u884c\u5358\u4f4d X\u30fb\u6559\u8a13 L\uff09\u3068\u578b\u4ed8\u304d\u30ea\u30f3\u30af\uff08`about` `quantities` `supported_by` `refuted_by` `grounded_in` `verifies` `registered_by` `derives_from` \u2026\uff09\u3002\u3059\u3079\u3066 JSON \u306e\u8a18\u9332\u5c64\u3067\u3001CI \u304c\u53c2\u7167\u6574\u5408\u30fb\u63a5\u5730\u5f8b\u30fb\u53cc\u65b9\u5411\u5f8b\u30fb\u51cd\u7d50\u5f8b\u3092\u691c\u67fb\u3059\u308b\u3002",
+    "kb_en": "Eight node types (Object O, Quantity Q, Evidence E, Claim C, Hypothesis H, Protocol P, ExecutionUnit X, Lesson L) and typed links (`about` `quantities` `supported_by` `refuted_by` `grounded_in` `verifies` `registered_by` `derives_from` \u2026). Everything is JSON in the record layer; CI checks referential integrity, grounding, bidirectionality and freezing.",
     "nodes": [],
     "view": "graph",
-    "view_label": "グラフ／俯瞰"
+    "view_label": "\u30b0\u30e9\u30d5\uff0f\u4fef\u77b0",
+    "view_label_en": "Graph / overview"
    },
    {
     "key": "obj",
-    "fig": "対象 O",
-    "kb": "計測の対象（族・体・census 表）。実例: 数体 Q8（8T5）の全数族と census 表、関数体の世代族。",
+    "fig": "\u5bfe\u8c61 O",
+    "fig_en": "Object O",
+    "kb": "\u8a08\u6e2c\u306e\u5bfe\u8c61\uff08\u65cf\u30fb\u4f53\u30fbcensus \u8868\uff09\u3002\u5b9f\u4f8b: \u6570\u4f53 Q8\uff088T5\uff09\u306e\u5168\u6570\u65cf\u3068 census \u8868\u3001\u95a2\u6570\u4f53\u306e\u4e16\u4ee3\u65cf\u3002",
+    "kb_en": "What is measured (a family, a field, a census table). Examples: the complete family of Q8 (8T5) number fields and its census table; a family of function fields by genus.",
     "nodes": [
      "O-nf-q8-8t5",
      "O-q8-8t5-census",
      "O-ff-q3-d17"
     ],
     "view": "lines",
-    "view_label": "研究線"
+    "view_label": "\u7814\u7a76\u7dda",
+    "view_label_en": "Research lines"
    },
    {
     "key": "measure",
-    "fig": "計測 → 量 Q・証拠 E",
-    "kb": "計測される量は **Q**（関数等式符号 W・中心零点位数 m など）、計測結果の記録は **E**。E は `quantities` で Q を、`about` で対象を指す。",
+    "fig": "\u8a08\u6e2c \u2192 \u91cf Q\u30fb\u8a3c\u62e0 E",
+    "fig_en": "Measurement \u2192 Quantity Q, Evidence E",
+    "kb": "\u8a08\u6e2c\u3055\u308c\u308b\u91cf\u306f **Q**\uff08\u95a2\u6570\u7b49\u5f0f\u7b26\u53f7 W\u30fb\u4e2d\u5fc3\u96f6\u70b9\u4f4d\u6570 m \u306a\u3069\uff09\u3001\u8a08\u6e2c\u7d50\u679c\u306e\u8a18\u9332\u306f **E**\u3002E \u306f `quantities` \u3067 Q \u3092\u3001`about` \u3067\u5bfe\u8c61\u3092\u6307\u3059\u3002",
+    "kb_en": "The measured quantity is a **Q** (root number W, order of the central zero m, \u2026); the record of a measurement is an **E**. E points to Q via `quantities` and to the object via `about`.",
     "nodes": [
      "Q-root-number",
      "Q-m-central",
      "E-q8-w-crosstab"
     ],
     "view": "grounding",
-    "view_label": "接地"
+    "view_label": "\u63a5\u5730",
+    "view_label_en": "Grounding"
    },
    {
     "key": "claim",
-    "fig": "支持 → 主張 C",
-    "kb": "主張 **C** は `supported_by` で証拠を指し、状態（確立・登録的中・暫定・棄却…）を持つ。実例: Q8 の解析済 40,125 体で「中心消滅 ⇔ W=−1」（完全対角）— 走行前に凍結した予測どおりに的中した `registered-hit`。",
+    "fig": "\u652f\u6301 \u2192 \u4e3b\u5f35 C",
+    "fig_en": "Support \u2192 Claim C",
+    "kb": "\u4e3b\u5f35 **C** \u306f `supported_by` \u3067\u8a3c\u62e0\u3092\u6307\u3057\u3001\u72b6\u614b\uff08\u78ba\u7acb\u30fb\u767b\u9332\u7684\u4e2d\u30fb\u66ab\u5b9a\u30fb\u68c4\u5374\u2026\uff09\u3092\u6301\u3064\u3002\u5b9f\u4f8b: Q8 \u306e\u89e3\u6790\u6e08 40,125 \u4f53\u3067\u300c\u4e2d\u5fc3\u6d88\u6ec5 \u21d4 W=\u22121\u300d\uff08\u5b8c\u5168\u5bfe\u89d2\uff09\u2014 \u8d70\u884c\u524d\u306b\u51cd\u7d50\u3057\u305f\u4e88\u6e2c\u3069\u304a\u308a\u306b\u7684\u4e2d\u3057\u305f `registered-hit`\u3002",
+    "kb_en": "A claim **C** points to evidence via `supported_by` and carries a status (established, registered-hit, provisional, rejected, \u2026). Example: over 40,125 analysed Q8 fields, central vanishing \u21d4 W = \u22121 (a perfect diagonal) \u2014 a `registered-hit`, i.e. a prediction frozen before the run that came true.",
     "nodes": [
      "C-q8-w-diagonal",
      "C-1q-law"
     ],
     "view": "grounding",
-    "view_label": "接地"
+    "view_label": "\u63a5\u5730",
+    "view_label_en": "Grounding"
    },
    {
     "key": "counter",
-    "fig": "反証（棄却も残す）",
-    "kb": "反例は `refuted_by` で結び、主張は `rejected` のまま残す（消さない）。実例: 中央係数則は e=10 の直接計算 −6024 ≠ −5880 で自己反証し、教訓 L に昇格した。",
+    "fig": "\u53cd\u8a3c\uff08\u68c4\u5374\u3082\u6b8b\u3059\uff09",
+    "fig_en": "Refutation (rejections are kept)",
+    "kb": "\u53cd\u4f8b\u306f `refuted_by` \u3067\u7d50\u3073\u3001\u4e3b\u5f35\u306f `rejected` \u306e\u307e\u307e\u6b8b\u3059\uff08\u6d88\u3055\u306a\u3044\uff09\u3002\u5b9f\u4f8b: \u4e2d\u592e\u4fc2\u6570\u5247\u306f e=10 \u306e\u76f4\u63a5\u8a08\u7b97 \u22126024 \u2260 \u22125880 \u3067\u81ea\u5df1\u53cd\u8a3c\u3057\u3001\u6559\u8a13 L \u306b\u6607\u683c\u3057\u305f\u3002",
+    "kb_en": "A counterexample is linked via `refuted_by` and the claim stays with status `rejected` (nothing is deleted). Example: the middle-coefficient law refuted itself by a direct computation at e=10 (\u22126024 \u2260 \u22125880) and became a lesson L.",
     "nodes": [
      "C-middle-law-false",
      "E-middle-e10"
     ],
     "view": "grounding",
-    "view_label": "接地"
+    "view_label": "\u63a5\u5730",
+    "view_label_en": "Grounding"
    },
    {
     "key": "hyp",
-    "fig": "登録 P・仮説 H（予測を走行前に凍結）",
-    "kb": "仮説 **H** と、判定帯まで走行前に凍結する事前登録 **P**（ファイルの sha256 で凍結）。予想は「後から合わせる」ことができない形で先に書く。",
+    "fig": "\u767b\u9332 P\u30fb\u4eee\u8aac H\uff08\u4e88\u6e2c\u3092\u8d70\u884c\u524d\u306b\u51cd\u7d50\uff09",
+    "fig_en": "Protocol P, Hypothesis H (predictions frozen before the run)",
+    "kb": "\u4eee\u8aac **H** \u3068\u3001\u5224\u5b9a\u5e2f\u307e\u3067\u8d70\u884c\u524d\u306b\u51cd\u7d50\u3059\u308b\u4e8b\u524d\u767b\u9332 **P**\uff08\u30d5\u30a1\u30a4\u30eb\u306e sha256 \u3067\u51cd\u7d50\uff09\u3002\u4e88\u60f3\u306f\u300c\u5f8c\u304b\u3089\u5408\u308f\u305b\u308b\u300d\u3053\u3068\u304c\u3067\u304d\u306a\u3044\u5f62\u3067\u5148\u306b\u66f8\u304f\u3002",
+    "kb_en": "A hypothesis **H**, and a pre-registration **P** that freezes the decision bands before the run (by the sha256 of the file). Predictions are written first, in a form that cannot be adjusted afterwards.",
     "nodes": [
      "P-q8-step2-w1",
      "H-d19-registered",
      "H-middle-weil-sum"
     ],
     "view": "protocols",
-    "view_label": "登録・判定"
+    "view_label": "\u767b\u9332\u30fb\u5224\u5b9a",
+    "view_label_en": "Registrations"
    },
    {
     "key": "lessons",
-    "fig": "教訓 L",
-    "kb": "失敗や修正を規則に昇格させたもの。`taught_by` で元になった証拠を指す。",
+    "fig": "\u6559\u8a13 L",
+    "fig_en": "Lesson L",
+    "kb": "\u5931\u6557\u3084\u4fee\u6b63\u3092\u898f\u5247\u306b\u6607\u683c\u3055\u305b\u305f\u3082\u306e\u3002`taught_by` \u3067\u5143\u306b\u306a\u3063\u305f\u8a3c\u62e0\u3092\u6307\u3059\u3002",
+    "kb_en": "A failure or correction promoted to a rule. `taught_by` points to the evidence it came from.",
     "nodes": [
      "L-middle-law-self-refutation",
      "L-extraction-vs-record",
      "L-verify-script-in-repo"
     ],
     "view": "lessons",
-    "view_label": "教訓"
+    "view_label": "\u6559\u8a13",
+    "view_label_en": "Lessons"
    },
    {
     "key": "bidir",
-    "fig": "双方向リンク",
-    "kb": "証拠 `grounded_in` ⇄ 実行単位 `verifies` を記録層に**両方向**で書く。主張 ⇄ 証拠の逆向きは CI が `backlinks.json` に導出し「双方向律」で照合。詳細パネルの ⇄ 印がそれ。",
+    "fig": "\u53cc\u65b9\u5411\u30ea\u30f3\u30af",
+    "fig_en": "Bidirectional links",
+    "kb": "\u8a3c\u62e0 `grounded_in` \u21c4 \u5b9f\u884c\u5358\u4f4d `verifies` \u3092\u8a18\u9332\u5c64\u306b**\u4e21\u65b9\u5411**\u3067\u66f8\u304f\u3002\u4e3b\u5f35 \u21c4 \u8a3c\u62e0\u306e\u9006\u5411\u304d\u306f CI \u304c `backlinks.json` \u306b\u5c0e\u51fa\u3057\u300c\u53cc\u65b9\u5411\u5f8b\u300d\u3067\u7167\u5408\u3002\u8a73\u7d30\u30d1\u30cd\u30eb\u306e \u21c4 \u5370\u304c\u305d\u308c\u3002",
+    "kb_en": "Evidence `grounded_in` \u21c4 execution unit `verifies` is written in **both directions** in the record layer. For claim \u21c4 evidence the inverse is derived by CI into `backlinks.json` and checked as the bidirectionality rule; the \u21c4 mark in the detail panel shows it.",
     "nodes": [
      "E-census-d17",
      "X-census-d17-spot"
     ],
     "view": "grounding",
-    "view_label": "接地（双方向ペアの実測値）"
+    "view_label": "\u63a5\u5730\uff08\u53cc\u65b9\u5411\u30da\u30a2\u306e\u5b9f\u6e2c\u5024\uff09",
+    "view_label_en": "Grounding (measured bidirectional pairs)"
    },
    {
     "key": "pkg",
-    "fig": "実行単位 X（コード・データ・環境・来歴）",
-    "kb": "`entry`（コード＝1 コマンド）・`inputs` の sha256（データ）・`env`（環境）・`prov`（来歴）。`tier`（full／accept／spot）で再実行の範囲とコストを限定する。offline 単位は同梱データだけで再実行できる。",
+    "fig": "\u5b9f\u884c\u5358\u4f4d X\uff08\u30b3\u30fc\u30c9\u30fb\u30c7\u30fc\u30bf\u30fb\u74b0\u5883\u30fb\u6765\u6b74\uff09",
+    "fig_en": "ExecutionUnit X (code, data, environment, provenance)",
+    "kb": "`entry`\uff08\u30b3\u30fc\u30c9\uff1d1 \u30b3\u30de\u30f3\u30c9\uff09\u30fb`inputs` \u306e sha256\uff08\u30c7\u30fc\u30bf\uff09\u30fb`env`\uff08\u74b0\u5883\uff09\u30fb`prov`\uff08\u6765\u6b74\uff09\u3002`tier`\uff08full\uff0faccept\uff0fspot\uff09\u3067\u518d\u5b9f\u884c\u306e\u7bc4\u56f2\u3068\u30b3\u30b9\u30c8\u3092\u9650\u5b9a\u3059\u308b\u3002offline \u5358\u4f4d\u306f\u540c\u68b1\u30c7\u30fc\u30bf\u3060\u3051\u3067\u518d\u5b9f\u884c\u3067\u304d\u308b\u3002",
+    "kb_en": "`entry` (the code, as one command), `inputs` with sha256 (the data), `env` (the environment), `prov` (provenance). `tier` (full / accept / spot) bounds the scope and cost of a re-run. Offline units can be re-executed from the bundled data alone.",
     "nodes": [
      "X-census-d17-spot",
      "X-census-d17",
      "X-q8-ks"
     ],
     "view": "grounding",
-    "view_label": "接地（再実行枠）"
+    "view_label": "\u63a5\u5730\uff08\u518d\u5b9f\u884c\u67a0\uff09",
+    "view_label_en": "Grounding (re-run box)"
    },
    {
     "key": "artifact",
-    "fig": "成果物・期待値",
-    "kb": "証拠の成果物と実行単位の期待値は sha256 で凍結し、再実行して一致を記録する（k4）。",
+    "fig": "\u6210\u679c\u7269\u30fb\u671f\u5f85\u5024",
+    "fig_en": "Artifacts and expected values",
+    "kb": "\u8a3c\u62e0\u306e\u6210\u679c\u7269\u3068\u5b9f\u884c\u5358\u4f4d\u306e\u671f\u5f85\u5024\u306f sha256 \u3067\u51cd\u7d50\u3057\u3001\u518d\u5b9f\u884c\u3057\u3066\u4e00\u81f4\u3092\u8a18\u9332\u3059\u308b\uff08k4\uff09\u3002",
+    "kb_en": "The artifacts of evidence and the expected values of execution units are frozen by sha256; re-runs record whether they match (k4).",
     "nodes": [
      "E-census-d17",
      "X-census-d17-spot"
     ],
     "view": "grounding",
-    "view_label": "接地"
+    "view_label": "\u63a5\u5730",
+    "view_label_en": "Grounding"
    },
    {
     "key": "record",
-    "fig": "記録層",
-    "kb": "ノード JSON（private リポジトリ）。CI が参照整合・接地律・双方向律・凍結律を検査し、公開抜粋は規則で生成する（手で選ばない）。",
+    "fig": "\u8a18\u9332\u5c64",
+    "fig_en": "Record layer",
+    "kb": "\u30ce\u30fc\u30c9 JSON\uff08private \u30ea\u30dd\u30b8\u30c8\u30ea\uff09\u3002CI \u304c\u53c2\u7167\u6574\u5408\u30fb\u63a5\u5730\u5f8b\u30fb\u53cc\u65b9\u5411\u5f8b\u30fb\u51cd\u7d50\u5f8b\u3092\u691c\u67fb\u3057\u3001\u516c\u958b\u629c\u7c8b\u306f\u898f\u5247\u3067\u751f\u6210\u3059\u308b\uff08\u624b\u3067\u9078\u3070\u306a\u3044\uff09\u3002",
+    "kb_en": "The node JSON files (private repository). CI checks referential integrity, grounding, bidirectionality and freezing; this public excerpt is generated by a rule, never hand-picked.",
     "nodes": [],
     "view": "table",
-    "view_label": "表"
+    "view_label": "\u8868",
+    "view_label_en": "Table"
    },
    {
     "key": "eval1",
-    "fig": "再実行できる",
-    "kb": "`rerun.py` が offline 実行単位の入力 sha256 を照合し、`entry` を実行して `expected` と比べる。CI が push ごと・毎週に走らせ、結果はバッジに出る。",
+    "fig": "\u518d\u5b9f\u884c\u3067\u304d\u308b",
+    "fig_en": "Can be re-executed",
+    "kb": "`rerun.py` \u304c offline \u5b9f\u884c\u5358\u4f4d\u306e\u5165\u529b sha256 \u3092\u7167\u5408\u3057\u3001`entry` \u3092\u5b9f\u884c\u3057\u3066 `expected` \u3068\u6bd4\u3079\u308b\u3002CI \u304c push \u3054\u3068\u30fb\u6bce\u9031\u306b\u8d70\u3089\u305b\u3001\u7d50\u679c\u306f\u30d0\u30c3\u30b8\u306b\u51fa\u308b\u3002",
+    "kb_en": "`rerun.py` checks the input sha256 of each offline execution unit, runs its `entry` and compares with `expected`. CI runs it on every push and weekly; the result is shown in the badge.",
     "nodes": [
      "X-census-d17-spot",
      "X-a1-mobius",
      "X-q8-ks"
     ],
     "view": "grounding",
-    "view_label": "接地（再実行のしかた）"
+    "view_label": "\u63a5\u5730\uff08\u518d\u5b9f\u884c\u306e\u3057\u304b\u305f\uff09",
+    "view_label_en": "Grounding (how to re-run)"
    },
    {
     "key": "eval2",
-    "fig": "根拠まで辿れる",
-    "kb": "接地タブ: 主張 → 証拠 → 実行単位 → 再実行結果 を 1 行で見る。「辿る」で根拠の鎖（登録 → 主張 → 証拠 → 実行 → 教訓）へ。",
+    "fig": "\u6839\u62e0\u307e\u3067\u8fbf\u308c\u308b",
+    "fig_en": "Can be traced to its grounds",
+    "kb": "\u63a5\u5730\u30bf\u30d6: \u4e3b\u5f35 \u2192 \u8a3c\u62e0 \u2192 \u5b9f\u884c\u5358\u4f4d \u2192 \u518d\u5b9f\u884c\u7d50\u679c \u3092 1 \u884c\u3067\u898b\u308b\u3002\u300c\u8fbf\u308b\u300d\u3067\u6839\u62e0\u306e\u9396\uff08\u767b\u9332 \u2192 \u4e3b\u5f35 \u2192 \u8a3c\u62e0 \u2192 \u5b9f\u884c \u2192 \u6559\u8a13\uff09\u3078\u3002",
+    "kb_en": "Grounding tab: claim \u2192 evidence \u2192 execution unit \u2192 re-run result in one row. \"Trace\" opens the chain of grounds (registration \u2192 claim \u2192 evidence \u2192 execution \u2192 lesson).",
     "nodes": [
      "C-1q-law",
      "E-census-d17",
      "X-q8-crosstab-accept"
     ],
     "view": "grounding",
-    "view_label": "接地"
+    "view_label": "\u63a5\u5730",
+    "view_label_en": "Grounding"
    },
    {
     "key": "eval3",
-    "fig": "予測が先に凍結（蓄積 → 予測 → 的中・棄却）",
-    "kb": "蓄積（d=11〜17 の census）から d=19 の「境界超過の符号反転」を予測し、判定帯を走行前に登録（P）→ 本走 → 帯内で的中（`registered-hit`）。Q8 でも W 層の予測 → 完全対角の的中。登録的中は抜粋内 5 件。",
+    "fig": "\u4e88\u6e2c\u304c\u5148\u306b\u51cd\u7d50\u3055\u308c\u308b",
+    "fig_en": "Predictions are frozen first",
+    "kb": "\u84c4\u7a4d\uff08d=11\u301c17 \u306e census\uff09\u304b\u3089 d=19 \u306e\u300c\u5883\u754c\u8d85\u904e\u306e\u7b26\u53f7\u53cd\u8ee2\u300d\u3092\u4e88\u6e2c\u3057\u3001\u5224\u5b9a\u5e2f\u3092\u8d70\u884c\u524d\u306b\u767b\u9332\uff08P\uff09\u2192 \u672c\u8d70 \u2192 \u5e2f\u5185\u3067\u7684\u4e2d\uff08`registered-hit`\uff09\u3002Q8 \u3067\u3082 W \u5c64\u306e\u4e88\u6e2c \u2192 \u5b8c\u5168\u5bfe\u89d2\u306e\u7684\u4e2d\u3002",
+    "kb_en": "From the accumulated censuses (d = 11\u202617) the sign reversal of the boundary excess at d = 19 was predicted, the decision band registered (P) before the run \u2192 run \u2192 hit inside the band (`registered-hit`). Likewise for Q8: the predicted W layer \u2192 the perfect diagonal.",
     "nodes": [
      "P-o19-registration",
      "E-census-d19",
@@ -392,46 +444,62 @@
      "C-registered-prediction-method"
     ],
     "view": "protocols",
-    "view_label": "登録・判定"
+    "view_label": "\u767b\u9332\u30fb\u5224\u5b9a",
+    "view_label_en": "Registrations"
    }
   ],
   "steps": [
    {
-    "title": "主張から証拠へ",
-    "text": "接地タブで `C-1q-law` の行を見る: 証拠 4 件（d=11〜17 の census 実測）と実行単位、再実行 PASS が並ぶ。",
+    "title": "\u4e3b\u5f35\u304b\u3089\u8a3c\u62e0\u3078",
+    "title_en": "From a claim to its evidence",
+    "text": "\u63a5\u5730\u30bf\u30d6\u3067 `C-1q-law` \u306e\u884c\u3092\u898b\u308b: \u8a3c\u62e0 4 \u4ef6\uff08d=11\u301c17 \u306e census \u5b9f\u6e2c\uff09\u3068\u5b9f\u884c\u5358\u4f4d\u3001\u518d\u5b9f\u884c PASS \u304c\u4e26\u3076\u3002",
+    "text_en": "Open the Grounding tab and look at the row of `C-1q-law`: four pieces of evidence (census measurements for d = 11\u202617), the execution units and the re-run PASS marks are listed side by side.",
     "node": "C-1q-law",
     "view": "grounding",
-    "check": "主張の行に、証拠 → 実行単位 → 再実行 PASS が並んでいた"
+    "check": "\u4e3b\u5f35\u306e\u884c\u306b\u3001\u8a3c\u62e0 \u2192 \u5b9f\u884c\u5358\u4f4d \u2192 \u518d\u5b9f\u884c PASS \u304c\u4e26\u3093\u3067\u3044\u305f",
+    "check_en": "the claim row listed evidence \u2192 execution unit \u2192 re-run PASS"
    },
    {
-    "title": "証拠から再実行へ",
-    "text": "`X-census-d17-spot` を開き「再実行」枠のコマンドをコピーして手元で走らせる（Python と sympy だけ。数秒）。CI の最新実行でも同じ結果が見られる。",
+    "title": "\u8a3c\u62e0\u304b\u3089\u518d\u5b9f\u884c\u3078",
+    "title_en": "From evidence to a re-run",
+    "text": "`X-census-d17-spot` \u3092\u958b\u304d\u300c\u518d\u5b9f\u884c\u300d\u67a0\u306e\u30b3\u30de\u30f3\u30c9\u3092\u30b3\u30d4\u30fc\u3057\u3066\u624b\u5143\u3067\u8d70\u3089\u305b\u308b\uff08Python \u3068 sympy \u3060\u3051\u3002\u6570\u79d2\uff09\u3002CI \u306e\u6700\u65b0\u5b9f\u884c\u3067\u3082\u540c\u3058\u7d50\u679c\u304c\u898b\u3089\u308c\u308b\u3002",
+    "text_en": "Open `X-census-d17-spot`, copy the command in its re-run box and run it locally (Python and sympy only; a few seconds). The latest CI run shows the same result.",
     "node": "X-census-d17-spot",
     "view": "grounding",
     "cmd": "git clone https://github.com/jxta/bias-kb-atlas.git && cd bias-kb-atlas && python3 rerun.py X-census-d17-spot",
     "expect": "X-census-d17-spot  spot   PASS   -0.4994337027369984 / -0.4994337027369984\n1/1 PASS",
-    "check": "手元（または CI）で再実行し、期待値と一致した"
+    "check": "\u624b\u5143\uff08\u307e\u305f\u306f CI\uff09\u3067\u518d\u5b9f\u884c\u3057\u3001\u671f\u5f85\u5024\u3068\u4e00\u81f4\u3057\u305f",
+    "check_en": "re-ran it locally (or in CI) and it matched the expected value"
    },
    {
-    "title": "予測 → 的中",
-    "text": "`C-d19-sign-reversal` の「根拠の鎖」に、実行前登録 `P-o19-registration` → census 本走 → 登録帯内 PASS が並ぶ。予測は走行前に凍結されている。",
+    "title": "\u4e88\u6e2c \u2192 \u7684\u4e2d",
+    "title_en": "Prediction \u2192 hit",
+    "text": "`C-d19-sign-reversal` \u306e\u300c\u6839\u62e0\u306e\u9396\u300d\u306b\u3001\u5b9f\u884c\u524d\u767b\u9332 `P-o19-registration` \u2192 census \u672c\u8d70 \u2192 \u767b\u9332\u5e2f\u5185 PASS \u304c\u4e26\u3076\u3002\u4e88\u6e2c\u306f\u8d70\u884c\u524d\u306b\u51cd\u7d50\u3055\u308c\u3066\u3044\u308b\u3002",
+    "text_en": "In the chain of grounds of `C-d19-sign-reversal`: the pre-registration `P-o19-registration` \u2192 the census run \u2192 PASS inside the registered band. The prediction was frozen before the run.",
     "node": "C-d19-sign-reversal",
     "view": "grounding",
-    "check": "登録（凍結 sha・日付）が本走より前にあることを確かめた"
+    "check": "\u767b\u9332\uff08\u51cd\u7d50 sha\u30fb\u65e5\u4ed8\uff09\u304c\u672c\u8d70\u3088\u308a\u524d\u306b\u3042\u308b\u3053\u3068\u3092\u78ba\u304b\u3081\u305f",
+    "check_en": "confirmed that the registration (frozen sha, date) precedes the run"
    },
    {
-    "title": "反例も残る",
-    "text": "`C-middle-law-false` は反例 `E-middle-e10` で棄却され、教訓 `L-middle-law-self-refutation` が規則になった。失敗も記録層から消えない。",
+    "title": "\u53cd\u4f8b\u3082\u6b8b\u308b",
+    "title_en": "Counterexamples stay",
+    "text": "`C-middle-law-false` \u306f\u53cd\u4f8b `E-middle-e10` \u3067\u68c4\u5374\u3055\u308c\u3001\u6559\u8a13 `L-middle-law-self-refutation` \u304c\u898f\u5247\u306b\u306a\u3063\u305f\u3002\u5931\u6557\u3082\u8a18\u9332\u5c64\u304b\u3089\u6d88\u3048\u306a\u3044\u3002",
+    "text_en": "`C-middle-law-false` was rejected by the counterexample `E-middle-e10`, and the lesson `L-middle-law-self-refutation` became a rule. Failures are never removed from the record layer.",
     "node": "C-middle-law-false",
     "view": "grounding",
-    "check": "棄却された主張が `rejected` のまま残り、反証と教訓に結ばれていた"
+    "check": "\u68c4\u5374\u3055\u308c\u305f\u4e3b\u5f35\u304c `rejected` \u306e\u307e\u307e\u6b8b\u308a\u3001\u53cd\u8a3c\u3068\u6559\u8a13\u306b\u7d50\u3070\u308c\u3066\u3044\u305f",
+    "check_en": "the rejected claim is still there as `rejected`, linked to its refutation and lesson"
    },
    {
-    "title": "人間の最終判断",
-    "text": "詳細パネルの「来歴」で主張者・承認者・PR 番号を見る。記録層への反映は PR の merge（人間の承認）だけで起きる。",
+    "title": "\u4eba\u9593\u306e\u6700\u7d42\u5224\u65ad",
+    "title_en": "The human's final decision",
+    "text": "\u8a73\u7d30\u30d1\u30cd\u30eb\u306e\u300c\u6765\u6b74\u300d\u3067\u4e3b\u5f35\u8005\u30fb\u627f\u8a8d\u8005\u30fbPR \u756a\u53f7\u3092\u898b\u308b\u3002\u8a18\u9332\u5c64\u3078\u306e\u53cd\u6620\u306f PR \u306e merge\uff08\u4eba\u9593\u306e\u627f\u8a8d\uff09\u3060\u3051\u3067\u8d77\u304d\u308b\u3002",
+    "text_en": "In the provenance box of the detail panel, see who asserted, who accepted, and the PR number. Nothing enters the record layer except through a merged PR (human approval).",
     "node": "C-q8-w-diagonal",
     "view": "grounding",
-    "check": "来歴に主張者（AI）と受入（別の AI）、PR 番号が記録されていた"
+    "check": "\u6765\u6b74\u306b\u4e3b\u5f35\u8005\uff08AI\uff09\u3068\u53d7\u5165\uff08\u5225\u306e AI\uff09\u3001PR \u756a\u53f7\u304c\u8a18\u9332\u3055\u308c\u3066\u3044\u305f",
+    "check_en": "provenance recorded the asserting AI, the accepting (different) AI and the PR number"
    }
   ],
   "svg": ""
@@ -444,5 +512,225 @@
   "subprojects/hurwitz_ea/verify_a1_mobius.py",
   "subprojects/hurwitz_ea/verify_boundary_1overq.py",
   "subprojects/q8_drh/results/pillarB/q8_ks_harvest/d4_wp1.json"
- ]
+ ],
+ "full_stats": {
+  "types": {
+   "Claim": 151,
+   "Evidence": 177,
+   "Hypothesis": 48,
+   "Lesson": 113,
+   "Object": 99,
+   "Protocol": 90,
+   "Quantity": 67,
+   "ExecutionUnit": 158
+  },
+  "claim_status": {
+   "established": 98,
+   "challenged": 3,
+   "rejected-recorded": 3,
+   "supported": 9,
+   "provisional": 10,
+   "registered-hit": 5,
+   "rejected": 23
+  },
+  "hypothesis_status": {
+   "open": 25,
+   "promoted": 4,
+   "supported": 8,
+   "rejected": 6,
+   "challenged": 4,
+   "provisional": 1
+  },
+  "protocols": {
+   "n": 90,
+   "frozen": 90
+  },
+  "lessons": 113,
+  "execution_units": {
+   "n": 158,
+   "tiers": {
+    "full": 96,
+    "spot": 13,
+    "accept": 49
+   },
+   "offline": 9
+  },
+  "grounding": {
+   "claims": 151,
+   "structural": 151,
+   "quick": 27
+  },
+  "bidir_pairs": {
+   "pairs": 183,
+   "bidir": 167
+  },
+  "status_history": 6,
+  "k4": {
+   "offline_pass": 9,
+   "offline_run": 9,
+   "pending": 53
+  },
+  "daily": [
+   [
+    "2026-06-05",
+    61
+   ],
+   [
+    "2026-06-08",
+    63
+   ],
+   [
+    "2026-06-10",
+    52
+   ],
+   [
+    "2026-06-20",
+    57
+   ],
+   [
+    "2026-06-25",
+    75
+   ],
+   [
+    "2026-07-15",
+    78
+   ],
+   [
+    "2026-08-04",
+    3
+   ],
+   [
+    "2026-08-05",
+    9
+   ],
+   [
+    "2026-08-06",
+    10
+   ],
+   [
+    "2026-08-07",
+    7
+   ],
+   [
+    "2026-08-08",
+    11
+   ],
+   [
+    "2026-08-09",
+    5
+   ],
+   [
+    "2026-08-10",
+    2
+   ],
+   [
+    "2026-08-11",
+    4
+   ],
+   [
+    "2026-08-12",
+    19
+   ],
+   [
+    "2026-08-13",
+    18
+   ],
+   [
+    "2026-08-14",
+    7
+   ],
+   [
+    "2026-08-23",
+    30
+   ],
+   [
+    "2026-08-24",
+    4
+   ],
+   [
+    "2026-08-25",
+    19
+   ],
+   [
+    "2026-08-26",
+    6
+   ],
+   [
+    "2026-08-27",
+    44
+   ],
+   [
+    "2026-08-28",
+    34
+   ],
+   [
+    "2026-08-29",
+    37
+   ],
+   [
+    "2026-08-30",
+    25
+   ],
+   [
+    "2026-08-31",
+    13
+   ],
+   [
+    "2026-09-01",
+    7
+   ],
+   [
+    "2026-09-02",
+    20
+   ],
+   [
+    "2026-09-03",
+    32
+   ],
+   [
+    "2026-09-04",
+    14
+   ],
+   [
+    "2026-09-05",
+    63
+   ],
+   [
+    "2026-09-06",
+    29
+   ],
+   [
+    "2026-09-07",
+    14
+   ],
+   [
+    "2026-09-08",
+    7
+   ],
+   [
+    "2026-09-09",
+    8
+   ],
+   [
+    "2026-09-10",
+    2
+   ],
+   [
+    "2026-09-11",
+    5
+   ],
+   [
+    "2026-09-12",
+    3
+   ],
+   [
+    "2026-09-13",
+    2
+   ],
+   [
+    "2026-09-14",
+    4
+   ]
+  ]
+ }
 }
