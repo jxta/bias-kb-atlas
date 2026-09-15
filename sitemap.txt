@@ -2,6 +2,8 @@ https://jxta.github.io/bias-kb-atlas/
 https://jxta.github.io/bias-kb-atlas/n/index.html
 https://jxta.github.io/bias-kb-atlas/llms.txt
 https://jxta.github.io/bias-kb-atlas/kb/kb.jsonld
+https://jxta.github.io/bias-kb-atlas/progress.html
+https://jxta.github.io/bias-kb-atlas/ro-crate-metadata.json
 https://jxta.github.io/bias-kb-atlas/n/C-1q-law.html
 https://jxta.github.io/bias-kb-atlas/n/C-a1-mobius.html
 https://jxta.github.io/bias-kb-atlas/n/C-boundary-closedform.html

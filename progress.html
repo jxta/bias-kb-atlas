@@ -36,6 +36,8 @@ svg{display:block;overflow:visible}
 .pt{stroke:none}.pt.inst{fill:var(--faint)}.pt.mech{fill:var(--ink)}
 .pt.susp{stroke:var(--ink);stroke-width:1.2;fill:#fff}
 .gb{fill:var(--faint)}
+.sv{stroke:#fff;stroke-width:.6}
+.sv.alive{fill:#111}.sv.prov{fill:#777}.sv.chal{fill:#aaa}.sv.sup{fill:#d0d0d0}.sv.rej{fill:#ececec}
 table{border-collapse:collapse;width:100%;font-size:13px}
 th{font-weight:500;text-align:left}
 .grid th,.grid td{border-bottom:1px solid var(--rule);padding:7px 8px}
@@ -62,7 +64,7 @@ footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--rule);color:v
 @media print{body{font-size:11px}main{padding:0}}
 </style></head><body><main>
 <h1>研究の現在地 — bias-kb 公開抜粋</h1>
-<p class=sub>公開抜粋 100 ノードから生成（記録層は非公開）　生成 2026-09-06 09:02Z
+<p class=sub>いまはすべて prov の日付から 1 点だけ補った派生（status_history はまだ 1 本も無い）。派生が多いうちは実質「作られた日ごとの現在の状態」で、本当の遷移は status_history が積まれてから見える。　生成 2026-09-15 02:21Z
 　記録の範囲 2026-06-10 〜 2026-08-25</p>
 <div class=kpis><div class=kpi><b>100</b><span>ノード</span></div><div class=kpi><b>2</b><span>判定</span></div><div class=kpi><b>0</b><span>うち ★</span></div><div class=kpi><b>4</b><span>登録</span></div></div>
 
@@ -71,6 +73,25 @@ footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--rule);color:v
 
 <h2>主張の棚卸し <span class=n>— 言っていることは、いま確かめられるか</span></h2>
 <table class=grid><thead><tr><th>状態</th><th>accept/spot に到達（即再実行できる）</th><th>full-tier のみ（mdx 本走が要る）</th><th>実行単位に届かない</th><th>計</th></tr></thead><tbody><tr><th>established</th><td>7</td><td>2</td><td>·</td><td class=tot>9</td></tr><tr><th>registered-hit</th><td>4</td><td>1</td><td>·</td><td class=tot>5</td></tr><tr><th>rejected</th><td>1</td><td>·</td><td>·</td><td class=tot>1</td></tr><tr><th>provisional</th><td>1</td><td>·</td><td>·</td><td class=tot>1</td></tr><tr class=sum><th>計</th><td>13</td><td>3</td><td>0</td><td class=tot>16</td></tr></tbody></table>
+
+<h2>主張の生存曲線 <span class=n>— 確立したものが、そのまま残っているか</span></h2>
+<p class=lead>その日その日に、主張がどの状態で何本あったか（16 主張）。いまはすべて prov の日付から 1 点だけ補った派生（status_history はまだ 1 本も無い）。派生が多いうちは実質「作られた日ごとの現在の状態」で、本当の遷移は status_history が積まれてから見える。</p>
+<svg viewBox="0 0 1040 230" width="100%" role="img" aria-label="主張の生存曲線">
+<line class="grid" x1="44" y1="188.0" x2="1028" y2="188.0"/><text class="tick" x="38" y="192.0" text-anchor="end">0</text>
+<line class="grid" x1="44" y1="101.0" x2="1028" y2="101.0"/><text class="tick" x="38" y="105.0" text-anchor="end">8</text>
+<line class="grid" x1="44" y1="14.0" x2="1028" y2="14.0"/><text class="tick" x="38" y="18.0" text-anchor="end">16</text>
+<polygon class="sv alive" points="44.0,177.1 509.4,166.2 828.5,155.4 855.1,144.5 881.7,101.0 895.0,68.4 1028.0,35.8 1028.0,188.0 895.0,188.0 881.7,188.0 855.1,188.0 828.5,188.0 509.4,188.0 44.0,188.0"/>
+<polygon class="sv prov" points="44.0,177.1 509.4,166.2 828.5,155.4 855.1,144.5 881.7,90.1 895.0,57.5 1028.0,24.9 1028.0,35.8 895.0,68.4 881.7,101.0 855.1,144.5 828.5,155.4 509.4,166.2 44.0,177.1"/>
+<polygon class="sv chal" points="44.0,177.1 509.4,166.2 828.5,155.4 855.1,144.5 881.7,90.1 895.0,57.5 1028.0,24.9 1028.0,24.9 895.0,57.5 881.7,90.1 855.1,144.5 828.5,155.4 509.4,166.2 44.0,177.1"/>
+<polygon class="sv sup" points="44.0,177.1 509.4,166.2 828.5,155.4 855.1,144.5 881.7,90.1 895.0,57.5 1028.0,24.9 1028.0,24.9 895.0,57.5 881.7,90.1 855.1,144.5 828.5,155.4 509.4,166.2 44.0,177.1"/>
+<polygon class="sv rej" points="44.0,177.1 509.4,166.2 828.5,155.4 855.1,144.5 881.7,90.1 895.0,46.6 1028.0,14.0 1028.0,24.9 895.0,57.5 881.7,90.1 855.1,144.5 828.5,155.4 509.4,166.2 44.0,177.1"/>
+<text class="tick" x="44" y="206">2026-06-10</text><text class="tick" x="1028" y="206" text-anchor="end">2026-08-23</text>
+<rect class="sv alive" x="44" y="216" width="10" height="10"/><text class="tick" x="58" y="225">確立</text>
+<rect class="sv prov" x="84.4" y="216" width="10" height="10"/><text class="tick" x="98.4" y="225">暫定・未決</text>
+<rect class="sv chal" x="146.4" y="216" width="10" height="10"/><text class="tick" x="160.4" y="225">係争</text>
+<rect class="sv sup" x="186.8" y="216" width="10" height="10"/><text class="tick" x="200.8" y="225">置換済み</text>
+<rect class="sv rej" x="241.60000000000002" y="216" width="10" height="10"/><text class="tick" x="255.60000000000002" y="225">棄却</text>
+</svg>
 
 <h2>未払いの借り <span class=n>— 分かっているが、まだ払っていないもの</span></h2>
 <table class=debt><tbody><tr><th>主張が即再実行できる</th><td class=num>13<span class=den> / 16</span></td><td class=num>81%</td><td class=why>残りは full-tier。k4 の再実行で accept/spot に上げる</td></tr><tr><th>成果物が sha256 で凍結</th><td class=num>8<span class=den> / 17</span></td><td class=num>47%</td><td class=why>凍結していない成果物は後から差し替えられる</td></tr><tr><th>実行単位の入力が凍結</th><td class=num>9<span class=den> / 21</span></td><td class=num>43%</td><td class=why>同上（再実行の同一性）</td></tr><tr><th>うち実ファイルと照合済み</th><td class=num>3<span class=den> / 21</span></td><td class=num>14%</td><td class=why>記録だけのものは照合していない</td></tr><tr><th>量に規約が書かれている</th><td class=num>0<span class=den> / 14</span></td><td class=num>0%</td><td class=why>因子 2・r vs r−1・窓の取り方 — 事故が起きた箇所</td></tr><tr><th>実行単位にノートブックがある</th><td class=num>1<span class=den> / 20</span></td><td class=num>5%</td><td class=why>接地の粒度をノートブックとする設計との乖離</td></tr><tr><th>実行単位が手元で再実行できる</th><td class=num>9<span class=den> / 20</span></td><td class=num>45%</td><td class=why>offline でないものは計算機環境が要る</td></tr></tbody></table>

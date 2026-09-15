@@ -1,10 +1,10 @@
 # bias-kb Atlas — public excerpt (claims grounded in re-executable evidence)
 
-> A machine-readable excerpt of a research knowledge base (bias-kb) in which every claim is linked, in both directions, to the evidence and the re-executable computation that produced it. 100 nodes selected by rule from a record layer of 853 nodes (private repository `jxta/ai4math-lab`, ref 593ef1e); generated 2026-09-06T01:07:58Z. Nothing here is hand-picked; the selection rule and the generator live in `knowledge/tools/kb_atlas.py`.
+> A machine-readable excerpt of a research knowledge base (bias-kb) in which every claim is linked, in both directions, to the evidence and the re-executable computation that produced it. 100 nodes selected by rule from a record layer of 903 nodes (private repository `jxta/ai4math-lab`, ref 9742090); generated 2026-09-15T00:58:06Z. Nothing here is hand-picked; the selection rule and the generator live in `knowledge/tools/kb_atlas.py`.
 
 ## Start here
 
-- Site (interactive Atlas, hash routing `#v=<view>&node=<id>`): https://jxta.github.io/bias-kb-atlas/
+- Site (interactive Atlas, hash routing `#v=<view>&node=<id>`; add `&lang=en` for the English UI — guide, grounding, headings and the figure labels; node texts stay in Japanese): https://jxta.github.io/bias-kb-atlas/ · English: https://jxta.github.io/bias-kb-atlas/#v=guide&lang=en
 - One node, no JavaScript: https://jxta.github.io/bias-kb-atlas/n/<id>.html — machine-readable twin: https://jxta.github.io/bias-kb-atlas/n/<id>.json (JSON-LD, `@context` = https://jxta.github.io/bias-kb-atlas/kb/context.jsonld)
 - Whole excerpt as JSON-LD: https://jxta.github.io/bias-kb-atlas/kb/kb.jsonld (context embedded; `@graph` = raw record-layer nodes + redacted stubs)
 - Whole excerpt with derived fields (`_line`, `_in`, `_out`, `_deg`, `_stub`): https://jxta.github.io/bias-kb-atlas/kb/nodes.json (what the Atlas renders)
@@ -12,6 +12,9 @@
 - Node schema (JSON Schema 2020-12): https://jxta.github.io/bias-kb-atlas/kb/schema.json · JSON-LD context: https://jxta.github.io/bias-kb-atlas/kb/context.jsonld
 - Re-execution results from CI (latest run, written by `.github/workflows/rerun.yml`): https://jxta.github.io/bias-kb-atlas/kb/rerun-latest.json
 - Node index: https://jxta.github.io/bias-kb-atlas/n/index.html · sitemap: https://jxta.github.io/bias-kb-atlas/sitemap.txt
+- RO-Crate 1.1 description of this bundle (datasets with sha256, scripts, execution units as actions): https://jxta.github.io/bias-kb-atlas/ro-crate-metadata.json
+- Notebook that re-runs the bundled units and shows the table: https://jxta.github.io/bias-kb-atlas/rerun.ipynb (Binder: https://mybinder.org/v2/gh/jxta/bias-kb-atlas/main?labpath=rerun.ipynb)
+- Research-status page (one page, no JavaScript; claim inventory, survival curve of claim statuses, unpaid debts, lessons): https://jxta.github.io/bias-kb-atlas/progress.html
 
 ## How to walk the graph
 
@@ -32,6 +35,7 @@ Units: X-a1-mobius, X-boundary-closedform, X-census-d11-spot, X-census-d13-spot,
 ## Counts
 
 Claim 16, Evidence 15, ExecutionUnit 20, Hypothesis 3, Lesson 11, Object 17, Protocol 4, Quantity 14; claims 16 (status: established 9, provisional 1, registered-hit 5, rejected 1); redacted stubs 68.
+Record layer behind this excerpt (private, counts only, as of 2026-09-15): 903 nodes — Claim 151, Evidence 177, ExecutionUnit 158, Hypothesis 48, Lesson 113, Object 99, Protocol 90, Quantity 67. Claims 151: 151 have a chain to an execution unit, 27 to an accept/spot unit; claim status challenged 3, established 98, provisional 10, registered-hit 5, rejected 23, rejected-recorded 3, supported 9. Evidence ⇄ execution pairs written in both directions 167/183. Pre-registrations frozen 90/90. k4 offline re-run 9/9 PASS, 53 full-tier units pending. Claims/hypotheses with a status history 6. Nodes added per day: 2026-09-08 +7, 2026-09-09 +8, 2026-09-10 +2, 2026-09-11 +5, 2026-09-12 +3, 2026-09-13 +2, 2026-09-14 +4 (last 7 days with additions).
 
 ## Optional
 

@@ -1,0 +1,783 @@
+{
+ "@context": "https://w3id.org/ro/crate/1.1/context",
+ "@graph": [
+  {
+   "@id": "ro-crate-metadata.json",
+   "@type": "CreativeWork",
+   "conformsTo": {
+    "@id": "https://w3id.org/ro/crate/1.1"
+   },
+   "about": {
+    "@id": "./"
+   }
+  },
+  {
+   "@id": "./",
+   "@type": "Dataset",
+   "name": "bias-kb Atlas — public excerpt (claims grounded in re-executable evidence)",
+   "description": "100 nodes selected by rule from a record layer of 903 nodes (jxta/ai4math-lab, ref 9742090); frozen inputs of the offline execution units are bundled and re-executed by rerun.py.",
+   "datePublished": "2026-09-15",
+   "license": {
+    "@id": "https://github.com/jxta/bias-kb-atlas"
+   },
+   "url": "https://jxta.github.io/bias-kb-atlas/",
+   "hasPart": [
+    {
+     "@id": "kb/nodes.json"
+    },
+    {
+     "@id": "kb/kb.jsonld"
+    },
+    {
+     "@id": "kb/context.jsonld"
+    },
+    {
+     "@id": "kb/schema.json"
+    },
+    {
+     "@id": "kb/backlinks.json"
+    },
+    {
+     "@id": "kb/rerun-latest.json"
+    },
+    {
+     "@id": "llms.txt"
+    },
+    {
+     "@id": "rerun.py"
+    },
+    {
+     "@id": "rerun.ipynb"
+    },
+    {
+     "@id": "progress.html"
+    },
+    {
+     "@id": "subprojects/hurwitz_ea/verify_a1_mobius.py"
+    },
+    {
+     "@id": "subprojects/q8/data_node1/lmfdb_8T5_extended_v3.csv"
+    },
+    {
+     "@id": "subprojects/hurwitz_ea/verify_boundary_1overq.py"
+    },
+    {
+     "@id": "subprojects/hurwitz_ea/ea_d11_aggregates.json"
+    },
+    {
+     "@id": "subprojects/hurwitz_ea/ea_d13_aggregates.json"
+    },
+    {
+     "@id": "subprojects/hurwitz_ea/ea_d15_aggregates.json"
+    },
+    {
+     "@id": "subprojects/hurwitz_ea/ea_d17_aggregates.json"
+    },
+    {
+     "@id": "subprojects/q8_drh/results/pillarB/q8_ks_harvest/d4_wp1.json"
+    }
+   ],
+   "mentions": [
+    {
+     "@id": "#X-a1-mobius"
+    },
+    {
+     "@id": "#X-binom-band"
+    },
+    {
+     "@id": "#X-boundary-closedform"
+    },
+    {
+     "@id": "#X-census-d11-spot"
+    },
+    {
+     "@id": "#X-census-d13-spot"
+    },
+    {
+     "@id": "#X-census-d15-spot"
+    },
+    {
+     "@id": "#X-census-d17-spot"
+    },
+    {
+     "@id": "#X-q8-crosstab-accept"
+    },
+    {
+     "@id": "#X-q8-ks"
+    },
+    {
+     "@id": "#C-1q-law"
+    },
+    {
+     "@id": "#C-a1-mobius"
+    },
+    {
+     "@id": "#C-boundary-closedform"
+    },
+    {
+     "@id": "#C-cg-sequence"
+    },
+    {
+     "@id": "#C-d11-registered-hit"
+    },
+    {
+     "@id": "#C-d15-registered-hit"
+    },
+    {
+     "@id": "#C-d17-registered-hit"
+    },
+    {
+     "@id": "#C-d19-sign-reversal"
+    },
+    {
+     "@id": "#C-deltac-identity"
+    },
+    {
+     "@id": "#C-ks-duality-dual"
+    },
+    {
+     "@id": "#C-middle-law-false"
+    },
+    {
+     "@id": "#C-nonabelian-dictionary"
+    },
+    {
+     "@id": "#C-novelty-n2g"
+    },
+    {
+     "@id": "#C-q8-w-diagonal"
+    },
+    {
+     "@id": "#C-registered-prediction-method"
+    },
+    {
+     "@id": "#C-thm71-q8-census"
+    }
+   ]
+  },
+  {
+   "@id": "kb/nodes.json",
+   "@type": "File",
+   "name": "nodes.json",
+   "contentSize": "146782",
+   "sha256": "707cc4195ace02439ba1426569e60882b0036c39b4965f76ef7a9414d03c2496",
+   "encodingFormat": "application/json"
+  },
+  {
+   "@id": "kb/kb.jsonld",
+   "@type": "File",
+   "name": "kb.jsonld",
+   "contentSize": "95031",
+   "sha256": "108108ab070c12bfb3370a1572b9a9687ee8f5961657a7f114fb746c78e3580e",
+   "encodingFormat": "text/plain"
+  },
+  {
+   "@id": "kb/context.jsonld",
+   "@type": "File",
+   "name": "context.jsonld",
+   "contentSize": "4650",
+   "sha256": "ed8d2d3aab400c182f60ef1bf1233e417483c90f934997bd1c91ed77f951f5e1",
+   "encodingFormat": "text/plain"
+  },
+  {
+   "@id": "kb/schema.json",
+   "@type": "File",
+   "name": "schema.json",
+   "contentSize": "15833",
+   "sha256": "a1205992c787ba775f94e47a63a463e49101bded28f3acf0cd1f3526fcc72aed",
+   "encodingFormat": "application/json"
+  },
+  {
+   "@id": "kb/backlinks.json",
+   "@type": "File",
+   "name": "backlinks.json",
+   "contentSize": "27085",
+   "sha256": "33e229775042ae85ab1480f2d8b78d02bd76eac479b7875a1b313f9411a5ba23",
+   "encodingFormat": "application/json"
+  },
+  {
+   "@id": "kb/rerun-latest.json",
+   "@type": "File",
+   "name": "rerun-latest.json",
+   "contentSize": "5218",
+   "sha256": "067f5677eeaae0fe59117218e6ffece5034fa0ac7daa351f0b46ed0d60f93d10",
+   "encodingFormat": "application/json"
+  },
+  {
+   "@id": "llms.txt",
+   "@type": "File",
+   "name": "llms.txt",
+   "contentSize": "5935",
+   "sha256": "c378465d6c2763eef3908e8a973501bcf094898338f5234be621176f24c6faf8",
+   "encodingFormat": "text/plain"
+  },
+  {
+   "@id": "rerun.py",
+   "@type": "File",
+   "name": "rerun.py",
+   "contentSize": "6012",
+   "sha256": "b4138553cb0ab5c998c0c07f93083a2f5543acab667390eafb7fe086a4b5b410",
+   "encodingFormat": "text/x-python"
+  },
+  {
+   "@id": "rerun.ipynb",
+   "@type": "File",
+   "name": "rerun.ipynb",
+   "contentSize": "5471",
+   "sha256": "3c04a22bcccfb2801b282ff6d089c5711d46806c605d9f820c7bbb8493739868",
+   "encodingFormat": "text/plain"
+  },
+  {
+   "@id": "progress.html",
+   "@type": "File",
+   "name": "progress.html",
+   "contentSize": "11944",
+   "sha256": "2ec39cd79fbc432855fb6aff723cb5989a1ca0973153642e0401a9391d4d589f",
+   "encodingFormat": "text/plain"
+  },
+  {
+   "@id": "subprojects/hurwitz_ea/verify_a1_mobius.py",
+   "@type": "File",
+   "name": "verify_a1_mobius.py",
+   "contentSize": "472",
+   "sha256": "2462ef707b8487b9535c94edeedc46a90cbc6f5f7886db5875d66117156ec953",
+   "encodingFormat": "text/x-python",
+   "description": "frozen input of X-a1-mobius"
+  },
+  {
+   "@id": "#X-a1-mobius",
+   "@type": "CreateAction",
+   "name": "A_1 Möbius 閉形式の直接照合",
+   "identifier": "X-a1-mobius",
+   "description": "tier spot; entry: python3 subprojects/hurwitz_ea/verify_a1_mobius.py",
+   "instrument": {
+    "@id": "rerun.py"
+   },
+   "object": [
+    {
+     "@id": "subprojects/hurwitz_ea/verify_a1_mobius.py"
+    }
+   ],
+   "result": [
+    {
+     "@type": "PropertyValue",
+     "name": "A1_closedform_match",
+     "value": "match"
+    }
+   ],
+   "url": "https://jxta.github.io/bias-kb-atlas/n/X-a1-mobius.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/X-a1-mobius.json",
+   "actionStatus": "https://schema.org/CompletedActionStatus"
+  },
+  {
+   "@id": "subprojects/q8/data_node1/lmfdb_8T5_extended_v3.csv",
+   "@type": "File",
+   "name": "lmfdb_8T5_extended_v3.csv",
+   "description": "frozen input of X-binom-band"
+  },
+  {
+   "@id": "#X-binom-band",
+   "@type": "CreateAction",
+   "name": "W 層 二項判定帯 [494,556] チェック（spot）",
+   "identifier": "X-binom-band",
+   "description": "tier spot; entry: python3 -c \"from math import comb; print('band [494,556] freeze #109 commit 72ca40cc')\"",
+   "instrument": {
+    "@id": "rerun.py"
+   },
+   "object": [
+    {
+     "@id": "subprojects/q8/data_node1/lmfdb_8T5_extended_v3.csv"
+    }
+   ],
+   "result": [
+    {
+     "@type": "PropertyValue",
+     "name": "w_band",
+     "value": "[494,556]"
+    }
+   ],
+   "url": "https://jxta.github.io/bias-kb-atlas/n/X-binom-band.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/X-binom-band.json",
+   "actionStatus": "https://schema.org/CompletedActionStatus",
+   "disambiguatingDescription": "declared offline in the record layer, but a frozen input is not bundled here (rerun.py: NOT-BUNDLED)"
+  },
+  {
+   "@id": "subprojects/hurwitz_ea/verify_boundary_1overq.py",
+   "@type": "File",
+   "name": "verify_boundary_1overq.py",
+   "contentSize": "759",
+   "sha256": "b6508d7ad77e16d31586dc24b8ce96243345569c5f0eedd94e48520754e491ee",
+   "encodingFormat": "text/x-python",
+   "description": "frozen input of X-boundary-closedform"
+  },
+  {
+   "@id": "#X-boundary-closedform",
+   "@type": "CreateAction",
+   "name": "閉形式 O(g,q) の記号評価",
+   "identifier": "X-boundary-closedform",
+   "description": "tier spot; entry: python3 subprojects/hurwitz_ea/verify_boundary_1overq.py",
+   "instrument": {
+    "@id": "rerun.py"
+   },
+   "object": [
+    {
+     "@id": "subprojects/hurwitz_ea/verify_boundary_1overq.py"
+    }
+   ],
+   "result": [
+    {
+     "@type": "PropertyValue",
+     "name": "closedform_vs_census",
+     "value": "match"
+    }
+   ],
+   "url": "https://jxta.github.io/bias-kb-atlas/n/X-boundary-closedform.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/X-boundary-closedform.json",
+   "actionStatus": "https://schema.org/CompletedActionStatus"
+  },
+  {
+   "@id": "subprojects/hurwitz_ea/ea_d11_aggregates.json",
+   "@type": "File",
+   "name": "ea_d11_aggregates.json",
+   "contentSize": "820",
+   "sha256": "c9ae5cfdb7480fcc2c8294d7c50b6d1962e3fe7c973bfd4efe7eab3f8d2ed100",
+   "encodingFormat": "application/json",
+   "description": "frozen input of X-census-d11-spot",
+   "sha256_recorded": "c9ae5cfdb7480fcc2c8294d7c50b6d1962e3fe7c973bfd4efe7eab3f8d2ed100"
+  },
+  {
+   "@id": "#X-census-d11-spot",
+   "@type": "CreateAction",
+   "name": "census d=11 凍結集計からの境界余剰 再計算（offline spot）",
+   "identifier": "X-census-d11-spot",
+   "description": "tier spot; entry: python3 -c \"import json;a=json.load(open('subprojects/hurwitz_ea/ea_d11_aggregates.json'));print(a['boundary_excess_n2g'])\"",
+   "instrument": {
+    "@id": "rerun.py"
+   },
+   "object": [
+    {
+     "@id": "subprojects/hurwitz_ea/ea_d11_aggregates.json"
+    }
+   ],
+   "result": [
+    {
+     "@type": "PropertyValue",
+     "name": "boundary_excess",
+     "value": -0.49076650925398013
+    }
+   ],
+   "url": "https://jxta.github.io/bias-kb-atlas/n/X-census-d11-spot.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/X-census-d11-spot.json",
+   "actionStatus": "https://schema.org/CompletedActionStatus"
+  },
+  {
+   "@id": "subprojects/hurwitz_ea/ea_d13_aggregates.json",
+   "@type": "File",
+   "name": "ea_d13_aggregates.json",
+   "contentSize": "4871",
+   "sha256": "9496aaeb94787031203aa8e99dfe08654fa45bd6b6ab400d8592cc4d5127c0c3",
+   "encodingFormat": "application/json",
+   "description": "frozen input of X-census-d13-spot",
+   "sha256_recorded": "9496aaeb94787031203aa8e99dfe08654fa45bd6b6ab400d8592cc4d5127c0c3"
+  },
+  {
+   "@id": "#X-census-d13-spot",
+   "@type": "CreateAction",
+   "name": "census d=13 凍結集計からの境界余剰 再計算（offline spot）",
+   "identifier": "X-census-d13-spot",
+   "description": "tier spot; entry: python3 -c \"import json;a=json.load(open('subprojects/hurwitz_ea/ea_d13_aggregates.json'));print(a['boundary_excess_n2g'])\"",
+   "instrument": {
+    "@id": "rerun.py"
+   },
+   "object": [
+    {
+     "@id": "subprojects/hurwitz_ea/ea_d13_aggregates.json"
+    }
+   ],
+   "result": [
+    {
+     "@type": "PropertyValue",
+     "name": "boundary_excess",
+     "value": -0.4949126864583562
+    }
+   ],
+   "url": "https://jxta.github.io/bias-kb-atlas/n/X-census-d13-spot.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/X-census-d13-spot.json",
+   "actionStatus": "https://schema.org/CompletedActionStatus"
+  },
+  {
+   "@id": "subprojects/hurwitz_ea/ea_d15_aggregates.json",
+   "@type": "File",
+   "name": "ea_d15_aggregates.json",
+   "contentSize": "13398",
+   "sha256": "964e8ac7758e39523066825cb3cc346256e915e4b9c3ddb1114bc9862c7715d4",
+   "encodingFormat": "application/json",
+   "description": "frozen input of X-census-d15-spot",
+   "sha256_recorded": "964e8ac7758e39523066825cb3cc346256e915e4b9c3ddb1114bc9862c7715d4"
+  },
+  {
+   "@id": "#X-census-d15-spot",
+   "@type": "CreateAction",
+   "name": "census d=15 凍結集計からの境界余剰 再計算（offline spot）",
+   "identifier": "X-census-d15-spot",
+   "description": "tier spot; entry: python3 -c \"import json;a=json.load(open('subprojects/hurwitz_ea/ea_d15_aggregates.json'));print(a['boundary_excess'])\"",
+   "instrument": {
+    "@id": "rerun.py"
+   },
+   "object": [
+    {
+     "@id": "subprojects/hurwitz_ea/ea_d15_aggregates.json"
+    }
+   ],
+   "result": [
+    {
+     "@type": "PropertyValue",
+     "name": "boundary_excess",
+     "value": -0.4989715075302701
+    }
+   ],
+   "url": "https://jxta.github.io/bias-kb-atlas/n/X-census-d15-spot.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/X-census-d15-spot.json",
+   "actionStatus": "https://schema.org/CompletedActionStatus"
+  },
+  {
+   "@id": "subprojects/hurwitz_ea/ea_d17_aggregates.json",
+   "@type": "File",
+   "name": "ea_d17_aggregates.json",
+   "contentSize": "57322",
+   "sha256": "6ad999d6a77b7fbcea168c076371e192194a7efb21effdca9121fdb80d492e15",
+   "encodingFormat": "application/json",
+   "description": "frozen input of X-census-d17-spot",
+   "sha256_recorded": "6ad999d6a77b7fbcea168c076371e192194a7efb21effdca9121fdb80d492e15"
+  },
+  {
+   "@id": "#X-census-d17-spot",
+   "@type": "CreateAction",
+   "name": "census d=17 凍結集計からの境界余剰 再計算（offline spot）",
+   "identifier": "X-census-d17-spot",
+   "description": "tier spot; entry: python3 -c \"import json;a=json.load(open('subprojects/hurwitz_ea/ea_d17_aggregates.json'));print(a['boundary_excess_n2g'])\"",
+   "instrument": {
+    "@id": "rerun.py"
+   },
+   "object": [
+    {
+     "@id": "subprojects/hurwitz_ea/ea_d17_aggregates.json"
+    }
+   ],
+   "result": [
+    {
+     "@type": "PropertyValue",
+     "name": "boundary_excess",
+     "value": -0.4994337027369984
+    }
+   ],
+   "url": "https://jxta.github.io/bias-kb-atlas/n/X-census-d17-spot.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/X-census-d17-spot.json",
+   "actionStatus": "https://schema.org/CompletedActionStatus"
+  },
+  {
+   "@id": "#X-q8-crosstab-accept",
+   "@type": "CreateAction",
+   "name": "T-C マスター表から W×m クロス表を独立再集計",
+   "identifier": "X-q8-crosstab-accept",
+   "description": "tier accept; entry: python3 knowledge/execution/scripts/x_q8_crosstab.py subprojects/q8/data_node1/lmfdb_8T5_extended_v3.csv",
+   "instrument": {
+    "@id": "rerun.py"
+   },
+   "object": [],
+   "result": [
+    {
+     "@type": "PropertyValue",
+     "name": "crosstab[Wm1_ge1,Wp1_eq0,Wp1_ge1,Wm1_eq0]",
+     "value": "[20600, 19525, 0, 0]"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "n",
+     "value": 40125
+    }
+   ],
+   "url": "https://jxta.github.io/bias-kb-atlas/n/X-q8-crosstab-accept.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/X-q8-crosstab-accept.json",
+   "actionStatus": "https://schema.org/CompletedActionStatus",
+   "disambiguatingDescription": "declared offline in the record layer, but a frozen input is not bundled here (rerun.py: NOT-BUNDLED)"
+  },
+  {
+   "@id": "subprojects/q8_drh/results/pillarB/q8_ks_harvest/d4_wp1.json",
+   "@type": "File",
+   "name": "d4_wp1.json",
+   "contentSize": "258224",
+   "sha256": "81c5175b3dc4d4ffea9e4a7f25ef32ef0be5e7c291720c2e0fa025e47f4137e7",
+   "encodingFormat": "application/json",
+   "description": "frozen input of X-q8-ks",
+   "sha256_recorded": "81c5175b3dc4d4ffea9e4a7f25ef32ef0be5e7c291720c2e0fa025e47f4137e7"
+  },
+  {
+   "@id": "#X-q8-ks",
+   "@type": "CreateAction",
+   "name": "Q8 対 D4 KS 二側検定",
+   "identifier": "X-q8-ks",
+   "description": "tier accept; entry: python3 -c \"import json;d=json.load(open('subprojects/q8_drh/results/pillarB/q8_ks_harvest/d4_wp1.json'));print(sum(1 for r in d if r.get('zeros') and min(r['zeros'])<0.05))\"",
+   "instrument": {
+    "@id": "rerun.py"
+   },
+   "object": [
+    {
+     "@id": "subprojects/q8_drh/results/pillarB/q8_ks_harvest/d4_wp1.json"
+    }
+   ],
+   "result": [
+    {
+     "@type": "PropertyValue",
+     "name": "d4_central_zero_count",
+     "value": 0
+    }
+   ],
+   "url": "https://jxta.github.io/bias-kb-atlas/n/X-q8-ks.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/X-q8-ks.json",
+   "actionStatus": "https://schema.org/CompletedActionStatus"
+  },
+  {
+   "@id": "#C-1q-law",
+   "@type": "CreativeWork",
+   "identifier": "C-1q-law",
+   "name": "1/q 法則（境界余剰の主漸近）",
+   "creativeWorkStatus": "established",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-1q-law.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-1q-law.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-census-d11.json"
+    },
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-census-d13.json"
+    },
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-census-d15.json"
+    },
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-census-d17.json"
+    }
+   ]
+  },
+  {
+   "@id": "#C-a1-mobius",
+   "@type": "CreativeWork",
+   "identifier": "C-a1-mobius",
+   "name": "A_1 の Möbius 閉形式（§5A 厳密証明）",
+   "creativeWorkStatus": "established",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-a1-mobius.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-a1-mobius.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-a1-mobius.json"
+    }
+   ]
+  },
+  {
+   "@id": "#C-boundary-closedform",
+   "@type": "CreativeWork",
+   "identifier": "C-boundary-closedform",
+   "name": "境界 O 項の閉形式（Theorem 1・厳密）",
+   "creativeWorkStatus": "established",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-boundary-closedform.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-boundary-closedform.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-boundary-closedform.json"
+    },
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-census-d11.json"
+    },
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-census-d13.json"
+    },
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-census-d15.json"
+    }
+   ]
+  },
+  {
+   "@id": "#C-cg-sequence",
+   "@type": "CreativeWork",
+   "identifier": "C-cg-sequence",
+   "name": "c(g) 整数列（Theorem 2）",
+   "creativeWorkStatus": "established",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-cg-sequence.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-cg-sequence.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-boundary-closedform.json"
+    }
+   ]
+  },
+  {
+   "@id": "#C-d11-registered-hit",
+   "@type": "CreativeWork",
+   "identifier": "C-d11-registered-hit",
+   "name": "d11 登録予測 的中（registered-hit）",
+   "creativeWorkStatus": "registered-hit",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-d11-registered-hit.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-d11-registered-hit.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-census-d11.json"
+    }
+   ]
+  },
+  {
+   "@id": "#C-d15-registered-hit",
+   "@type": "CreativeWork",
+   "identifier": "C-d15-registered-hit",
+   "name": "d15 登録予測 的中（registered-hit）",
+   "creativeWorkStatus": "registered-hit",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-d15-registered-hit.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-d15-registered-hit.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-census-d15.json"
+    }
+   ]
+  },
+  {
+   "@id": "#C-d17-registered-hit",
+   "@type": "CreativeWork",
+   "identifier": "C-d17-registered-hit",
+   "name": "d17 登録帯 的中（registered-hit）",
+   "creativeWorkStatus": "registered-hit",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-d17-registered-hit.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-d17-registered-hit.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-census-d17.json"
+    }
+   ]
+  },
+  {
+   "@id": "#C-d19-sign-reversal",
+   "@type": "CreativeWork",
+   "identifier": "C-d19-sign-reversal",
+   "name": "d=19 で境界超過の符号反転を実行前登録どおり的中（n=6 問題の実験決着）",
+   "creativeWorkStatus": "registered-hit",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-d19-sign-reversal.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-d19-sign-reversal.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-census-d19.json"
+    }
+   ]
+  },
+  {
+   "@id": "#C-deltac-identity",
+   "@type": "CreativeWork",
+   "identifier": "C-deltac-identity",
+   "name": "Q8 Δ_C 厳密恒等式（結果は真、新規性は主張しない）",
+   "creativeWorkStatus": "established",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-deltac-identity.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-deltac-identity.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-o18-deltac.json"
+    }
+   ]
+  },
+  {
+   "@id": "#C-ks-duality-dual",
+   "@type": "CreativeWork",
+   "identifier": "C-ks-duality-dual",
+   "name": "族KS対称型=個々FSの双対（5族確定）",
+   "creativeWorkStatus": "established",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-ks-duality-dual.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-ks-duality-dual.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-ks-duality.json"
+    }
+   ]
+  },
+  {
+   "@id": "#C-middle-law-false",
+   "@type": "CreativeWork",
+   "identifier": "C-middle-law-false",
+   "name": "中央係数則は偽（自己反証）",
+   "creativeWorkStatus": "rejected",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-middle-law-false.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-middle-law-false.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-middle-e10.json"
+    }
+   ]
+  },
+  {
+   "@id": "#C-nonabelian-dictionary",
+   "@type": "CreativeWork",
+   "identifier": "C-nonabelian-dictionary",
+   "name": "非可換辞書 |C|=|[G,G]|（O-30）",
+   "creativeWorkStatus": "established",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-nonabelian-dictionary.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-nonabelian-dictionary.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-q8-ks.json"
+    }
+   ]
+  },
+  {
+   "@id": "#C-novelty-n2g",
+   "@type": "CreativeWork",
+   "identifier": "C-novelty-n2g",
+   "name": "n=2g 二次項の新規性（探索範囲内）",
+   "creativeWorkStatus": "provisional",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-novelty-n2g.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-novelty-n2g.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-boundary-closedform.json"
+    }
+   ]
+  },
+  {
+   "@id": "#C-q8-w-diagonal",
+   "@type": "CreativeWork",
+   "identifier": "C-q8-w-diagonal",
+   "name": "数体 Q8 (8T5) の解析済全個体で中心消滅⇔W=−1（完全対角）",
+   "creativeWorkStatus": "registered-hit",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-q8-w-diagonal.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-q8-w-diagonal.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-q8-w-crosstab.json"
+    }
+   ]
+  },
+  {
+   "@id": "#C-registered-prediction-method",
+   "@type": "CreativeWork",
+   "identifier": "C-registered-prediction-method",
+   "name": "事前登録予測が2例的中（d11, d15）",
+   "creativeWorkStatus": "established",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-registered-prediction-method.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-registered-prediction-method.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-d15-regpred.json"
+    }
+   ]
+  },
+  {
+   "@id": "#C-thm71-q8-census",
+   "@type": "CreativeWork",
+   "identifier": "C-thm71-q8-census",
+   "name": "Thm7.1 Q8 census 全23 PASS",
+   "creativeWorkStatus": "established",
+   "url": "https://jxta.github.io/bias-kb-atlas/n/C-thm71-q8-census.html",
+   "sameAs": "https://jxta.github.io/bias-kb-atlas/n/C-thm71-q8-census.json",
+   "isBasedOn": [
+    {
+     "@id": "https://jxta.github.io/bias-kb-atlas/n/E-q8-note.json"
+    }
+   ]
+  }
+ ]
+}
