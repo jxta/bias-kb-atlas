@@ -2,6 +2,90 @@
    依存: d3 v7（同梱）。データ: <script id="atlas-data"> の JSON（kb_atlas.py が生成）。 */
 (function () {
   "use strict";
+  // 言語: #lang=en（または ?lang=en、前回の選択）で 案内・接地・ヘッダ・フィルタ・詳細の見出し・図のラベル を英語にする。
+  // ノードの本文（label / statement）は記録層の言語のまま。切替はページ再読込（定数を組み直すため）。
+  const LANG = (() => { try { const h = new URLSearchParams(location.hash.replace(/^#/, "")), q = new URLSearchParams(location.search); const l = h.get("lang") || q.get("lang") || localStorage.getItem("atlas-lang"); return l === "en" ? "en" : "ja"; } catch (e) { return "ja"; } })();
+  const EN = LANG === "en"; document.documentElement.lang = LANG;
+  const T = EN ? {
+    tabs: { guide: "Guide", grounding: "Grounding", atlas: "Overview", lines: "Lines", timeline: "Time", graph: "Graph", lessons: "Lessons", protocols: "Registrations", table: "Table" },
+    hdr_rec: "record layer", hdr_exc: "excerpt", hdr_sync: "synced", hdr_ref: "source commit of the record layer", hdr_rerun_t: "latest re-run of the offline units by the public CI (rerun.yml → kb/rerun-latest.json)", hdr_rerun: "last re-run",
+    search_ph: "search id / label / text ( / to focus)", btn_filters: "⛭ Filters", btn_insp: "▤ Detail", btn_theme_t: "light / dark", btn_help_t: "legend and usage", btn_lang: "日本語", btn_lang_t: "日本語で表示",
+    help_title: "bias-kb Atlas — legend and usage",
+    private: "private", stub_t: "exists in the record layer but is outside the public excerpt (only the type is public; the id is the first 10 hex of sha256 of the real id)",
+    rail_showing: "showing", rail_nodes: "nodes", rail_type: "Type", rail_status: "Status", rail_line: "Research line", rail_period: "Period", rail_tier: "Execution tier (X only)", rail_actor: "Asserted by", rail_all: "all", rail_none: "none", rail_reset: "reset filters", status_none: "no status",
+    actors: { "統率": "orchestrator AI", meta: "meta-AI", other: "other" },
+    deg: "degree", insp_empty_h: "Detail panel", insp_empty: "Click a leaf in the overview, a card, a chip or a search hit to see the whole node, its chain of grounds and its neighbourhood here.",
+    chain_h: "Chain of grounds — registration → claim → evidence → execution → lesson", ego_h: "Neighbourhood (click to move)", fields_h: "Fields", out_h: "Outgoing links", in_h: "Incoming links (backlinks)", arts_h: "Artifacts", prov_h: "Provenance (prov)", raw_h: "Raw JSON",
+    prov_by: "asserted by", prov_acc: "accepted by", prov_date: "date", prov_vis: "visibility", prov_rec: "record", prov_rec_note: "(inside the private repository; the excerpt is bundled in kb/nodes.json)", prov_page: "standalone page", prov_cite: "URL to cite:",
+    hist_h: "Status history", hist_by: "by", hist_ev: "evidence", hist_pr: "PR", hist_reason: "reason", hist_derived: "(derived — not written in the node)",
+    kv_def: "definition", kv_cp: "counterpoints / reservations", kv_conv: "conventions", kv_hooks: "derivation hooks", kv_frozen: "frozen", kv_indep: "independence", kv_scope: "scope", kv_predicts: "predicts", kv_measured: "measured with", kv_direction: "direction", kv_verdict: "verdict", kv_ledger: "ledger", kv_other: "other fields",
+    chain_names: { P: "Protocol", C: "Claim / Hyp.", E: "Evidence", X: "Execution", L: "Lesson" }, chain_none: "Nodes of this type have no links that form a chain.",
+    reexec_h: "Re-run — execute this unit and compare with the expected values", reexec_off: "offline: re-executable from the bundled data alone", reexec_nb: "offline in the record layer, but the frozen input is not bundled (too large / annexed) — not re-executable from this bundle", reexec_full: "full-tier run (mdx / large data) — private, not re-run here",
+    reexec_cmd: "command (in the repository root)", copy: "⧉ copy command", copied: "✓ copied", inputs_h: "inputs (frozen sha256)", no_sha: "no sha recorded", expected_h: "expected values", tol: "tolerance:", k4_h: "k4 re-run record (knowledge/index/k4_results.md)", env_h: "environment", indep_h: "independence",
+    ev_units_h: "Execution units that re-run this evidence", bidir: "⇄ bidirectional", bidir_t: "grounded_in and verifies are both written in the record layer",
+    k4_none: "no re-run record", k4_none_t: "no record in k4 (the record-layer-wide re-run)", k4_pass: "re-run PASS", k4_pend: "private · not re-run", k4_pend_t: "private · not re-run: a full-tier run on the mdx computer; cannot be re-executed from this bundle and the record-layer re-run has not been settled either",
+    lineage_h: "Lineage", sup_old: "supersedes (old)", sup_new: "superseded by (new)", promoted: "promoted to", more: "show full text", less: "collapse", chars: "chars",
+    guide_th: ["Element of the figure", "What it is in this knowledge base", "Live examples (click for detail) / where to look"],
+    tour_h: "Check it in 3 minutes", tour_sub: "— a tour (progress is kept only in this browser)", tour_open: "open", tour_go: { grounding: "Grounding", protocols: "Registrations", table: "Table", graph: "Graph", lessons: "Lessons", lines: "Lines" }, tour_chk: "checked step", tour_binder: "open in Binder", tour_binder_t: "open this repository in JupyterLab in the browser (re-run without a local Python)", tour_cs: "Codespaces", tour_cs_t: "open this repository in GitHub Codespaces", tour_expect: "expected output (PASS if it matches):", tour_check: "what to check:",
+    tour_done: "checked", tour_you: "— what you have checked:", tour_start: ". Go from the top: “open” takes you to the live example; tick the box once you have checked it.", tour_all: " — you have walked the record layer once around: claim, evidence, execution, registration, provenance.",
+    guide_foot: "This guide is embedded by the generator (`GUIDE` in `kb_atlas.py`); the example node ids were verified to exist in the record layer at generation time. Every element of the figure, example and “→” button moves within this page.", guide_foot_pub: "Machine-readable entry points:", guide_nodepages: "standalone node pages",
+    growth_h: "Size of the record layer (counts only)", growth_sub: "The public excerpt is fixed by rule to the grounding chain (function-field census line and the Q8 W layer), so it does not grow with the research. The record layer behind it does; only its counts are shown here — nothing about the private research content.",
+    growth_nodes: "nodes in the record layer", growth_claims: "claims", growth_grounded: "claims whose chain reaches an execution unit", growth_quick: "of them reach an accept/spot unit (re-executable at once)", growth_bidir: "evidence ⇄ execution pairs written in both directions", growth_proto: "pre-registrations frozen before the run", growth_lessons: "lessons (failures promoted to rules)", growth_k4: "offline units re-run and matched", growth_pending: "full-tier units not yet re-run", growth_hist: "claims / hypotheses with a status history", growth_daily: "nodes added per day (cumulative line, right axis)", growth_status: "claim status across the record layer",
+    gr_title: "Grounding — from claims to re-executable evidence", gr_sub: "Every claim is grounded, by links in both directions, in the re-executable computation that produced it, so that reasoning can always be traced back to evidence that can be re-run — measured here on the nodes currently shown.",
+    p1_h: "P1 computational grounding", p1: "claim <code>supported_by</code> → evidence <code>grounded_in</code> → execution unit (<code>entry</code> command, <code>inputs</code> sha256, <code>expected</code>, <code>env</code>). The CI gate R9 (“grounding rule”) rejects claims without evidence and evidence without an execution unit.",
+    p2_h: "P2 bidirectionality", p2: "evidence <code>grounded_in</code> ⇄ execution unit <code>verifies</code> is written in <b>both directions</b> in the record layer (measured below). For claim ⇄ evidence the inverse is derived by CI into <code>backlinks.json</code> and checked (“bidirectionality rule”); the incoming links on this page are those backlinks.",
+    p3_h: "P3 execution granularity", p3: "execution units carry a <code>tier</code> (full = the main run, accept = acceptance, spot = spot check) that bounds the scope and cost of a re-run. Offline units re-run with one command; <code>kb_k4.py</code> re-runs all units and records the match rate (k4).",
+    kpi1: "structural grounding", kpi1_s: (g, c) => `${g}/${c} claims have a chain evidence → execution unit`, kpi1_d: "Definition: share of claims whose links claim supported_by → evidence grounded_in → execution unit close in the record layer. It only says the chain is written; it does not say a re-run matched.",
+    kpi2: "re-run match (k4, measured)", kpi2_s: (w, c, p) => `${w}/${c} claims reach a unit with a re-run PASS · only private/not-re-run ${p}`, kpi2_d: "Definition: share of claims with at least one execution unit at the end of the chain that was re-run and matched the recorded expected value (k4 PASS). A different quantity from structural grounding — this is the measured “actually traced to the grounds”. PENDING (private, not re-run) counts neither as match nor mismatch.",
+    kpi3: "bidirectional pairs (grounded_in ⇄ verifies)", kpi3_s: (b, p) => `${b}/${p} pairs written in both directions`, kpi3_d: "Definition: for each evidence → execution unit link (grounded_in), the share for which execution unit → evidence (verifies) is also written in the record layer. Checked by the CI bidirectionality rule.",
+    kpi4: "re-run match of bundled offline units", kpi4_s: (a) => `private/not re-run (mdx runs) ${a.Xpend} · no record ${a.Xnone}${a.Xnb ? ` · inputs not bundled ${a.Xnb}` : ""} · sha verified ${a.artsVer}/${a.artsSha} · frozen registrations ${a.Pfrozen} · registered hits ${a.hits}`, kpi4_d: "Definition: among execution units whose frozen inputs are all in this bundle (re-executable with one command), those with PASS in k4 (the record-layer-wide re-run). “private · not re-run” = full-tier runs on mdx: not re-executable from this bundle and not yet settled on the record-layer side either. Counted honestly in a separate box.",
+    pend_h: (n) => `Private · not re-run units — ${n}`, pend1: (n) => `<b>${n}</b> units are full-tier runs on the mdx computer (e.g. exhaustive census); their frozen inputs are not bundled. Records, sha256 and registration bands are in the nodes, but the re-run match (k4) is not settled (PENDING).`, pend2: (n) => ` <b>${n}</b> units are offline in the record layer but the frozen input is too large / annexed, so <code>rerun.py</code> reports them as NOT-BUNDLED and leaves them out of the count.`, pend3: " Not counting these as matches is what separates the two rates above.",
+    how_h: "How to re-run", how1: "Run each unit’s <code>entry</code> in the repository root and compare with <code>expected</code>. All at once:", how2: "The re-run box of each execution-unit card shows the individual command, input sha256, expected values and the k4 record (got / want).", how3: (b, c) => ` Without a local Python, open the repository in <a href="${b}" target="_blank" rel="noopener">Binder</a> (JupyterLab in the browser) or <a href="${c}" target="_blank" rel="noopener">GitHub Codespaces</a> and run the same commands.`,
+    ci_h: "Latest CI re-run", ci_nb: "not bundled", ci_wait: "The latest CI re-run (kb/rerun-latest.json) will appear here after the next CI run.",
+    gr_th: ["Claim", "Status", "Evidence", "Execution unit (tier · re-run)", "Artifact sha", "Registration", ""], verified: "verified", trace: "trace",
+    line_view_t: "go to the research-line view",
+  } : {
+    tabs: { guide: "案内", grounding: "接地", atlas: "俯瞰", lines: "研究線", timeline: "時間", graph: "グラフ", lessons: "教訓", protocols: "登録・判定", table: "表" },
+    hdr_rec: "記録層", hdr_exc: "抜粋", hdr_sync: "同期", hdr_ref: "記録層の元コミット", hdr_rerun_t: "公開バンドルの CI（rerun.yml）が最後に offline 単位を再実行した結果（kb/rerun-latest.json）", hdr_rerun: "最終再実行",
+    search_ph: "ID・ラベル・本文を検索（/ でフォーカス）", btn_filters: "⛭ フィルタ", btn_insp: "▤ 詳細", btn_theme_t: "ライト／ダーク", btn_help_t: "凡例・使い方", btn_lang: "EN", btn_lang_t: "Show the guide, grounding and headings in English",
+    help_title: "bias-kb Atlas — 凡例と使い方",
+    private: "非公開", stub_t: "記録層に存在するが公開抜粋に含まれないノード（型だけ公開。ID は実 ID の sha256 先頭 10 桁）",
+    rail_showing: "表示中", rail_nodes: "ノード", rail_type: "型", rail_status: "状態", rail_line: "研究線", rail_period: "期間", rail_tier: "実行 tier（X のみ）", rail_actor: "主張者", rail_all: "全て", rail_none: "なし", rail_reset: "フィルタを初期化", status_none: "状態なし",
+    actors: { "統率": "統率AI", meta: "meta-AI", other: "その他" },
+    deg: "次数", insp_empty_h: "詳細パネル", insp_empty: "俯瞰の葉・カード・チップ・検索結果をクリックすると、ここにノードの全内容・根拠の鎖・近傍が出ます。",
+    chain_h: "根拠の鎖 — 登録 → 主張 → 証拠 → 実行 → 教訓", ego_h: "近傍（クリックで移動）", fields_h: "フィールド", out_h: "出るリンク", in_h: "入るリンク（逆リンク）", arts_h: "成果物（artifacts）", prov_h: "来歴（prov）", raw_h: "生の JSON",
+    prov_by: "主張者", prov_acc: "受入", prov_date: "日付", prov_vis: "可視性", prov_rec: "記録", prov_rec_note: "（非公開リポジトリ内。抜粋は kb/nodes.json に同梱）", prov_page: "単体ページ", prov_cite: "引用用 URL:",
+    hist_h: "状態の履歴（status_history）", hist_by: "by", hist_ev: "証拠", hist_pr: "PR", hist_reason: "理由", hist_derived: "（派生 — ノードには書かれていない）",
+    kv_def: "定義", kv_cp: "反論・留保", kv_conv: "規約", kv_hooks: "導出フック", kv_frozen: "凍結", kv_indep: "独立性", kv_scope: "適用範囲（scope）", kv_predicts: "予測（predicts）", kv_measured: "計器（measured_with）", kv_direction: "研究線（direction）", kv_verdict: "判定（verdict）", kv_ledger: "台帳（ledger）", kv_other: "その他の欄",
+    chain_names: { P: "登録", C: "主張・仮説", E: "証拠", X: "実行単位", L: "教訓" }, chain_none: "この型のノードには鎖を構成するリンクがありません。",
+    reexec_h: "再実行 — この単位を走らせて期待値と比べる", reexec_off: "offline: 同梱データだけで再実行可", reexec_nb: "offline だが凍結入力は未同梱（大きすぎる／annex）— この束からは再実行不可", reexec_full: "本走系（mdx／大規模データ）— 非公開・未再実行",
+    reexec_cmd: "コマンド（リポジトリ直下で）", copy: "⧉ コマンドをコピー", copied: "✓ コピーしました", inputs_h: "入力（凍結 sha256）", no_sha: "sha 記録なし", expected_h: "期待値（expected）", tol: "許容:", k4_h: "k4 再実行の記録（knowledge/index/k4_results.md）", env_h: "環境", indep_h: "独立性",
+    ev_units_h: "この証拠を再実行で確かめる実行単位", bidir: "⇄ 双方向", bidir_t: "grounded_in と verifies が両方向に記録されている",
+    k4_none: "再実行記録なし", k4_none_t: "k4（記録層側の一斉再実行）の記録なし", k4_pass: "再実行 PASS", k4_pend: "非公開・未再実行", k4_pend_t: "非公開・未再実行: mdx 上の本走（full tier）で、この束からは再実行できない。記録層側でも再実行一致はまだ確定していない",
+    lineage_h: "系譜", sup_old: "置換する（旧）", sup_new: "置換された（新）", promoted: "昇格先", more: "全文を表示", less: "折りたたむ", chars: "字",
+    guide_th: ["図の要素", "この知識基盤での実体", "実例（クリックで詳細）／見る場所"],
+    tour_h: "３分で確かめる", tour_sub: "— ツアー（進み具合はこの端末だけに保存）", tour_open: "開く", tour_go: { grounding: "接地", protocols: "登録・判定", table: "表", graph: "グラフ", lessons: "教訓", lines: "研究線" }, tour_chk: "ステップ", tour_binder: "Binder で開く", tour_binder_t: "ブラウザ内の JupyterLab でこのリポジトリを開く（手元に Python が無くても再実行できる）", tour_cs: "Codespaces", tour_cs_t: "GitHub Codespaces でこのリポジトリを開く", tour_expect: "期待される出力（一致すれば PASS）:", tour_check: "確かめる点:",
+    tour_done: "確かめた", tour_you: "— あなたが確かめたこと:", tour_start: "。上から順に、各ステップの「開く」で実例へ移動し、確かめたらチェックを入れる。", tour_all: " — 主張から証拠・実行・登録・来歴まで、記録層の鎖を一周した。",
+    guide_foot: "この案内は生成器（`kb_atlas.py` の `GUIDE`）が埋め込んだもので、実例のノード ID は生成時に記録層で実在を確認している。図の要素・実例・「→」ボタンはすべてこのページ内のビューへ移動する。", guide_foot_pub: "機械可読の入口:", guide_nodepages: "ノード単体ページ",
+    growth_h: "記録層の規模（数だけ）", growth_sub: "公開抜粋は規則で「接地の鎖」（関数体 census 線と Q8 の W 層）に固定しているので、研究が進んでも抜粋は増えない。その背後の記録層は成長しており、ここではその**数だけ**を出す（非公開の研究内容は出さない）。",
+    growth_nodes: "記録層のノード数", growth_claims: "主張", growth_grounded: "主張の鎖が実行単位に到達", growth_quick: "うち accept/spot 単位に到達（即再実行可）", growth_bidir: "証拠 ⇄ 実行単位 が両方向に記録", growth_proto: "走行前に凍結した事前登録", growth_lessons: "教訓（失敗から規則へ）", growth_k4: "offline 単位を再実行して一致", growth_pending: "未再実行の full-tier 単位", growth_hist: "状態履歴を持つ主張・仮説", growth_daily: "日ごとに増えたノード数（折れ線は累計、右軸）", growth_status: "記録層全体の主張の状態",
+    gr_title: "接地 — 主張から再実行可能な証拠へ", gr_sub: "主張を、それを生んだ再実行可能な計算に双方向のリンクで接地させ、推論が常に再実行可能な証拠まで遡れるようにする — この設計を bias-kb がどう実装しているかを、表示中のノードで実測する。",
+    p1_h: "P1 計算接地", p1: "主張 <code>supported_by</code>→ 証拠 <code>grounded_in</code>→ 実行単位（<code>entry</code> コマンド・<code>inputs</code> の sha256・<code>expected</code>・<code>env</code>）。CI の R9 検査「接地律」が、証拠を持たない主張と実行単位を持たない証拠を拒否する。",
+    p2_h: "P2 双方向性", p2: "証拠 <code>grounded_in</code> ⇄ 実行単位 <code>verifies</code> は記録層に<b>両方向</b>で書く（下の実測）。主張 ⇄ 証拠の逆向きは <code>backlinks.json</code> を CI が導出し「双方向律」で照合。この画面の「入るリンク」がその逆リンク。",
+    p3_h: "P3 実行粒度", p3: "実行単位は <code>tier</code>（full = 本走・accept = 受入・spot = 抽出照合）で再実行の範囲とコストを限定。offline 単位は 1 コマンドで再実行でき、<code>kb_k4.py</code> が全単位を再走して一致率を記録する（k4）。",
+    kpi1: "構造接地率", kpi1_s: (g, c) => `${g}/${c} 主張が 証拠 → 実行単位 の鎖を持つ`, kpi1_d: "定義: 主張 supported_by → 証拠 grounded_in → 実行単位 のリンクが記録層で閉じている主張の割合。鎖が「書かれている」ことだけを見る指標で、再実行して一致したかどうかは含まない。",
+    kpi2: "再実行一致（k4 実測）", kpi2_s: (w, c, p) => `${w}/${c} 主張が 再実行 PASS の単位まで辿れる · 非公開・未再実行のみ ${p}`, kpi2_d: "定義: 鎖の先の実行単位に、再実行して記録の期待値と一致した記録（k4 PASS）が 1 本以上ある主張の割合。構造接地率とは別の量で、こちらが「根拠まで実際に辿れた」実測値。PENDING（非公開・未再実行）は一致にも不一致にも数えない。",
+    kpi3: "双方向ペア（grounded_in ⇄ verifies）", kpi3_s: (b, p) => `${b}/${p} 組が記録層に両方向あり`, kpi3_d: "定義: 証拠 → 実行単位（grounded_in）の各リンクについて、実行単位 → 証拠（verifies）が記録層にも書かれている割合。CI の双方向律が照合する。",
+    kpi4: "同梱 offline 単位の再実行一致", kpi4_s: (a) => `非公開・未再実行（mdx 本走）${a.Xpend} · 記録なし ${a.Xnone}${a.Xnb ? ` · 入力未同梱 ${a.Xnb}` : ""} · sha 実照合 ${a.artsVer}/${a.artsSha} · 凍結登録 ${a.Pfrozen} · 登録的中 ${a.hits}`, kpi4_d: "定義: この束に凍結入力がそろい 1 コマンドで再実行できる実行単位のうち、k4（記録層側の一斉再実行）で PASS のもの。「非公開・未再実行」= mdx 上の本走で、この束からは再実行できず、記録層側の再実行一致もまだ確定していない単位。正直に別枠で数える。",
+    pend_h: (n) => `非公開・未再実行の単位 — ${n}`, pend1: (n) => `<b>${n}</b> 単位は mdx 計算機上の本走（full tier: 全数 census など）で、この束には凍結入力を同梱していない。記録・sha256・登録帯は各ノードにあるが、再実行一致（k4）はまだ確定していない（PENDING）。`, pend2: (n) => ` <b>${n}</b> 単位は記録層では offline だが、凍結入力が大きすぎる／annex にあるため同梱できず、<code>rerun.py</code> は NOT-BUNDLED として集計から外す。`, pend3: " これらを「一致」に数えていない点が、上の 2 つの率の差になる。",
+    how_h: "再実行のしかた", how1: "各実行単位の <code>entry</code> をリポジトリ直下で実行し、<code>expected</code> と比べる。まとめて走らせるには:", how2: "実行単位カードの「再実行」欄に、個別のコマンド・入力の sha256・期待値・k4 の記録（got / want）を示す。", how3: (b, c) => ` 手元に Python が無ければ <a href="${b}" target="_blank" rel="noopener">Binder</a>（ブラウザ内 JupyterLab）か <a href="${c}" target="_blank" rel="noopener">GitHub Codespaces</a> でリポジトリを開いて同じコマンドを実行できる。`,
+    ci_h: "CI の最終再実行", ci_nb: "未同梱", ci_wait: "CI の最終再実行結果（kb/rerun-latest.json）は次回の CI 実行後にここへ出る。",
+    gr_th: ["主張", "状態", "証拠", "実行単位（tier・再実行）", "成果物 sha", "登録", ""], verified: "実照合", trace: "辿る",
+    line_view_t: "研究線ビューへ",
+  };
+  // 図（docs/overview.svg）のラベル: 日本語 → 英語。lang=en のとき <text> の中身を置き換える（SVG 自体は変えない）
+  const SVG_EN = { "人間の研究者": "Human researcher", "問題設定・解釈・最終判断（merge）": "problem, interpretation, final decision (merge)", "AI エージェント（統率AI・実行AI）": "AI agents (orchestrator, executor)", "計算して証拠を生み、記録層に書く": "compute evidence, write the record layer", "別の AI（meta-AI）": "A different AI (meta-AI)", "独立に再計算して検収・裁定": "recomputes independently; accepts, arbitrates", "知識基盤 bias-kb": "Knowledge base bias-kb", "8 型のノードと型付きリンク（すべて JSON の記録層）": "8 node types, typed links (all JSON in the record layer)", "知識グラフ": "Knowledge graph", "対象 O": "Object O", "族・体・census 表": "family, field, census table", "計測": "measure", "量 Q ・ 証拠 E": "Quantity Q · Evidence E", "計測値と、その記録": "measured values and their record", "支持": "support", "主張 C": "Claim C", "状態（確立・棄却…）": "status (established, rejected …)", "反証（棄却も残す）": "refutation (rejections kept)", "登録 P ・ 仮説 H": "Protocol P · Hypothesis H", "予測を走行前に凍結": "predictions frozen before the run", "登録": "registers", "教訓 L": "Lesson L", "失敗・修正を規則へ": "failures, corrections → rules", "双方向リンク": "bidirectional links", "証拠 grounded_in ⇄ 実行単位 verifies（両方向を記録層に書く）": "E grounded_in ⇄ X verifies (both written in the record layer)", "再実行可能な研究": "Re-executable research", "記録層": "Record layer", "ノード JSON（private）": "node JSON (private)", "CI: 参照整合・接地律": "CI: references, grounding", "双方向律・凍結律": "bidirectionality, freezing", "公開抜粋は規則で生成": "public excerpt by rule", "実行単位 X（tier で粒度を限定）": "ExecutionUnit X (tier bounds the scope)", "コード": "code", "データ": "data", "inputs＋sha256": "inputs + sha256", "環境": "environment", "来歴": "provenance", "prov・PR": "prov · PR", "成果物・期待値": "artifacts, expected values", "sha256 で凍結、再実行して": "frozen by sha256; re-run and", "一致を記録（k4）": "record the match (k4)", "確かめられること": "What can be checked", "再実行できる": "Can be re-executed", "rerun.py・CI": "rerun.py · CI", "入力 sha256 を照合 →": "check input sha256 →", "実行 → 期待値と比較": "run → compare with expected", "根拠まで辿れる": "Can be traced to its grounds", "主張 → 証拠 → 実行単位": "claim → evidence → execution unit", "→ 再実行結果（接地タブ）": "→ re-run result (Grounding tab)", "別の AI の独立再集計も X": "meta-AI’s recount is also an X", "予測が先に凍結": "Predictions frozen first", "蓄積 → 予測 → 的中・棄却": "accumulate → predict → hit / reject", "後から合わせられない": "cannot be adjusted afterwards", "（登録・判定）": "(Registrations tab)" };
+  const tr = (o, k) => (EN && o && o[k + "_en"]) || (o ? o[k] : "");
   // データは同梱（<script id="atlas-data">）か、外部 JSON（<body data-atlas-src="kb/nodes.json">）から読む
   const inline = document.getElementById("atlas-data");
   const src = document.body.dataset.atlasSrc;
@@ -22,10 +106,10 @@
   const REPO = "https://github.com/" + (META.repo || "jxta/ai4math-lab");
   const TYPES = ["Object", "Quantity", "Evidence", "Claim", "Hypothesis", "Protocol", "ExecutionUnit", "Lesson"];
   const TLET = { Object: "O", Quantity: "Q", Evidence: "E", Claim: "C", Hypothesis: "H", Protocol: "P", ExecutionUnit: "X", Lesson: "L" };
-  const TJA = { Object: "対象", Quantity: "量", Evidence: "証拠", Claim: "主張", Hypothesis: "仮説", Protocol: "登録", ExecutionUnit: "実行", Lesson: "教訓" };
+  const TJA = EN ? { Object: "Object", Quantity: "Quantity", Evidence: "Evidence", Claim: "Claim", Hypothesis: "Hypothesis", Protocol: "Protocol", ExecutionUnit: "Execution", Lesson: "Lesson" } : { Object: "対象", Quantity: "量", Evidence: "証拠", Claim: "主張", Hypothesis: "仮説", Protocol: "登録", ExecutionUnit: "実行", Lesson: "教訓" };
   const STATUSES = ["established", "registered-hit", "supported", "promoted", "provisional", "open", "challenged", "rejected", "rejected-recorded", "superseded"];
-  const SJA = { established: "確立", "registered-hit": "登録的中", supported: "支持", promoted: "昇格", provisional: "暫定", open: "未決", challenged: "係争", rejected: "棄却", "rejected-recorded": "棄却記録", superseded: "置換済" };
-  const REL_JA = { about: "対象", quantities: "量", supported_by: "根拠", refuted_by: "反証", registered_by: "登録", derives_from: "派生元", supersedes: "置換する", superseded_by: "置換された", promoted_to: "昇格先", related: "関連", grounded_in: "接地", supports: "支持する", refutes: "反証する", verifies: "検証する", taught_by: "教えた証拠", constrains: "制約" };
+  const SJA = EN ? { established: "established", "registered-hit": "registered hit", supported: "supported", promoted: "promoted", provisional: "provisional", open: "open", challenged: "challenged", rejected: "rejected", "rejected-recorded": "rejected (recorded)", superseded: "superseded" } : { established: "確立", "registered-hit": "登録的中", supported: "支持", promoted: "昇格", provisional: "暫定", open: "未決", challenged: "係争", rejected: "棄却", "rejected-recorded": "棄却記録", superseded: "置換済" };
+  const REL_JA = EN ? { about: "about", quantities: "quantities", supported_by: "supported by", refuted_by: "refuted by", registered_by: "registered by", derives_from: "derives from", supersedes: "supersedes", superseded_by: "superseded by", promoted_to: "promoted to", related: "related", grounded_in: "grounded in", supports: "supports", refutes: "refutes", verifies: "verifies", taught_by: "taught by", constrains: "constrains" } : { about: "対象", quantities: "量", supported_by: "根拠", refuted_by: "反証", registered_by: "登録", derives_from: "派生元", supersedes: "置換する", superseded_by: "置換された", promoted_to: "昇格先", related: "関連", grounded_in: "接地", supports: "支持する", refutes: "反証する", verifies: "検証する", taught_by: "教えた証拠", constrains: "制約" };
   const LINES = META.lines;
   const LINE_COLORS = { "O-fs-family": "#2a78d6", "O-qec-family": "#eb6834", "O-ecnf-family": "#1baf7a", "O-dihedral-artin-family": "#eda100", "O-cubic-family": "#e87ba4", "O-fingerprint-family": "#008300", "O-ff-q3-family": "#4a3aa7", "dir-A": "#e34948", "dir-B": "#0e7490", principles: "#7c3aed", program: "#6b7280", unassigned: "#a3a9b5" };
   const lineById = new Map(LINES.map(l => [l.id, l]));
@@ -35,7 +119,7 @@
   const lineColor = (l) => LINE_COLORS[l] || "#999";
   const lineLabel = (l) => (lineById.get(l) || {}).label || l;
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const fmtN = (n) => (n == null ? "" : Number(n).toLocaleString("ja-JP"));
+  const fmtN = (n) => (n == null ? "" : Number(n).toLocaleString(EN ? "en-US" : "ja-JP"));
   const ID_RE = /\b([OQECHPXL]-[a-z0-9][a-z0-9-]*)\b/g;
   const md = (s) => esc(s).replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>").replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(ID_RE, (m) => byId.has(m) ? `<a class="nl" data-node="${m}">${m}</a>` : m).replace(/\n/g, "<br>");
@@ -43,7 +127,7 @@
   const plain = (s) => String(s || "").replace(/\*\*/g, "").replace(/`/g, "");
   const textOf = (n) => n.statement || n.definition || n.entry || "";
   const k4Of = (xid) => K4[xid] || null;
-  const k4Badge = (xid) => { const r = k4Of(xid); if (!r) return `<span class="badge" style="background:${css("--s-none")}" title="k4（記録層側の一斉再実行）の記録なし">再実行記録なし</span>`; const c = r.status === "PASS" ? statusColor("established") : r.status === "PENDING" ? statusColor("provisional") : statusColor("rejected"); const t = r.status === "PASS" ? `再実行 PASS（got ${r.got} / want ${r.want}）` : r.status === "PENDING" ? "非公開・未再実行: mdx 上の本走（full tier）で、この束からは再実行できない。記録層側でも再実行一致はまだ確定していない" : (r.note || r.status); return `<span class="badge" style="background:${c}" title="${esc(t)}">${r.status === "PASS" ? "再実行 PASS" : r.status === "PENDING" ? "非公開・未再実行" : esc(r.status)}</span>`; };
+  const k4Badge = (xid) => { const r = k4Of(xid); if (!r) return `<span class="badge" style="background:${css("--s-none")}" title="${T.k4_none_t}">${T.k4_none}</span>`; const c = r.status === "PASS" ? statusColor("established") : r.status === "PENDING" ? statusColor("provisional") : statusColor("rejected"); const t = r.status === "PASS" ? `${T.k4_pass} (got ${r.got} / want ${r.want})` : r.status === "PENDING" ? T.k4_pend_t : (r.note || r.status); return `<span class="badge" style="background:${c}" title="${esc(t)}">${r.status === "PASS" ? T.k4_pass : r.status === "PENDING" ? T.k4_pend : esc(r.status)}</span>`; };
   // 「offline」は記録層の宣言、「_bundled」はこの束に凍結入力が全部そろい実際に再実行できるか（生成時に判定）
   const rerunable = (x) => !!((x.env || {}).offline && x._bundled !== false);
   const reciprocal = (a, b) => { const A = byId.get(a), B = byId.get(b); if (!A || !B) return false; return B._out.some(e => e.to === a); };
@@ -76,6 +160,7 @@
     const p = new URLSearchParams();
     p.set("v", state.view); if (state.line) p.set("line", state.line); if (state.node) p.set("node", state.node);
     if (state.view === "graph" && state.graphFocus) p.set("focus", state.graphFocus);
+    if (EN) p.set("lang", "en");
     const h = "#" + p.toString(); if (location.hash !== h) { suppressHash = true; location.hash = h; }
   }
   let suppressHash = false;
@@ -104,17 +189,18 @@
   app.innerHTML = `
   <header class="hdr">
     <div class="brand"><b>bias-kb Atlas</b><small id="fresh">${META.profile === "public-grounding"
-      ? `記録層 <b>${fmtN(META.stats.full_n || 0)}</b> ／ 抜粋 <b>${fmtN(NODES.length)}</b> ／ 同期 ${esc((META.generated_at || "").slice(0, 10))}${META.source_ref ? ` <span class="muted" title="記録層の元コミット">(${esc(String(META.source_ref).slice(0, 7))})</span>` : ""}<span id="rerunHdr" title="公開バンドルの CI（rerun.yml）が最後に offline 単位を再実行した結果（kb/rerun-latest.json）"></span>`
+      ? `${T.hdr_rec} <b>${fmtN(META.stats.full_n || 0)}</b> ／ ${T.hdr_exc} <b>${fmtN(NODES.length)}</b> ／ ${T.hdr_sync} ${esc((META.generated_at || "").slice(0, 10))}${META.source_ref ? ` <span class="muted" title="${T.hdr_ref}">(${esc(String(META.source_ref).slice(0, 7))})</span>` : ""}<span id="rerunHdr" title="${T.hdr_rerun_t}"></span>`
       : `${esc(META.version || "")} · ${fmtN(NODES.length)} nodes · ${esc((META.generated_at || "").slice(0, 10))}`}</small></div>
     <nav class="tabs" id="tabs"></nav>
-    <div class="search"><input id="q" placeholder="ID・ラベル・本文を検索（/ でフォーカス）" autocomplete="off"><span class="kbd">/</span><div class="drop" id="drop"></div></div>
-    <button class="iconbtn" id="btnFilters" title="フィルタ列の表示切替">⛭ フィルタ</button>
-    <button class="iconbtn" id="btnInsp" title="詳細パネルの表示切替">▤ 詳細</button>
-    <button class="iconbtn" id="btnTheme" title="ライト／ダーク">◐</button>
-    <button class="iconbtn" id="btnHelp" title="凡例・使い方">?</button>
+    <div class="search"><input id="q" placeholder="${T.search_ph}" autocomplete="off"><span class="kbd">/</span><div class="drop" id="drop"></div></div>
+    <button class="iconbtn" id="btnFilters" title="${EN ? "toggle the filter column" : "フィルタ列の表示切替"}">${T.btn_filters}</button>
+    <button class="iconbtn" id="btnInsp" title="${EN ? "toggle the detail panel" : "詳細パネルの表示切替"}">${T.btn_insp}</button>
+    <button class="iconbtn" id="btnLang" title="${T.btn_lang_t}" lang="${EN ? "ja" : "en"}">${T.btn_lang}</button>
+    <button class="iconbtn" id="btnTheme" title="${T.btn_theme_t}">◐</button>
+    <button class="iconbtn" id="btnHelp" title="${T.btn_help_t}">?</button>
   </header>
-  <div class="help" id="help" hidden><div class="helpbox"><div class="helphd"><b>bias-kb Atlas — 凡例と使い方</b><button class="iconbtn" id="helpClose">✕</button></div><div class="helpbd" id="helpBody"></div></div></div>
-  ${META.profile === "public-grounding" ? `<div class="banner" id="banner"><b>公開抜粋</b> — 知識基盤 bias-kb（private リポジトリ <code>${esc(META.repo)}</code>、${esc((META.generated_at || "").slice(0, 10))} 時点 ${fmtN(META.stats.full_n || 0)} ノード）から、<b>主張 → 証拠 → 再実行可能な実行単位</b> の鎖に関わる ${fmtN(NODES.length)} ノードを規則で抜き出したものです（関数体 census 線と Q8 の W 層）。抜粋外の隣接ノードは型だけの<b>非公開スタブ</b>（${fmtN(STUBS.length)} 件、点線）として残し、「証拠はあるが非公開」と「根拠がない」を区別します。offline 実行単位の凍結入力は同梱され、<code>python3 rerun.py</code> で再実行できます${META.public_repo ? `（<a href="https://github.com/${esc(META.public_repo)}" target="_blank" rel="noopener">${esc(META.public_repo)}</a>）` : ""}。各ノードは JS なしの単体ページ <code>n/&lt;id&gt;.html</code>／<code>.json</code> でも読めます（<a href="n/index.html">一覧</a>・<a href="llms.txt">llms.txt</a>）。</div>` : ""}
+  <div class="help" id="help" hidden><div class="helpbox"><div class="helphd"><b>${T.help_title}</b><button class="iconbtn" id="helpClose">✕</button></div><div class="helpbd" id="helpBody"></div></div></div>
+  ${META.profile === "public-grounding" ? (EN ? `<div class="banner" id="banner"><b>Public excerpt</b> — ${fmtN(NODES.length)} nodes selected by rule from the knowledge base bias-kb (private repository <code>${esc(META.repo)}</code>, ${fmtN(META.stats.full_n || 0)} nodes as of ${esc((META.generated_at || "").slice(0, 10))}): the nodes that take part in a chain <b>claim → evidence → re-executable execution unit</b> (function-field census line and the Q8 W layer). Neighbours outside the excerpt remain as <b>private stubs</b> (${fmtN(STUBS.length)}, dashed) that carry only their type, so that “evidence exists but is private” is distinguishable from “no evidence”. The frozen inputs of the offline execution units are bundled and can be re-run with <code>python3 rerun.py</code>${META.public_repo ? ` (<a href="https://github.com/${esc(META.public_repo)}" target="_blank" rel="noopener">${esc(META.public_repo)}</a>)` : ""}. Every node also has a standalone page without JavaScript, <code>n/&lt;id&gt;.html</code> / <code>.json</code> (<a href="n/index.html">index</a> · <a href="llms.txt">llms.txt</a>). Node texts are in Japanese (the language of the record layer).</div>` : `<div class="banner" id="banner"><b>公開抜粋</b> — 知識基盤 bias-kb（private リポジトリ <code>${esc(META.repo)}</code>、${esc((META.generated_at || "").slice(0, 10))} 時点 ${fmtN(META.stats.full_n || 0)} ノード）から、<b>主張 → 証拠 → 再実行可能な実行単位</b> の鎖に関わる ${fmtN(NODES.length)} ノードを規則で抜き出したものです（関数体 census 線と Q8 の W 層）。抜粋外の隣接ノードは型だけの<b>非公開スタブ</b>（${fmtN(STUBS.length)} 件、点線）として残し、「証拠はあるが非公開」と「根拠がない」を区別します。offline 実行単位の凍結入力は同梱され、<code>python3 rerun.py</code> で再実行できます${META.public_repo ? `（<a href="https://github.com/${esc(META.public_repo)}" target="_blank" rel="noopener">${esc(META.public_repo)}</a>）` : ""}。各ノードは JS なしの単体ページ <code>n/&lt;id&gt;.html</code>／<code>.json</code> でも読めます（<a href="n/index.html">一覧</a>・<a href="llms.txt">llms.txt</a>）。</div>`) : ""}
   <div class="body" id="body"><aside class="rail" id="rail"></aside><main class="stage" id="stage"></main><aside class="insp" id="insp"><div class="splitter" id="split"></div><div id="inspBody"></div></aside></div>
   <div class="tt" id="tt"></div>`;
   const $ = (s, r = document) => r.querySelector(s);
@@ -133,18 +219,27 @@
     fetch(META.rerun_latest, { cache: "no-store" }).then(r => r.ok ? r.json() : null).then(j => {
       if (!j || !Array.isArray(j.results)) return; RERUN = j;
       const np = j.results.filter(r => r.status === "PASS").length, nt = j.results.filter(r => r.status !== "NOT-BUNDLED").length;
-      const el = $("#rerunHdr"); if (el) el.innerHTML = ` ／ 最終再実行 <b style="color:${np === nt ? "var(--ok, #15803d)" : "var(--bad, #b91c1c)"}">${np}/${nt} PASS</b> <span class="muted">${esc((j.generated_at || "").slice(0, 10))}${j.python ? " · Python " + esc(j.python) : ""}</span>`;
+      const el = $("#rerunHdr"); if (el) el.innerHTML = ` ／ ${T.hdr_rerun} <b style="color:${np === nt ? "var(--ok, #15803d)" : "var(--bad, #b91c1c)"}">${np}/${nt} PASS</b> <span class="muted">${esc((j.generated_at || "").slice(0, 10))}${j.python ? " · Python " + esc(j.python) : ""}</span>`;
       if (state.view === "grounding") renderStage();
     }).catch(() => { });
   }
-  const VIEWS = [...(HAS_GUIDE ? [["guide", "案内"]] : []), ["grounding", "接地"], ["atlas", "俯瞰"], ["lines", "研究線"], ["timeline", "時間"], ["graph", "グラフ"], ["lessons", "教訓"], ["protocols", "登録・判定"], ["table", "表"]];
+  const VIEWS = [...(HAS_GUIDE ? [["guide", T.tabs.guide]] : []), ["grounding", T.tabs.grounding], ["atlas", T.tabs.atlas], ["lines", T.tabs.lines], ["timeline", T.tabs.timeline], ["graph", T.tabs.graph], ["lessons", T.tabs.lessons], ["protocols", T.tabs.protocols], ["table", T.tabs.table]];
   $("#tabs").innerHTML = VIEWS.map(([k, l]) => `<button class="tab" data-v="${k}">${l}</button>`).join("");
   $("#tabs").addEventListener("click", e => { const b = e.target.closest(".tab"); if (b) go(b.dataset.v); });
   $("#btnFilters").onclick = () => { state.filtersOpen = !state.filtersOpen; layout(); };
   $("#btnHelp").onclick = () => { renderHelp(); $("#help").hidden = false; };
+  $("#btnLang").onclick = () => { const to = EN ? "ja" : "en"; try { localStorage.setItem("atlas-lang", to); } catch (e) { } const p = new URLSearchParams(location.hash.replace(/^#/, "")); if (to === "en") p.set("lang", "en"); else p.delete("lang"); location.hash = "#" + p.toString(); location.reload(); };
   $("#helpClose").onclick = () => { $("#help").hidden = true; };
   $("#help").addEventListener("click", e => { if (e.target.id === "help") $("#help").hidden = true; });
   function renderHelp() {
+    if (EN) { $("#helpBody").innerHTML = `
+      <p>This page is a self-contained viewer generated by <code>kb_atlas.py</code> from the record layer (node JSON) in <code>knowledge/</code> of the repository <code>${esc(META.repo)}</code> (generated ${esc(META.generated_at)}, source ${esc(META.source)} ${esc(META.source_ref)}). The record layer is never modified.</p>
+      <h4>Eight node types</h4><div class="legend">${TYPES.map(t => `<span class="it"><span class="sw" style="background:${typeColor(t)}"></span><b>${TLET[t]}</b> ${t}</span>`).join("")}</div>
+      <p class="small muted">Claims (C) are grounded in evidence (E); evidence in re-executable execution units (X) and in artifacts frozen by sha256. Hypotheses (H) are conjectures, protocols (P) are pre-registrations frozen before the run, lessons (L) are failures promoted to rules.</p>
+      <h4>Status</h4><div class="legend">${STATUSES.map(st => `<span class="it"><span class="sw" style="background:${statusColor(st)}"></span>${st}</span>`).join("")}</div>
+      <p class="small muted">Rejected claims stay as <code>rejected</code> / <code>rejected-recorded</code>; <code>supersedes</code> links the lineage. <code>registered-hit</code> = a prediction frozen before the run that came true.</p>
+      <h4>Links</h4><div class="legend">${Object.keys(REL_JA).map(r => `<span class="it"><code>${r}</code> ${REL_JA[r]}</span>`).join("")}</div>
+      <h4>Usage</h4><ul class="small"><li><b>Guide</b>: the figure of the mechanism, the table figure → implementation → live examples, and a tour of five checks.</li><li><b>Grounding</b>: per claim, evidence → execution unit (tier, k4 re-run) → artifact sha → registration; “trace” opens the detail. The re-run box of an execution-unit card shows the command, input sha256, expected values and the k4 record.</li><li><b>Overview / Lines / Time / Graph / Lessons / Registrations / Table</b>: the other views (labels in Japanese).</li><li><b>Detail panel</b>: node ids in the text are clickable; the chain of grounds is registration → claim → evidence → execution → lesson; ← → history; ⧉ copies the URL (the hash holds the current place, including <code>lang=en</code>).</li><li><b>Keys</b>: <code>/</code> search, <code>Esc</code> close, Enter/Space opens the focused chip or figure element.</li></ul>`; return; }
     $("#helpBody").innerHTML = `
       <p>このページは、リポジトリ <code>${esc(META.repo)}</code> の <code>knowledge/</code> にある記録層（ノード JSON）から <code>kb_atlas.py</code> が生成した自己完結の閲覧ツールです（生成 ${esc(META.generated_at)}、ソース ${esc(META.source)} ${esc(META.source_ref)}）。記録層は書き換えません。</p>
       <h4>ノードの 8 型</h4><div class="legend">${TYPES.map(t => `<span class="it"><span class="sw" style="background:${typeColor(t)}"></span><b>${TLET[t]}</b> ${TJA[t]}（${t}）</span>`).join("")}</div>
@@ -226,14 +321,14 @@
   // ------------------------------------------------------------------ small renderers
   function badgeType(n) { return `<span class="badge type" style="background:${typeColor(n.type)}">${TLET[n.type]} ${TJA[n.type]}</span>`; }
   function badgeStatus(n) { return n.status ? `<span class="badge" style="background:${statusColor(n.status)}">${esc(SJA[n.status] || n.status)}</span>` : ""; }
-  function badgeLine(l) { return `<span class="badge" data-line="${l}" style="background:${lineColor(l)};cursor:pointer" title="研究線ビューへ">${esc((lineById.get(l) || {}).short || l)}</span>`; }
+  function badgeLine(l) { return `<span class="badge" data-line="${l}" style="background:${lineColor(l)};cursor:pointer" title="${T.line_view_t}">${esc((lineById.get(l) || {}).short || l)}</span>`; }
   function chip(id, extra = "") {
     const n = byId.get(id); if (!n) return `<span class="chip"><span class="id">${esc(id)}</span></span>`;
-    if (n._stub) return `<span class="chip stub" data-node="${id}" tabindex="0" role="link" title="記録層に存在するが公開抜粋に含まれないノード（型だけ公開。ID は実 ID の sha256 先頭 10 桁）"><span class="dot" style="background:${typeColor(n.type)}"></span><span class="id">${esc(TLET[n.type])} 非公開</span><span class="t">${esc(n.label)}</span>${extra}</span>`;
+    if (n._stub) return `<span class="chip stub" data-node="${id}" tabindex="0" role="link" title="${T.stub_t}"><span class="dot" style="background:${typeColor(n.type)}"></span><span class="id">${esc(TLET[n.type])} ${T.private}</span><span class="t">${esc(n.label)}</span>${extra}</span>`;
     return `<span class="chip" data-node="${id}" tabindex="0" role="link" title="${esc(short(n.label, 200))}"><span class="dot" style="background:${typeColor(n.type)}"></span><span class="id">${esc(id)}</span><span class="t">${esc(short(n.label, 70))}</span>${extra}</span>`;
   }
   function card(n, o = {}) {
-    return `<div class="nodecard${state.node === n.id ? " sel" : ""}" data-node="${n.id}"><div class="h">${badgeType(n)}${badgeStatus(n)}<span class="id">${esc(n.id)}</span></div><div class="lbl">${esc(short(n.label, o.len || 140))}</div><div class="meta"><span>${esc(n._date)}</span>${o.line !== false ? `<span>${esc((lineById.get(n._line) || {}).short || "")}</span>` : ""}${n.tier ? `<span>tier ${esc(n.tier)}</span>` : ""}<span>次数 ${n._deg}</span></div></div>`;
+    return `<div class="nodecard${state.node === n.id ? " sel" : ""}" data-node="${n.id}"><div class="h">${badgeType(n)}${badgeStatus(n)}<span class="id">${esc(n.id)}</span></div><div class="lbl">${esc(short(n.label, o.len || 140))}</div><div class="meta"><span>${esc(n._date)}</span>${o.line !== false ? `<span>${esc((lineById.get(n._line) || {}).short || "")}</span>` : ""}${n.tier ? `<span>tier ${esc(n.tier)}</span>` : ""}<span>${T.deg} ${n._deg}</span></div></div>`;
   }
   function statusBar(nodes) {
     const c = d3.rollup(nodes.filter(n => n.status), v => v.length, n => n.status); const tot = d3.sum([...c.values()]) || 1;
@@ -244,17 +339,17 @@
   function renderRail() {
     const rail = $("#rail"); const vis = VISIBLE;
     const cnt = (pred) => NODES.filter(n => pred(n)).length, vcnt = (pred) => vis.filter(n => pred(n)).length;
-    const rows = (title, key, items, colorFn, labelFn) => `<h4>${title} <span class="right"></span></h4><div class="mini"><button data-all="${key}">全て</button><button data-none="${key}">なし</button></div>` +
+    const rows = (title, key, items, colorFn, labelFn) => `<h4>${title} <span class="right"></span></h4><div class="mini"><button data-all="${key}">${T.rail_all}</button><button data-none="${key}">${T.rail_none}</button></div>` +
       items.map(it => `<div class="row${state.f[key].has(it) ? "" : " off"}" data-f="${key}" data-val="${esc(it)}"><span class="sw" style="background:${colorFn(it)}"></span><span>${esc(labelFn(it))}</span><span class="cnt">${vcnt(n => keyOf(key, n) === it)}/${cnt(n => keyOf(key, n) === it)}</span></div>`).join("");
-    rail.innerHTML = `<div class="hint">表示中 <b class="count">${fmtN(vis.length)}</b> / ${fmtN(NODES.length)} ノード</div>
-      ${rows("型", "types", TYPES, typeColor, t => `${TLET[t]} ${TJA[t]}（${t}）`)}
-      ${rows("状態", "statuses", [...STATUSES, "none"], s => s === "none" ? css("--s-none") : statusColor(s), s => s === "none" ? "状態なし" : `${SJA[s]}（${s}）`)}
-      ${rows("研究線", "lines", LINES.map(l => l.id), lineColor, l => lineLabel(l))}
-      <h4>期間</h4><div class="daterange"><span id="dl0">${allDates[state.f.d0]}</span> — <span id="dl1">${allDates[state.f.d1]}</span></div>
+    rail.innerHTML = `<div class="hint">${T.rail_showing} <b class="count">${fmtN(vis.length)}</b> / ${fmtN(NODES.length)} ${T.rail_nodes}</div>
+      ${rows(T.rail_type, "types", TYPES, typeColor, t => EN ? `${TLET[t]} ${t}` : `${TLET[t]} ${TJA[t]}（${t}）`)}
+      ${rows(T.rail_status, "statuses", [...STATUSES, "none"], s => s === "none" ? css("--s-none") : statusColor(s), s => s === "none" ? T.status_none : EN ? s : `${SJA[s]}（${s}）`)}
+      ${rows(T.rail_line, "lines", LINES.map(l => l.id), lineColor, l => lineLabel(l))}
+      <h4>${T.rail_period}</h4><div class="daterange"><span id="dl0">${allDates[state.f.d0]}</span> — <span id="dl1">${allDates[state.f.d1]}</span></div>
       <input type="range" id="r0" min="0" max="${allDates.length - 1}" value="${state.f.d0}"><input type="range" id="r1" min="0" max="${allDates.length - 1}" value="${state.f.d1}">
-      ${rows("実行 tier（X のみ）", "tiers", ["full", "accept", "spot", "none"], () => "#94a3b8", t => t)}
-      ${rows("主張者", "actors", ["統率", "meta", "other"], () => "#94a3b8", a => ({ "統率": "統率AI", meta: "meta-AI", other: "その他" })[a])}
-      <div class="mini" style="margin-top:12px"><button id="fReset">フィルタを初期化</button></div>`;
+      ${rows(T.rail_tier, "tiers", ["full", "accept", "spot", "none"], () => "#94a3b8", t => t)}
+      ${rows(T.rail_actor, "actors", ["統率", "meta", "other"], () => "#94a3b8", a => T.actors[a])}
+      <div class="mini" style="margin-top:12px"><button id="fReset">${T.rail_reset}</button></div>`;
     rail.onclick = e => {
       const r = e.target.closest(".row[data-f]"); if (r) { const s = state.f[r.dataset.f]; if (s.has(r.dataset.val)) s.delete(r.dataset.val); else s.add(r.dataset.val); update(); return; }
       const a = e.target.closest("[data-all]"); if (a) { const k = a.dataset.all; state.f[k] = new Set(allValues(k)); update(); return; }
@@ -283,32 +378,63 @@
   // ---------- 案内（この知識基盤のしくみ — 図と実例の対応） ----------
   function viewGuide(stage) {
     const G = META.guide; if (!G || !G.rows || !G.rows.length) { viewGrounding(stage); return; }
-    const rowHtml = G.rows.map(r => `<tr id="gr-${esc(r.key)}" data-key="${esc(r.key)}"><td class="gfig">${esc(r.fig)}</td><td class="gkb">${md(r.kb)}</td><td class="gex">${(r.nodes || []).map(id => chip(id)).join("") || '<span class="muted small">—</span>'}${r.view ? `<div style="margin-top:5px"><button class="iconbtn small" data-go="${esc(r.view)}">${esc(r.view_label || r.view)} →</button></div>` : ""}</td></tr>`).join("");
+    const rowHtml = G.rows.map(r => `<tr id="gr-${esc(r.key)}" data-key="${esc(r.key)}"><td class="gfig">${esc(tr(r, "fig"))}</td><td class="gkb">${md(tr(r, "kb"))}</td><td class="gex">${(r.nodes || []).map(id => chip(id)).join("") || '<span class="muted small">—</span>'}${r.view ? `<div style="margin-top:5px"><button class="iconbtn small" data-go="${esc(r.view)}">${esc(tr(r, "view_label") || r.view)} →</button></div>` : ""}</td></tr>`).join("");
     // ３分で確かめる — ツアー形式（進行状態・コマンドのコピー・期待出力・最後に「確かめたこと」の要約）。状態は端末内だけに保存。
     const STEPS = G.steps || [];
     const tourKey = "atlas-tour-" + (META.generated_at || "").slice(0, 10);
     const done = (() => { try { return new Set(JSON.parse(localStorage.getItem(tourKey) || "[]")); } catch (e) { return new Set(); } })();
     const saveTour = () => { try { localStorage.setItem(tourKey, JSON.stringify([...done])); } catch (e) { } };
     const stepHtml = (s, i) => `<li class="tstep${done.has(i) ? " done" : ""}" data-step="${i}">
-        <div class="thead"><label class="tchk"><input type="checkbox" data-chk="${i}" ${done.has(i) ? "checked" : ""} aria-label="ステップ ${i + 1} を確かめた"> <b>${i + 1}. ${esc(s.title)}</b></label>${s.node ? ` <button class="iconbtn small" data-trace="${esc(s.node)}">開く</button>` : ""}${s.view && s.view !== "guide" ? ` <button class="iconbtn small" data-go="${esc(s.view)}">${esc(({ grounding: "接地", protocols: "登録・判定", table: "表", graph: "グラフ", lessons: "教訓", lines: "研究線" })[s.view] || s.view)} →</button>` : ""}</div>
-        <div class="tbody">${md(s.text)}
-        ${s.cmd ? `<div class="tcmd"><pre class="raw cmd">${esc(s.cmd)}</pre><button class="iconbtn small" data-copy="${i}">⧉ コマンドをコピー</button>${BINDER ? ` <a class="iconbtn small" href="${BINDER}" target="_blank" rel="noopener" title="ブラウザ内の JupyterLab でこのリポジトリを開く（手元に Python が無くても再実行できる）">Binder で開く</a>` : ""}${CODESPACES ? ` <a class="iconbtn small" href="${CODESPACES}" target="_blank" rel="noopener" title="GitHub Codespaces でこのリポジトリを開く">Codespaces</a>` : ""}</div>` : ""}
-        ${s.expect ? `<div class="small muted" style="margin-top:6px">期待される出力（一致すれば PASS）:</div><pre class="raw texp">${esc(s.expect)}</pre>` : ""}
-        ${s.check ? `<div class="small tcheck">確かめる点: ${esc(s.check)}</div>` : ""}</div></li>`;
-    const tourSummary = () => { const k = [...done].filter(i => i < STEPS.length).sort(); return `<div class="tsum${k.length === STEPS.length && STEPS.length ? " all" : ""}"><div class="tprog"><i style="width:${STEPS.length ? Math.round(100 * k.length / STEPS.length) : 0}%"></i></div><div class="small"><b>${k.length} / ${STEPS.length}</b> 確かめた${k.length ? ` — あなたが確かめたこと: ${k.map(i => esc(STEPS[i].check || STEPS[i].title)).join("；")}` : "。上から順に、各ステップの「開く」で実例へ移動し、確かめたらチェックを入れる。"}${k.length === STEPS.length && STEPS.length ? " — 主張から証拠・実行・登録・来歴まで、記録層の鎖を一周した。" : ""}</div></div>`; };
+        <div class="thead"><label class="tchk"><input type="checkbox" data-chk="${i}" ${done.has(i) ? "checked" : ""} aria-label="${T.tour_chk} ${i + 1}"> <b>${i + 1}. ${esc(tr(s, "title"))}</b></label>${s.node ? ` <button class="iconbtn small" data-trace="${esc(s.node)}">${T.tour_open}</button>` : ""}${s.view && s.view !== "guide" ? ` <button class="iconbtn small" data-go="${esc(s.view)}">${esc(T.tour_go[s.view] || s.view)} →</button>` : ""}</div>
+        <div class="tbody">${md(tr(s, "text"))}
+        ${s.cmd ? `<div class="tcmd"><pre class="raw cmd">${esc(s.cmd)}</pre><button class="iconbtn small" data-copy="${i}">${T.copy}</button>${BINDER ? ` <a class="iconbtn small" href="${BINDER}" target="_blank" rel="noopener" title="${T.tour_binder_t}">${T.tour_binder}</a>` : ""}${CODESPACES ? ` <a class="iconbtn small" href="${CODESPACES}" target="_blank" rel="noopener" title="${T.tour_cs_t}">${T.tour_cs}</a>` : ""}</div>` : ""}
+        ${s.expect ? `<div class="small muted" style="margin-top:6px">${T.tour_expect}</div><pre class="raw texp">${esc(s.expect)}</pre>` : ""}
+        ${s.check ? `<div class="small tcheck">${T.tour_check} ${esc(tr(s, "check"))}</div>` : ""}</div></li>`;
+    const tourSummary = () => { const k = [...done].filter(i => i < STEPS.length).sort(); return `<div class="tsum${k.length === STEPS.length && STEPS.length ? " all" : ""}"><div class="tprog"><i style="width:${STEPS.length ? Math.round(100 * k.length / STEPS.length) : 0}%"></i></div><div class="small"><b>${k.length} / ${STEPS.length}</b> ${T.tour_done}${k.length ? ` ${T.tour_you} ${k.map(i => esc(tr(STEPS[i], "check") || tr(STEPS[i], "title"))).join(EN ? "; " : "；")}` : T.tour_start}${k.length === STEPS.length && STEPS.length ? T.tour_all : ""}</div></div>`; };
+    // 記録層の規模（数だけ）— 公開抜粋は規則で固定なので増えないが、背後の記録層の成長は数で示す
+    const growthCard = () => {
+      const F = META.full_stats; if (!F || !F.types) return "";
+      const tot = Object.values(F.types).reduce((a, b) => a + b, 0);
+      const kp = (v, l) => `<div class="card kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`;
+      const st = F.claim_status || {}; const sOrder = ["established", "registered-hit", "supported", "promoted", "provisional", "open", "challenged", "rejected", "rejected-recorded", "superseded"];
+      const stBar = `<div class="bar" style="margin-top:6px">${sOrder.filter(k => st[k]).map(k => `<i style="width:${100 * st[k] / Math.max(1, Object.values(st).reduce((a, b) => a + b, 0))}%;background:${statusColor(k)}" title="${esc(SJA[k] || k)} ${st[k]}"></i>`).join("")}</div><div class="small muted" style="margin-top:4px">${sOrder.filter(k => st[k]).map(k => `<span class="it"><span class="sw" style="background:${statusColor(k)};display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:3px"></span>${esc(SJA[k] || k)} ${st[k]}</span>`).join(" · ")}</div>`;
+      const g = F.grounding || {}, bp = F.bidir_pairs || {}, k4 = F.k4 || {}, pr = F.protocols || {};
+      return `<div class="card" style="margin-top:12px"><h3 class="ct">${T.growth_h} <span class="muted small">— ${esc((META.generated_at || "").slice(0, 10))}${META.source_ref ? ` (${esc(String(META.source_ref).slice(0, 7))})` : ""}</span></h3><div class="small" style="margin-bottom:8px">${md(T.growth_sub)}</div>
+        <div class="grid g4">${kp(fmtN(tot), T.growth_nodes + ` <span class="muted small">(${TYPES.map(t => `${TLET[t]} ${F.types[t] || 0}`).join(" · ")})</span>`)}${kp(`${g.structural || 0}<span class="muted small"> / ${g.claims || 0}</span>`, T.growth_grounded + ` <span class="muted small">· ${g.quick || 0} ${T.growth_quick}</span>`)}${kp(`${bp.bidir || 0}<span class="muted small"> / ${bp.pairs || 0}</span>`, T.growth_bidir)}${kp(`${k4.offline_pass || 0}<span class="muted small"> / ${k4.offline_run || 0}</span>`, T.growth_k4 + ` <span class="muted small">· ${k4.pending || 0} ${T.growth_pending}</span>`)}</div>
+        <div class="grid g3" style="margin-top:8px">${kp(fmtN(pr.frozen || 0), T.growth_proto)}${kp(fmtN(F.lessons || 0), T.growth_lessons)}${kp(fmtN(F.status_history || 0), T.growth_hist)}</div>
+        <div class="small" style="margin-top:10px"><b>${T.growth_status}</b> (${fmtN(g.claims || 0)})${stBar}</div>
+        <div class="small" style="margin-top:10px"><b>${T.growth_daily}</b></div><div id="growth"></div></div>`;
+    };
+    const drawGrowth = (host) => {
+      const F = META.full_stats; if (!host || !F || !F.daily || !F.daily.length) return;
+      const W = host.clientWidth || 700, H = 150, m = { l: 34, r: 40, t: 8, b: 22 };
+      const days = F.daily.map(([d, n]) => ({ d: new Date(d + "T00:00:00Z"), n })); let c = 0; days.forEach(x => { c += x.n; x.c = c; });
+      const x = d3.scaleUtc().domain(d3.extent(days, d => d.d)).range([m.l, W - m.r]), y = d3.scaleLinear().domain([0, d3.max(days, d => d.n)]).nice().range([H - m.b, m.t]), y2 = d3.scaleLinear().domain([0, d3.max(days, d => d.c)]).nice().range([H - m.b, m.t]);
+      const svg = d3.select(host).html("").append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("width", "100%").attr("role", "img").attr("aria-label", T.growth_daily);
+      const bw = Math.max(2, (W - m.l - m.r) / Math.max(1, (x.domain()[1] - x.domain()[0]) / 864e5) - 1);
+      svg.append("g").selectAll("rect").data(days).join("rect").attr("x", d => x(d.d) - bw / 2).attr("y", d => y(d.n)).attr("width", bw).attr("height", d => y(0) - y(d.n)).attr("fill", css("--accent")).attr("opacity", .55).append("title").text(d => `${d.d.toISOString().slice(0, 10)}: +${d.n} (${d.c})`);
+      svg.append("path").datum(days).attr("fill", "none").attr("stroke", css("--ink")).attr("stroke-width", 1.4).attr("d", d3.line().x(d => x(d.d)).y(d => y2(d.c)));
+      svg.append("g").attr("transform", `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(6).tickFormat(d3.utcFormat("%m/%d"))).selectAll("text").style("font-size", "10px");
+      svg.append("g").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4)).selectAll("text").style("font-size", "10px");
+      svg.append("g").attr("transform", `translate(${W - m.r},0)`).call(d3.axisRight(y2).ticks(4)).selectAll("text").style("font-size", "10px");
+      svg.selectAll(".domain, .tick line").attr("stroke", css("--line"));
+    };
     stage.innerHTML = `<div class="pad guide">
-      <h2 class="vt">${esc(G.title)}</h2>
-      <p class="vsub">${esc(G.source)}</p>
-      <div class="card gfigure" role="group" aria-label="知識基盤のしくみの図。要素はキーボードでも選べる">${G.svg || ""}</div>
-      <div class="card" style="padding:0;overflow:auto;margin-top:12px"><table class="tbl gtbl"><thead><tr><th>図の要素</th><th>この知識基盤での実体</th><th>実例（クリックで詳細）／見る場所</th></tr></thead><tbody>${rowHtml}</tbody></table></div>
-      <div class="card tour" style="margin-top:12px"><h3 class="ct">３分で確かめる <span class="muted small">— ツアー（進み具合はこの端末だけに保存）</span></h3><div id="tsum">${tourSummary()}</div><ol class="gsteps">${STEPS.map(stepHtml).join("")}</ol></div>
-      <p class="small muted" style="margin-top:8px">この案内は生成器（<code>kb_atlas.py</code> の <code>GUIDE</code>）が埋め込んだもので、実例のノード ID は生成時に記録層で実在を確認している。図の要素・実例・「→」ボタンはすべてこのページ内のビューへ移動する。${PUBLIC ? `機械可読の入口: <a href="llms.txt">llms.txt</a>・<a href="kb/kb.jsonld">kb/kb.jsonld</a>・<a href="n/index.html">ノード単体ページ</a>。` : ""}</p>
+      <h2 class="vt">${esc(tr(G, "title"))}</h2>
+      <p class="vsub">${esc(tr(G, "source"))}</p>
+      <div class="card gfigure" role="group" aria-label="${EN ? "Figure of the mechanism of the knowledge base; elements can be selected with the keyboard" : "知識基盤のしくみの図。要素はキーボードでも選べる"}">${G.svg || ""}</div>
+      <div class="card" style="padding:0;overflow:auto;margin-top:12px"><table class="tbl gtbl"><thead><tr>${T.guide_th.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rowHtml}</tbody></table></div>
+      <div class="card tour" style="margin-top:12px"><h3 class="ct">${T.tour_h} <span class="muted small">${T.tour_sub}</span></h3><div id="tsum">${tourSummary()}</div><ol class="gsteps">${STEPS.map(stepHtml).join("")}</ol></div>
+      ${growthCard()}
+      <p class="small muted" style="margin-top:8px">${md(T.guide_foot)}${PUBLIC ? ` ${T.guide_foot_pub} <a href="llms.txt">llms.txt</a>・<a href="kb/kb.jsonld">kb/kb.jsonld</a>・<a href="n/index.html">${T.guide_nodepages}</a>${EN ? "" : "。"}` : ""}</p>
     </div>`;
+    drawGrowth(stage.querySelector("#growth"));
     const svg = stage.querySelector(".gfigure svg");
+    if (svg && EN) { svg.classList.add("lang-en"); svg.querySelectorAll("text").forEach(t => { const k = (t.textContent || "").trim(); if (SVG_EN[k]) { t.textContent = SVG_EN[k]; const fs = parseFloat(t.getAttribute("font-size") || getComputedStyle(t).fontSize) || 11; t.style.fontSize = (fs * 0.86).toFixed(1) + "px"; } }); }
     const rowOf = (key) => stage.querySelector(`#gr-${CSS.escape(key)}`);
     if (svg) svg.querySelectorAll(".hot").forEach(h => {
       const row = G.rows.find(r => r.key === h.dataset.key);
-      h.setAttribute("tabindex", "0"); h.setAttribute("role", "button"); h.setAttribute("aria-label", (row ? row.fig : h.dataset.key) + " — 対応表の行と実例を開く");
+      h.setAttribute("tabindex", "0"); h.setAttribute("role", "button"); h.setAttribute("aria-label", (row ? tr(row, "fig") : h.dataset.key) + (EN ? " — open the matching row and example" : " — 対応表の行と実例を開く"));
       h.addEventListener("click", e => {
         e.stopPropagation(); const key = h.dataset.key, tr = rowOf(key); if (!tr) return;
         svg.querySelectorAll(".hot").forEach(x => x.classList.toggle("on", x === h));
@@ -322,7 +448,7 @@
       h.addEventListener("blur", () => { const tr = rowOf(h.dataset.key); if (tr) tr.classList.remove("hl"); });
     });
     stage.querySelectorAll("input[data-chk]").forEach(cb => cb.addEventListener("change", () => { const i = +cb.dataset.chk; if (cb.checked) done.add(i); else done.delete(i); saveTour(); cb.closest(".tstep").classList.toggle("done", cb.checked); $("#tsum").innerHTML = tourSummary(); }));
-    stage.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); const t = STEPS[+b.dataset.copy].cmd || ""; const ok = () => { b.textContent = "✓ コピーしました"; setTimeout(() => { b.textContent = "⧉ コマンドをコピー"; }, 1200); }; if (navigator.clipboard) navigator.clipboard.writeText(t).then(ok, () => window.prompt("コマンド:", t)); else window.prompt("コマンド:", t); }));
+    stage.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); const t = STEPS[+b.dataset.copy].cmd || ""; const ok = () => { b.textContent = T.copied; setTimeout(() => { b.textContent = T.copy; }, 1200); }; if (navigator.clipboard) navigator.clipboard.writeText(t).then(ok, () => window.prompt(EN ? "command:" : "コマンド:", t)); else window.prompt(EN ? "command:" : "コマンド:", t); }));
     stage.querySelectorAll(".gtbl tr[data-key]").forEach(tr => {
       tr.addEventListener("mouseenter", () => { if (svg) { const h = svg.querySelector(`.hot[data-key="${tr.dataset.key}"]`); if (h) h.classList.add("on"); } });
       tr.addEventListener("mouseleave", () => { if (svg) { const h = svg.querySelector(`.hot[data-key="${tr.dataset.key}"]`); if (h && !tr.classList.contains("on")) h.classList.remove("on"); } });
@@ -358,25 +484,25 @@
     rows.sort((a, b) => (b.ch.pass - a.ch.pass) || ((order[a.c.status] ?? 9) - (order[b.c.status] ?? 9)) || (b.c._date || "").localeCompare(a.c._date || ""));
     const kp = (v, l, s = "", def = "") => `<div class="card kpi"${def ? ` title="${esc(def)}"` : ""}><div class="v">${v}</div><div class="l">${l}${def ? ` <span class="def" aria-label="定義">ⓘ</span>` : ""}</div>${s ? `<div class="s">${s}</div>` : ""}</div>`;
     const cloneCmd = PUBLIC && PUBREPO ? `git clone ${PUBREPO}.git && cd ${esc(META.public_repo.split("/")[1])} && python3 rerun.py` : `git clone git@github.com:${esc(META.repo)}.git && cd ${esc(META.repo.split("/")[1])} && python3 knowledge/tools/kb_k4.py`;
-    const rerunBox = RERUN ? (() => { const np = RERUN.results.filter(r => r.status === "PASS").length, nb = RERUN.results.filter(r => r.status === "NOT-BUNDLED").length, nt = RERUN.results.length - nb; return `<div class="small" style="margin-top:8px"><b>CI の最終再実行</b>（<a href="${esc(META.rerun_latest)}">kb/rerun-latest.json</a>、${esc((RERUN.generated_at || "").slice(0, 16).replace("T", " "))} UTC${RERUN.python ? "、Python " + esc(RERUN.python) : ""}${RERUN.commit ? "、commit " + esc(String(RERUN.commit).slice(0, 7)) : ""}）: <b style="color:${np === nt ? "var(--ok, #15803d)" : "var(--bad, #b91c1c)"}">${np}/${nt} PASS</b>${nb ? `、未同梱 ${nb}` : ""} — ${RERUN.results.map(r => `<code title="${esc(r.status)}${r.got ? " got " + esc(r.got) : ""}">${esc(r.id)}</code> ${r.status === "PASS" ? "✓" : r.status === "NOT-BUNDLED" ? "–" : "✗"}`).join(" ")}</div>`; })() : (PUBLIC ? `<div class="small muted" style="margin-top:8px">CI の最終再実行結果（kb/rerun-latest.json）は次回の CI 実行後にここへ出る。</div>` : "");
+    const rerunBox = RERUN ? (() => { const np = RERUN.results.filter(r => r.status === "PASS").length, nb = RERUN.results.filter(r => r.status === "NOT-BUNDLED").length, nt = RERUN.results.length - nb; return `<div class="small" style="margin-top:8px"><b>${T.ci_h}</b>（<a href="${esc(META.rerun_latest)}">kb/rerun-latest.json</a>、${esc((RERUN.generated_at || "").slice(0, 16).replace("T", " "))} UTC${RERUN.python ? "、Python " + esc(RERUN.python) : ""}${RERUN.commit ? "、commit " + esc(String(RERUN.commit).slice(0, 7)) : ""}）: <b style="color:${np === nt ? "var(--ok, #15803d)" : "var(--bad, #b91c1c)"}">${np}/${nt} PASS</b>${nb ? `、${T.ci_nb} ${nb}` : ""} — ${RERUN.results.map(r => `<code title="${esc(r.status)}${r.got ? " got " + esc(r.got) : ""}">${esc(r.id)}</code> ${r.status === "PASS" ? "✓" : r.status === "NOT-BUNDLED" ? "–" : "✗"}`).join(" ")}</div>`; })() : (PUBLIC ? `<div class="small muted" style="margin-top:8px">${T.ci_wait}</div>` : "");
     stage.innerHTML = `<div class="pad">
-      <h2 class="vt">接地 — 主張から再実行可能な証拠へ</h2>
-      <p class="vsub">主張を、それを生んだ再実行可能な計算に双方向のリンクで接地させ、推論が常に再実行可能な証拠まで遡れるようにする — この設計を bias-kb がどう実装しているかを、表示中のノードで実測する。</p>
+      <h2 class="vt">${T.gr_title}</h2>
+      <p class="vsub">${T.gr_sub}</p>
       <div class="grid g3" style="margin-bottom:12px">
-        <div class="card"><h3 class="ct">P1 計算接地</h3><div class="small">主張 <code>supported_by</code>→ 証拠 <code>grounded_in</code>→ 実行単位（<code>entry</code> コマンド・<code>inputs</code> の sha256・<code>expected</code>・<code>env</code>）。CI の R9 検査「接地律」が、証拠を持たない主張と実行単位を持たない証拠を拒否する。</div></div>
-        <div class="card"><h3 class="ct">P2 双方向性</h3><div class="small">証拠 <code>grounded_in</code> ⇄ 実行単位 <code>verifies</code> は記録層に<b>両方向</b>で書く（下の実測）。主張 ⇄ 証拠の逆向きは <code>backlinks.json</code> を CI が導出し「双方向律」で照合。この画面の「入るリンク」がその逆リンク。</div></div>
-        <div class="card"><h3 class="ct">P3 実行粒度</h3><div class="small">実行単位は <code>tier</code>（full = 本走・accept = 受入・spot = 抽出照合）で再実行の範囲とコストを限定。offline 単位は 1 コマンドで再実行でき、<code>kb_k4.py</code> が全単位を再走して一致率を記録する（k4）。</div></div>
+        <div class="card"><h3 class="ct">${T.p1_h}</h3><div class="small">${T.p1}</div></div>
+        <div class="card"><h3 class="ct">${T.p2_h}</h3><div class="small">${T.p2}</div></div>
+        <div class="card"><h3 class="ct">${T.p3_h}</h3><div class="small">${T.p3}</div></div>
       </div>
       <div class="grid g4" style="margin-bottom:12px">
-        ${kp(`${claims.length ? Math.round(100 * grounded / claims.length) : 0}%`, "構造接地率", `${grounded}/${claims.length} 主張が 証拠 → 実行単位 の鎖を持つ`, "定義: 主張 supported_by → 証拠 grounded_in → 実行単位 のリンクが記録層で閉じている主張の割合。鎖が「書かれている」ことだけを見る指標で、再実行して一致したかどうかは含まない。")}
-        ${kp(`${claims.length ? Math.round(100 * withPass / claims.length) : 0}%`, "再実行一致（k4 実測）", `${withPass}/${claims.length} 主張が 再実行 PASS の単位まで辿れる · 非公開・未再実行のみ ${claimsPending}`, "定義: 鎖の先の実行単位に、再実行して記録の期待値と一致した記録（k4 PASS）が 1 本以上ある主張の割合。構造接地率とは別の量で、こちらが「根拠まで実際に辿れた」実測値。PENDING（非公開・未再実行）は一致にも不一致にも数えない。")}
-        ${kp(`${pairs ? Math.round(100 * bidir / pairs) : 0}%`, "双方向ペア（grounded_in ⇄ verifies）", `${bidir}/${pairs} 組が記録層に両方向あり`, "定義: 証拠 → 実行単位（grounded_in）の各リンクについて、実行単位 → 証拠（verifies）が記録層にも書かれている割合。CI の双方向律が照合する。")}
-        ${kp(`${k4pass}<span class="muted small"> / ${Xrun.length}</span>`, "同梱 offline 単位の再実行一致", `非公開・未再実行（mdx 本走）${Xpend} · 記録なし ${Xnone}${Xnb ? ` · 入力未同梱 ${Xnb}` : ""} · sha 実照合 ${artsVer}/${artsSha} · 凍結登録 ${Pfrozen} · 登録的中 ${hits}`, "定義: この束に凍結入力がそろい 1 コマンドで再実行できる実行単位のうち、k4（記録層側の一斉再実行）で PASS のもの。「非公開・未再実行」= mdx 上の本走で、この束からは再実行できず、記録層側の再実行一致もまだ確定していない単位。正直に別枠で数える。")}
+        ${kp(`${claims.length ? Math.round(100 * grounded / claims.length) : 0}%`, T.kpi1, T.kpi1_s(grounded, claims.length), T.kpi1_d)}
+        ${kp(`${claims.length ? Math.round(100 * withPass / claims.length) : 0}%`, T.kpi2, T.kpi2_s(withPass, claims.length, claimsPending), T.kpi2_d)}
+        ${kp(`${pairs ? Math.round(100 * bidir / pairs) : 0}%`, T.kpi3, T.kpi3_s(bidir, pairs), T.kpi3_d)}
+        ${kp(`${k4pass}<span class="muted small"> / ${Xrun.length}</span>`, T.kpi4, T.kpi4_s({ Xpend, Xnone, Xnb, artsVer, artsSha, Pfrozen, hits }), T.kpi4_d)}
       </div>
-      ${Xpend || Xnb ? `<div class="card pend" style="margin-bottom:12px"><h3 class="ct">非公開・未再実行の単位 — ${Xpend + Xnb}</h3><div class="small">${Xpend ? `<b>${Xpend}</b> 単位は mdx 計算機上の本走（full tier: 全数 census など）で、この束には凍結入力を同梱していない。記録・sha256・登録帯は各ノードにあるが、再実行一致（k4）はまだ確定していない（PENDING）。` : ""}${Xnb ? ` <b>${Xnb}</b> 単位は記録層では offline だが、凍結入力が大きすぎる／annex にあるため同梱できず、<code>rerun.py</code> は NOT-BUNDLED として集計から外す。` : ""} これらを「一致」に数えていない点が、上の 2 つの率の差になる。</div><div style="margin-top:6px">${Xall.filter(x => (k4Of(x.id) || {}).status === "PENDING" || ((x.env || {}).offline && !rerunable(x))).map(x => `${chip(x.id)} <span class="badge" style="background:${css("--muted")}">${esc(x.tier || "?")}</span>`).join(" ")}</div></div>` : ""}
-      <div class="card" style="margin-bottom:12px"><h3 class="ct">再実行のしかた</h3><div class="small">各実行単位の <code>entry</code> をリポジトリ直下で実行し、<code>expected</code> と比べる。まとめて走らせるには:</div><pre class="raw" style="max-height:none">${esc(cloneCmd)}</pre><div class="small muted">実行単位カードの「再実行」欄に、個別のコマンド・入力の sha256・期待値・k4 の記録（got / want）を示す。${BINDER ? ` 手元に Python が無ければ <a href="${BINDER}" target="_blank" rel="noopener">Binder</a>（ブラウザ内 JupyterLab）か <a href="${CODESPACES}" target="_blank" rel="noopener">GitHub Codespaces</a> でリポジトリを開いて同じコマンドを実行できる。` : ""}</div>${rerunBox}</div>
-      <div class="card" style="padding:0;overflow:auto"><table class="tbl"><thead><tr><th>主張</th><th>状態</th><th>証拠</th><th>実行単位（tier・再実行）</th><th>成果物 sha</th><th>登録</th><th></th></tr></thead><tbody>
-      ${rows.map(({ c, ch }) => `<tr data-node="${c.id}" class="${state.node === c.id ? "sel" : ""}"><td><code>${esc(c.id)}</code><div class="small">${esc(short(c.label, 70))}</div></td><td>${badgeStatus(c)}</td><td>${ch.evs.map(e => chip(e)).join("") || "—"}</td><td>${ch.xs.map(x => `<div style="margin:2px 0">${chip(x.id)} <span class="badge" style="background:${css("--muted")}">${esc(x.tier || "?")}</span> ${k4Badge(x.id)}</div>`).join("") || '<span class="muted">—</span>'}</td><td class="nowrap">${ch.sha ? `${ch.verified}/${ch.sha} 実照合` : "—"}</td><td>${ch.ps.map(p => chip(p)).join("") || "—"}</td><td><button class="iconbtn small" data-trace="${c.id}">辿る</button></td></tr>`).join("")}</tbody></table></div></div>`;
+      ${Xpend || Xnb ? `<div class="card pend" style="margin-bottom:12px"><h3 class="ct">${T.pend_h(Xpend + Xnb)}</h3><div class="small">${Xpend ? T.pend1(Xpend) : ""}${Xnb ? T.pend2(Xnb) : ""}${T.pend3}</div><div style="margin-top:6px">${Xall.filter(x => (k4Of(x.id) || {}).status === "PENDING" || ((x.env || {}).offline && !rerunable(x))).map(x => `${chip(x.id)} <span class="badge" style="background:${css("--muted")}">${esc(x.tier || "?")}</span>`).join(" ")}</div></div>` : ""}
+      <div class="card" style="margin-bottom:12px"><h3 class="ct">${T.how_h}</h3><div class="small">${T.how1}</div><pre class="raw" style="max-height:none">${esc(cloneCmd)}</pre><div class="small muted">${T.how2}${BINDER ? T.how3(BINDER, CODESPACES) : ""}</div>${rerunBox}</div>
+      <div class="card" style="padding:0;overflow:auto"><table class="tbl"><thead><tr>${T.gr_th.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>
+      ${rows.map(({ c, ch }) => `<tr data-node="${c.id}" class="${state.node === c.id ? "sel" : ""}"><td><code>${esc(c.id)}</code><div class="small">${esc(short(c.label, 70))}</div></td><td>${badgeStatus(c)}</td><td>${ch.evs.map(e => chip(e)).join("") || "—"}</td><td>${ch.xs.map(x => `<div style="margin:2px 0">${chip(x.id)} <span class="badge" style="background:${css("--muted")}">${esc(x.tier || "?")}</span> ${k4Badge(x.id)}</div>`).join("") || '<span class="muted">—</span>'}</td><td class="nowrap">${ch.sha ? `${ch.verified}/${ch.sha} ${T.verified}` : "—"}</td><td>${ch.ps.map(p => chip(p)).join("") || "—"}</td><td><button class="iconbtn small" data-trace="${c.id}">${T.trace}</button></td></tr>`).join("")}</tbody></table></div></div>`;
     stage.addEventListener("click", e => { const b = e.target.closest("[data-trace]"); if (b) { e.stopPropagation(); open(b.dataset.trace); } });
   }
 
@@ -625,7 +751,7 @@
   // ------------------------------------------------------------------ inspector
   function renderInspector() {
     const host = $("#inspBody");
-    if (!state.node) { host.innerHTML = `<div class="empty"><b>詳細パネル</b>俯瞰の葉・カード・チップ・検索結果をクリックすると、ここにノードの全内容・根拠の鎖・近傍が出ます。</div>`; return; }
+    if (!state.node) { host.innerHTML = `<div class="empty"><b>${T.insp_empty_h}</b>${T.insp_empty}</div>`; return; }
     const n = byId.get(state.node); const prov = n.prov || {};
     const canBack = state.trailPos > 0, canFwd = state.trailPos < state.trail.length - 1;
     if (n._stub) {  // 非公開スタブ: 型と隣接だけを示す（実 ID・本文は出さない）
@@ -644,9 +770,18 @@
     const linksHtml = (groups, dir) => groups.length ? groups.map(([rel, es]) => `<div class="grp"><div class="rel">${dir === "out" ? "→" : "←"} ${esc(REL_JA[rel] || rel)} <code>${esc(rel)}</code> <span class="muted">${es.length}</span></div>${es.map(e => { const other = dir === "out" ? e.to : e.from; const rec = reciprocal(n.id, other); return chip(other, rec ? `<span title="記録層に逆向きのリンクもある（双方向）" style="color:var(--accent);font-weight:700">⇄</span>` : ""); }).join("")}</div>`).join("") : `<div class="hint">—</div>`;
     const fields = [];
     const kv = (k, v) => fields.push(`<div class="k">${esc(k)}</div><div class="v">${v}</div>`);
-    if (n.definition) kv("定義", `<div class="stmt">${md(n.definition)}</div>`);
-    if (n.counterpoints) kv("反論・留保", `<div class="stmt">${md(n.counterpoints)}</div>`);
-    if (n.conventions) kv("規約", `<div class="stmt">${md(n.conventions)}</div>`);
+    if (n.definition) kv(T.kv_def, `<div class="stmt">${md(n.definition)}</div>`);
+    if (n.counterpoints) kv(T.kv_cp, `<div class="stmt">${md(n.counterpoints)}</div>`);
+    if (n.conventions) kv(T.kv_conv, `<div class="stmt">${md(n.conventions)}</div>`);
+    if (n.convention) kv("convention", `<div class="stmt">${md(typeof n.convention === "string" ? n.convention : JSON.stringify(n.convention))}</div>`);
+    if (n.direction) kv(T.kv_direction, `<code>${esc(n.direction)}</code>`);
+    // g4（ORDER 0014）: 主張の適用範囲・予測・計器・判定・台帳 — 記録層に入り始めた構造化欄をそのまま見せる（無ければ出ない）
+    const jsonKv = (k, v) => kv(k, `<div class="vals"><table>${flatten(v).map(([a, b]) => `<tr><td>${esc(a)}</td><td>${byId.has(b) ? chip(b) : esc(b)}</td></tr>`).join("")}</table></div>`);
+    if (n.scope) jsonKv(T.kv_scope, n.scope);
+    if (n.predicts) jsonKv(T.kv_predicts, n.predicts);
+    if (n.measured_with) kv(T.kv_measured, (Array.isArray(n.measured_with) ? n.measured_with : [n.measured_with]).map(m => byId.has(m) ? chip(m) : `<code>${esc(String(m))}</code>`).join(" "));
+    if (n.verdict) { if (typeof n.verdict === "string") kv(T.kv_verdict, `<div class="stmt">${md(n.verdict)}</div>`); else jsonKv(T.kv_verdict, n.verdict); }
+    if (n.ledger) jsonKv(T.kv_ledger, n.ledger);
     if (n.pre_named_killers) kv("pre-named killers", `<div class="stmt">${Array.isArray(n.pre_named_killers) ? n.pre_named_killers.map((k, i) => `${i + 1}. ${md(k)}`).join("<br>") : md(n.pre_named_killers)}</div>`);
     if (n.derivation_hooks) kv("導出フック", `<div class="stmt">${(Array.isArray(n.derivation_hooks) ? n.derivation_hooks : [n.derivation_hooks]).map((k, i) => `${i + 1}. ${md(k)}`).join("<br>")}</div>`);
     if (n.tier) kv("tier", `<code>${esc(n.tier)}</code>`);
@@ -655,54 +790,60 @@
     if (n.seed != null) kv("seed", `<code>${esc(JSON.stringify(n.seed))}</code>`);
     if (n.expected && n.type !== "ExecutionUnit") kv("expected", `<div class="vals"><table>${(Array.isArray(n.expected) ? n.expected : [n.expected]).map(x => `<tr><td>${esc(x.name || "")}</td><td>${esc(typeof x.value === "object" ? JSON.stringify(x.value) : x.value)}${x.tolerance ? ` <span class="muted">± ${esc(x.tolerance)}</span>` : ""}</td></tr>`).join("")}</table></div>`);
     if (n.inputs && n.type !== "ExecutionUnit") kv("inputs", (Array.isArray(n.inputs) ? n.inputs : [n.inputs]).map(x => typeof x === "string" ? `<code>${esc(x)}</code>` : `<div>${repoLink(x.ref || x.path || JSON.stringify(x))}${x.sha256 ? ` <span class="muted small">sha ${esc(x.sha256.slice(0, 10))}${x.sha_verified ? " · " + esc(x.sha_verified) : ""}</span>` : ""}</div>`).join(""));
-    if (n.frozen) kv("凍結", `<div>${repoLink(n.frozen.path || "")}<br><span class="muted small">sha256 ${esc(n.frozen.sha256 || "")}</span><br>${esc(n.frozen.frozen_at || "")} ${PUBLIC ? esc(n.frozen.pr || "") : prLink(n.frozen.pr)}</div>`);
+    if (n.frozen) kv(T.kv_frozen, `<div>${repoLink(n.frozen.path || "")}<br><span class="muted small">sha256 ${esc(n.frozen.sha256 || "")}</span><br>${esc(n.frozen.frozen_at || "")} ${PUBLIC ? esc(n.frozen.pr || "") : prLink(n.frozen.pr)}</div>`);
     if (n.measures) kv("measures", (Array.isArray(n.measures) ? n.measures : [n.measures]).map(m => byId.has(m) ? chip(m) : `<code>${esc(typeof m === "string" ? m : JSON.stringify(m))}</code>`).join(" "));
     if (n.values) kv("values", `<div class="vals"><table>${flatten(n.values).map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</table></div>`);
     if (n.lmfdb_label) kv("LMFDB", `<code>${esc(n.lmfdb_label)}</code>`);
     if (n.sameAs) kv("sameAs", (Array.isArray(n.sameAs) ? n.sameAs : [n.sameAs]).map(s => /^https?:/.test(s) ? `<a href="${esc(s)}" target="_blank" rel="noopener">${esc(s)}</a>` : esc(s)).join("<br>"));
-    if (n.independence) kv("独立性", `<div class="stmt">${md(typeof n.independence === "string" ? n.independence : JSON.stringify(n.independence))}</div>`);
+    if (n.independence) kv(T.kv_indep, `<div class="stmt">${md(typeof n.independence === "string" ? n.independence : JSON.stringify(n.independence))}</div>`);
     if (n.notebook) kv("notebook", `<code>${esc(n.notebook)}</code>`);
+    // 生成器が知らない欄（schema の純加算で増えた欄）も落とさずに見せる — 別の AI が「何が書かれているか」を機械的に見られるように
+    const KNOWN = new Set(["id", "type", "label", "statement", "status", "status_history", "prov", "definition", "counterpoints", "conventions", "convention", "direction", "scope", "predicts", "measured_with", "verdict", "ledger", "tier", "entry", "env", "seed", "expected", "inputs", "frozen", "measures", "values", "lmfdb_label", "sameAs", "independence", "notebook", "artifacts", "pre_named_killers", "derivation_hooks", "about", "quantities", "supported_by", "refuted_by", "registered_by", "derives_from", "supersedes", "superseded_by", "promoted_to", "related", "grounded_in", "supports", "refutes", "verifies", "taught_by", "constrains", "uses"]);
+    const other = Object.keys(n).filter(k => !k.startsWith("_") && !KNOWN.has(k));
+    if (other.length) kv(T.kv_other, `<div class="vals"><table>${other.flatMap(k => flatten(n[k], k)).map(([a, b]) => `<tr><td>${esc(a)}</td><td>${byId.has(b) ? chip(b) : esc(b)}</td></tr>`).join("")}</table></div>`);
+    const histHtml = Array.isArray(n.status_history) && n.status_history.length ? `<h5>${T.hist_h}</h5><div class="hist">${n.status_history.map((h, i) => `<div class="hrow"><span class="badge" style="background:${statusColor(h.status)}">${esc(SJA[h.status] || h.status || "")}</span> <span class="muted small">${esc(h.date || "")}</span>${h.by ? ` <span class="small">${T.hist_by} ${esc(h.by)}</span>` : ""}${h.evidence ? ` <span class="small">${T.hist_ev} ${byId.has(h.evidence) ? chip(h.evidence) : `<code>${esc(h.evidence)}</code>`}</span>` : ""}${h.protocol ? ` ${byId.has(h.protocol) ? chip(h.protocol) : `<code>${esc(h.protocol)}</code>`}` : ""}${h.pr ? ` <span class="small">${T.hist_pr} ${PUBLIC ? esc(h.pr) : prLink(h.pr)}</span>` : ""}${h.reason ? `<div class="small muted">${md(h.reason)}</div>` : ""}${h.derived ? ` <span class="muted small">${T.hist_derived}</span>` : ""}${i < n.status_history.length - 1 ? '<span class="muted"> ↓</span>' : ""}</div>`).join("")}</div>` : "";
     const arts = (n.artifacts || []).map(a => `<div>${repoLink(a.path || "")} <span class="muted small">${esc(a.role || "")}${a.location ? " · " + esc(a.location) : ""}${a.sha256 ? " · sha256 " + esc(a.sha256.slice(0, 12)) + "…" : ""}</span>${a.sha_verified ? ` <span class="badge" style="background:${a.sha_verified === "verified" ? statusColor("established") : statusColor("provisional")}">${a.sha_verified === "verified" ? "sha 実照合済" : esc(a.sha_verified)}</span>` : ""}</div>`).join("");
     // 再実行ボックス（X）／検証単位一覧（E）
     let reexec = "";
     if (n.type === "ExecutionUnit") {
       const r = k4Of(n.id); const off = (n.env || {}).offline;
       const cmd = `${PUBLIC && PUBREPO ? `git clone ${PUBREPO}.git && cd ${META.public_repo.split("/")[1]}\n` : `cd ${META.repo.split("/")[1]}   # ${META.repo}\n`}${n.entry || ""}`;
-      reexec = `<h5>再実行 — この単位を走らせて期待値と比べる</h5><div class="reexec">
-        <div class="row2"><span class="badge" style="background:${css("--muted")}">tier ${esc(n.tier || "?")}</span> ${off ? (rerunable(n) ? `<span class="badge" style="background:${statusColor("established")}">offline: 同梱データだけで再実行可</span>` : `<span class="badge" style="background:${statusColor("provisional")}" title="${esc((n._missing_inputs || []).join(", "))}">offline だが凍結入力は未同梱（大きすぎる／annex）— この束からは再実行不可</span>`) : `<span class="badge" style="background:${statusColor("provisional")}">本走系（mdx／大規模データ）— 非公開・未再実行</span>`} ${k4Badge(n.id)}</div>
-        <div class="small muted" style="margin:6px 0 2px">コマンド（リポジトリ直下で）</div><pre class="raw cmd" id="cmdbox">${esc(cmd)}</pre><button class="iconbtn small" id="copyCmd">⧉ コマンドをコピー</button>${PUBLIC && BINDER && rerunable(n) ? ` <a class="iconbtn small" href="${BINDER}" target="_blank" rel="noopener" title="ブラウザ内の JupyterLab でリポジトリを開く">Binder</a> <a class="iconbtn small" href="${CODESPACES}" target="_blank" rel="noopener">Codespaces</a>` : ""}
-        ${n.inputs ? `<div class="small muted" style="margin:8px 0 2px">入力（凍結 sha256）</div>${(Array.isArray(n.inputs) ? n.inputs : [n.inputs]).map(x => typeof x === "string" ? `<div class="inp"><code>${esc(x)}</code></div>` : `<div class="inp">${repoLink(x.ref || x.path || "")}<div class="sha">${x.sha256 ? `<code>${esc(x.sha256)}</code> <span class="muted">(${esc(x.sha_kind || "")})</span>` : '<span class="muted">sha 記録なし</span>'}${x.sha_verified ? ` <span class="badge" style="background:${x.sha_verified === "verified" ? statusColor("established") : statusColor("provisional")}">${esc(x.sha_verified)}</span>` : ""}</div></div>`).join("")}` : ""}
-        ${n.expected ? `<div class="small muted" style="margin:8px 0 2px">期待値（expected）</div><div class="vals"><table>${(Array.isArray(n.expected) ? n.expected : [n.expected]).map(x => `<tr><td>${esc(x.name || "")}</td><td><code>${esc(typeof x.value === "object" ? JSON.stringify(x.value) : x.value)}</code>${x.tolerance ? ` <span class="muted">許容: ${esc(x.tolerance)}</span>` : ""}</td></tr>`).join("")}</table></div>` : ""}
-        ${r ? `<div class="small muted" style="margin:8px 0 2px">k4 再実行の記録（knowledge/index/k4_results.md）</div><div class="vals"><table><tr><td>status</td><td><b>${esc(r.status)}</b></td></tr>${r.got ? `<tr><td>got</td><td><code>${esc(r.got)}</code></td></tr><tr><td>want</td><td><code>${esc(r.want)}</code></td></tr>` : ""}${r.note ? `<tr><td>note</td><td>${esc(r.note)}</td></tr>` : ""}</table></div>` : ""}
-        ${n.env ? `<div class="small muted" style="margin:8px 0 2px">環境</div><code>${esc(JSON.stringify(n.env))}</code>` : ""}
-        ${n.independence ? `<div class="small muted" style="margin:8px 0 2px">独立性</div><div class="small">${md(typeof n.independence === "string" ? n.independence : JSON.stringify(n.independence))}</div>` : ""}
+      reexec = `<h5>${T.reexec_h}</h5><div class="reexec">
+        <div class="row2"><span class="badge" style="background:${css("--muted")}">tier ${esc(n.tier || "?")}</span> ${off ? (rerunable(n) ? `<span class="badge" style="background:${statusColor("established")}">${T.reexec_off}</span>` : `<span class="badge" style="background:${statusColor("provisional")}" title="${esc((n._missing_inputs || []).join(", "))}">${T.reexec_nb}</span>`) : `<span class="badge" style="background:${statusColor("provisional")}">${T.reexec_full}</span>`} ${k4Badge(n.id)}</div>
+        <div class="small muted" style="margin:6px 0 2px">${T.reexec_cmd}</div><pre class="raw cmd" id="cmdbox">${esc(cmd)}</pre><button class="iconbtn small" id="copyCmd">${T.copy}</button>${PUBLIC && BINDER && rerunable(n) ? ` <a class="iconbtn small" href="${BINDER}" target="_blank" rel="noopener" title="${T.tour_binder_t}">Binder</a> <a class="iconbtn small" href="${CODESPACES}" target="_blank" rel="noopener">Codespaces</a>` : ""}
+        ${n.inputs ? `<div class="small muted" style="margin:8px 0 2px">${T.inputs_h}</div>${(Array.isArray(n.inputs) ? n.inputs : [n.inputs]).map(x => typeof x === "string" ? `<div class="inp"><code>${esc(x)}</code></div>` : `<div class="inp">${repoLink(x.ref || x.path || "")}<div class="sha">${x.sha256 ? `<code>${esc(x.sha256)}</code> <span class="muted">(${esc(x.sha_kind || "")})</span>` : `<span class="muted">${T.no_sha}</span>`}${x.sha_verified ? ` <span class="badge" style="background:${x.sha_verified === "verified" ? statusColor("established") : statusColor("provisional")}">${esc(x.sha_verified)}</span>` : ""}</div></div>`).join("")}` : ""}
+        ${n.expected ? `<div class="small muted" style="margin:8px 0 2px">${T.expected_h}</div><div class="vals"><table>${(Array.isArray(n.expected) ? n.expected : [n.expected]).map(x => `<tr><td>${esc(x.name || "")}</td><td><code>${esc(typeof x.value === "object" ? JSON.stringify(x.value) : x.value)}</code>${x.tolerance ? ` <span class="muted">${T.tol} ${esc(x.tolerance)}</span>` : ""}</td></tr>`).join("")}</table></div>` : ""}
+        ${r ? `<div class="small muted" style="margin:8px 0 2px">${T.k4_h}</div><div class="vals"><table><tr><td>status</td><td><b>${esc(r.status)}</b></td></tr>${r.got ? `<tr><td>got</td><td><code>${esc(r.got)}</code></td></tr><tr><td>want</td><td><code>${esc(r.want)}</code></td></tr>` : ""}${r.note ? `<tr><td>note</td><td>${esc(r.note)}</td></tr>` : ""}</table></div>` : ""}
+        ${n.env ? `<div class="small muted" style="margin:8px 0 2px">${T.env_h}</div><code>${esc(JSON.stringify(n.env))}</code>` : ""}
+        ${n.independence ? `<div class="small muted" style="margin:8px 0 2px">${T.indep_h}</div><div class="small">${md(typeof n.independence === "string" ? n.independence : JSON.stringify(n.independence))}</div>` : ""}
       </div>`;
     } else if (n.type === "Evidence") {
       const xs = [...new Set([...(n.grounded_in || []), ...n._in.filter(i => i.rel === "verifies").map(i => i.from)])].filter(x => byId.has(x));
-      reexec = `<h5>この証拠を再実行で確かめる実行単位</h5>${xs.length ? xs.map(x => { const X = byId.get(x); const rec = (n.grounded_in || []).includes(x) && (X.verifies || []).includes(n.id); return `<div style="margin:3px 0">${chip(x)} <span class="badge" style="background:${css("--muted")}">${esc(X.tier || "?")}</span> ${k4Badge(x)} ${rec ? '<span title="grounded_in と verifies が両方向に記録されている" style="color:var(--accent);font-weight:700">⇄ 双方向</span>' : ""}</div>`; }).join("") : '<div class="hint">—</div>'}`;
+      reexec = `<h5>${T.ev_units_h}</h5>${xs.length ? xs.map(x => { const X = byId.get(x); const rec = (n.grounded_in || []).includes(x) && (X.verifies || []).includes(n.id); return `<div style="margin:3px 0">${chip(x)} <span class="badge" style="background:${css("--muted")}">${esc(X.tier || "?")}</span> ${k4Badge(x)} ${rec ? `<span title="${T.bidir_t}" style="color:var(--accent);font-weight:700">${T.bidir}</span>` : ""}</div>`; }).join("") : '<div class="hint">—</div>'}`;
     }
     const statu = (prov.statu || []).map(s => PUBLIC ? `STATU ${esc(s)}` : `<a href="${REPO}/tree/main/.bus/STATU/outbox" target="_blank" rel="noopener" title="outbox を開く">STATU ${esc(s)}</a>`).join(" ");
     const prs = (prov.pr || []).map(p => prLink(p)).join(" ");
-    const lineage = [...(n.supersedes ? [["置換する（旧）", n.supersedes]] : []), ...(n.superseded_by ? [["置換された（新）", n.superseded_by]] : []), ...(n.promoted_to ? [["昇格先", n.promoted_to]] : [])];
+    const lineage = [...(n.supersedes ? [[T.sup_old, n.supersedes]] : []), ...(n.superseded_by ? [[T.sup_new, n.superseded_by]] : []), ...(n.promoted_to ? [[T.promoted, n.promoted_to]] : [])];
     host.innerHTML = `<div class="top"><div class="nav"><button class="iconbtn" id="iBack" ${canBack ? "" : "disabled"} title="戻る">←</button><button class="iconbtn" id="iFwd" ${canFwd ? "" : "disabled"} title="進む">→</button><span class="sp"></span>
         <button class="iconbtn" id="iGraph" title="このノードを中心にグラフ">◎ グラフ</button><button class="iconbtn" id="iLine" title="研究線ビュー">≡ 研究線</button><button class="iconbtn" id="iCopy" title="このノードへのリンクをコピー">⧉</button><button class="iconbtn" id="iClose" title="閉じる">✕</button></div>
       <div class="ident">${badgeType(n)}${badgeStatus(n)}${badgeLine(n._line)}<code>${esc(n.id)}</code><span>${esc(n._date)}</span></div><div class="title">${esc(n.label)}</div>
       <div class="trail">${state.trail.map((t, i) => `<a data-node="${t}" style="${i === state.trailPos ? "color:var(--ink);font-weight:700" : ""}">${esc(t)}</a>${i < state.trail.length - 1 ? '<span class="sep">›</span>' : ""}`).join("")}</div></div>
     <div class="bd">
-      ${n.statement ? `<div class="stmt${n.statement.length > 700 ? " clamp" : ""}" id="stmt">${md(n.statement)}</div>${n.statement.length > 700 ? `<button class="iconbtn small" id="stmtMore" style="margin-top:4px">全文を表示（${fmtN(n.statement.length)} 字）</button>` : ""}` : ""}
+      ${n.statement ? `<div class="stmt${n.statement.length > 700 ? " clamp" : ""}" id="stmt">${md(n.statement)}</div>${n.statement.length > 700 ? `<button class="iconbtn small" id="stmtMore" style="margin-top:4px">${T.more}（${fmtN(n.statement.length)} ${T.chars}）</button>` : ""}` : ""}
+      ${histHtml}
       ${n.type === "ExecutionUnit" ? reexec : ""}
-      ${lineage.length ? `<h5>系譜</h5>${lineage.map(([l, id]) => `<div><span class="hint">${l}:</span> ${(Array.isArray(id) ? id : [id]).map(chip).join("")}</div>`).join("")}` : ""}
-      <h5>根拠の鎖 — 登録 → 主張 → 証拠 → 実行 → 教訓</h5><div class="chain" id="chain"></div>
+      ${lineage.length ? `<h5>${T.lineage_h}</h5>${lineage.map(([l, id]) => `<div><span class="hint">${l}:</span> ${(Array.isArray(id) ? id : [id]).map(chip).join("")}</div>`).join("")}` : ""}
+      <h5>${T.chain_h}</h5><div class="chain" id="chain"></div>
       ${n.type !== "ExecutionUnit" ? reexec : ""}
-      <h5>近傍（クリックで移動）</h5><div class="ego" id="ego"></div>
-      ${fields.length ? `<h5>フィールド</h5><div class="kv">${fields.join("")}</div>` : ""}
-      <div class="links"><h5>出るリンク <span class="muted">${n._out.length}</span></h5>${linksHtml(outG, "out")}<h5>入るリンク（逆リンク） <span class="muted">${n._in.length}</span></h5>${linksHtml(inG, "in")}</div>
-      ${arts ? `<h5>成果物（artifacts）</h5>${arts}` : ""}
-      <h5>来歴（prov）</h5><div class="kv"><div class="k">主張者</div><div class="v">${esc(prov.asserted_by || "")}</div><div class="k">受入</div><div class="v">${esc(prov.accepted_by || "—")}</div><div class="k">日付</div><div class="v">${esc(prov.date || "")}</div>${statu ? `<div class="k">STATU</div><div class="v">${statu}</div>` : ""}${prs ? `<div class="k">PR</div><div class="v">${prs}</div>` : ""}<div class="k">可視性</div><div class="v">${esc(prov.visibility || "")}</div><div class="k">記録</div><div class="v">${PUBLIC ? `<code>${esc(n._src)}</code> <span class="muted small">（非公開リポジトリ内。抜粋は kb/nodes.json に同梱）</span>` : `<a href="${REPO}/blob/main/${esc(n._src)}" target="_blank" rel="noopener"><code>${esc(n._src)}</code></a>`}</div>${PUBLIC ? `<div class="k">単体ページ</div><div class="v"><a href="n/${esc(n.id)}.html" target="_blank" rel="noopener">n/${esc(n.id)}.html</a> · <a href="n/${esc(n.id)}.json" target="_blank" rel="noopener">JSON-LD</a>${SITE ? ` · <span class="muted small">引用用 URL:</span> <code class="small">${esc(SITE)}/n/${esc(n.id)}.html</code>` : ""}</div>` : ""}</div>
-      <details class="sec" style="margin-top:12px"><summary>生の JSON<span class="n"></span></summary><pre class="raw">${esc(JSON.stringify(stripDerived(n), null, 1))}</pre></details>
+      <h5>${T.ego_h}</h5><div class="ego" id="ego"></div>
+      ${fields.length ? `<h5>${T.fields_h}</h5><div class="kv">${fields.join("")}</div>` : ""}
+      <div class="links"><h5>${T.out_h} <span class="muted">${n._out.length}</span></h5>${linksHtml(outG, "out")}<h5>${T.in_h} <span class="muted">${n._in.length}</span></h5>${linksHtml(inG, "in")}</div>
+      ${arts ? `<h5>${T.arts_h}</h5>${arts}` : ""}
+      <h5>${T.prov_h}</h5><div class="kv"><div class="k">${T.prov_by}</div><div class="v">${esc(prov.asserted_by || "")}</div><div class="k">${T.prov_acc}</div><div class="v">${esc(prov.accepted_by || "—")}</div><div class="k">${T.prov_date}</div><div class="v">${esc(prov.date || "")}</div>${statu ? `<div class="k">STATU</div><div class="v">${statu}</div>` : ""}${prs ? `<div class="k">PR</div><div class="v">${prs}</div>` : ""}<div class="k">${T.prov_vis}</div><div class="v">${esc(prov.visibility || "")}</div><div class="k">${T.prov_rec}</div><div class="v">${PUBLIC ? `<code>${esc(n._src)}</code> <span class="muted small">${T.prov_rec_note}</span>` : `<a href="${REPO}/blob/main/${esc(n._src)}" target="_blank" rel="noopener"><code>${esc(n._src)}</code></a>`}</div>${PUBLIC ? `<div class="k">${T.prov_page}</div><div class="v"><a href="n/${esc(n.id)}.html" target="_blank" rel="noopener">n/${esc(n.id)}.html</a> · <a href="n/${esc(n.id)}.json" target="_blank" rel="noopener">JSON-LD</a>${SITE ? ` · <span class="muted small">${T.prov_cite}</span> <code class="small">${esc(SITE)}/n/${esc(n.id)}.html</code>` : ""}</div>` : ""}</div>
+      <details class="sec" style="margin-top:12px"><summary>${T.raw_h}<span class="n"></span></summary><pre class="raw">${esc(JSON.stringify(stripDerived(n), null, 1))}</pre></details>
     </div>`;
-    const cc = $("#copyCmd"); if (cc) cc.onclick = () => { const t = $("#cmdbox").textContent; const done = () => { cc.textContent = "✓ コピーしました"; setTimeout(() => { cc.textContent = "⧉ コマンドをコピー"; }, 1200); }; if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, () => window.prompt("コマンド:", t)); else window.prompt("コマンド:", t); };
-    const sm = $("#stmtMore"); if (sm) sm.onclick = () => { $("#stmt").classList.toggle("clamp"); sm.textContent = $("#stmt").classList.contains("clamp") ? `全文を表示（${fmtN(n.statement.length)} 字）` : "折りたたむ"; };
+    const cc = $("#copyCmd"); if (cc) cc.onclick = () => { const t = $("#cmdbox").textContent; const done = () => { cc.textContent = T.copied; setTimeout(() => { cc.textContent = T.copy; }, 1200); }; if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, () => window.prompt(EN ? "command:" : "コマンド:", t)); else window.prompt(EN ? "command:" : "コマンド:", t); };
+    const sm = $("#stmtMore"); if (sm) sm.onclick = () => { $("#stmt").classList.toggle("clamp"); sm.textContent = $("#stmt").classList.contains("clamp") ? `${T.more}（${fmtN(n.statement.length)} ${T.chars}）` : T.less; };
     $("#iBack").onclick = () => { if (canBack) { state.trailPos--; state.node = state.trail[state.trailPos]; render(); } };
     $("#iFwd").onclick = () => { if (canFwd) { state.trailPos++; state.node = state.trail[state.trailPos]; render(); } };
     $("#iClose").onclick = () => { state.node = null; state.inspOpen = false; render(); };
@@ -748,9 +889,9 @@
     for (const c of claims) { const C = byId.get(c); [...(C.supported_by || []), ...(C.refuted_by || [])].forEach(e => evs.add(e)); (C.registered_by || []).forEach(p => add("P", p)); C._in.filter(e => e.rel === "promoted_to").forEach(e => add("C", e.from)); }
     evs.forEach(e => { add("E", e); const E = byId.get(e); if (!E) return; (E.grounded_in || []).forEach(x => add("X", x)); E._in.filter(i => i.rel === "verifies").forEach(i => add("X", i.from)); (E.registered_by || []).forEach(p => add("P", p)); E._in.filter(i => i.rel === "taught_by").forEach(i => add("L", i.from)); });
     claims.forEach(c => byId.get(c)._in.filter(i => i.rel === "taught_by").forEach(i => add("L", i.from)));
-    const order = ["P", "C", "E", "X", "L"], names = { P: "登録", C: "主張・仮説", E: "証拠", X: "実行単位", L: "教訓" };
+    const order = ["P", "C", "E", "X", "L"], names = T.chain_names;
     const items = order.map(k => [...cols[k]].map(id => byId.get(id)).sort((a, b) => (a._date || "").localeCompare(b._date || "")));
-    if (!items.some(a => a.length)) { host.innerHTML = '<div class="hint">この型のノードには鎖を構成するリンクがありません。</div>'; return; }
+    if (!items.some(a => a.length)) { host.innerHTML = `<div class="hint">${T.chain_none}</div>`; return; }
     const rowsMax = Math.max(1, ...items.map(a => a.length)); const colW = Math.max(130, Math.min(170, Math.floor(((host.clientWidth || 440) - 24) / order.length))), rowH = 44, W = order.length * colW + 20, H = 30 + rowsMax * rowH;
     const svg = d3.select(host).html("").append("svg").attr("width", W).attr("height", H).attr("viewBox", `0 0 ${W} ${H}`);
     const pos = new Map();
