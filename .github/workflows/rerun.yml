@@ -50,11 +50,12 @@ jobs:
           else
             echo "kb/parts/ not present — keeping kb/nodes.json as committed"
           fi
-      - name: Rebuild derived pages from kb/nodes.json (n/<id>.html|json, kb/kb.jsonld, kb/backlinks.json, llms.txt, sitemap.txt, ro-crate-metadata.json)
-        run: python3 build_site.py
       # 「研究の現在地」1 枚もの（外部資源なし・SVG はサーバ側で描く）。抜粋から作れる面だけを出す。生成器は private と同一（kb_progress.py・kb_ledger.py・kb_g4.py）。
+      # build_site.py より先に走らせる: ro-crate-metadata.json が progress.html の sha256 を記録するので、古い progress.html の sha を拾わないため。
       - name: Rebuild progress.html (research status on one page)
         run: python3 kb_progress.py --nodes kb/nodes.json -o progress.html --title "研究の現在地 — bias-kb 公開抜粋" --note "公開抜粋から生成（記録層は非公開）"
+      - name: Rebuild derived pages from kb/nodes.json (n/<id>.html|json, kb/kb.jsonld, kb/backlinks.json, llms.txt, sitemap.txt, ro-crate-metadata.json)
+        run: python3 build_site.py
       # 機械可読の入口が壊れていないか（context の語が全部宣言されている・PROV が W3C IRI に展開される・dangling 0・双方向ペア・schema・派生ファイルの一致）
       - name: Check the public bundle (context coverage, PROV, dangling links, bidir pairs, schema, derived files)
         run: python3 check_site.py
