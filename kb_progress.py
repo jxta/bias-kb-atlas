@@ -202,6 +202,76 @@ def claims_table(nodes):
             + "<th>計</th></tr></thead><tbody>" + "".join(rows) + "</tbody></table>")
 
 
+SURV = [("alive", "確立", ("established", "registered-hit", "supported", "promoted")),
+        ("prov", "暫定・未決", ("provisional", "open")),
+        ("chal", "係争", ("challenged",)),
+        ("sup", "置換済み", ("superseded",)),
+        ("rej", "棄却", ("rejected", "rejected-recorded"))]
+SURV_OF = {st: k for k, _, sts in SURV for st in sts}
+
+
+def survival_svg(nodes, w=1040, hgt=230, pad_l=44, pad_r=12, pad_t=14, pad_b=42):
+    """主張の生存曲線 — その日その日に、主張がどの状態で何本あったか（ORDER 0015 §3-2）。
+
+    status_history が書かれていればその遷移を、無ければ prov.date の 1 点だけの
+    擬似履歴を使う（派生）。派生が多いうちは実質「作られた日ごとの現在の状態」で、
+    本当の遷移は必須化の日以降に積まれる。そのことは図の下に書く。
+    """
+    sys.path.insert(0, HERE)
+    import kb_g4
+    cl = [c for c in kb_g4.derive(nodes)["claims"] if c["type"] == "Claim"]
+    if not cl:
+        return "", {}
+    dates = sorted({h.get("date") for c in cl for h in c["history"] if h.get("date")})
+    if len(dates) < 2:
+        return "", {}
+    d0, d1 = dates[0], dates[-1]
+    span = max(_days(d0, d1), 1)
+    iw, ih = w - pad_l - pad_r, hgt - pad_t - pad_b
+    x = lambda d: pad_l + iw * _days(d0, d) / span
+
+    def at(c, d):
+        st = None
+        for h in c["history"]:
+            if (h.get("date") or "") <= d:
+                st = h.get("status")
+        return SURV_OF.get(st) if st else None
+
+    stack = {k: [] for k, _, _ in SURV}
+    mx = 1
+    for d in dates:
+        col = Counter(at(c, d) for c in cl)
+        col.pop(None, None)
+        tot = sum(col.values())
+        mx = max(mx, tot)
+        acc = 0
+        for k, _, _ in SURV:
+            acc += col.get(k, 0)
+            stack[k].append(acc)
+    y = lambda v: pad_t + ih * (1 - v / mx)
+    o = [f'<svg viewBox="0 0 {w} {hgt}" width="100%" role="img" aria-label="主張の生存曲線">']
+    for v in (0, mx // 2, mx):
+        o.append(f'<line class="grid" x1="{pad_l}" y1="{y(v):.1f}" x2="{w-pad_r}" y2="{y(v):.1f}"/>'
+                 f'<text class="tick" x="{pad_l-6}" y="{y(v)+4:.1f}" text-anchor="end">{v}</text>')
+    prev = [0] * len(dates)
+    for k, _, _ in SURV:
+        cur = stack[k]
+        pts = " ".join(f"{x(d):.1f},{y(v):.1f}" for d, v in zip(dates, cur))
+        back = " ".join(f"{x(d):.1f},{y(v):.1f}" for d, v in zip(reversed(dates), reversed(prev)))
+        o.append(f'<polygon class="sv {k}" points="{pts} {back}"/>')
+        prev = cur
+    o.append(f'<text class="tick" x="{pad_l}" y="{hgt-24}">{_esc(d0)}</text>'
+             f'<text class="tick" x="{w-pad_r}" y="{hgt-24}" text-anchor="end">{_esc(d1)}</text>')
+    lx = pad_l
+    for k, ja, _ in SURV:
+        o.append(f'<rect class="sv {k}" x="{lx}" y="{hgt-14}" width="10" height="10"/>'
+                 f'<text class="tick" x="{lx+14}" y="{hgt-5}">{_esc(ja)}</text>')
+        lx += 26 + 7.2 * len(ja)
+    o.append("</svg>")
+    nf = sum(1 for c in cl if c["history_source"] == "field")
+    return "\n".join(o), {"n": len(cl), "field": nf, "derived": len(cl) - nf}
+
+
 def debts(nodes):
     xs = [n for n in nodes.values() if n.get("type") == "ExecutionUnit"]
     es = [n for n in nodes.values() if n.get("type") == "Evidence"]
@@ -324,6 +394,8 @@ svg{display:block;overflow:visible}
 .pt{stroke:none}.pt.inst{fill:var(--faint)}.pt.mech{fill:var(--ink)}
 .pt.susp{stroke:var(--ink);stroke-width:1.2;fill:#fff}
 .gb{fill:var(--faint)}
+.sv{stroke:#fff;stroke-width:.6}
+.sv.alive{fill:#111}.sv.prov{fill:#777}.sv.chal{fill:#aaa}.sv.sup{fill:#d0d0d0}.sv.rej{fill:#ececec}
 table{border-collapse:collapse;width:100%;font-size:13px}
 th{font-weight:500;text-align:left}
 .grid th,.grid td{border-bottom:1px solid var(--rule);padding:7px 8px}
@@ -369,6 +441,20 @@ def build(nodes, title, note, out):
         K.append(("研究線", len(real_dirs)))
     kpis = "".join(f'<div class=kpi><b>{v}</b><span>{_esc(k)}</span></div>' for k, v in K)
 
+    sv, svst = survival_svg(nodes)
+    if sv:
+        if svst["field"]:
+            note = (f"うち {svst['field']} 本は status_history がノードに書かれており、"
+                    f"{svst['derived']} 本は prov の日付から 1 点だけ補った派生。")
+        else:
+            note = "いまはすべて prov の日付から 1 点だけ補った派生（status_history はまだ 1 本も無い）。"
+        note += ("派生が多いうちは実質「作られた日ごとの現在の状態」で、"
+                 "本当の遷移は status_history が積まれてから見える。")
+        surv_section = ("<h2>主張の生存曲線 <span class=n>— 確立したものが、そのまま残っているか</span></h2>\n"
+                        f"<p class=lead>その日その日に、主張がどの状態で何本あったか（{svst['n']} 主張）。{note}</p>\n" + sv)
+    else:
+        surv_section = ""
+
     if real_dirs:
         lane_section = f"""<h2>研究線のレーン <span class=n>— 登録から判定まで</span></h2>
 <p class=lead>◇ は事前登録、記号は凍結判定。★ は予測が当たった判定、✗ は反証・不成立、⚠ は計器の失敗。点に触れると内容が出る。</p>
@@ -398,6 +484,8 @@ def build(nodes, title, note, out):
 
 <h2>主張の棚卸し <span class=n>— 言っていることは、いま確かめられるか</span></h2>
 {claims_table(nodes)}
+
+{surv_section}
 
 <h2>未払いの借り <span class=n>— 分かっているが、まだ払っていないもの</span></h2>
 {debts(nodes)}
