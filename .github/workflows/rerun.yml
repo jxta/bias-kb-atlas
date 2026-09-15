@@ -54,6 +54,14 @@ jobs:
       # build_site.py より先に走らせる: ro-crate-metadata.json が progress.html の sha256 を記録するので、古い progress.html の sha を拾わないため。
       - name: Rebuild progress.html (research status on one page)
         run: python3 kb_progress.py --nodes kb/nodes.json -o progress.html --title "研究の現在地 — bias-kb 公開抜粋" --note "公開抜粋から生成（記録層は非公開）"
+      # 生成時刻だけが違うなら commit 済みの progress.html を残す（build_site.py の前に決める: RO-Crate は「実際に commit されるファイル」の sha256 を記録する）
+      - name: Keep the committed progress.html when only the generation time changed
+        run: |
+          if git show HEAD:progress.html >/tmp/prev_progress.html 2>/dev/null; then
+            sed -E 's/生成 [0-9-]+ [0-9:]+Z//' /tmp/prev_progress.html >/tmp/a.html
+            sed -E 's/生成 [0-9-]+ [0-9:]+Z//' progress.html >/tmp/b.html
+            if cmp -s /tmp/a.html /tmp/b.html; then git checkout -- progress.html; echo "progress.html: only the timestamp changed — kept the committed one"; else echo "progress.html: content changed — will be committed"; fi
+          fi
       - name: Rebuild derived pages from kb/nodes.json (n/<id>.html|json, kb/kb.jsonld, kb/backlinks.json, llms.txt, sitemap.txt, ro-crate-metadata.json)
         run: python3 build_site.py
       # 機械可読の入口が壊れていないか（context の語が全部宣言されている・PROV が W3C IRI に展開される・dangling 0・双方向ペア・schema・派生ファイルの一致）
@@ -82,12 +90,6 @@ jobs:
           same = key(a) == key(b) and a.get('n_pass') == b.get('n_pass') and a.get('python') == b.get('python') and a.get('kb_generated_at') == b.get('kb_generated_at')
           sys.exit(0 if not same else 1)
           PY
-          fi
-          # progress.html は生成時刻だけの差分では commit しない（中身が変わったときだけ）
-          if git show HEAD:progress.html >/tmp/prev_progress.html 2>/dev/null; then
-            sed -E 's/生成 [0-9-]+ [0-9:]+Z//' /tmp/prev_progress.html >/tmp/a.html
-            sed -E 's/生成 [0-9-]+ [0-9:]+Z//' progress.html >/tmp/b.html
-            if cmp -s /tmp/a.html /tmp/b.html; then git checkout -- progress.html; fi
           fi
           git add -A n kb llms.txt sitemap.txt progress.html ro-crate-metadata.json
           if git diff --cached --quiet; then echo "nothing to commit"; exit 0; fi
