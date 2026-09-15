@@ -2,7 +2,8 @@
 """kb_site.py / build_site.py — 公開バンドルの「機械可読の入口」を kb/nodes.json から生成する（ORDER 0014 g0）。
 
   python3 build_site.py            # リポジトリ直下で。kb/nodes.json（と kb/context.jsonld, kb/schema.json）を読み、
-                                   # n/<id>.html, n/<id>.json, n/index.html, kb/kb.jsonld, kb/backlinks.json, llms.txt, sitemap.txt を書く
+                                   # n/<id>.html, n/<id>.json, n/index.html, kb/kb.jsonld, kb/backlinks.json, llms.txt, sitemap.txt,
+                                   # ro-crate-metadata.json（束の RO-Crate 1.1 記述）を書く
 
 private 側では knowledge/tools/kb_site.py として kb_atlas.py から呼ばれ、公開バンドルへは同じファイルが build_site.py として複製される
 （公開リポジトリの CI が push ごとに実行し、派生ファイルを再生成して commit する）。入力は kb/nodes.json だけで、出力は決定的
@@ -91,6 +92,29 @@ def node_page(n, meta, byid, site):
     if n.get("lmfdb_label"): kv("lmfdb_label", f"<code>{e(n['lmfdb_label'])}</code>")
     if n.get("sameAs"): kv("sameAs", " ".join(f'<a href="{e(s)}">{e(s)}</a>' if str(s).startswith("http") else e(str(s)) for s in as_list(n.get("sameAs"))))
     if n.get("notebook"): kv("notebook", f"<code>{e(n['notebook'])}</code>")
+    if n.get("direction"): kv("direction（研究線）", f"<code>{e(str(n['direction']))}</code>")
+    def flat(v, pre=""):
+        out = []
+        if isinstance(v, dict):
+            for k2, v2 in v.items(): out += flat(v2, pre + "." + k2 if pre else k2)
+        elif isinstance(v, list) and v and all(isinstance(x, (dict, list)) for x in v):
+            for i, v2 in enumerate(v): out += flat(v2, f"{pre}[{i}]")
+        else: out.append((pre, json.dumps(v, ensure_ascii=False) if isinstance(v, (dict, list)) else str(v)))
+        return out
+    def jtable(v):
+        return "<table class=\"in\">" + "".join(f"<tr><td><code>{e(a)}</code></td><td>{link(b) if b in byid else e(b)}</td></tr>" for a, b in flat(v)) + "</table>"
+    if n.get("status_history"):
+        hist = n["status_history"] if isinstance(n["status_history"], list) else [n["status_history"]]
+        kv("状態の履歴 (status_history)", "".join(f"<div><b>{e(str(h.get('status', '')))}</b> <span class=\"l\">{e(str(h.get('date', '')))}</span>{' · by ' + e(str(h['by'])) if h.get('by') else ''}{' · 証拠 ' + link(h['evidence']) if h.get('evidence') else ''}{' · 登録 ' + link(h['protocol']) if h.get('protocol') else ''}{' · PR ' + e(str(h['pr'])) if h.get('pr') else ''}{' · STATU ' + e(str(h['statu'])) if h.get('statu') else ''}{'<div class=l>' + e(str(h['reason'])) + '</div>' if h.get('reason') else ''}</div>" for h in hist if isinstance(h, dict)))
+    for key, ja in (("scope", "適用範囲 (scope)"), ("predicts", "予測 (predicts)"), ("measured_with", "計器 (measured_with)"), ("verdict", "判定 (verdict)"), ("ledger", "台帳 (ledger)"), ("convention", "規約 (convention)"), ("discriminants", "判別器 (discriminants)"), ("decision_table", "判定表 (decision_table)"), ("outcome_space", "結果空間 (outcome_space)"), ("null_model", "帰無モデル (null_model)"), ("sample", "標本 (sample)"), ("exposure", "暴露 (exposure)")):
+        if n.get(key) is not None:
+            v = n[key]
+            kv(ja, f'<div class="stmt">{ref_ids(v)}</div>' if isinstance(v, str) else jtable(v))
+    KNOWN = {"id", "type", "label", "statement", "status", "status_history", "prov", "definition", "counterpoints", "conventions", "convention", "direction", "scope", "predicts", "measured_with", "verdict", "ledger", "tier", "entry", "env", "seed", "expected", "inputs", "frozen", "measures", "values", "lmfdb_label", "sameAs", "independence", "notebook", "artifacts", "pre_named_killers", "derivation_hooks", "discriminants", "decision_table", "outcome_space", "null_model", "sample", "exposure",
+             "about", "quantities", "supported_by", "refuted_by", "registered_by", "derives_from", "supersedes", "superseded_by", "promoted_to", "related", "grounded_in", "supports", "refutes", "verifies", "taught_by", "constrains", "uses"}
+    other = [k for k in n if not k.startswith("_") and k not in KNOWN]
+    if other:  # 生成器が知らない欄も落とさない（schema の純加算で増えた欄を別の AI が読めるように）
+        kv("その他の欄", "".join(f"<div><code>{e(k)}</code>: {(f'<div class=stmt>{ref_ids(n[k])}</div>' if isinstance(n[k], str) else jtable(n[k]))}</div>" for k in other))
     k4 = (meta.get("k4") or {}).get(n["id"])
     if k4: kv("k4 再実行の記録", f"<b>{e(k4['status'])}</b>{' — got <code>' + e(k4['got']) + '</code> / want <code>' + e(k4['want']) + '</code>' if k4.get('got') else ''}{(' — ' + e(k4['note'])) if k4.get('note') else ''}")
     if n["type"] == "ExecutionUnit" and (n.get("env") or {}).get("offline"):
@@ -138,7 +162,7 @@ table.in td{{padding:1px 8px 1px 0}}pre{{white-space:pre-wrap;word-break:break-a
 .links{{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}}@media(max-width:700px){{.links{{grid-template-columns:1fr}}}}.grp{{margin:6px 0}}.rel{{font-weight:600;font-size:13px}}.stub{{color:#6b7280;border:1px dashed #9ca3af;border-radius:6px;padding:0 4px}}.bi{{color:#2563eb;font-weight:700}}
 nav a{{margin-right:14px}}footer{{margin-top:28px;color:#6b7280;font-size:12px}}</style></head>
 <body><main>
-<nav><a href="../">Atlas（トップ）</a><a href="{e(atlas)}">このノードを Atlas で開く</a><a href="{e(n['id'])}.json">JSON（JSON-LD）</a><a href="index.html">ノード一覧</a></nav>
+<nav><a href="../">Atlas（トップ）</a><a href="{e(atlas)}">このノードを Atlas で開く</a><a href="{e(atlas)}&amp;lang=en" hreflang="en">English UI</a><a href="{e(n['id'])}.json">JSON（JSON-LD）</a><a href="index.html">ノード一覧</a></nav>
 <div style="margin-top:12px"><span class="badge t">{e(TYPE_LETTER.get(n['type'], '?'))} {e(T_JA.get(n['type'], n['type']))}</span>{f'<span class="badge">{e(n["status"])}</span>' if n.get('status') else ''}<code>{e(n['id'])}</code> <span class="l">{e(n.get('_date', ''))}</span></div>
 <h1>{e(str(n.get('label') or ''))}</h1>
 <table class="kv">{''.join(rows)}</table>
@@ -181,7 +205,7 @@ def llms_txt(meta, graph, stubs, site):
 
 ## Start here
 
-- Site (interactive Atlas, hash routing `#v=<view>&node=<id>`): {S}/
+- Site (interactive Atlas, hash routing `#v=<view>&node=<id>`; add `&lang=en` for the English UI — guide, grounding, headings and the figure labels; node texts stay in Japanese): {S}/ · English: {S}/#v=guide&lang=en
 - One node, no JavaScript: {S}/n/<id>.html — machine-readable twin: {S}/n/<id>.json (JSON-LD, `@context` = {S}/kb/context.jsonld)
 - Whole excerpt as JSON-LD: {S}/kb/kb.jsonld (context embedded; `@graph` = raw record-layer nodes + redacted stubs)
 - Whole excerpt with derived fields (`_line`, `_in`, `_out`, `_deg`, `_stub`): {S}/kb/nodes.json (what the Atlas renders)
@@ -189,6 +213,9 @@ def llms_txt(meta, graph, stubs, site):
 - Node schema (JSON Schema 2020-12): {S}/kb/schema.json · JSON-LD context: {S}/kb/context.jsonld
 - Re-execution results from CI (latest run, written by `.github/workflows/rerun.yml`): {S}/kb/rerun-latest.json
 - Node index: {S}/n/index.html · sitemap: {S}/sitemap.txt
+- RO-Crate 1.1 description of this bundle (datasets with sha256, scripts, execution units as actions): {S}/ro-crate-metadata.json
+- Notebook that re-runs the bundled units and shows the table: {S}/rerun.ipynb (Binder: https://mybinder.org/v2/gh/{meta.get('public_repo', 'jxta/bias-kb-atlas')}/main?labpath=rerun.ipynb)
+- Research-status page (one page, no JavaScript; claim inventory, survival curve of claim statuses, unpaid debts, lessons): {S}/progress.html
 
 ## How to walk the graph
 
@@ -209,13 +236,78 @@ Units: {', '.join(xoff)}.{(' Declared offline but not re-executable from this bu
 ## Counts
 
 {', '.join(f'{t} {c}' for t, c in sorted(types.items()))}; claims {len(claims)} (status: {', '.join(f'{k} {v}' for k, v in sorted(collections.Counter(c.get('status') for c in claims).items()))}); redacted stubs {len(stubs)}.
-
+{record_layer_counts(meta)}
 ## Optional
 
 - Human guide (Japanese) with the figure of the mechanism: {S}/#v=guide · README: https://github.com/{meta.get('public_repo', 'jxta/bias-kb-atlas')}#readme
 - Interpretation rule for `k4` results: PASS = re-executed and matched the recorded expected value; PENDING = not re-executed in this environment; MISMATCH/ERR = please open an issue.
 """
 
+
+
+def record_layer_counts(meta):
+    """記録層全体の規模（数だけ）。抜粋は規則で固定なので、研究の進展は記録層の数で示す（内容は出さない）。"""
+    F = meta.get("full_stats") or {}
+    if not F.get("types"): return ""
+    T = F["types"]; g = F.get("grounding") or {}; b = F.get("bidir_pairs") or {}; k = F.get("k4") or {}; p = F.get("protocols") or {}
+    cs = F.get("claim_status") or {}
+    daily = F.get("daily") or []
+    return (f"Record layer behind this excerpt (private, counts only, as of {meta.get('generated_at', '')[:10]}): {sum(T.values())} nodes — "
+            f"{', '.join(f'{t} {T[t]}' for t in sorted(T))}. Claims {g.get('claims', 0)}: {g.get('structural', 0)} have a chain to an execution unit, "
+            f"{g.get('quick', 0)} to an accept/spot unit; claim status {', '.join(f'{k2} {v}' for k2, v in sorted(cs.items()))}. "
+            f"Evidence ⇄ execution pairs written in both directions {b.get('bidir', 0)}/{b.get('pairs', 0)}. Pre-registrations frozen {p.get('frozen', 0)}/{p.get('n', 0)}. "
+            f"k4 offline re-run {k.get('offline_pass', 0)}/{k.get('offline_run', 0)} PASS, {k.get('pending', 0)} full-tier units pending. "
+            f"Claims/hypotheses with a status history {F.get('status_history', 0)}. Nodes added per day: {', '.join(f'{d} +{n}' for d, n in daily[-7:])} (last 7 days with additions).\n")
+
+
+def ro_crate(outdir, graph, meta, site):
+    """束の RO-Crate 1.1 記述（ro-crate-metadata.json）。同梱ファイル（sha256 付き）・スクリプト・offline 実行単位（CreateAction）・主張（CreativeWork）。"""
+    import hashlib
+    S = (site + "/") if site else "./"
+    ents = []
+    ents.append({"@id": "ro-crate-metadata.json", "@type": "CreativeWork", "conformsTo": {"@id": "https://w3id.org/ro/crate/1.1"}, "about": {"@id": "./"}})
+    root = {"@id": "./", "@type": "Dataset", "name": "bias-kb Atlas — public excerpt (claims grounded in re-executable evidence)",
+            "description": f"{len(graph)} nodes selected by rule from a record layer of {meta.get('stats', {}).get('full_n', '?')} nodes ({meta.get('repo', '')}, ref {meta.get('source_ref', '')}); frozen inputs of the offline execution units are bundled and re-executed by rerun.py.",
+            "datePublished": (meta.get("generated_at") or "")[:10], "license": {"@id": "https://github.com/" + (meta.get("public_repo") or "jxta/bias-kb-atlas")},
+            "url": S, "hasPart": [], "mentions": []}
+    ents.append(root)
+    files = {}
+    def file_ent(path, role=None):
+        if path in files: return files[path]
+        fp = os.path.join(outdir, path)
+        ent = {"@id": path, "@type": "File", "name": os.path.basename(path)}
+        if os.path.exists(fp):
+            data = open(fp, "rb").read(); ent["contentSize"] = str(len(data)); ent["sha256"] = hashlib.sha256(data).hexdigest()
+            ent["encodingFormat"] = "application/json" if path.endswith(".json") else "text/x-python" if path.endswith(".py") else "text/plain"
+        if role: ent["description"] = role
+        files[path] = ent; ents.append(ent); root["hasPart"].append({"@id": path}); return ent
+    for pth in ["kb/nodes.json", "kb/kb.jsonld", "kb/context.jsonld", "kb/schema.json", "kb/backlinks.json", "kb/rerun-latest.json", "llms.txt", "rerun.py", "rerun.ipynb", "progress.html"]:
+        if os.path.exists(os.path.join(outdir, pth)): file_ent(pth)
+    byid = {n["id"]: n for n in graph}
+    for x in graph:
+        if x["type"] != "ExecutionUnit" or not (x.get("env") or {}).get("offline"): continue
+        objs = []
+        for inp in x.get("inputs") or []:
+            ref = inp.get("ref") if isinstance(inp, dict) else None
+            if not ref or str(ref).startswith("annex"): continue
+            fe = file_ent(ref, "frozen input of " + x["id"])
+            if inp.get("sha256"): fe["sha256_recorded"] = inp["sha256"]
+            objs.append({"@id": ref})
+        act = {"@id": "#" + x["id"], "@type": "CreateAction", "name": x.get("label") or x["id"], "identifier": x["id"],
+               "description": f"tier {x.get('tier')}; entry: {x.get('entry')}", "instrument": {"@id": "rerun.py"}, "object": objs,
+               "result": [{"@type": "PropertyValue", "name": e2.get("name"), "value": e2.get("value") if isinstance(e2.get("value"), (str, int, float)) else json.dumps(e2.get("value"), ensure_ascii=False)} for e2 in (x.get("expected") or []) if isinstance(e2, dict)],
+               "url": f"{S}n/{x['id']}.html", "sameAs": f"{S}n/{x['id']}.json"}
+        r = (meta.get("k4") or {}).get(x["id"])
+        if r: act["actionStatus"] = "https://schema.org/CompletedActionStatus" if r.get("status") == "PASS" else "https://schema.org/PotentialActionStatus"
+        if not x.get("_bundled"): act["disambiguatingDescription"] = "declared offline in the record layer, but a frozen input is not bundled here (rerun.py: NOT-BUNDLED)"
+        ents.append(act); root["mentions"].append({"@id": "#" + x["id"]})
+    for c in graph:
+        if c["type"] != "Claim": continue
+        ents.append({"@id": "#" + c["id"], "@type": "CreativeWork", "identifier": c["id"], "name": c.get("label") or c["id"], "creativeWorkStatus": c.get("status"),
+                     "url": f"{S}n/{c['id']}.html", "sameAs": f"{S}n/{c['id']}.json", "isBasedOn": [{"@id": f"{S}n/{ev}.json"} for ev in as_list(c.get("supported_by")) if ev in byid]})
+        root["mentions"].append({"@id": "#" + c["id"]})
+    json.dump({"@context": "https://w3id.org/ro/crate/1.1/context", "@graph": ents}, open(os.path.join(outdir, "ro-crate-metadata.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    return len(ents)
 
 
 def build_site(outdir, graph, stubs, meta, site):
@@ -246,7 +338,7 @@ def build_site(outdir, graph, stubs, meta, site):
     groups = collections.OrderedDict((t, [n for n in graph if n["type"] == t]) for t in TYPE_LETTER)
     idx = f"""<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ノード一覧 · bias-kb 公開抜粋</title>
 <style>body{{font:14px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Hiragino Sans","Noto Sans JP",sans-serif;color:#1f2937;margin:0;background:#fafafa}}main{{max-width:900px;margin:0 auto;padding:20px 18px 48px}}h2{{font-size:16px;margin:18px 0 6px}}li{{margin:2px 0}}.l{{color:#6b7280;font-size:12px}}code{{font-size:12.5px}}nav a{{margin-right:14px}}</style></head>
-<body><main><nav><a href="../">Atlas（トップ）</a><a href="../kb/kb.jsonld">kb/kb.jsonld</a><a href="../kb/nodes.json">kb/nodes.json</a><a href="../llms.txt">llms.txt</a></nav>
+<body><main><nav><a href="../">Atlas（トップ）</a><a href="../#v=guide&amp;lang=en" hreflang="en">English UI</a><a href="../progress.html">研究の現在地</a><a href="../kb/kb.jsonld">kb/kb.jsonld</a><a href="../kb/nodes.json">kb/nodes.json</a><a href="../ro-crate-metadata.json">RO-Crate</a><a href="../llms.txt">llms.txt</a></nav>
 <h1 style="font-size:20px">ノード一覧 — 公開抜粋 {len(graph)} ノード <span class="l">＋ 非公開スタブ {len(stubs)}</span></h1>
 <p class="l">記録層 {e(str(meta.get('stats', {}).get('full_n', '')))} ノード（{e(meta.get('source_ref', ''))}）から規則で抜粋。生成 {e(meta.get('generated_at', ''))}。各ページは JS なしで読め、同名の <code>.json</code>（JSON-LD）を持つ。</p>
 {''.join(f'<h2>{e(TYPE_LETTER[t])} {e(T_JA[t])}（{e(t)}） <span class="l">{len(ns)}</span></h2><ul>' + ''.join(f'<li><a href="{e(n["id"])}.html"><code>{e(n["id"])}</code></a> {e(str(n.get("label") or "")[:100])}{" <span class=l>" + e(n["status"]) + "</span>" if n.get("status") else ""}</li>' for n in ns) + '</ul>' for t, ns in groups.items() if ns)}
@@ -254,8 +346,9 @@ def build_site(outdir, graph, stubs, meta, site):
     open(os.path.join(ndir, "index.html"), "w", encoding="utf-8").write(idx)
     open(os.path.join(outdir, "llms.txt"), "w", encoding="utf-8").write(llms_txt(meta, graph, stubs, site))
     base = (site + "/") if site else ""
-    open(os.path.join(outdir, "sitemap.txt"), "w", encoding="utf-8").write("\n".join([base, base + "n/index.html", base + "llms.txt", base + "kb/kb.jsonld"] + [f"{base}n/{n['id']}.html" for n in graph]) + "\n")
-    print(f"build_site: n/ ({len(graph)} pages + index), kb/kb.jsonld, kb/context.jsonld, kb/backlinks.json, llms.txt, sitemap.txt; stubs={len(stubs)}")
+    open(os.path.join(outdir, "sitemap.txt"), "w", encoding="utf-8").write("\n".join([base, base + "n/index.html", base + "llms.txt", base + "kb/kb.jsonld", base + "progress.html", base + "ro-crate-metadata.json"] + [f"{base}n/{n['id']}.html" for n in graph]) + "\n")
+    n_ro = ro_crate(outdir, graph, meta, site)
+    print(f"build_site: n/ ({len(graph)} pages + index), kb/kb.jsonld, kb/context.jsonld, kb/backlinks.json, llms.txt, sitemap.txt, ro-crate-metadata.json ({n_ro} entities); stubs={len(stubs)}")
 
 
 
