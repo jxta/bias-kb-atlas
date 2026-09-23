@@ -206,6 +206,7 @@ def llms_txt(meta, graph, stubs, site):
 ## Start here
 
 - Site (interactive Atlas, hash routing `#v=<view>&node=<id>`; add `&lang=en` for the English UI — guide, grounding, headings and the figure labels; node texts stay in Japanese): {S}/ · English: {S}/#v=guide&lang=en
+- Research map (every research line with its milestones on a time axis, current position, next moves, direction layer, recent changes): {S}/#v=map · English: {S}/#v=map&lang=en
 - One node, no JavaScript: {S}/n/<id>.html — machine-readable twin: {S}/n/<id>.json (JSON-LD, `@context` = {S}/kb/context.jsonld)
 - Whole excerpt as JSON-LD: {S}/kb/kb.jsonld (context embedded; `@graph` = raw record-layer nodes + redacted stubs)
 - Whole excerpt with derived fields (`_line`, `_in`, `_out`, `_deg`, `_stub`): {S}/kb/nodes.json (what the Atlas renders)

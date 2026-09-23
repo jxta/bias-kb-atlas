@@ -18,6 +18,7 @@
 {"id":"C-~9df8de63fb","type":"Claim","label":"非公開の主張","_stub":true,"_k":"C","_line":"unassigned","_date":"","_out":[{"rel":"supported_by","to":"E-q8-note"},{"rel":"about","to":"O-q8-8t5-census"}],"_in":[],"_deg":2,"_src":""}
 {"id":"C-~cc3dce7737","type":"Claim","label":"非公開の主張","_stub":true,"_k":"C","_line":"unassigned","_date":"","_out":[{"rel":"supported_by","to":"E-q8-note"},{"rel":"about","to":"O-dihedral-artin-family"}],"_in":[],"_deg":2,"_src":""}
 {"id":"C-~c7897ab848","type":"Claim","label":"非公開の主張","_stub":true,"_k":"C","_line":"unassigned","_date":"","_out":[{"rel":"supported_by","to":"E-q8-note"}],"_in":[],"_deg":1,"_src":""}
+{"id":"L-~10557507a2","type":"Lesson","label":"非公開の教訓","_stub":true,"_k":"L","_line":"unassigned","_date":"","_out":[{"rel":"related","to":"L-byte-fidelity"}],"_in":[],"_deg":1,"_src":""}
 {"id":"L-~8d81f80c7b","type":"Lesson","label":"非公開の教訓","_stub":true,"_k":"L","_line":"unassigned","_date":"","_out":[],"_in":[{"rel":"taught_by","from":"L-direction-preregistration"}],"_deg":1,"_src":""}
 {"id":"O-~5142628b27","type":"Object","label":"非公開の対象","_stub":true,"_k":"O","_line":"unassigned","_date":"","_out":[{"rel":"related","to":"L-direction-preregistration"}],"_in":[],"_deg":1,"_src":""}
 {"id":"H-~980b933fef","type":"Hypothesis","label":"非公開の仮説","_stub":true,"_k":"H","_line":"unassigned","_date":"","_out":[{"rel":"related","to":"L-novelty-search-scope"},{"rel":"about","to":"O-fs-family"}],"_in":[],"_deg":2,"_src":""}

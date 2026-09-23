@@ -43,6 +43,13 @@
     how_h: "How to re-run", how1: "Run each unit’s <code>entry</code> in the repository root and compare with <code>expected</code>. All at once:", how2: "The re-run box of each execution-unit card shows the individual command, input sha256, expected values and the k4 record (got / want).", how3: (b, c) => ` Without a local Python, open the repository in <a href="${b}" target="_blank" rel="noopener">Binder</a> (JupyterLab in the browser) or <a href="${c}" target="_blank" rel="noopener">GitHub Codespaces</a> and run the same commands.`,
     ci_h: "Latest CI re-run", ci_nb: "not bundled", ci_wait: "The latest CI re-run (kb/rerun-latest.json) will appear here after the next CI run.",
     gr_th: ["Claim", "Status", "Evidence", "Execution unit (tier · re-run)", "Artifact sha", "Registration", ""], verified: "verified", trace: "trace",
+    map: { tab: "Map", title: "Research map — where we are, and where next", sub: "One page for a human: every research line with its milestones (registrations ◇, verdicts ★✗●, claims ▲▽) on a time axis, the current position and the next moves, the direction layer, and what changed recently. Generated from the record layer — nothing is hand-written.",
+      fresh: (d, n) => `Record layer last appended <b>${d}</b>${n != null ? ` (${n} day${n === 1 ? "" : "s"} ago)` : ""}`, stale: "No node has been appended for several days: recent work may still live only in status reports and not yet be knowledge-ized (obligation R10).", stale_pub: "No node has been appended to the record layer for several days.",
+      latest_order: (no, d) => ` · latest order/ruling <b>${no}</b> (${d})`, window: "window", all: "all", days: "d", lanes_h: "Lines on a time axis", legend: "◇ registration (dashed = no verdict yet) · ★ predicted and hit · ● verdict · ✗ falsified · ⚠ instrument failed · ▲ claim established · ▽ rejected · ○ other status change · click a mark to open the node",
+      quiet: (n) => `Lines with no milestone in this window: ${n}`, cards_h: "Current position and next moves, per line", now: "Now", next: "Next moves", ledger: "Prediction ledger", instr: "instruments", mech: "mechanisms", asof: "as of",
+      est: "established / hits", rej: "rejected", openh: "open hypotheses", openp: "registered, not yet judged", lessons: "lessons", none: "—", nothing_open: "nothing pending", claims_line: (n, a, b, c) => `${n} claims: ${a} established · ${b} registered hits · ${c} rejected`, hyps_line: (o) => `${o} open hypotheses`, regs_line: (r, o) => `${r} registrations, ${o} not yet judged`,
+      last_ev: "latest milestone", no_ev: "no milestone recorded", program_h: "Direction layer", program_sub: "The root of the programme, the cross-cutting principles and the six research directions, with their current status.", principles: "Cross-cutting principles", directions: "Research directions", orders_h: "Orders and rulings (human → orchestrator)", orders_sub: "The directive stream in the private repository — what was ordered, when. Titles only.", ruling: "ruling", order: "order",
+      changed_h: "What changed recently", new7: "added in the last 7 days", new30: "added in the last 30 days", trans: "status transitions (30 days)", no_change: "none", private_h: "Private lines (counts only)", private_sub: "These research lines are outside the public excerpt by rule; only their size is shown.", goto_line: "line view", goto_ground: "grounding", last: "last" },
     line_view_t: "go to the research-line view",
   } : {
     tabs: { guide: "案内", grounding: "接地", atlas: "俯瞰", lines: "研究線", timeline: "時間", graph: "グラフ", lessons: "教訓", protocols: "登録・判定", table: "表" },
@@ -81,6 +88,13 @@
     how_h: "再実行のしかた", how1: "各実行単位の <code>entry</code> をリポジトリ直下で実行し、<code>expected</code> と比べる。まとめて走らせるには:", how2: "実行単位カードの「再実行」欄に、個別のコマンド・入力の sha256・期待値・k4 の記録（got / want）を示す。", how3: (b, c) => ` 手元に Python が無ければ <a href="${b}" target="_blank" rel="noopener">Binder</a>（ブラウザ内 JupyterLab）か <a href="${c}" target="_blank" rel="noopener">GitHub Codespaces</a> でリポジトリを開いて同じコマンドを実行できる。`,
     ci_h: "CI の最終再実行", ci_nb: "未同梱", ci_wait: "CI の最終再実行結果（kb/rerun-latest.json）は次回の CI 実行後にここへ出る。",
     gr_th: ["主張", "状態", "証拠", "実行単位（tier・再実行）", "成果物 sha", "登録", ""], verified: "実照合", trace: "辿る",
+    map: { tab: "地図", title: "研究の地図 — いまどこにいて、次はどこへ", sub: "人間が 1 頁で見るための面。研究線ごとの節目（登録 ◇・判定 ★✗●・主張 ▲▽）を時間軸に並べ、線ごとの現在地と次の一手、方向層、直近の変化を出す。すべて記録層から生成（手書きの文はない）。",
+      fresh: (d, n) => `記録層の最終追記 <b>${d}</b>${n != null ? `（${n} 日前）` : ""}`, stale: "数日以上ノードが追記されていない。直近の研究は STATU 報告に留まり、まだ知識化（R10）されていない可能性がある。", stale_pub: "記録層に数日以上ノードが追記されていない。",
+      latest_order: (no, d) => ` · 最新の指示・裁定 <b>${no}</b>（${d}）`, window: "窓", all: "全期間", days: "日", lanes_h: "研究線の時間軸", legend: "◇ 登録（点線＝未判定）・★ 予測が当たった判定・● 判定・✗ 反証・⚠ 計器の失敗・▲ 主張の確立・▽ 棄却・○ その他の状態変更・印をクリックでノードを開く",
+      quiet: (n) => `この窓に節目のない線: ${n}`, cards_h: "線ごとの現在地と次の一手", now: "現在地", next: "次の一手", ledger: "予測台帳", instr: "計器", mech: "機構", asof: "時点",
+      est: "確立・登録的中", rej: "棄却", openh: "開いた仮説", openp: "登録済み・未判定", lessons: "教訓", none: "—", nothing_open: "保留なし", claims_line: (n, a, b, c) => `主張 ${n}（確立 ${a}・登録的中 ${b}・棄却 ${c}）`, hyps_line: (o) => `開いた仮説 ${o}`, regs_line: (r, o) => `登録 ${r}（未判定 ${o}）`,
+      last_ev: "直近の節目", no_ev: "節目の記録なし", program_h: "方向層", program_sub: "プログラムの根・横断原理・6 つの研究方向と、その現在の状態。", principles: "横断原理", directions: "研究方向", orders_h: "指示と裁定の流れ（人間 → 統率AI）", orders_sub: "private リポジトリの指示書（ORDER）と裁定の列 — いつ、何を指示したか。表題のみ。", ruling: "裁定", order: "指示",
+      changed_h: "直近の変化", new7: "7 日以内に追記", new30: "30 日以内に追記", trans: "状態の遷移（30 日）", no_change: "なし", private_h: "非公開の研究線（数だけ）", private_sub: "これらの研究線は規則で公開抜粋の外にある。規模だけを出す。", goto_line: "研究線ビュー", goto_ground: "接地", last: "最終" },
     line_view_t: "研究線ビューへ",
   };
   // 図（docs/overview.svg）のラベル: 日本語 → 英語。lang=en のとき <text> の中身を置き換える（SVG 自体は変えない）
@@ -136,7 +150,7 @@
 
   // ------------------------------------------------------------------ state & routing
   const allDates = [...new Set(NODES.map(n => n._date).filter(Boolean))].sort();
-  const defaultView = () => META.profile === "public-grounding" ? ((META.guide && META.guide.rows && META.guide.rows.length) ? "guide" : "grounding") : "atlas";
+  const defaultView = () => META.profile === "public-grounding" ? ((META.guide && META.guide.rows && META.guide.rows.length) ? "guide" : "grounding") : (META.map && META.map.lanes ? "map" : "atlas");
   const state = {
     view: defaultView(), line: null, node: null, trail: [], trailPos: -1,
     f: { types: new Set(TYPES), statuses: new Set([...STATUSES, "none"]), lines: new Set(LINES.map(l => l.id)), tiers: new Set(["full", "accept", "spot", "none"]), d0: 0, d1: allDates.length - 1, actors: new Set(["統率", "meta", "other"]) },
@@ -223,7 +237,8 @@
       if (state.view === "grounding") renderStage();
     }).catch(() => { });
   }
-  const VIEWS = [...(HAS_GUIDE ? [["guide", T.tabs.guide]] : []), ["grounding", T.tabs.grounding], ["atlas", T.tabs.atlas], ["lines", T.tabs.lines], ["timeline", T.tabs.timeline], ["graph", T.tabs.graph], ["lessons", T.tabs.lessons], ["protocols", T.tabs.protocols], ["table", T.tabs.table]];
+  const HAS_MAP = !!(META.map && META.map.lanes);
+  const VIEWS = [...(HAS_GUIDE ? [["guide", T.tabs.guide]] : []), ...(HAS_MAP ? [["map", T.map.tab]] : []), ["grounding", T.tabs.grounding], ["atlas", T.tabs.atlas], ["lines", T.tabs.lines], ["timeline", T.tabs.timeline], ["graph", T.tabs.graph], ["lessons", T.tabs.lessons], ["protocols", T.tabs.protocols], ["table", T.tabs.table]];
   $("#tabs").innerHTML = VIEWS.map(([k, l]) => `<button class="tab" data-v="${k}">${l}</button>`).join("");
   $("#tabs").addEventListener("click", e => { const b = e.target.closest(".tab"); if (b) go(b.dataset.v); });
   $("#btnFilters").onclick = () => { state.filtersOpen = !state.filtersOpen; layout(); };
@@ -372,7 +387,7 @@
   }
   function renderStage() {
     const stage = $("#stage"); stage.innerHTML = "";
-    ({ guide: viewGuide, grounding: viewGrounding, atlas: viewAtlas, lines: viewLines, timeline: viewTimeline, graph: viewGraph, lessons: viewLessons, protocols: viewProtocols, table: viewTable }[state.view] || viewAtlas)(stage);
+    ({ guide: viewGuide, map: viewMap, grounding: viewGrounding, atlas: viewAtlas, lines: viewLines, timeline: viewTimeline, graph: viewGraph, lessons: viewLessons, protocols: viewProtocols, table: viewTable }[state.view] || viewAtlas)(stage);
   }
 
   // ---------- 案内（この知識基盤のしくみ — 図と実例の対応） ----------
@@ -456,6 +471,103 @@
     stage.addEventListener("click", e => {
       const g = e.target.closest("[data-go]"); if (g) { e.stopPropagation(); go(g.dataset.go); return; }
       const b = e.target.closest("[data-trace]"); if (b) { e.stopPropagation(); open(b.dataset.trace); }
+    });
+  }
+
+  // ---------- 地図（研究の俯瞰） ----------
+  // meta.map は kb_atlas.research_map() が記録層から作る（節目・現在地・次の一手・方向層・ORDER・直近の変化）。ここは描くだけ。
+  const MARK = { reg: ["◇", "reg"], star: ["★", "star"], plain: ["●", "plain"], bad: ["✗", "bad"], instr: ["⚠", "instr"], est: ["▲", "est"], rej: ["▽", "rej"], st: ["○", "st"] };
+  const MARK_JA = { reg: "登録", star: "予測が当たった判定", plain: "判定", bad: "反証", instr: "計器の失敗", est: "主張の確立", rej: "棄却", st: "状態変更" };
+  const MARK_EN = { reg: "registration", star: "predicted and hit", plain: "verdict", bad: "falsified", instr: "instrument failed", est: "claim established", rej: "rejected", st: "status change" };
+  const fmtD = (d) => d ? (EN ? d.slice(5).replace("-", "/") : `${+d.slice(5, 7)}/${+d.slice(8, 10)}`) : "";
+  function viewMap(stage) {
+    const M = META.map; if (!M || !M.lanes) { viewAtlas(stage); return; }
+    const win = state.mapWin || 60;
+    const today = new Date(M.today + "T00:00:00Z");
+    const dayOf = (d) => new Date(d + "T00:00:00Z");
+    const inWin = (d) => win >= 9999 || (today - dayOf(d)) / 864e5 <= win;
+    const lanesAll = M.lanes; const lanes = lanesAll.filter(l => l.events.some(e => inWin(e.date)));
+    const quiet = lanesAll.filter(l => !lanes.includes(l));
+    const stale = M.stale_days != null && M.stale_days >= 3;
+    const latestOrder = M.orders && M.orders.length ? M.orders[M.orders.length - 1] : null;
+    const kp = (v, l) => `<div class="card kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`;
+    const lineL = (l) => EN ? `${esc(l.short)} <span class="muted small">${esc(l.label)}</span>` : esc(l.label);
+    const laneCard = (l) => {
+      const c = l.claims || {}, h = l.hyps || {};
+      const nC = Object.values(c).reduce((a, b) => a + b, 0), est = (c.established || 0), hit = (c["registered-hit"] || 0), rej = (c.rejected || 0) + (c["rejected-recorded"] || 0);
+      const oH = (h.open || 0) + (h.provisional || 0) + (h.challenged || 0);
+      const last = l.events.length ? l.events[l.events.length - 1] : null;
+      const lastV = [...l.events].reverse().find(e => e.t === "E") || null;
+      const lg = l.ledger || {};
+      const bar = (t) => t ? `<span class="lbar" title="${t.hit}/${t.n}"><i style="width:${Math.round(100 * t.hit / Math.max(1, t.n))}%"></i></span> ${t.hit}/${t.n}` : "—";
+      const chips = (ids) => ids.length ? ids.map(i => chip(i)).join("") : `<span class="muted small">${T.map.none}</span>`;
+      return `<div class="card mlane" id="ml-${esc(l.id)}"><h3 class="ct"><span class="sw" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:${lineColor(l.id)};margin-right:6px"></span>${lineL(l)} <span class="muted small">${l.n} ${T.rail_nodes} · ${T.map.last} ${esc(l.last)}</span>
+        <span class="right"><button class="iconbtn small" data-line="${esc(l.id)}">${T.map.goto_line} →</button></span></h3>
+        ${nC ? `<div class="bar">${["established", "registered-hit", "supported", "promoted", "provisional", "open", "challenged", "rejected", "rejected-recorded", "superseded"].filter(s => c[s]).map(s => `<i style="width:${100 * c[s] / nC}%;background:${statusColor(s)}" title="${esc(SJA[s] || s)} ${c[s]}"></i>`).join("")}</div>` : ""}
+        <div class="small" style="margin-top:6px">${T.map.claims_line(nC, est, hit, rej)} · ${T.map.hyps_line(oH)} · ${T.map.regs_line(l.verdicts.reg, l.open_p.length)}</div>
+        <div class="mrow"><b>${T.map.now}</b> ${lastV ? `${esc(fmtD(lastV.date))} <span class="mk ${lastV.mark}">${MARK[lastV.mark][0]}</span> ${esc(lastV.name || "")}${lastV.kn ? ` ${esc(lastV.kn)}` : ""} — ${chip(lastV.id)}` : last ? `${esc(fmtD(last.date))} <span class="mk ${last.mark}">${MARK[last.mark][0]}</span> ${chip(last.id)}` : `<span class="muted small">${T.map.no_ev}</span>`}</div>
+        ${l.ledger && (lg.instrument || lg.mechanism) ? `<div class="mrow"><b>${T.map.ledger}</b> ${T.map.instr} ${bar(lg.instrument)} · ${T.map.mech} ${bar(lg.mechanism)} <span class="muted small">(${T.map.asof} ${esc(fmtD(lg.as_of))})</span></div>` : ""}
+        <div class="mrow"><b>${T.map.next}</b> ${l.open_p.length || l.open_h.length ? `${l.open_p.length ? `<div class="small muted">${T.map.openp}</div>${chips(l.open_p)}` : ""}${l.open_h.length ? `<div class="small muted">${T.map.openh}</div>${chips(l.open_h)}` : ""}` : `<span class="muted small">${T.map.nothing_open}</span>`}</div>
+        <details class="sec"><summary>${T.map.est} <span class="n">${l.established.length}</span> · ${T.map.rej} <span class="n">${l.rejected.length}</span> · ${T.map.lessons} <span class="n">${l.lessons.length}</span></summary><div class="mrow"><div class="small muted">${T.map.est}</div>${chips(l.established)}<div class="small muted">${T.map.rej}</div>${chips(l.rejected)}<div class="small muted">${T.map.lessons}</div>${chips(l.lessons)}</div></details>
+      </div>`;
+    };
+    const P = M.program || {};
+    const stChip = (x) => `<span class="chip" data-node="${esc(x.id)}" tabindex="0" role="link"><span class="dot" style="background:${statusColor(x.status)}"></span><span class="id">${esc(x.id.replace(/^(C-principle-|H-dir-)/, ""))}</span><span class="t">${esc(short(x.label, 60))}</span><span class="badge" style="background:${statusColor(x.status)};margin-left:4px">${esc(SJA[x.status] || x.status || "")}</span></span>`;
+    const ordersHtml = M.orders && M.orders.length ? `<div class="card" style="padding:0;overflow:auto"><table class="tbl"><thead><tr><th>No</th><th>${T.prov_date}</th><th></th><th>${EN ? "title" : "表題"}</th></tr></thead><tbody>${[...M.orders].reverse().map(o => `<tr><td><code>${esc(o.no)}</code></td><td class="nowrap">${esc(o.date)}</td><td>${o.kind === "ruling" ? `<span class="badge" style="background:${css("--muted")}">${T.map.ruling}</span>` : ""}</td><td class="small">${esc(o.title)}</td></tr>`).join("")}</tbody></table></div>` : "";
+    const byLine = (ids) => { const g = new Map(); ids.forEach(i => { const n = byId.get(i); if (!n) return; const k = n._line; if (!g.has(k)) g.set(k, []); g.get(k).push(i); }); return [...g].sort((a, b) => b[1].length - a[1].length); };
+    const recent7 = M.recent["7"] || [], recent30 = M.recent["30"] || [];
+    const privLanes = M.private_lanes || [];
+    stage.innerHTML = `<div class="pad map">
+      <h2 class="vt">${T.map.title}</h2><p class="vsub">${T.map.sub}</p>
+      <div class="card${stale ? " pend" : ""}" style="margin-bottom:12px"><div class="small">${T.map.fresh(esc(M.full_record_max || M.record_max), M.stale_days)}${latestOrder ? T.map.latest_order(esc(latestOrder.no), esc(latestOrder.date)) : ""}${stale ? ` — <b>${PUBLIC ? T.map.stale_pub : T.map.stale}</b>` : ""}</div></div>
+      <div class="grid g4" style="margin-bottom:12px">${kp(fmtN(lanesAll.length), EN ? "research lines" : "研究線")}${kp(fmtN(lanesAll.reduce((a, l) => a + l.verdicts.reg, 0)), EN ? "registrations" : "登録")}${kp(fmtN(lanesAll.reduce((a, l) => a + l.verdicts.star, 0)) + `<span class="muted small"> / ${fmtN(lanesAll.reduce((a, l) => a + l.verdicts.star + l.verdicts.plain + l.verdicts.bad + l.verdicts.instr, 0))}</span>`, EN ? "★ hits / verdicts" : "★ 的中 / 判定")}${kp(fmtN(recent7.length) + `<span class="muted small"> / ${fmtN(recent30.length)}</span>`, EN ? "nodes added, 7 d / 30 d" : "追記 7 日 / 30 日")}</div>
+      <div class="card" style="margin-bottom:12px"><h3 class="ct">${T.map.lanes_h} <span class="seg" style="margin-left:10px">${[30, 60, 120, 9999].map(w => `<button data-win="${w}" class="${win === w ? "on" : ""}">${w === 9999 ? T.map.all : w + " " + T.map.days}</button>`).join("")}</span></h3><div id="mapLanes"></div><div class="small muted" style="margin-top:6px">${T.map.legend}</div>${quiet.length ? `<div class="small muted" style="margin-top:4px">${T.map.quiet(quiet.map(l => `<a data-line="${esc(l.id)}" style="cursor:pointer">${esc(l.short)}</a>`).join(EN ? ", " : "・"))}</div>` : ""}</div>
+      <h3 class="ct">${T.map.cards_h}</h3><div class="grid g2" style="margin-bottom:12px">${lanesAll.map(laneCard).join("")}</div>
+      ${privLanes.length ? `<div class="card" style="margin-bottom:12px"><h3 class="ct">${T.map.private_h}</h3><div class="small muted">${T.map.private_sub}</div><div class="small" style="margin-top:6px">${privLanes.map(l => `<span class="it"><span class="sw" style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${lineColor("dir-" + l.key)};margin-right:4px"></span>${esc(l.label)}: ${fmtN(l.n)} ${T.rail_nodes} · ${EN ? "claims" : "主張"} ${l.claims} · ${EN ? "registrations" : "登録"} ${l.protocols} · ${EN ? "last" : "最終"} ${esc(l.last)}</span>`).join("<br>")}</div></div>` : ""}
+      <div class="grid g2" style="margin-bottom:12px">
+        <div class="card"><h3 class="ct">${T.map.program_h}</h3><div class="small muted">${T.map.program_sub}</div>${P.root ? `<div class="mrow">${chip(P.root)}</div>` : ""}<div class="mrow"><b>${T.map.principles}</b><div>${(P.principles || []).map(stChip).join("") || T.map.none}</div></div><div class="mrow"><b>${T.map.directions}</b>${P.next ? ` ${chip(P.next)}` : ""}<div>${(P.directions || []).map(stChip).join("") || T.map.none}</div>${P.next_statement ? `<div class="small muted" style="margin-top:4px">${esc(short(P.next_statement, 200))}</div>` : ""}</div></div>
+        <div class="card"><h3 class="ct">${T.map.changed_h}</h3><div class="mrow"><b>${T.map.new7}</b> <span class="muted small">${recent7.length}</span><div>${recent7.length ? byLine(recent7).map(([ln, ids]) => `<div class="small"><span class="sw" style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${lineColor(ln)};margin-right:4px"></span>${esc((lineById.get(ln) || {}).short || ln)} ${ids.slice(0, 12).map(i => chip(i)).join("")}${ids.length > 12 ? `<span class="muted small"> +${ids.length - 12}</span>` : ""}</div>`).join("") : `<span class="muted small">${T.map.no_change}</span>`}</div></div>
+          <div class="mrow"><b>${T.map.new30}</b> <span class="muted small">${recent30.length}</span><div class="small">${byLine(recent30).map(([ln, ids]) => `<span class="it"><span class="sw" style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${lineColor(ln)};margin-right:3px"></span>${esc((lineById.get(ln) || {}).short || ln)} <b>${ids.length}</b></span>`).join(" · ") || T.map.no_change}</div></div>
+          <div class="mrow"><b>${T.map.trans}</b> <span class="muted small">${(M.changes || []).length}</span><div>${(M.changes || []).slice(0, 12).map(c => `<div class="small">${esc(fmtD(c.date))} ${chip(c.id)} <span class="badge" style="background:${statusColor(c.from)}">${esc(SJA[c.from] || c.from)}</span> → <span class="badge" style="background:${statusColor(c.to)}">${esc(SJA[c.to] || c.to)}</span>${c.reason ? `<div class="muted small" style="margin-left:14px">${esc(short(c.reason, 120))}</div>` : ""}</div>`).join("") || `<span class="muted small">${T.map.no_change}</span>`}</div></div></div>
+      </div>
+      ${ordersHtml ? `<div class="card" style="margin-bottom:12px"><h3 class="ct">${T.map.orders_h}</h3><div class="small muted" style="margin-bottom:6px">${T.map.orders_sub}</div>${ordersHtml}</div>` : ""}
+    </div>`;
+    stage.querySelectorAll("[data-win]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); state.mapWin = +b.dataset.win; render(); }));
+    drawLanes(stage.querySelector("#mapLanes"), lanes, win, today);
+  }
+  function drawLanes(host, lanes, win, today) {
+    if (!host) return; if (!lanes.length) { host.innerHTML = `<div class="hint">${T.map.no_ev}</div>`; return; }
+    const dayOf = (d) => new Date(d + "T00:00:00Z");
+    const allD = lanes.flatMap(l => l.events.map(e => dayOf(e.date)));
+    const x0 = win >= 9999 ? new Date(Math.min(...allD) - 2 * 864e5) : new Date(today - win * 864e5);
+    const W = host.clientWidth || 900, padL = 110, padR = 150, padT = 22, padB = 24;
+    const rowHs = lanes.map(l => { const m = d3.max(d3.rollup(l.events.filter(e => dayOf(e.date) >= x0), v => v.length, e => e.date).values()) || 1; return Math.min(96, Math.max(30, 12 * m + 10)); });
+    const rowY = rowHs.map((h, i) => padT + rowHs.slice(0, i).reduce((a, b) => a + b, 0) + h / 2);
+    const H = padT + padB + rowHs.reduce((a, b) => a + b, 0);
+    const x = d3.scaleUtc().domain([x0, new Date(+today + 864e5)]).range([padL, W - padR]);
+    const svg = d3.select(host).html("").append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("width", "100%").attr("role", "img");
+    svg.append("g").attr("transform", `translate(0,${padT - 6})`).call(d3.axisTop(x).ticks(Math.max(4, Math.min(12, Math.round((W - padL - padR) / 80)))).tickFormat(d3.utcFormat(EN ? "%m/%d" : "%-m/%-d"))).selectAll("text").style("font-size", "10px").style("fill", css("--muted"));
+    svg.selectAll(".domain, .tick line").attr("stroke", css("--line"));
+    svg.append("line").attr("x1", x(today)).attr("x2", x(today)).attr("y1", padT - 4).attr("y2", H - padB + 4).attr("stroke", css("--accent")).attr("stroke-dasharray", "3,3").attr("opacity", .7);
+    lanes.forEach((l, i) => {
+      const y = rowY[i];
+      svg.append("line").attr("x1", padL).attr("x2", W - padR).attr("y1", y).attr("y2", y).attr("stroke", css("--line"));
+      svg.append("rect").attr("x", 4).attr("y", y - 6).attr("width", 6).attr("height", 12).attr("rx", 2).attr("fill", lineColor(l.id));
+      const lab = svg.append("text").attr("x", 14).attr("y", y + 4).style("font-size", "11px").style("fill", css("--ink")).style("cursor", "pointer").text(short(EN ? l.short : l.label, 14)).attr("data-line", l.id);
+      lab.append("title").text(l.label);
+      const ev = l.events.filter(e => dayOf(e.date) >= x0);
+      const byDate = d3.groups(ev, e => e.date);
+      byDate.forEach(([d, arr]) => arr.forEach((e, j) => {
+        const dy = arr.length > 1 ? (j - (arr.length - 1) / 2) * 11 : 0;
+        const [g, cls] = MARK[e.mark] || MARK.plain;
+        const t = svg.append("text").attr("x", x(dayOf(d))).attr("y", y + dy + 4).attr("text-anchor", "middle").attr("class", "mmk " + cls + (e.open ? " open" : "")).style("cursor", "pointer").text(g).attr("data-node", e.id);
+        t.append("title").text(`${e.date} ${(EN ? MARK_EN : MARK_JA)[e.mark]}${e.name ? " · " + e.name : ""}${e.kn ? " " + e.kn : ""}\n${e.id}\n${(e.label || "").slice(0, 100)}`);
+        t.on("mouseover", (ev2) => showTT(`<b>${esc(e.id)}</b>${esc(short(e.label, 110))}<br><span style="opacity:.8">${esc(e.date)} · ${esc((EN ? MARK_EN : MARK_JA)[e.mark])}${e.name ? " · " + esc(e.name) : ""}${e.kn ? " " + esc(e.kn) : ""}</span>`, ev2)).on("mousemove", moveTT).on("mouseout", hideTT);
+      }));
+      const lastV = [...l.events].reverse().find(e => e.t === "E" && dayOf(e.date) >= x0);
+      const v = l.verdicts;
+      svg.append("text").attr("x", W - padR + 8).attr("y", y - 3).style("font-size", "10px").style("fill", css("--ink")).text(lastV ? short(lastV.name || "", 22) : "");
+      svg.append("text").attr("x", W - padR + 8).attr("y", y + 10).style("font-size", "9.5px").style("fill", css("--muted")).text(`◇${v.reg} ★${v.star} ●${v.plain} ✗${v.bad + v.instr}`);
     });
   }
 

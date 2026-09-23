@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-09-15T00:58:06Z",
+ "generated_at": "2026-09-23T00:01:04Z",
  "source": "index/kb.jsonld",
- "source_ref": "9742090",
- "source_commit_date": "2026-09-15",
+ "source_ref": "e1faddf4",
+ "source_commit_date": "2026-09-21",
  "version": "v1.0",
  "repo": "jxta/ai4math-lab",
  "stats": {
@@ -27,14 +27,14 @@
   "n": 100,
   "date_min": "2026-06-10",
   "date_max": "2026-08-25",
-  "full_n": 903,
-  "full_date_max": "2026-09-14",
-  "stubs": 68,
+  "full_n": 908,
+  "full_date_max": "2026-09-16",
+  "stubs": 69,
   "stub_types": {
    "Quantity": 3,
    "Claim": 27,
    "Hypothesis": 11,
-   "Lesson": 1,
+   "Lesson": 2,
    "Object": 24,
    "Evidence": 2
   }
@@ -516,13 +516,13 @@
  "full_stats": {
   "types": {
    "Claim": 151,
-   "Evidence": 177,
-   "Hypothesis": 48,
-   "Lesson": 113,
+   "Evidence": 178,
+   "Hypothesis": 49,
+   "Lesson": 115,
    "Object": 99,
    "Protocol": 90,
    "Quantity": 67,
-   "ExecutionUnit": 158
+   "ExecutionUnit": 159
   },
   "claim_status": {
    "established": 98,
@@ -537,7 +537,7 @@
    "open": 25,
    "promoted": 4,
    "supported": 8,
-   "rejected": 6,
+   "rejected": 7,
    "challenged": 4,
    "provisional": 1
   },
@@ -545,11 +545,11 @@
    "n": 90,
    "frozen": 90
   },
-  "lessons": 113,
+  "lessons": 115,
   "execution_units": {
-   "n": 158,
+   "n": 159,
    "tiers": {
-    "full": 96,
+    "full": 97,
     "spot": 13,
     "accept": 49
    },
@@ -561,10 +561,10 @@
    "quick": 27
   },
   "bidir_pairs": {
-   "pairs": 183,
-   "bidir": 167
+   "pairs": 184,
+   "bidir": 168
   },
-  "status_history": 6,
+  "status_history": 7,
   "k4": {
    "offline_pass": 9,
    "offline_run": 9,
@@ -730,7 +730,456 @@
    [
     "2026-09-14",
     4
+   ],
+   [
+    "2026-09-15",
+    4
+   ],
+   [
+    "2026-09-16",
+    1
    ]
+  ]
+ },
+ "map": {
+  "today": "2026-09-23",
+  "record_max": "2026-08-25",
+  "full_record_max": "2026-09-16",
+  "stale_days": 7,
+  "lanes": [
+   {
+    "id": "O-dihedral-artin-family",
+    "key": "L4",
+    "label": "\u2463 \u4e8c\u9762\u4f53\uff0fQ8\uff0fArtin",
+    "short": "Artin",
+    "n": 31,
+    "last": "2026-08-25",
+    "types": {
+     "C": 4,
+     "E": 5,
+     "L": 6,
+     "O": 4,
+     "P": 1,
+     "Q": 5,
+     "X": 6
+    },
+    "claims": {
+     "established": 3,
+     "registered-hit": 1
+    },
+    "hyps": {},
+    "active7": 0,
+    "active30": 1,
+    "events": [
+     {
+      "date": "2026-06-10",
+      "id": "C-thm71-q8-census",
+      "t": "C",
+      "mark": "est",
+      "name": "established",
+      "label": "Thm7.1 Q8 census \u516823 PASS"
+     },
+     {
+      "date": "2026-08-09",
+      "id": "P-q8-step2-w1",
+      "t": "P",
+      "mark": "reg",
+      "label": "ORDER_Q8_STEP2 w1 \u4e09\u5c64\u51cd\u7d50\uff0b\u4e8b\u524d\u767b\u9332\uff08\u5224\u5b9a\u5e2f [494,556]\u30fbW \u5c64\u4e88\u6e2c\uff09",
+      "open": false
+     },
+     {
+      "date": "2026-08-10",
+      "id": "C-q8-w-diagonal",
+      "t": "C",
+      "mark": "est",
+      "name": "registered-hit",
+      "label": "\u6570\u4f53 Q8 (8T5) \u306e\u89e3\u6790\u6e08\u5168\u500b\u4f53\u3067\u4e2d\u5fc3\u6d88\u6ec5\u21d4W=\u22121\uff08\u5b8c\u5168\u5bfe\u89d2\uff09"
+     },
+     {
+      "date": "2026-08-12",
+      "id": "C-deltac-identity",
+      "t": "C",
+      "mark": "est",
+      "name": "established",
+      "label": "Q8 \u0394_C \u53b3\u5bc6\u6052\u7b49\u5f0f\uff08\u7d50\u679c\u306f\u771f\u3001\u65b0\u898f\u6027\u306f\u4e3b\u5f35\u3057\u306a\u3044\uff09"
+     },
+     {
+      "date": "2026-08-13",
+      "id": "C-nonabelian-dictionary",
+      "t": "C",
+      "mark": "est",
+      "name": "established",
+      "label": "\u975e\u53ef\u63db\u8f9e\u66f8 |C|=|[G,G]|\uff08O-30\uff09"
+     }
+    ],
+    "ledger": null,
+    "established": [
+     "C-nonabelian-dictionary",
+     "C-deltac-identity",
+     "C-q8-w-diagonal",
+     "C-thm71-q8-census"
+    ],
+    "rejected": [],
+    "open_h": [],
+    "open_p": [],
+    "verdicts": {
+     "star": 0,
+     "bad": 0,
+     "instr": 0,
+     "plain": 0,
+     "reg": 1
+    },
+    "lessons": [
+     "L-verify-script-in-repo",
+     "L-byte-fidelity",
+     "L-population-definition",
+     "L-monitor-predicate-fragile"
+    ]
+   },
+   {
+    "id": "O-ff-q3-family",
+    "key": "L7",
+    "label": "\u2466 \u95a2\u6570\u4f53 census",
+    "short": "FF",
+    "n": 61,
+    "last": "2026-08-24",
+    "types": {
+     "C": 11,
+     "E": 8,
+     "H": 3,
+     "L": 5,
+     "O": 12,
+     "P": 3,
+     "Q": 7,
+     "X": 12
+    },
+    "claims": {
+     "established": 5,
+     "registered-hit": 4,
+     "rejected": 1,
+     "provisional": 1
+    },
+    "hyps": {
+     "promoted": 1,
+     "open": 2
+    },
+    "active7": 0,
+    "active30": 2,
+    "events": [
+     {
+      "date": "2026-08-04",
+      "id": "P-census-exec-a",
+      "t": "P",
+      "mark": "reg",
+      "label": "\u5168\u6570 census \u624b\u9806\uff08EXEC_A_v2\uff09",
+      "open": false
+     },
+     {
+      "date": "2026-08-08",
+      "id": "C-registered-prediction-method",
+      "t": "C",
+      "mark": "est",
+      "name": "established",
+      "label": "\u4e8b\u524d\u767b\u9332\u4e88\u6e2c\u304c2\u4f8b\u7684\u4e2d\uff08d11, d15\uff09"
+     },
+     {
+      "date": "2026-08-12",
+      "id": "C-1q-law",
+      "t": "C",
+      "mark": "est",
+      "name": "established",
+      "label": "1/q \u6cd5\u5247\uff08\u5883\u754c\u4f59\u5270\u306e\u4e3b\u6f38\u8fd1\uff09"
+     },
+     {
+      "date": "2026-08-12",
+      "id": "C-boundary-closedform",
+      "t": "C",
+      "mark": "est",
+      "name": "established",
+      "label": "\u5883\u754c O \u9805\u306e\u9589\u5f62\u5f0f\uff08Theorem 1\u30fb\u53b3\u5bc6\uff09"
+     },
+     {
+      "date": "2026-08-12",
+      "id": "C-cg-sequence",
+      "t": "C",
+      "mark": "est",
+      "name": "established",
+      "label": "c(g) \u6574\u6570\u5217\uff08Theorem 2\uff09"
+     },
+     {
+      "date": "2026-08-12",
+      "id": "P-o19-registration",
+      "t": "P",
+      "mark": "reg",
+      "label": "O-19 d=19 \u6c7a\u5b9a\u7684\u691c\u5b9a\u306e\u5b9f\u884c\u524d\u767b\u9332\uff08ORDER 0008 \u51cd\u7d50\uff09",
+      "open": false
+     },
+     {
+      "date": "2026-08-12",
+      "id": "P-registered-prediction",
+      "t": "P",
+      "mark": "reg",
+      "label": "\u4e8b\u524d\u767b\u9332\u4e88\u6e2c\u30d7\u30ed\u30c8\u30b3\u30eb\uff08register-then-verify\uff09",
+      "open": false
+     },
+     {
+      "date": "2026-08-13",
+      "id": "C-a1-mobius",
+      "t": "C",
+      "mark": "est",
+      "name": "established",
+      "label": "A_1 \u306e M\u00f6bius \u9589\u5f62\u5f0f\uff08\u00a75A \u53b3\u5bc6\u8a3c\u660e\uff09"
+     },
+     {
+      "date": "2026-08-13",
+      "id": "C-d19-sign-reversal",
+      "t": "C",
+      "mark": "est",
+      "name": "registered-hit",
+      "label": "d=19 \u3067\u5883\u754c\u8d85\u904e\u306e\u7b26\u53f7\u53cd\u8ee2\u3092\u5b9f\u884c\u524d\u767b\u9332\u3069\u304a\u308a\u7684\u4e2d\uff08n=6 \u554f\u984c\u306e\u5b9f\u9a13\u6c7a\u7740\uff09"
+     },
+     {
+      "date": "2026-08-13",
+      "id": "C-middle-law-false",
+      "t": "C",
+      "mark": "rej",
+      "name": "rejected",
+      "label": "\u4e2d\u592e\u4fc2\u6570\u5247\u306f\u507d\uff08\u81ea\u5df1\u53cd\u8a3c\uff09"
+     },
+     {
+      "date": "2026-08-13",
+      "id": "E-census-d19",
+      "t": "E",
+      "mark": "plain",
+      "name": "PASS",
+      "label": "census d=19 \u5b9f\u6e2c\uff08\u03a3\u5074\u8d85\u904e \u22122.4300e-05\u30fb\u767b\u9332\u5e2f\u5185 PASS\uff09",
+      "kn": ""
+     },
+     {
+      "date": "2026-08-13",
+      "id": "E-middle-e10",
+      "t": "E",
+      "mark": "plain",
+      "name": "middle-law FALSE (holds only e=2,6)",
+      "label": "\u4e2d\u592e\u4fc2\u6570\u5247 \u53cd\u4f8b\uff08-6024\u2260-5880\uff09",
+      "kn": ""
+     },
+     {
+      "date": "2026-08-23",
+      "id": "C-d11-registered-hit",
+      "t": "C",
+      "mark": "est",
+      "name": "registered-hit",
+      "label": "d11 \u767b\u9332\u4e88\u6e2c \u7684\u4e2d\uff08registered-hit\uff09"
+     },
+     {
+      "date": "2026-08-23",
+      "id": "C-d15-registered-hit",
+      "t": "C",
+      "mark": "est",
+      "name": "registered-hit",
+      "label": "d15 \u767b\u9332\u4e88\u6e2c \u7684\u4e2d\uff08registered-hit\uff09"
+     },
+     {
+      "date": "2026-08-23",
+      "id": "C-d17-registered-hit",
+      "t": "C",
+      "mark": "est",
+      "name": "registered-hit",
+      "label": "d17 \u767b\u9332\u5e2f \u7684\u4e2d\uff08registered-hit\uff09"
+     }
+    ],
+    "ledger": null,
+    "established": [
+     "C-d11-registered-hit",
+     "C-d15-registered-hit",
+     "C-d17-registered-hit",
+     "C-a1-mobius",
+     "C-d19-sign-reversal",
+     "C-1q-law"
+    ],
+    "rejected": [
+     "C-middle-law-false"
+    ],
+    "open_h": [
+     "H-middle-weil-sum",
+     "H-supersingular-scaling"
+    ],
+    "open_p": [],
+    "verdicts": {
+     "star": 0,
+     "bad": 0,
+     "instr": 0,
+     "plain": 2,
+     "reg": 3
+    },
+    "lessons": [
+     "L-direction-preregistration",
+     "L-extraction-vs-record",
+     "L-middle-law-self-refutation",
+     "L-novelty-search-scope"
+    ]
+   },
+   {
+    "id": "O-fingerprint-family",
+    "key": "L6",
+    "label": "\u2465 \u6307\u7d0b\uff0fE-AK\uff0fT2",
+    "short": "Finger",
+    "n": 2,
+    "last": "2026-08-08",
+    "types": {
+     "E": 1,
+     "X": 1
+    },
+    "claims": {},
+    "hyps": {},
+    "active7": 0,
+    "active30": 0,
+    "events": [],
+    "ledger": null,
+    "established": [],
+    "rejected": [],
+    "open_h": [],
+    "open_p": [],
+    "verdicts": {
+     "star": 0,
+     "bad": 0,
+     "instr": 0,
+     "plain": 0,
+     "reg": 0
+    },
+    "lessons": []
+   },
+   {
+    "id": "O-fs-family",
+    "key": "L1",
+    "label": "\u2460 FS \u7d71\u4e00\u5247",
+    "short": "FS",
+    "n": 6,
+    "last": "2026-07-15",
+    "types": {
+     "C": 1,
+     "E": 1,
+     "O": 1,
+     "Q": 2,
+     "X": 1
+    },
+    "claims": {
+     "established": 1
+    },
+    "hyps": {},
+    "active7": 0,
+    "active30": 0,
+    "events": [
+     {
+      "date": "2026-07-15",
+      "id": "C-ks-duality-dual",
+      "t": "C",
+      "mark": "est",
+      "name": "established",
+      "label": "\u65cfKS\u5bfe\u79f0\u578b=\u500b\u3005FS\u306e\u53cc\u5bfe\uff085\u65cf\u78ba\u5b9a\uff09"
+     }
+    ],
+    "ledger": null,
+    "established": [
+     "C-ks-duality-dual"
+    ],
+    "rejected": [],
+    "open_h": [],
+    "open_p": [],
+    "verdicts": {
+     "star": 0,
+     "bad": 0,
+     "instr": 0,
+     "plain": 0,
+     "reg": 0
+    },
+    "lessons": []
+   }
+  ],
+  "program": {
+   "root": null,
+   "next": null,
+   "root_label": "",
+   "next_statement": "",
+   "principles": [],
+   "directions": []
+  },
+  "recent": {
+   "7": [],
+   "30": [
+    "L-verify-script-in-repo",
+    "L-direction-preregistration",
+    "O-ff-d17-m2-layer"
+   ]
+  },
+  "changes": [],
+  "orders": [],
+  "latest_order": "",
+  "private_lanes": [
+   {
+    "key": "L2",
+    "short": "QEC",
+    "label": "\u2461 Q \u4e0a EC \uff0b WP-A",
+    "n": 76,
+    "last": "2026-06-25",
+    "claims": 24,
+    "protocols": 0
+   },
+   {
+    "key": "L3",
+    "short": "ECNF",
+    "label": "\u2462 \u6570\u4f53\u4e0a EC",
+    "n": 60,
+    "last": "2026-06-05",
+    "claims": 21,
+    "protocols": 0
+   },
+   {
+    "key": "L5",
+    "short": "Cubic",
+    "label": "\u2464 \u4e09\u6b21\u4f53\uff0fKoyama\uff0f\u03c4",
+    "n": 63,
+    "last": "2026-06-08",
+    "claims": 16,
+    "protocols": 0
+   },
+   {
+    "key": "A",
+    "short": "A",
+    "label": "\u7814\u7a76\u7dda A \u2014 2 \u6b21\u90e8\u5206\u306e\u7cfb\u5217",
+    "n": 168,
+    "last": "2026-09-16",
+    "claims": 1,
+    "protocols": 45
+   },
+   {
+    "key": "B",
+    "short": "B",
+    "label": "\u7814\u7a76\u7dda B \u2014 \u4e8c\u9762\u4f53 D\u2099 \u7cfb\u5217",
+    "n": 37,
+    "last": "2026-09-15",
+    "claims": 0,
+    "protocols": 9
+   },
+   {
+    "key": "Pr",
+    "short": "\u539f\u7406",
+    "label": "\u6a2a\u65ad\u539f\u7406\u30fb\u5927\u7d71\u4e00",
+    "n": 24,
+    "last": "2026-08-31",
+    "claims": 7,
+    "protocols": 1
+   },
+   {
+    "key": "Rt",
+    "short": "\u6839",
+    "label": "\u30d7\u30ed\u30b0\u30e9\u30e0\u6839\u30fb\u7814\u7a76\u65b9\u5411",
+    "n": 13,
+    "last": "2026-08-23",
+    "claims": 1,
+    "protocols": 1
+   }
   ]
  }
 }
