@@ -1,10 +1,10 @@
 {
- "generated_at": "2026-09-15T02:21:28Z",
- "commit": "f3196449971495cb1939e4209b63e02dfbf4ffc1",
+ "generated_at": "2026-09-23T00:09:04Z",
+ "commit": "d1c40507f4d1b21305963a07f15986091a2583cd",
  "python": "3.12.14",
  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
- "kb_generated_at": "2026-09-15T00:58:06Z",
- "kb_source_ref": "9742090",
+ "kb_generated_at": "2026-09-23T00:01:04Z",
+ "kb_source_ref": "e1faddf4",
  "n_pass": 7,
  "n_run": 7,
  "n_not_bundled": 2,
@@ -24,7 +24,7 @@
    "status": "PASS",
    "got": "A1_closedform_match: match",
    "want": "match",
-   "seconds": 0.32
+   "seconds": 0.31
   },
   {
    "id": "X-binom-band",
@@ -61,7 +61,7 @@
    "status": "PASS",
    "got": "closedform_vs_census(1/q law): match",
    "want": "match",
-   "seconds": 0.26
+   "seconds": 0.31
   },
   {
    "id": "X-census-d11-spot",
@@ -166,7 +166,7 @@
    "status": "PASS",
    "got": "0",
    "want": "0",
-   "seconds": 0.02
+   "seconds": 0.03
   }
  ]
 }

@@ -15,8 +15,8 @@
    "@id": "./",
    "@type": "Dataset",
    "name": "bias-kb Atlas — public excerpt (claims grounded in re-executable evidence)",
-   "description": "100 nodes selected by rule from a record layer of 903 nodes (jxta/ai4math-lab, ref 9742090); frozen inputs of the offline execution units are bundled and re-executed by rerun.py.",
-   "datePublished": "2026-09-15",
+   "description": "100 nodes selected by rule from a record layer of 908 nodes (jxta/ai4math-lab, ref e1faddf4); frozen inputs of the offline execution units are bundled and re-executed by rerun.py.",
+   "datePublished": "2026-09-23",
    "license": {
     "@id": "https://github.com/jxta/bias-kb-atlas"
    },
@@ -159,16 +159,16 @@
    "@id": "kb/nodes.json",
    "@type": "File",
    "name": "nodes.json",
-   "contentSize": "146782",
-   "sha256": "707cc4195ace02439ba1426569e60882b0036c39b4965f76ef7a9414d03c2496",
+   "contentSize": "153512",
+   "sha256": "e9104225a2e55c1684bc8b94265186c9cde63bdbbb05c70775b821b9fe7d5e36",
    "encodingFormat": "application/json"
   },
   {
    "@id": "kb/kb.jsonld",
    "@type": "File",
    "name": "kb.jsonld",
-   "contentSize": "95031",
-   "sha256": "108108ab070c12bfb3370a1572b9a9687ee8f5961657a7f114fb746c78e3580e",
+   "contentSize": "95137",
+   "sha256": "9ceb4a83701ac3a1daa0bf9fd3bc3c3a4514ad8e0468e662d6a2f6da012bf10c",
    "encodingFormat": "text/plain"
   },
   {
@@ -191,8 +191,8 @@
    "@id": "kb/backlinks.json",
    "@type": "File",
    "name": "backlinks.json",
-   "contentSize": "27085",
-   "sha256": "33e229775042ae85ab1480f2d8b78d02bd76eac479b7875a1b313f9411a5ba23",
+   "contentSize": "27212",
+   "sha256": "fe20f45bb3e84eeb4032292e78e774309d1d58898eae0bd591292c646456607a",
    "encodingFormat": "application/json"
   },
   {
@@ -207,8 +207,8 @@
    "@id": "llms.txt",
    "@type": "File",
    "name": "llms.txt",
-   "contentSize": "5935",
-   "sha256": "c378465d6c2763eef3908e8a973501bcf094898338f5234be621176f24c6faf8",
+   "contentSize": "6180",
+   "sha256": "6105b8c3bbe33ea0acd24f8828db5341c8e2c8f708bc2a6efa63193deb4717e3",
    "encodingFormat": "text/plain"
   },
   {
