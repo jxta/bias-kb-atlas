@@ -1,10 +1,10 @@
 {
- "generated_at": "2026-09-23T02:44:02Z",
- "commit": "184d2355a54d8dd4d730c505e5a7b988d462e113",
+ "generated_at": "2026-09-23T03:47:37Z",
+ "commit": "e28f20b1f292214e04648b644997511f1d5a7a89",
  "python": "3.12.14",
  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
- "kb_generated_at": "2026-09-23T02:02:01Z",
- "kb_source_ref": "e1faddf4",
+ "kb_generated_at": "2026-09-23T03:44:03Z",
+ "kb_source_ref": "46f0e1e0",
  "n_pass": 7,
  "n_run": 7,
  "n_not_bundled": 2,
@@ -24,7 +24,7 @@
    "status": "PASS",
    "got": "A1_closedform_match: match",
    "want": "match",
-   "seconds": 4.07
+   "seconds": 0.21
   },
   {
    "id": "X-binom-band",
@@ -61,7 +61,7 @@
    "status": "PASS",
    "got": "closedform_vs_census(1/q law): match",
    "want": "match",
-   "seconds": 0.24
+   "seconds": 0.19
   },
   {
    "id": "X-census-d11-spot",
@@ -78,7 +78,7 @@
    "status": "PASS",
    "got": "-0.49076650925398013",
    "want": "-0.49076650925398013",
-   "seconds": 0.02
+   "seconds": 0.01
   },
   {
    "id": "X-census-d13-spot",
@@ -95,7 +95,7 @@
    "status": "PASS",
    "got": "-0.4949126864583562",
    "want": "-0.4949126864583562",
-   "seconds": 0.02
+   "seconds": 0.01
   },
   {
    "id": "X-census-d15-spot",
@@ -112,7 +112,7 @@
    "status": "PASS",
    "got": "-0.4989715075302701",
    "want": "-0.4989715075302701",
-   "seconds": 0.02
+   "seconds": 0.01
   },
   {
    "id": "X-census-d17-spot",
@@ -129,7 +129,7 @@
    "status": "PASS",
    "got": "-0.4994337027369984",
    "want": "-0.4994337027369984",
-   "seconds": 0.02
+   "seconds": 0.01
   },
   {
    "id": "X-q8-crosstab-accept",

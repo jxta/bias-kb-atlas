@@ -1,6 +1,6 @@
 # bias-kb Atlas — public excerpt (claims grounded in re-executable evidence)
 
-> A machine-readable excerpt of a research knowledge base (bias-kb) in which every claim is linked, in both directions, to the evidence and the re-executable computation that produced it. 100 nodes selected by rule from a record layer of 908 nodes (private repository `jxta/ai4math-lab`, ref e1faddf4); generated 2026-09-23T02:02:01Z. Nothing here is hand-picked; the selection rule and the generator live in `knowledge/tools/kb_atlas.py`.
+> A machine-readable excerpt of a research knowledge base (bias-kb) in which every claim is linked, in both directions, to the evidence and the re-executable computation that produced it. 100 nodes selected by rule from a record layer of 962 nodes (private repository `jxta/ai4math-lab`, ref 46f0e1e0); generated 2026-09-23T03:44:03Z. Nothing here is hand-picked; the selection rule and the generator live in `knowledge/tools/kb_atlas.py`.
 
 ## Start here
 
@@ -37,7 +37,7 @@ Units: X-a1-mobius, X-boundary-closedform, X-census-d11-spot, X-census-d13-spot,
 ## Counts
 
 Claim 16, Evidence 15, ExecutionUnit 20, Hypothesis 3, Lesson 11, Object 17, Protocol 4, Quantity 14; claims 16 (status: established 9, provisional 1, registered-hit 5, rejected 1); redacted stubs 69.
-Record layer behind this excerpt (private, counts only, as of 2026-09-23): 908 nodes — Claim 151, Evidence 178, ExecutionUnit 159, Hypothesis 49, Lesson 115, Object 99, Protocol 90, Quantity 67. Claims 151: 151 have a chain to an execution unit, 27 to an accept/spot unit; claim status challenged 3, established 98, provisional 10, registered-hit 5, rejected 23, rejected-recorded 3, supported 9. Evidence ⇄ execution pairs written in both directions 168/184. Pre-registrations frozen 90/90. k4 offline re-run 9/9 PASS, 53 full-tier units pending. Claims/hypotheses with a status history 7. Nodes added per day: 2026-09-10 +2, 2026-09-11 +5, 2026-09-12 +3, 2026-09-13 +2, 2026-09-14 +4, 2026-09-15 +4, 2026-09-16 +1 (last 7 days with additions).
+Record layer behind this excerpt (private, counts only, as of 2026-09-23): 962 nodes — Claim 159, Evidence 189, ExecutionUnit 166, Hypothesis 51, Lesson 127, Object 106, Protocol 94, Quantity 70. Claims 159: 159 have a chain to an execution unit, 27 to an accept/spot unit; claim status challenged 3, established 106, provisional 10, registered-hit 5, rejected 23, rejected-recorded 3, supported 9. Evidence ⇄ execution pairs written in both directions 178/195. Pre-registrations frozen 94/94. k4 offline re-run 9/9 PASS, 53 full-tier units pending. Claims/hypotheses with a status history 17. Nodes added per day: 2026-09-15 +4, 2026-09-16 +1, 2026-09-17 +2, 2026-09-18 +3, 2026-09-20 +5, 2026-09-21 +13, 2026-09-22 +31 (last 7 days with additions).
 
 ## Optional
 

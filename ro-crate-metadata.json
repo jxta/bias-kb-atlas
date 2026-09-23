@@ -15,7 +15,7 @@
    "@id": "./",
    "@type": "Dataset",
    "name": "bias-kb Atlas — public excerpt (claims grounded in re-executable evidence)",
-   "description": "100 nodes selected by rule from a record layer of 908 nodes (jxta/ai4math-lab, ref e1faddf4); frozen inputs of the offline execution units are bundled and re-executed by rerun.py.",
+   "description": "100 nodes selected by rule from a record layer of 962 nodes (jxta/ai4math-lab, ref 46f0e1e0); frozen inputs of the offline execution units are bundled and re-executed by rerun.py.",
    "datePublished": "2026-09-23",
    "license": {
     "@id": "https://github.com/jxta/bias-kb-atlas"
@@ -159,8 +159,8 @@
    "@id": "kb/nodes.json",
    "@type": "File",
    "name": "nodes.json",
-   "contentSize": "153701",
-   "sha256": "9d192fab43376174835502b16a2c67818aca74cf87ee3c71f7f8fc07d439ccca",
+   "contentSize": "153898",
+   "sha256": "2e4b8b5026dd5272083abb19f0829c7704726781d7a19262cd7571eccc6f4daf",
    "encodingFormat": "application/json"
   },
   {
@@ -192,7 +192,7 @@
    "@type": "File",
    "name": "backlinks.json",
    "contentSize": "27212",
-   "sha256": "5ef6866c4e993858b12c8803392a2544864e08c94fc50825100c69ac4769a2b6",
+   "sha256": "04b771b3bef0b75bad0022703e9dfaa95d70edace8f7b9a11ac376ee7c087b22",
    "encodingFormat": "application/json"
   },
   {
@@ -200,15 +200,15 @@
    "@type": "File",
    "name": "rerun-latest.json",
    "contentSize": "5219",
-   "sha256": "5f1ca404c066a6d71dcdb774e4b256113b67d9dbbb3dd7612d50b13452a088da",
+   "sha256": "c56ad038a93e977a685453183b917995f927f20095ee0ce377ef6eb4b9049721",
    "encodingFormat": "application/json"
   },
   {
    "@id": "llms.txt",
    "@type": "File",
    "name": "llms.txt",
-   "contentSize": "6464",
-   "sha256": "d9ab8e46e6f1c76e302d3a1e0bd8644a71a10857999348db7746f8614a8c048a",
+   "contentSize": "6469",
+   "sha256": "0b54da0b0806900b60d352aa0b75a76bb37b54cbc09d93f4749a3f0a558fba9e",
    "encodingFormat": "text/plain"
   },
   {

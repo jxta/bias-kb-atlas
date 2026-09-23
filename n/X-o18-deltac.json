@@ -82,9 +82,9 @@
    "note": "mdx full-tier re-run 2026-09-05 PASS 1/1（ORDER 0013 夜間計画 (c) J4/J5、mdx-01; 記録体数は旧 qf1/batch_rest で再現、report: t2/k4_rerun_2026-09-05/REPORT.md）"
   },
   "record_layer": {
-   "nodes": 908,
-   "source_ref": "e1faddf4",
-   "generated_at": "2026-09-23T02:02:01Z"
+   "nodes": 962,
+   "source_ref": "46f0e1e0",
+   "generated_at": "2026-09-23T03:44:03Z"
   }
  }
 }
