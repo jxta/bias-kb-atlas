@@ -1,11 +1,12 @@
 # bias-kb Atlas — public excerpt (claims grounded in re-executable evidence)
 
-> A machine-readable excerpt of a research knowledge base (bias-kb) in which every claim is linked, in both directions, to the evidence and the re-executable computation that produced it. 100 nodes selected by rule from a record layer of 908 nodes (private repository `jxta/ai4math-lab`, ref e1faddf4); generated 2026-09-23T00:01:04Z. Nothing here is hand-picked; the selection rule and the generator live in `knowledge/tools/kb_atlas.py`.
+> A machine-readable excerpt of a research knowledge base (bias-kb) in which every claim is linked, in both directions, to the evidence and the re-executable computation that produced it. 100 nodes selected by rule from a record layer of 908 nodes (private repository `jxta/ai4math-lab`, ref e1faddf4); generated 2026-09-23T02:02:01Z. Nothing here is hand-picked; the selection rule and the generator live in `knowledge/tools/kb_atlas.py`.
 
 ## Start here
 
 - Site (interactive Atlas, hash routing `#v=<view>&node=<id>`; add `&lang=en` for the English UI — guide, grounding, headings and the figure labels; node texts stay in Japanese): https://jxta.github.io/bias-kb-atlas/ · English: https://jxta.github.io/bias-kb-atlas/#v=guide&lang=en
 - Research map (every research line with its milestones on a time axis, current position, next moves, direction layer, recent changes): https://jxta.github.io/bias-kb-atlas/#v=map · English: https://jxta.github.io/bias-kb-atlas/#v=map&lang=en
+- Story of one research line, for people and for AI (same content as the Atlas story view `#v=story&line=<line>`): https://jxta.github.io/bias-kb-atlas/lines/<line>.md and https://jxta.github.io/bias-kb-atlas/lines/<line>.json (line ids: O-ff-q3-family, O-dihedral-artin-family, ...)
 - One node, no JavaScript: https://jxta.github.io/bias-kb-atlas/n/<id>.html — machine-readable twin: https://jxta.github.io/bias-kb-atlas/n/<id>.json (JSON-LD, `@context` = https://jxta.github.io/bias-kb-atlas/kb/context.jsonld)
 - Whole excerpt as JSON-LD: https://jxta.github.io/bias-kb-atlas/kb/kb.jsonld (context embedded; `@graph` = raw record-layer nodes + redacted stubs)
 - Whole excerpt with derived fields (`_line`, `_in`, `_out`, `_deg`, `_stub`): https://jxta.github.io/bias-kb-atlas/kb/nodes.json (what the Atlas renders)
