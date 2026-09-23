@@ -1,0 +1,37 @@
+{
+ "generated_at": "2026-09-23",
+ "lane": {
+  "id": "O-fingerprint-family",
+  "key": "L6",
+  "label": "⑥ 指紋／E-AK／T2",
+  "short": "Finger",
+  "n": 2,
+  "last": "2026-08-08",
+  "types": {
+   "E": 1,
+   "X": 1
+  },
+  "claims": {},
+  "hyps": {},
+  "active7": 0,
+  "active30": 0,
+  "events": [],
+  "ledger": null,
+  "established": [],
+  "rejected": [],
+  "open_h": [],
+  "open_p": [],
+  "verdicts": {
+   "star": 0,
+   "bad": 0,
+   "instr": 0,
+   "plain": 0,
+   "reg": 0
+  },
+  "lessons": [],
+  "orders": [],
+  "decisions": []
+ },
+ "orders": [],
+ "decisions": []
+}

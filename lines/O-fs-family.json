@@ -1,0 +1,53 @@
+{
+ "generated_at": "2026-09-23",
+ "lane": {
+  "id": "O-fs-family",
+  "key": "L1",
+  "label": "① FS 統一則",
+  "short": "FS",
+  "n": 6,
+  "last": "2026-07-15",
+  "types": {
+   "C": 1,
+   "E": 1,
+   "O": 1,
+   "Q": 2,
+   "X": 1
+  },
+  "claims": {
+   "established": 1
+  },
+  "hyps": {},
+  "active7": 0,
+  "active30": 0,
+  "events": [
+   {
+    "date": "2026-07-15",
+    "id": "C-ks-duality-dual",
+    "t": "C",
+    "mark": "est",
+    "name": "established",
+    "label": "族KS対称型=個々FSの双対（5族確定）"
+   }
+  ],
+  "ledger": null,
+  "established": [
+   "C-ks-duality-dual"
+  ],
+  "rejected": [],
+  "open_h": [],
+  "open_p": [],
+  "verdicts": {
+   "star": 0,
+   "bad": 0,
+   "instr": 0,
+   "plain": 0,
+   "reg": 0
+  },
+  "lessons": [],
+  "orders": [],
+  "decisions": []
+ },
+ "orders": [],
+ "decisions": []
+}

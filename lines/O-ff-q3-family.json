@@ -1,0 +1,191 @@
+{
+ "generated_at": "2026-09-23",
+ "lane": {
+  "id": "O-ff-q3-family",
+  "key": "L7",
+  "label": "⑦ 関数体 census",
+  "short": "FF",
+  "n": 61,
+  "last": "2026-08-24",
+  "types": {
+   "C": 11,
+   "E": 8,
+   "H": 3,
+   "L": 5,
+   "O": 12,
+   "P": 3,
+   "Q": 7,
+   "X": 12
+  },
+  "claims": {
+   "established": 5,
+   "registered-hit": 4,
+   "rejected": 1,
+   "provisional": 1
+  },
+  "hyps": {
+   "promoted": 1,
+   "open": 2
+  },
+  "active7": 0,
+  "active30": 2,
+  "events": [
+   {
+    "date": "2026-08-04",
+    "id": "P-census-exec-a",
+    "t": "P",
+    "mark": "reg",
+    "label": "全数 census 手順（EXEC_A_v2）",
+    "open": false
+   },
+   {
+    "date": "2026-08-08",
+    "id": "C-registered-prediction-method",
+    "t": "C",
+    "mark": "est",
+    "name": "established",
+    "label": "事前登録予測が2例的中（d11, d15）"
+   },
+   {
+    "date": "2026-08-12",
+    "id": "C-1q-law",
+    "t": "C",
+    "mark": "est",
+    "name": "established",
+    "label": "1/q 法則（境界余剰の主漸近）"
+   },
+   {
+    "date": "2026-08-12",
+    "id": "C-boundary-closedform",
+    "t": "C",
+    "mark": "est",
+    "name": "established",
+    "label": "境界 O 項の閉形式（Theorem 1・厳密）"
+   },
+   {
+    "date": "2026-08-12",
+    "id": "C-cg-sequence",
+    "t": "C",
+    "mark": "est",
+    "name": "established",
+    "label": "c(g) 整数列（Theorem 2）"
+   },
+   {
+    "date": "2026-08-12",
+    "id": "P-o19-registration",
+    "t": "P",
+    "mark": "reg",
+    "label": "O-19 d=19 決定的検定の実行前登録（ORDER 0008 凍結）",
+    "open": false
+   },
+   {
+    "date": "2026-08-12",
+    "id": "P-registered-prediction",
+    "t": "P",
+    "mark": "reg",
+    "label": "事前登録予測プロトコル（register-then-verify）",
+    "open": false
+   },
+   {
+    "date": "2026-08-13",
+    "id": "C-a1-mobius",
+    "t": "C",
+    "mark": "est",
+    "name": "established",
+    "label": "A_1 の Möbius 閉形式（§5A 厳密証明）"
+   },
+   {
+    "date": "2026-08-13",
+    "id": "C-d19-sign-reversal",
+    "t": "C",
+    "mark": "est",
+    "name": "registered-hit",
+    "label": "d=19 で境界超過の符号反転を実行前登録どおり的中（n=6 問題の実験決着）"
+   },
+   {
+    "date": "2026-08-13",
+    "id": "C-middle-law-false",
+    "t": "C",
+    "mark": "rej",
+    "name": "rejected",
+    "label": "中央係数則は偽（自己反証）"
+   },
+   {
+    "date": "2026-08-13",
+    "id": "E-census-d19",
+    "t": "E",
+    "mark": "plain",
+    "name": "PASS",
+    "label": "census d=19 実測（Σ側超過 −2.4300e-05・登録帯内 PASS）",
+    "kn": ""
+   },
+   {
+    "date": "2026-08-13",
+    "id": "E-middle-e10",
+    "t": "E",
+    "mark": "plain",
+    "name": "middle-law FALSE (holds only e=2,6)",
+    "label": "中央係数則 反例（-6024≠-5880）",
+    "kn": ""
+   },
+   {
+    "date": "2026-08-23",
+    "id": "C-d11-registered-hit",
+    "t": "C",
+    "mark": "est",
+    "name": "registered-hit",
+    "label": "d11 登録予測 的中（registered-hit）"
+   },
+   {
+    "date": "2026-08-23",
+    "id": "C-d15-registered-hit",
+    "t": "C",
+    "mark": "est",
+    "name": "registered-hit",
+    "label": "d15 登録予測 的中（registered-hit）"
+   },
+   {
+    "date": "2026-08-23",
+    "id": "C-d17-registered-hit",
+    "t": "C",
+    "mark": "est",
+    "name": "registered-hit",
+    "label": "d17 登録帯 的中（registered-hit）"
+   }
+  ],
+  "ledger": null,
+  "established": [
+   "C-d11-registered-hit",
+   "C-d15-registered-hit",
+   "C-d17-registered-hit",
+   "C-a1-mobius",
+   "C-d19-sign-reversal",
+   "C-1q-law"
+  ],
+  "rejected": [
+   "C-middle-law-false"
+  ],
+  "open_h": [
+   "H-middle-weil-sum",
+   "H-supersingular-scaling"
+  ],
+  "open_p": [],
+  "verdicts": {
+   "star": 0,
+   "bad": 0,
+   "instr": 0,
+   "plain": 2,
+   "reg": 3
+  },
+  "lessons": [
+   "L-direction-preregistration",
+   "L-extraction-vs-record",
+   "L-middle-law-self-refutation",
+   "L-novelty-search-scope"
+  ],
+  "orders": [],
+  "decisions": []
+ },
+ "orders": [],
+ "decisions": []
+}

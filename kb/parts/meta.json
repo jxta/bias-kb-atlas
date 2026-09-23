@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-23T00:01:04Z",
+ "generated_at": "2026-09-23T02:02:01Z",
  "source": "index/kb.jsonld",
  "source_ref": "e1faddf4",
  "source_commit_date": "2026-09-21",
@@ -834,7 +834,9 @@
      "L-byte-fidelity",
      "L-population-definition",
      "L-monitor-predicate-fragile"
-    ]
+    ],
+    "orders": [],
+    "decisions": []
    },
    {
     "id": "O-ff-q3-family",
@@ -1018,7 +1020,9 @@
      "L-extraction-vs-record",
      "L-middle-law-self-refutation",
      "L-novelty-search-scope"
-    ]
+    ],
+    "orders": [],
+    "decisions": []
    },
    {
     "id": "O-fingerprint-family",
@@ -1048,7 +1052,9 @@
      "plain": 0,
      "reg": 0
     },
-    "lessons": []
+    "lessons": [],
+    "orders": [],
+    "decisions": []
    },
    {
     "id": "O-fs-family",
@@ -1094,7 +1100,9 @@
      "plain": 0,
      "reg": 0
     },
-    "lessons": []
+    "lessons": [],
+    "orders": [],
+    "decisions": []
    }
   ],
   "program": {
@@ -1115,6 +1123,7 @@
   },
   "changes": [],
   "orders": [],
+  "decisions": [],
   "latest_order": "",
   "private_lanes": [
    {
@@ -1181,5 +1190,6 @@
     "protocols": 1
    }
   ]
- }
+ },
+ "discussions": "https://github.com/jxta/bias-kb-atlas/discussions"
 }

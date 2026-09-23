@@ -43,7 +43,7 @@
     how_h: "How to re-run", how1: "Run each unit’s <code>entry</code> in the repository root and compare with <code>expected</code>. All at once:", how2: "The re-run box of each execution-unit card shows the individual command, input sha256, expected values and the k4 record (got / want).", how3: (b, c) => ` Without a local Python, open the repository in <a href="${b}" target="_blank" rel="noopener">Binder</a> (JupyterLab in the browser) or <a href="${c}" target="_blank" rel="noopener">GitHub Codespaces</a> and run the same commands.`,
     ci_h: "Latest CI re-run", ci_nb: "not bundled", ci_wait: "The latest CI re-run (kb/rerun-latest.json) will appear here after the next CI run.",
     gr_th: ["Claim", "Status", "Evidence", "Execution unit (tier · re-run)", "Artifact sha", "Registration", ""], verified: "verified", trace: "trace",
-    map: { tab: "Map", title: "Research map — where we are, and where next", sub: "One page for a human: every research line with its milestones (registrations ◇, verdicts ★✗●, claims ▲▽) on a time axis, the current position and the next moves, the direction layer, and what changed recently. Generated from the record layer — nothing is hand-written.",
+    map: { story_h: "Story of a research line", story_sub: "One line, in order: what was ordered, registered, judged, established, learned — and what is waiting for a decision. Shareable by URL; the same content exists as lines/<line>.md and .json for people and for AI.", to_story: "story →", back_map: "← map", copy_url: "copy URL", copy_md: "copy as Markdown", copied: "copied", dl_json: "JSON", dl_md: "Markdown", pending_h: "Waiting for a decision", decisions_h: "Decisions (knowledge/decisions/)", decisions_none: "No decision record yet for this line. Write the question, options, grounds and choice as D-*.json (see knowledge/decisions/README.md); AI files it as proposed, a person decides.", d_q: "question", d_opt: "options", d_choice: "choice", d_why: "why", d_by: "by", d_prop: "proposed by", d_status: { proposed: "proposed", decided: "decided", superseded: "superseded" }, timeline_h: "Milestones in order", orders_line_h: "Orders and rulings that touch this line", discuss: "discussion thread", discuss_none: "No discussion base URL configured (kb_atlas.py --discussions <URL>).", all_stories: "all lines", tab: "Map", title: "Research map — where we are, and where next", sub: "One page for a human: every research line with its milestones (registrations ◇, verdicts ★✗●, claims ▲▽) on a time axis, the current position and the next moves, the direction layer, and what changed recently. Generated from the record layer — nothing is hand-written.",
       fresh: (d, n) => `Record layer last appended <b>${d}</b>${n != null ? ` (${n} day${n === 1 ? "" : "s"} ago)` : ""}`, stale: "No node has been appended for several days: recent work may still live only in status reports and not yet be knowledge-ized (obligation R10).", stale_pub: "No node has been appended to the record layer for several days.",
       latest_order: (no, d) => ` · latest order/ruling <b>${no}</b> (${d})`, window: "window", all: "all", days: "d", lanes_h: "Lines on a time axis", legend: "◇ registration (dashed = no verdict yet) · ★ predicted and hit · ● verdict · ✗ falsified · ⚠ instrument failed · ▲ claim established · ▽ rejected · ○ other status change · click a mark to open the node",
       quiet: (n) => `Lines with no milestone in this window: ${n}`, cards_h: "Current position and next moves, per line", now: "Now", next: "Next moves", ledger: "Prediction ledger", instr: "instruments", mech: "mechanisms", asof: "as of",
@@ -88,7 +88,7 @@
     how_h: "再実行のしかた", how1: "各実行単位の <code>entry</code> をリポジトリ直下で実行し、<code>expected</code> と比べる。まとめて走らせるには:", how2: "実行単位カードの「再実行」欄に、個別のコマンド・入力の sha256・期待値・k4 の記録（got / want）を示す。", how3: (b, c) => ` 手元に Python が無ければ <a href="${b}" target="_blank" rel="noopener">Binder</a>（ブラウザ内 JupyterLab）か <a href="${c}" target="_blank" rel="noopener">GitHub Codespaces</a> でリポジトリを開いて同じコマンドを実行できる。`,
     ci_h: "CI の最終再実行", ci_nb: "未同梱", ci_wait: "CI の最終再実行結果（kb/rerun-latest.json）は次回の CI 実行後にここへ出る。",
     gr_th: ["主張", "状態", "証拠", "実行単位（tier・再実行）", "成果物 sha", "登録", ""], verified: "実照合", trace: "辿る",
-    map: { tab: "地図", title: "研究の地図 — いまどこにいて、次はどこへ", sub: "人間が 1 頁で見るための面。研究線ごとの節目（登録 ◇・判定 ★✗●・主張 ▲▽）を時間軸に並べ、線ごとの現在地と次の一手、方向層、直近の変化を出す。すべて記録層から生成（手書きの文はない）。",
+    map: { story_h: "研究線の物語", story_sub: "1 本の線を順に読む: 何を指示し、登録し、判定し、確立し、学んだか — そして何が判断待ちか。URL で共有でき、同じ内容が lines/<line>.md と .json にあって人にも AI にも渡せる。", to_story: "物語 →", back_map: "← 地図", copy_url: "URL をコピー", copy_md: "Markdown でコピー", copied: "コピーしました", dl_json: "JSON", dl_md: "Markdown", pending_h: "判断待ち", decisions_h: "判断の記録（knowledge/decisions/）", decisions_none: "この線の判断の記録はまだ無い。問い・選択肢・根拠・決定を D-*.json に書く（knowledge/decisions/README.md）。AI は proposed で起案し、人が決める。", d_q: "問い", d_opt: "選択肢", d_choice: "決定", d_why: "理由", d_by: "決めた人", d_prop: "起案", d_status: { proposed: "起案", decided: "決定", superseded: "置換済み" }, timeline_h: "節目（日付順）", orders_line_h: "この線に触れた指示・裁定", discuss: "議論スレッド", discuss_none: "議論の土台 URL が未設定（kb_atlas.py --discussions <URL>）。", all_stories: "全線", tab: "地図", title: "研究の地図 — いまどこにいて、次はどこへ", sub: "人間が 1 頁で見るための面。研究線ごとの節目（登録 ◇・判定 ★✗●・主張 ▲▽）を時間軸に並べ、線ごとの現在地と次の一手、方向層、直近の変化を出す。すべて記録層から生成（手書きの文はない）。",
       fresh: (d, n) => `記録層の最終追記 <b>${d}</b>${n != null ? `（${n} 日前）` : ""}`, stale: "数日以上ノードが追記されていない。直近の研究は STATU 報告に留まり、まだ知識化（R10）されていない可能性がある。", stale_pub: "記録層に数日以上ノードが追記されていない。",
       latest_order: (no, d) => ` · 最新の指示・裁定 <b>${no}</b>（${d}）`, window: "窓", all: "全期間", days: "日", lanes_h: "研究線の時間軸", legend: "◇ 登録（点線＝未判定）・★ 予測が当たった判定・● 判定・✗ 反証・⚠ 計器の失敗・▲ 主張の確立・▽ 棄却・○ その他の状態変更・印をクリックでノードを開く",
       quiet: (n) => `この窓に節目のない線: ${n}`, cards_h: "線ごとの現在地と次の一手", now: "現在地", next: "次の一手", ledger: "予測台帳", instr: "計器", mech: "機構", asof: "時点",
@@ -387,7 +387,7 @@
   }
   function renderStage() {
     const stage = $("#stage"); stage.innerHTML = "";
-    ({ guide: viewGuide, map: viewMap, grounding: viewGrounding, atlas: viewAtlas, lines: viewLines, timeline: viewTimeline, graph: viewGraph, lessons: viewLessons, protocols: viewProtocols, table: viewTable }[state.view] || viewAtlas)(stage);
+    ({ guide: viewGuide, map: viewMap, story: viewStory, grounding: viewGrounding, atlas: viewAtlas, lines: viewLines, timeline: viewTimeline, graph: viewGraph, lessons: viewLessons, protocols: viewProtocols, table: viewTable }[state.view] || viewAtlas)(stage);
   }
 
   // ---------- 案内（この知識基盤のしくみ — 図と実例の対応） ----------
@@ -502,7 +502,7 @@
       const bar = (t) => t ? `<span class="lbar" title="${t.hit}/${t.n}"><i style="width:${Math.round(100 * t.hit / Math.max(1, t.n))}%"></i></span> ${t.hit}/${t.n}` : "—";
       const chips = (ids) => ids.length ? ids.map(i => chip(i)).join("") : `<span class="muted small">${T.map.none}</span>`;
       return `<div class="card mlane" id="ml-${esc(l.id)}"><h3 class="ct"><span class="sw" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:${lineColor(l.id)};margin-right:6px"></span>${lineL(l)} <span class="muted small">${l.n} ${T.rail_nodes} · ${T.map.last} ${esc(l.last)}</span>
-        <span class="right"><button class="iconbtn small" data-line="${esc(l.id)}">${T.map.goto_line} →</button></span></h3>
+        <span class="right"><button class="iconbtn small" data-story="${esc(l.id)}">${T.map.to_story}</button> <button class="iconbtn small" data-line="${esc(l.id)}">${T.map.goto_line} →</button></span></h3>
         ${nC ? `<div class="bar">${["established", "registered-hit", "supported", "promoted", "provisional", "open", "challenged", "rejected", "rejected-recorded", "superseded"].filter(s => c[s]).map(s => `<i style="width:${100 * c[s] / nC}%;background:${statusColor(s)}" title="${esc(SJA[s] || s)} ${c[s]}"></i>`).join("")}</div>` : ""}
         <div class="small" style="margin-top:6px">${T.map.claims_line(nC, est, hit, rej)} · ${T.map.hyps_line(oH)} · ${T.map.regs_line(l.verdicts.reg, l.open_p.length)}</div>
         <div class="mrow"><b>${T.map.now}</b> ${lastV ? `${esc(fmtD(lastV.date))} <span class="mk ${lastV.mark}">${MARK[lastV.mark][0]}</span> ${esc(lastV.name || "")}${lastV.kn ? ` ${esc(lastV.kn)}` : ""} — ${chip(lastV.id)}` : last ? `${esc(fmtD(last.date))} <span class="mk ${last.mark}">${MARK[last.mark][0]}</span> ${chip(last.id)}` : `<span class="muted small">${T.map.no_ev}</span>`}</div>
@@ -533,7 +533,67 @@
       ${ordersHtml ? `<div class="card" style="margin-bottom:12px"><h3 class="ct">${T.map.orders_h}</h3><div class="small muted" style="margin-bottom:6px">${T.map.orders_sub}</div>${ordersHtml}</div>` : ""}
     </div>`;
     stage.querySelectorAll("[data-win]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); state.mapWin = +b.dataset.win; render(); }));
+    stage.querySelectorAll("[data-story]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); go("story", { line: b.dataset.story }); }));
     drawLanes(stage.querySelector("#mapLanes"), lanes, win, today);
+  }
+  // ---------- 研究線の物語（1 本の線を順に読む・共有する） ----------
+  function storyMarkdown(L, ods, ds) {
+    const MK = EN ? MARK_EN : MARK_JA; const c = L.claims || {}, nC = Object.values(c).reduce((a, b) => a + b, 0), v = L.verdicts;
+    const lab = (i) => plain((byId.get(i) || {}).label || "").slice(0, 110);
+    const o = [`# ${L.label}（${L.short}）`, "", `${EN ? "generated" : "生成"} ${META.map.today} · ${T.map.last} ${L.last} · ${L.n} ${T.rail_nodes}`, "",
+      `${T.map.claims_line(nC, c.established || 0, c["registered-hit"] || 0, (c.rejected || 0) + (c["rejected-recorded"] || 0))} · ${T.map.regs_line(v.reg, L.open_p.length)} · ${T.map.hyps_line(L.open_h.length)}`];
+    const lastV = [...L.events].reverse().find(e => e.t === "E");
+    o.push("", `## ${T.map.now}`, lastV ? `${lastV.date} ${MARK[lastV.mark][0]} ${lastV.name || ""} ${lastV.kn || ""} — \`${lastV.id}\` ${plain(lastV.label).slice(0, 120)}` : T.map.no_ev);
+    if (L.open_p.length) o.push("", `## ${T.map.pending_h} — ${T.map.openp}`, ...L.open_p.map(i => `- \`${i}\` ${lab(i)}`));
+    if (L.open_h.length) o.push("", `## ${T.map.pending_h} — ${T.map.openh}`, ...L.open_h.map(i => `- \`${i}\` ${lab(i)}`));
+    if (ods.length) o.push("", `## ${T.map.orders_line_h}`, ...ods.map(x => `- ${x.no}（${x.date}）${x.title}`));
+    o.push("", `## ${T.map.decisions_h}`, ...(ds.length ? ds.map(d => `- [${d.status}] ${d.date} \`${d.id}\` **${d.question}** → ${d.choice || "—"}（${d.by || d.proposed_by || ""}）${(d.based_on || []).length ? " " + d.based_on.map(b => "`" + b + "`").join(", ") : ""}`) : [T.map.decisions_none]));
+    o.push("", `## ${T.map.timeline_h}`, ...L.events.map(x => `- ${x.date} ${MARK[x.mark][0]} ${MK[x.mark]} \`${x.id}\` ${x.name || ""}${x.kn ? " " + x.kn : ""} — ${plain(x.label).slice(0, 110)}`));
+    if (L.lessons.length) o.push("", `## ${T.map.lessons}`, ...L.lessons.map(i => `- \`${i}\` ${lab(i)}`));
+    o.push("", `${location.origin}${location.pathname}#v=story&line=${L.id}${EN ? "&lang=en" : ""}`);
+    return o.join("\n") + "\n";
+  }
+  function viewStory(stage) {
+    const M = META.map; if (!M || !M.lanes) { viewAtlas(stage); return; }
+    const L = M.lanes.find(l => l.id === state.line) || M.lanes[0]; if (!L) { viewMap(stage); return; } state.line = L.id;
+    const ods = (M.orders || []).filter(o => (L.orders || []).includes(o.no)), ds = (M.decisions || []).filter(d => (L.decisions || []).includes(d.id));
+    const c = L.claims || {}, nC = Object.values(c).reduce((a, b) => a + b, 0), v = L.verdicts, lg = L.ledger || {};
+    const bar = (t) => t ? `<span class="lbar" title="${t.hit}/${t.n}"><i style="width:${Math.round(100 * t.hit / Math.max(1, t.n))}%"></i></span> ${t.hit}/${t.n}` : "—";
+    const chips = (ids) => ids.length ? ids.map(i => chip(i)).join("") : `<span class="muted small">${T.map.none}</span>`;
+    const byDate = d3.groups(L.events, e => e.date);
+    const disc = META.discussions ? `<a class="iconbtn small" href="${esc(META.discussions)}${META.discussions.includes("?") ? "&" : "?"}discussions_q=${encodeURIComponent(L.short)}" target="_blank" rel="noopener">${T.map.discuss} ↗</a>` : `<span class="muted small" title="${T.map.discuss_none}">${T.map.discuss}: —</span>`;
+    const dcard = (d) => `<div class="card dcard"><div class="h"><span class="badge" style="background:${d.status === "decided" ? statusColor("established") : d.status === "superseded" ? css("--muted") : statusColor("provisional")}">${esc(T.map.d_status[d.status] || d.status)}</span> <span class="badge" style="background:${css("--muted")}">${esc(d.kind || "")}</span> <code>${esc(d.id)}</code> <span class="muted small">${esc(d.date)}</span></div>
+      <div class="mrow"><b>${T.map.d_q}</b> ${esc(d.question)}</div>${(d.options || []).length ? `<div class="mrow"><b>${T.map.d_opt}</b> ${d.options.map(x => `<span class="badge" style="background:${x === d.choice ? statusColor("established") : css("--line")};color:${x === d.choice ? "#fff" : "var(--ink)"}">${esc(x)}</span>`).join(" ")}</div>` : ""}
+      ${d.choice ? `<div class="mrow"><b>${T.map.d_choice}</b> ${esc(d.choice)}</div>` : ""}${d.rationale ? `<div class="mrow"><b>${T.map.d_why}</b> <span class="small">${md(d.rationale)}</span></div>` : ""}
+      ${(d.based_on || []).length ? `<div class="mrow"><b>${EN ? "grounds" : "根拠"}</b> ${chips(d.based_on)}</div>` : ""}<div class="mrow small muted">${d.proposed_by ? `${T.map.d_prop} ${esc(d.proposed_by)} · ` : ""}${d.by ? `${T.map.d_by} ${esc(d.by)}` : ""}${d.source ? ` · ${Object.entries(d.source).filter(([k, x]) => x && (!Array.isArray(x) || x.length)).map(([k, x]) => `${esc(k)} ${esc(Array.isArray(x) ? x.join(" ") : x)}`).join(" · ")}` : ""}${d.note ? `<div>${esc(d.note)}</div>` : ""}</div></div>`;
+    stage.innerHTML = `<div class="pad map story">
+      <div class="pillbar">${M.lanes.map(l => `<span class="chip" data-story="${esc(l.id)}" style="${l.id === L.id ? "border-color:var(--accent);background:var(--sel)" : ""}"><span class="dot" style="background:${lineColor(l.id)}"></span>${esc(EN ? l.short : l.label)} <span class="muted">${l.n}</span></span>`).join("")}<button class="iconbtn small" data-go="map" style="margin-left:8px">${T.map.back_map}</button></div>
+      <h2 class="vt"><span class="sw" style="display:inline-block;width:12px;height:12px;border-radius:3px;background:${lineColor(L.id)}"></span> ${esc(L.label)} <span class="muted small">${L.n} ${T.rail_nodes} · ${T.map.last} ${esc(L.last)}</span></h2>
+      <p class="vsub">${T.map.story_sub}</p>
+      <div class="toolbar"><button class="iconbtn small" id="stCopyUrl">${T.map.copy_url}</button> <button class="iconbtn small" id="stCopyMd">${T.map.copy_md}</button> <button class="iconbtn small" id="stDlMd">${T.map.dl_md}</button> <button class="iconbtn small" id="stDlJson">${T.map.dl_json}</button> ${disc} <button class="iconbtn small" data-line="${esc(L.id)}" style="margin-left:auto">${T.map.goto_line} →</button></div>
+      <div class="grid g3" style="margin:10px 0 12px">
+        <div class="card kpi"><div class="v">${nC}</div><div class="l">${T.map.claims_line(nC, c.established || 0, c["registered-hit"] || 0, (c.rejected || 0) + (c["rejected-recorded"] || 0))}</div></div>
+        <div class="card kpi"><div class="v">${v.star}<span class="muted small"> / ${v.star + v.plain + v.bad + v.instr}</span></div><div class="l">${EN ? "★ hits / verdicts" : "★ 的中 / 判定"} · ${T.map.regs_line(v.reg, L.open_p.length)}</div></div>
+        <div class="card kpi"><div class="v">${L.open_h.length + L.open_p.length}</div><div class="l">${T.map.pending_h}${L.ledger && (lg.instrument || lg.mechanism) ? ` · ${T.map.instr} ${bar(lg.instrument)} · ${T.map.mech} ${bar(lg.mechanism)}` : ""}</div></div>
+      </div>
+      <div class="grid g2">
+        <div>
+          <div class="card"><h3 class="ct">${T.map.pending_h}</h3><div class="mrow"><b>${T.map.openp}</b><div>${chips(L.open_p)}</div></div><div class="mrow"><b>${T.map.openh}</b><div>${chips(L.open_h)}</div></div></div>
+          <div class="card" style="margin-top:12px"><h3 class="ct">${T.map.decisions_h} <span class="muted small">${ds.length}</span></h3>${ds.length ? ds.map(dcard).join("") : `<div class="small muted">${T.map.decisions_none}</div>`}</div>
+          ${ods.length ? `<div class="card" style="margin-top:12px"><h3 class="ct">${T.map.orders_line_h}</h3>${ods.map(o => `<div class="small">${esc(o.no)} <span class="muted">${esc(o.date)}</span> ${esc(o.title)}</div>`).join("")}</div>` : ""}
+          ${L.lessons.length ? `<div class="card" style="margin-top:12px"><h3 class="ct">${T.map.lessons}</h3>${chips(L.lessons)}</div>` : ""}
+        </div>
+        <div class="card"><h3 class="ct">${T.map.timeline_h} <span class="muted small">${L.events.length}</span></h3><div class="stl">${byDate.map(([d, arr]) => `<div class="sday"><div class="sdate">${esc(d)}</div><div class="sev">${arr.map(x => `<div class="sitem"><span class="mk ${x.mark}">${MARK[x.mark][0]}</span> ${chip(x.id)} ${x.name ? `<span class="small">${esc(x.name)}${x.kn ? " " + esc(x.kn) : ""}</span>` : ""}${x.open ? `<span class="badge" style="background:${statusColor("provisional")}">${T.map.openp}</span>` : ""}</div>`).join("")}</div></div>`).join("") || `<div class="hint">${T.map.no_ev}</div>`}</div></div>
+      </div></div>`;
+    const flash = (b, t) => { const o = b.textContent; b.textContent = t; setTimeout(() => { b.textContent = o; }, 1200); };
+    const url = () => location.href.replace(/#.*$/, "") + `#v=story&line=${L.id}${EN ? "&lang=en" : ""}`;
+    const dl = (name, text, type) => { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name; a.click(); };
+    $("#stCopyUrl").onclick = (e) => { e.stopPropagation(); const b = e.currentTarget; if (navigator.clipboard) navigator.clipboard.writeText(url()).then(() => flash(b, T.map.copied), () => window.prompt("URL:", url())); else window.prompt("URL:", url()); };
+    $("#stCopyMd").onclick = (e) => { e.stopPropagation(); const b = e.currentTarget, t = storyMarkdown(L, ods, ds); if (navigator.clipboard) navigator.clipboard.writeText(t).then(() => flash(b, T.map.copied), () => window.prompt("Markdown:", t)); else window.prompt("Markdown:", t); };
+    $("#stDlMd").onclick = (e) => { e.stopPropagation(); dl(`${L.id}.md`, storyMarkdown(L, ods, ds), "text/markdown"); };
+    $("#stDlJson").onclick = (e) => { e.stopPropagation(); dl(`${L.id}.json`, JSON.stringify({ generated_at: META.map.today, lane: L, orders: ods, decisions: ds }, null, 1), "application/json"); };
+    stage.querySelectorAll("[data-story]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); go("story", { line: b.dataset.story }); }));
+    stage.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); go(b.dataset.go); }));
   }
   function drawLanes(host, lanes, win, today) {
     if (!host) return; if (!lanes.length) { host.innerHTML = `<div class="hint">${T.map.no_ev}</div>`; return; }

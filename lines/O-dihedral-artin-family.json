@@ -1,0 +1,96 @@
+{
+ "generated_at": "2026-09-23",
+ "lane": {
+  "id": "O-dihedral-artin-family",
+  "key": "L4",
+  "label": "④ 二面体／Q8／Artin",
+  "short": "Artin",
+  "n": 31,
+  "last": "2026-08-25",
+  "types": {
+   "C": 4,
+   "E": 5,
+   "L": 6,
+   "O": 4,
+   "P": 1,
+   "Q": 5,
+   "X": 6
+  },
+  "claims": {
+   "established": 3,
+   "registered-hit": 1
+  },
+  "hyps": {},
+  "active7": 0,
+  "active30": 1,
+  "events": [
+   {
+    "date": "2026-06-10",
+    "id": "C-thm71-q8-census",
+    "t": "C",
+    "mark": "est",
+    "name": "established",
+    "label": "Thm7.1 Q8 census 全23 PASS"
+   },
+   {
+    "date": "2026-08-09",
+    "id": "P-q8-step2-w1",
+    "t": "P",
+    "mark": "reg",
+    "label": "ORDER_Q8_STEP2 w1 三層凍結＋事前登録（判定帯 [494,556]・W 層予測）",
+    "open": false
+   },
+   {
+    "date": "2026-08-10",
+    "id": "C-q8-w-diagonal",
+    "t": "C",
+    "mark": "est",
+    "name": "registered-hit",
+    "label": "数体 Q8 (8T5) の解析済全個体で中心消滅⇔W=−1（完全対角）"
+   },
+   {
+    "date": "2026-08-12",
+    "id": "C-deltac-identity",
+    "t": "C",
+    "mark": "est",
+    "name": "established",
+    "label": "Q8 Δ_C 厳密恒等式（結果は真、新規性は主張しない）"
+   },
+   {
+    "date": "2026-08-13",
+    "id": "C-nonabelian-dictionary",
+    "t": "C",
+    "mark": "est",
+    "name": "established",
+    "label": "非可換辞書 |C|=|[G,G]|（O-30）"
+   }
+  ],
+  "ledger": null,
+  "established": [
+   "C-nonabelian-dictionary",
+   "C-deltac-identity",
+   "C-q8-w-diagonal",
+   "C-thm71-q8-census"
+  ],
+  "rejected": [],
+  "open_h": [],
+  "open_p": [],
+  "verdicts": {
+   "star": 0,
+   "bad": 0,
+   "instr": 0,
+   "plain": 0,
+   "reg": 1
+  },
+  "lessons": [
+   "L-verify-script-in-repo",
+   "L-byte-fidelity",
+   "L-population-definition",
+   "L-monitor-predicate-fragile"
+  ],
+  "orders": [],
+  "decisions": []
+ },
+ "orders": [],
+ "decisions": []
+}

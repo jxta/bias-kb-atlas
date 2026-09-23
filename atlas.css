@@ -280,3 +280,6 @@ pre.raw.cmd { max-height: none; font-size: 12px; margin: 4px 0 6px; }
 .map .lbar{display:inline-block;width:70px;height:7px;background:var(--line);border-radius:3px;vertical-align:middle;overflow:hidden}.map .lbar i{display:block;height:100%;background:var(--ink)}
 .map details.sec summary .n{color:var(--muted);font-weight:400;margin:0 2px}
 @media(max-width:900px){.map .grid.g2{grid-template-columns:1fr}}
+/* 研究線の物語 */
+.story .stl .sday{display:grid;grid-template-columns:78px 1fr;gap:8px;padding:5px 0;border-top:1px solid var(--line)}.story .stl .sdate{color:var(--muted);font-size:12px;padding-top:2px}.story .stl .sitem{margin:2px 0;line-height:1.7}
+.story .dcard{padding:10px 12px;margin-top:8px}.story .dcard .h{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.story .toolbar{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
