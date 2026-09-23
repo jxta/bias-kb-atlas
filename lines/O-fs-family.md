@@ -2,6 +2,8 @@
 
 生成 2026-09-23・記録層の最終追記 2026-07-15・ノード 6（C 1、E 1、O 1、Q 2、X 1）
 
+読み方: 記録層（private repo jxta/ai4math-lab の knowledge/）から生成した文書。`ID` は同 repo の knowledge/＜型＞/＜ID＞.json、または private Atlas（knowledge/rendered/atlas.html の #v=grounding&node=＜ID＞）で開ける。議論は同 repo の Discussions（研究線ごとのスレッド）、結論は knowledge/decisions/ に残す（裁定 0022）。
+
 主張 1（確立 1・登録的中 0・棄却 0）／登録 0（未判定 0）／判定 0（★ 0・✗ 0・⚠ 0）／開いた仮説 0
 
 ## 現在地

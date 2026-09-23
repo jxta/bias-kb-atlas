@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-09-23T02:02:01Z",
+ "generated_at": "2026-09-23T03:44:03Z",
  "source": "index/kb.jsonld",
- "source_ref": "e1faddf4",
- "source_commit_date": "2026-09-21",
+ "source_ref": "46f0e1e0",
+ "source_commit_date": "2026-09-23",
  "version": "v1.0",
  "repo": "jxta/ai4math-lab",
  "stats": {
@@ -27,8 +27,8 @@
   "n": 100,
   "date_min": "2026-06-10",
   "date_max": "2026-08-25",
-  "full_n": 908,
-  "full_date_max": "2026-09-16",
+  "full_n": 962,
+  "full_date_max": "2026-09-22",
   "stubs": 69,
   "stub_types": {
    "Quantity": 3,
@@ -515,17 +515,17 @@
  ],
  "full_stats": {
   "types": {
-   "Claim": 151,
-   "Evidence": 178,
-   "Hypothesis": 49,
-   "Lesson": 115,
-   "Object": 99,
-   "Protocol": 90,
-   "Quantity": 67,
-   "ExecutionUnit": 159
+   "Claim": 159,
+   "Evidence": 189,
+   "Hypothesis": 51,
+   "Lesson": 127,
+   "Object": 106,
+   "Protocol": 94,
+   "Quantity": 70,
+   "ExecutionUnit": 166
   },
   "claim_status": {
-   "established": 98,
+   "established": 106,
    "challenged": 3,
    "rejected-recorded": 3,
    "supported": 9,
@@ -534,7 +534,7 @@
    "rejected": 23
   },
   "hypothesis_status": {
-   "open": 25,
+   "open": 27,
    "promoted": 4,
    "supported": 8,
    "rejected": 7,
@@ -542,29 +542,29 @@
    "provisional": 1
   },
   "protocols": {
-   "n": 90,
-   "frozen": 90
+   "n": 94,
+   "frozen": 94
   },
-  "lessons": 115,
+  "lessons": 127,
   "execution_units": {
-   "n": 159,
+   "n": 166,
    "tiers": {
-    "full": 97,
+    "full": 104,
     "spot": 13,
     "accept": 49
    },
-   "offline": 9
+   "offline": 10
   },
   "grounding": {
-   "claims": 151,
-   "structural": 151,
+   "claims": 159,
+   "structural": 159,
    "quick": 27
   },
   "bidir_pairs": {
-   "pairs": 184,
-   "bidir": 168
+   "pairs": 195,
+   "bidir": 178
   },
-  "status_history": 7,
+  "status_history": 17,
   "k4": {
    "offline_pass": 9,
    "offline_run": 9,
@@ -738,14 +738,34 @@
    [
     "2026-09-16",
     1
+   ],
+   [
+    "2026-09-17",
+    2
+   ],
+   [
+    "2026-09-18",
+    3
+   ],
+   [
+    "2026-09-20",
+    5
+   ],
+   [
+    "2026-09-21",
+    13
+   ],
+   [
+    "2026-09-22",
+    31
    ]
   ]
  },
  "map": {
   "today": "2026-09-23",
   "record_max": "2026-08-25",
-  "full_record_max": "2026-09-16",
-  "stale_days": 7,
+  "full_record_max": "2026-09-22",
+  "stale_days": 1,
   "lanes": [
    {
     "id": "O-dihedral-artin-family",
@@ -836,7 +856,8 @@
      "L-monitor-predicate-fragile"
     ],
     "orders": [],
-    "decisions": []
+    "decisions": [],
+    "thread": ""
    },
    {
     "id": "O-ff-q3-family",
@@ -1022,7 +1043,8 @@
      "L-novelty-search-scope"
     ],
     "orders": [],
-    "decisions": []
+    "decisions": [],
+    "thread": ""
    },
    {
     "id": "O-fingerprint-family",
@@ -1054,7 +1076,8 @@
     },
     "lessons": [],
     "orders": [],
-    "decisions": []
+    "decisions": [],
+    "thread": ""
    },
    {
     "id": "O-fs-family",
@@ -1102,7 +1125,8 @@
     },
     "lessons": [],
     "orders": [],
-    "decisions": []
+    "decisions": [],
+    "thread": ""
    }
   ],
   "program": {
@@ -1157,19 +1181,19 @@
     "key": "A",
     "short": "A",
     "label": "\u7814\u7a76\u7dda A \u2014 2 \u6b21\u90e8\u5206\u306e\u7cfb\u5217",
-    "n": 168,
-    "last": "2026-09-16",
-    "claims": 1,
+    "n": 193,
+    "last": "2026-09-22",
+    "claims": 6,
     "protocols": 45
    },
    {
     "key": "B",
     "short": "B",
     "label": "\u7814\u7a76\u7dda B \u2014 \u4e8c\u9762\u4f53 D\u2099 \u7cfb\u5217",
-    "n": 37,
-    "last": "2026-09-15",
-    "claims": 0,
-    "protocols": 9
+    "n": 63,
+    "last": "2026-09-22",
+    "claims": 3,
+    "protocols": 13
    },
    {
     "key": "Pr",
@@ -1188,8 +1212,17 @@
     "last": "2026-08-23",
     "claims": 1,
     "protocols": 1
+   },
+   {
+    "key": "\u2014",
+    "short": "\u672a\u5206\u985e",
+    "label": "\u672a\u5206\u985e",
+    "n": 3,
+    "last": "2026-09-18",
+    "claims": 0,
+    "protocols": 0
    }
   ]
  },
- "discussions": "https://github.com/jxta/bias-kb-atlas/discussions"
+ "discussions": ""
 }
