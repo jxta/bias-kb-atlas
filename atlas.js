@@ -2,10 +2,22 @@
    依存: d3 v7（同梱）。データ: <script id="atlas-data"> の JSON（kb_atlas.py が生成）。 */
 (function () {
   "use strict";
-  // 言語: #lang=en（または ?lang=en、前回の選択）で 案内・接地・ヘッダ・フィルタ・詳細の見出し・図のラベル を英語にする。
-  // ノードの本文（label / statement）は記録層の言語のまま。切替はページ再読込（定数を組み直すため）。
-  const LANG = (() => { try { const h = new URLSearchParams(location.hash.replace(/^#/, "")), q = new URLSearchParams(location.search); const l = h.get("lang") || q.get("lang") || localStorage.getItem("atlas-lang"); return l === "en" ? "en" : "ja"; } catch (e) { return "ja"; } })();
+  // 言語: 優先順は #lang=en|ja（または ?lang=）→ 前回の選択（localStorage）→ ブラウザの言語（日本語なら ja、それ以外は en）。
+  // 英語 UI では 案内・接地・ヘッダ・フィルタ・詳細の見出し・図のラベル が英語になる。ノードの本文（label / statement）は記録層の言語のまま。
+  // 切替はページ再読込（定数を組み直すため）。2026-10-13: 既定をブラウザ言語から決めるようにした（それまでは lang=en のときだけ英語）。
+  const LANG = (() => {
+    let l = null;
+    try { const h = new URLSearchParams(location.hash.replace(/^#/, "")), q = new URLSearchParams(location.search); l = h.get("lang") || q.get("lang"); } catch (e) { }
+    if (l !== "en" && l !== "ja") { try { l = localStorage.getItem("atlas-lang"); } catch (e) { l = null; } }
+    if (l === "en" || l === "ja") return l;
+    try {
+      const langs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || ""];
+      return langs.some(x => String(x || "").toLowerCase().startsWith("ja")) ? "ja" : "en";
+    } catch (e) { return "en"; }
+  })();
   const EN = LANG === "en"; document.documentElement.lang = LANG;
+  // 公開 index.html の固定リンク「現在地」（progress.html）の表示を言語に合わせる（private の atlas.html には無い）
+  try { const pl = document.getElementById("progress-link"); if (pl) { pl.textContent = EN ? "Progress" : "現在地"; pl.title = EN ? "Where the research stands — one page (Japanese)" : "研究の現在地 — 1 枚で状況を見る"; } } catch (e) { }
   const T = EN ? {
     tabs: { guide: "Guide", grounding: "Grounding", atlas: "Overview", lines: "Lines", timeline: "Time", graph: "Graph", lessons: "Lessons", protocols: "Registrations", table: "Table" },
     hdr_rec: "record layer", hdr_exc: "excerpt", hdr_sync: "synced", hdr_ref: "source commit of the record layer", hdr_rerun_t: "latest re-run of the offline units by the public CI (rerun.yml → kb/rerun-latest.json)", hdr_rerun: "last re-run",

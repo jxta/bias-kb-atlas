@@ -1,11 +1,25 @@
-# bias-kb Atlas — 公開抜粋（主張から再実行可能な証拠へ）
+# bias-kb Atlas — public excerpt: from claims to re-executable evidence
 
 [![rerun-offline-units](https://github.com/jxta/bias-kb-atlas/actions/workflows/rerun.yml/badge.svg)](https://github.com/jxta/bias-kb-atlas/actions/workflows/rerun.yml)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jxta/bias-kb-atlas/main?labpath=rerun.ipynb)
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/jxta/bias-kb-atlas?quickstart=1)
 
+**bias-kb Atlas** is the public excerpt of a research knowledge base in which every claim is grounded, by links written in both directions, in the evidence and the re-executable computation that produced it. 100 nodes are selected *by rule* (never by hand) from a private record layer of 962 nodes (2026-09-23); neighbours outside the excerpt remain as type-only private stubs, so that “evidence exists but is private” is distinguishable from “no evidence”.
+
+- **Site**: https://jxta.github.io/bias-kb-atlas/ — the UI follows your browser language (English unless the browser is set to Japanese); force it with `#lang=en` or `#lang=ja`, or use the EN／日本語 button in the header. The guide, the grounding view, headings and figure labels are translated; node texts remain in Japanese, the language of the record layer. Research map: https://jxta.github.io/bias-kb-atlas/#v=map&lang=en · where the research stands (one page, Japanese): https://jxta.github.io/bias-kb-atlas/progress.html
+- **Check it in 3 minutes**: open the guide tab and follow the tour — claim → evidence → execution unit → re-run PASS; re-run one unit yourself (`python3 rerun.py X-census-d17-spot`, or the Binder badge above); a prediction frozen before the run that came true; a rejected claim that is still there; the human merge as the only way into the record layer.
+- **For AI agents**: `llms.txt` (how to walk the graph), `n/<id>.json` (one node as JSON-LD, with `bidir`/`stub` flags on links and the grounding chain), `kb/kb.jsonld` (whole excerpt, context embedded, provenance mapped to W3C PROV), `kb/backlinks.json`, `ro-crate-metadata.json`, `kb/rerun-latest.json` (latest CI re-run). Every node has a stable URL `n/<id>.html` that can be cited from a paper.
+- **Re-run**: `git clone … && pip install -r requirements.txt && python3 rerun.py` — checks the sha256 of the frozen inputs, runs each `entry`, compares with `expected`; CI does the same on every push and weekly. Units that need the mdx academic cloud are shown honestly as “private · not re-run”, never as matches.
+- **Provenance of this site**: everything here is generated from the private record layer `jxta/ai4math-lab` (`knowledge/`) by `kb_atlas.py --profile public-grounding`; nothing is hand-picked or hand-edited. In the record layer the orchestrating AI writes nodes, the meta AI audits them, and a human merge is the only way in. Research: JHPCN jh261018 “AI for Science of Science: a systematic study of Chebyshev's bias” (Miho Aoki, Shimane University; Shigetoshi Yokoyama, National Institute of Informatics).
+
+*Open the site, read `llms.txt`, fetch one node as `n/<id>.json`, or run `python3 rerun.py` to re-execute the offline execution units bundled here and compare with the recorded expected values. The full Japanese description follows.*
+
+---
+
+## 日本語の説明 — bias-kb Atlas 公開抜粋（主張から再実行可能な証拠へ）
+
 **閲覧**: https://jxta.github.io/bias-kb-atlas/ （静的ページ。ローカルで見るときは `python3 -m http.server` でこのディレクトリを配信して `index.html` を開く。外部依存は d3 v7.9.0 を jsDelivr から SRI 付きで読むだけ）
-**English UI**: https://jxta.github.io/bias-kb-atlas/#v=guide&lang=en （案内・接地・見出し・図のラベルが英語になる。ノード本文は記録層の言語＝日本語のまま。ヘッダの「EN／日本語」で切替）
+**言語**: UI はブラウザの言語に従います（日本語以外なら英語 UI。2026-10-13 から）。`#lang=ja`／`#lang=en` で固定、ヘッダの「EN／日本語」で切替（選択は localStorage に残る）。英語 UI では案内・接地・見出し・図のラベルが英語になり、ノード本文は記録層の言語＝日本語のまま: https://jxta.github.io/bias-kb-atlas/#v=guide&lang=en
 **研究の現在地（1 枚、JS なし）**: https://jxta.github.io/bias-kb-atlas/progress.html · **機械可読**: [`llms.txt`](https://jxta.github.io/bias-kb-atlas/llms.txt) · [`ro-crate-metadata.json`](https://jxta.github.io/bias-kb-atlas/ro-crate-metadata.json)
 
 これは、素数の偏り（Chebyshev bias）の系統的研究を複数の AI エージェントと人間で進めている
@@ -19,12 +33,12 @@
 抜粋外の隣接ノードは**型だけの非公開スタブ**（69 件、ID は実 ID の sha256 先頭 10 桁）として残し、
 「証拠・主張はあるが非公開」と「根拠がない」を区別できるようにしています。
 
-## 何を示すためのものか
+### 何を示すためのものか
 
 この知識基盤の設計目標は、**主張を、それを生んだ再実行可能な計算に双方向のリンクで接地させ、推論が常に再実行可能な証拠まで遡れるようにする**ことです。
 それが進行中の研究で実際に動いていることを、閲覧者自身（人でも、別の AI でも）が確かめられるようにしています。
 
-## しくみ — 図と実例の対応
+### しくみ — 図と実例の対応
 
 下の図は、この知識基盤のしくみを一枚にしたものです。Atlas の最初のタブ **「案内」** に同じ図と対応表があり、
 図の要素をクリック（キーボードでも選べます）すると実例のノードが開きます（https://jxta.github.io/bias-kb-atlas/#v=guide ）。
@@ -59,7 +73,7 @@
 | **P2 双方向性** | 証拠 `grounded_in` ⇄ 実行単位 `verifies` は記録層に両方向で書く。主張 ⇄ 証拠の逆向きは `backlinks.json` を CI が導出し「双方向律」で照合 | 詳細パネルの「出るリンク／入るリンク」。⇄ 印は記録層に両方向あるもの。機械可読には `kb/backlinks.json`（各リンクに `bidir`） |
 | **P3 実行粒度** | 実行単位は `tier`（full = 本走・accept = 受入・spot = 抽出照合）で再実行の範囲とコストを限定 | offline 単位 7 本は同梱データだけで 1 コマンドずつ再実行できる（下記）。本走（full）は「非公開・未再実行」として別枠に正直に数える |
 
-## 機械可読の入口 — For AI agents（英語）
+### 機械可読の入口 — For AI agents（英語）
 
 The whole excerpt is reachable without JavaScript and without scraping the interactive page:
 
@@ -80,7 +94,7 @@ The whole excerpt is reachable without JavaScript and without scraping the inter
 
 Walk: `C.supported_by → E.grounded_in → X` (and `X.verifies → E` written explicitly, so the pair is bidirectional). Refuted claims keep `status: rejected` and point to the counter-evidence via `refuted_by`; nothing is deleted. Ids of the form `<T>-~<10 hex>` with `"stub": true` are nodes that exist in the record layer but are outside this excerpt — only the type is public; they distinguish "evidence exists but is private" from "no evidence".
 
-## 再実行する
+### 再実行する
 
 ```bash
 git clone https://github.com/jxta/bias-kb-atlas.git && cd bias-kb-atlas
@@ -114,7 +128,7 @@ GitHub Actions（上のバッジ）が push のたびと毎週、同じ再実行
 本走（`full`、mdx 計算機上の全数 census: 例 d=17 は 86,093,442 個の指標）は同梱していません。
 その本走の記録・sha・登録帯は各ノードの JSON にあり、Atlas では「非公開・未再実行」として一致にも不一致にも数えません。
 
-## 中身
+### 中身
 
 ```
 index.html                 Atlas（案内・接地・俯瞰・研究線・時間・グラフ・教訓・登録・表 ＋ 詳細パネル。#lang=en で英語 UI）
@@ -137,20 +151,9 @@ docs/overview.svg          しくみの図（案内タブと上の対応表に�
 ノードの 8 型: O 対象・Q 量・E 証拠・C 主張・H 仮説・P 事前登録・X 実行単位・L 教訓。
 状態: established／registered-hit（走行前に凍結した予測の的中）／supported／provisional／open／challenged／rejected（棄却も残す）。
 
-## 出所と生成
+### 出所と生成
 
 - 記録層: `jxta/ai4math-lab`（private）`knowledge/` — 統率AI（Claude）が知識化し、meta-AI（Claude）が検収、横山（NII）が merge で承認。
 - 生成: `knowledge/tools/kb_atlas.py --profile public-grounding --source-ref <sha> --public-repo jxta/bias-kb-atlas --site-url https://jxta.github.io/bias-kb-atlas --emit-parts <このリポジトリ> --bundle-inputs`（同リポジトリ）。抜粋は `kb/parts/`（1 行 1 ノードの JSONL）で受け取り、CI が `kb/nodes.json` に組み立てて派生ファイルを再生成する。すべて生成物で、手編集しない。鮮度（記録層のノード数・元 commit・同期日）は Atlas のヘッダに出る。
 - 更新: 2026-09-03 接地ビュー／09-04 案内ビュー／09-06 ノード単体ページ・JSON-LD・スタブ・ツアー・現在地ページ／09-15 記録層 903 ノードに同期、英語 UI、記録層の規模、状態履歴（`status_history`）の表示、JSON-LD context を記録層の最新（82 語、来歴を W3C PROV へ）に、RO-Crate、ノートブック、CI 検査 `check_site.py`／09-23 記録層 962 ノードに同期、「地図」タブ（研究線ごとの節目・現在地・次の一手・方向層・直近の変化。非公開の線は数だけ）。
 - 研究: JHPCN jh261018「AI for Science of Science: 系統的素数偏り研究」（青木美穂・島根大学、横山重俊・国立情報学研究所）。
-
-## In English
-
-**bias-kb Atlas** is the public excerpt of a research knowledge base in which every claim is grounded, by links written in both directions, in the evidence and the re-executable computation that produced it. 100 nodes are selected *by rule* (never by hand) from a private record layer of 903 nodes (2026-09-15); neighbours outside the excerpt remain as type-only private stubs, so that “evidence exists but is private” is distinguishable from “no evidence”.
-
-- **Site** (English UI: guide, grounding, headings, figure labels; node texts are in Japanese): https://jxta.github.io/bias-kb-atlas/#v=guide&lang=en
-- **Check it in 3 minutes**: open the guide tab and follow the tour — claim → evidence → execution unit → re-run PASS; re-run one unit yourself (`python3 rerun.py X-census-d17-spot`, or the Binder badge above); a prediction frozen before the run that came true; a rejected claim that is still there; the human merge as the only way into the record layer.
-- **For AI agents**: `llms.txt` (how to walk the graph), `n/<id>.json` (one node as JSON-LD, with `bidir`/`stub` flags on links and the grounding chain), `kb/kb.jsonld` (whole excerpt, context embedded, provenance mapped to W3C PROV), `kb/backlinks.json`, `ro-crate-metadata.json`, `kb/rerun-latest.json` (latest CI re-run). Every node has a stable URL `n/<id>.html` that can be cited from a paper.
-- **Re-run**: `git clone … && pip install -r requirements.txt && python3 rerun.py` — checks the sha256 of the frozen inputs, runs each `entry`, compares with `expected`; CI does the same on every push and weekly. Units that need the mdx supercomputer are shown honestly as “private · not re-run”, never as matches.
-
-*Open `index.html`, read `llms.txt`, fetch one node as `n/<id>.json`, or run `python3 rerun.py` to re-execute the offline execution units bundled here and compare with the recorded expected values.*
