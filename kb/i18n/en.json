@@ -1,0 +1,1011 @@
+{
+ "meta": {
+  "lang": "en",
+  "kind": "bias-kb Atlas — English overlay for the public excerpt (presentation layer, not part of the record layer)",
+  "generated": "2026-10-13",
+  "source": "kb/nodes.json",
+  "source_generated_at": "2026-09-23T03:44:03Z",
+  "source_ref": "46f0e1e0",
+  "translation": "AI-assisted translation (Claude) checked by the project; the Japanese record layer is authoritative. Identifiers, numbers, formulas, file names and PR/ORDER/STATU numbers are kept verbatim.",
+  "fingerprint": "_src[path] = FNV-1a 32-bit over the Unicode code points of the Japanese source text, hex, ':' , length in code points. atlas.js applies a translation only when the current source text has the same fingerprint.",
+  "check": "python3 i18n_check.py",
+  "counts": {
+   "nodes": 100,
+   "fields": 248,
+   "lines": 12,
+   "k4": 2
+  }
+ },
+ "nodes": {
+  "C-1q-law": {
+   "label": "1/q law (leading asymptotics of the boundary excess)",
+   "statement": "O(g,q) ~ 1/[(q-1)q^g]. Consistent with the boundary excess measured in the d11–d17 censuses.",
+   "counterpoints": "Depends on the elementary estimate q^{2g}-2g N_q(2g)=q^g+lower-order terms.",
+   "_src": {
+    "label": "11d56745:16",
+    "statement": "402d2064:48",
+    "counterpoints": "83f09279:34"
+   }
+  },
+  "C-a1-mobius": {
+   "label": "Möbius closed form for A_1 (rigorous proof, §5A)",
+   "statement": "For e even, Σ_{deg P=e} A_1(P)=(q/e)Σ_{d|odd(m)}μ(d)(q^d-1). Reciprocity → χ_2(P(0))=ψ_e(root) → Möbius inversion over subfields; rigorous.",
+   "counterpoints": "The case e odd is treated separately. Does not extend to the middle coefficient A_{e/2} (see C-middle-law-false below).",
+   "_src": {
+    "label": "c7f3a289:26",
+    "statement": "492ee830:92",
+    "counterpoints": "9aa2f366:56"
+   }
+  },
+  "C-boundary-closedform": {
+   "label": "Closed form of the boundary O-term (Theorem 1, rigorous)",
+   "statement": "The O-term of the hyperelliptic boundary excess is given rigorously by the closed form O(g,q) (Q-boundary-oterm). It uses only Rudnick's top coefficient A_{e-1}=-q^{e/2-1} (functional equation, root number +1) and elementary generating functions; the general A_j are not needed.",
+   "counterpoints": "The main term and the root number are due to Rudnick (stated explicitly). The novelty is the closed form of the quadratic n=2g term.",
+   "_src": {
+    "label": "1ffe53fe:24",
+    "statement": "3510f3d4:120",
+    "counterpoints": "4fbe563c:46"
+   }
+  },
+  "C-cg-sequence": {
+   "label": "The integer sequence c(g) (Theorem 2)",
+   "statement": "The symmetric limit of the boundary excess is c(g)=+1,+1,-1,0,0,… (0 for g≥4). Rigorous by symbolic evaluation.",
+   "counterpoints": "Symbolic evaluation at finite g. The asymptotic behaviour is covered by the 1/q law.",
+   "_src": {
+    "label": "3d9c3f7c:19",
+    "statement": "f7bd7425:47",
+    "counterpoints": "e1437925:28"
+   }
+  },
+  "C-d11-registered-hit": {
+   "label": "d11 registered prediction hit (registered-hit)",
+   "statement": "The boundary excess d11=−0.49076650925398013 (16 digits) hit the pre-registered value −0.4907 from Rudnick's theorem (the purely empirical rule −0.4870 was rejected). k4 offline re-verification PASS.",
+   "counterpoints": "Discriminating from a pure exponential form = identifying the theorem (registered falsifiability).",
+   "_src": {
+    "label": "a8c1e44e:27",
+    "statement": "0f9971cc:103",
+    "counterpoints": "e6da5f04:24"
+   }
+  },
+  "C-d15-registered-hit": {
+   "label": "d15 registered prediction hit (registered-hit)",
+   "statement": "d15=−0.4989715075302701 and ‘m_D odd = 0’ hit the prediction registered before the run (2nd case). The interior even term n=6 also matched E_pred −0.940474. k4 offline re-verification PASS.",
+   "counterpoints": "Tests the extrapolation accuracy of the theorem.",
+   "_src": {
+    "label": "75d646fa:27",
+    "statement": "aa53a6d0:103",
+    "counterpoints": "0357ad04:10"
+   }
+  },
+  "C-d17-registered-hit": {
+   "label": "d17 registered band hit (registered-hit)",
+   "statement": "With the d17 census complete, the boundary excess −0.4994337027369984 (16 digits) is PASS inside the registered band [−0.50093,−0.49793] (confirmation of the 1/q law at a higher generation). nD=86,093,442 with a full-count match; 261 individuals in the m_D=2 layer. Registration frozen in PR #124; DIRECTIVE #186 merged, so the validity of the hit is not in question.",
+   "counterpoints": "★ Limit of the band design (DIRECTIVE 0049): the half-width 0.0015 is about 3.3 times the predicted increment −0.00046, so the band also contains the measured d15 value — ‘inside the band’ alone cannot distinguish geometric decay from no change since the previous generation (from d19 on, the half-width is registered in proportion to the increment). The census aggregate ea_d17 finished on 2026-08-24 and is committed to the repo (sha_verified=verified; the recorded-only status is resolved).",
+   "_src": {
+    "label": "1aa786db:26",
+    "statement": "61d23b42:173",
+    "counterpoints": "3ca2ca4f:208"
+   }
+  },
+  "C-d19-sign-reversal": {
+   "label": "Sign reversal of the boundary excess at d=19, hit as registered before the run (experimental settlement of the n=6 problem)",
+   "statement": "In the full census of 774,840,978 individuals for q=3, d=19 (g=9), the measured per-individual excess (Σ side) −2.4300e-05 lies inside the registered band [−2.7253e-05, −2.1253e-05] (registered value −2.4253e-05±3e-06, frozen before the run). The predicted sign reversal from the +1.8e-06 of d13–d17 is confirmed; the difference from the all-groups closed form is 4.10e-10. The mechanism (0056 §3) in which −q·Σ_P A_5 changes sign at the edge idx=7 of the window condition d mod 12 ∈ [0,7] is confirmed and need not be withdrawn.",
+   "counterpoints": "O-19 was launched earlier than instructed (self-reported, STATU 0059 §5). 36 individuals were temporarily lost with rc=137; the values are the full count after a 24 h extension and a 36/36 re-run. The registration was frozen by the .bus ORDER 0008 method (inbox commit 081d278), not by the Yokoyama-merge method. The census aggregate sha is recorded-only (awaiting k4 verification).",
+   "derivation_hooks[0]": "Follow-up test of the window-exponent transition from d=21 on",
+   "derivation_hooks[1]": "Make the g=9 out-of-sample result (ratio 0.99990) an independent Claim",
+   "derivation_hooks[2]": "Extrapolate the n=6 mechanism to other q",
+   "_src": {
+    "label": "451ccc21:39",
+    "statement": "4c9ad96c:257",
+    "counterpoints": "330de0aa:184",
+    "derivation_hooks[0]": "e86fb786:16",
+    "derivation_hooks[1]": "0ec2f1b1:39",
+    "derivation_hooks[2]": "5b48684c:15"
+   }
+  },
+  "C-deltac-identity": {
+   "label": "Exact Δ_C identities for Q8 (the result is true; no novelty is claimed)",
+   "statement": "Delta_{±i}=(1/4)(T_1−T_2−T_3) and Delta_1+Delta_{-1}=(1/4)(T_1+T_2+T_3) are exact identities. The three classes of order 4 are determined by congruences alone. A Python implementation that never uses the degree-8 polynomial reproduces gp to 2.3e-13.",
+   "counterpoints": "★ No novelty is claimed: Δ=(2/h)Σ_{ψ≠1}S_ψ and the general form of Δ_C are preceded by Aoki–Koyama (arXiv:2203.12266) Theorem 3.1 / 2.2 (a paper by Prof. Aoki herself). What remains of value is the preprocessing for family statistics and the concrete consequences for Q8.",
+   "_src": {
+    "label": "1b374d63:28",
+    "statement": "5266ae3d:125",
+    "counterpoints": "2b2d2a75:132"
+   }
+  },
+  "C-ks-duality-dual": {
+   "label": "Family KS symmetry type = dual of the individual FS indicator (settled for 5 families)",
+   "counterpoints": "θ-unfolding removes the degree confounding (the naive version is an artifact).",
+   "_src": {
+    "label": "6ca6eb70:20",
+    "counterpoints": "1f1134b2:42"
+   }
+  },
+  "C-middle-law-false": {
+   "label": "The middle-coefficient law is false (self-refuted)",
+   "statement": "The hypothesis Σ_P A_{e/2}=-N_q(e) holds only for e=2,6 and fails at e=10 (-6024≠-5880). It reduces to a smoothed Weil sum.",
+   "counterpoints": "Initially extrapolated (wrongly) from the two cases e=2,6 to all e≡2 mod 4. Refuted by direct computation while attempting a proof. A real instance of the project's guard against ‘extrapolation from few cases’.",
+   "_src": {
+    "label": "83654712:13",
+    "statement": "2c9af648:73",
+    "counterpoints": "678957e9:77"
+   }
+  },
+  "C-nonabelian-dictionary": {
+   "label": "Non-abelian dictionary |C|=|[G,G]| (O-30)",
+   "statement": "A class C is determined by congruences ⟺ |C|=|[G,G]|. Q8/D4=3/5, A4=2/4, S4=0/5, A5=0. The mechanism splits three ways: quadratic / cubic / none.",
+   "counterpoints": "Proved by column orthogonality. Confirmed by Chebotarev densities in A4/S4 fields. A5 has no congruence-determined class.",
+   "_src": {
+    "label": "134fa01b:23",
+    "statement": "9c16cd19:75",
+    "counterpoints": "9848de84:49"
+   }
+  },
+  "C-novelty-n2g": {
+   "label": "Novelty of the quadratic n=2g term (within the searched range)",
+   "statement": "No prior work on the closed form of the quadratic n=2g term of the boundary O-term was found in the searched MathSciNet/arXiv range. The main term and the root number are known from Rudnick.",
+   "counterpoints": "A full sweep of MathSciNet/zbMATH is incomplete (AMS Trans. 378 (2025) unread, HTTP 403). A provisional claim limited to that range.",
+   "_src": {
+    "label": "aa78f61f:19",
+    "statement": "cc8a14e4:78",
+    "counterpoints": "ae64cfa4:68"
+   }
+  },
+  "C-q8-w-diagonal": {
+   "label": "For all analysed Q8 (8T5) number fields, central vanishing ⇔ W=−1 (perfectly diagonal)",
+   "statement": "Among the 40,125 fields of the LMFDB 8T5 master table with m_ρ0 computed, central zero order m≥1 ⇔ root number W=−1 holds with 0 exceptions (W=−1∧m≥1: 20,600 / W=+1∧m=0: 19,525 / off-diagonal 0/0). A perfect hit of the W-layer prediction registered before the run (P-q8-step2-w1).",
+   "counterpoints": "The population is the subset with m_ρ0 computed (40,125 of 50,257). The 10,132 uncomputed fields are a systematic truncation on the large-conductor side (see the diagnosis in E-tb-registered). The diagonality is an exhaustive fact on that subset.",
+   "derivation_hooks[0]": "The same cross-table for other FS=−1 groups (Q16, SL(2,3), …)",
+   "derivation_hooks[1]": "Stability of the diagonality across conductor layers (connects to H-vanishing-rate-conductor-drift)",
+   "derivation_hooks[2]": "Basis for the murmuration search by root-number layer (H-root-number-murmuration)",
+   "_src": {
+    "label": "fb01c744:35",
+    "statement": "ac83f63a:150",
+    "counterpoints": "3e8badaa:101",
+    "derivation_hooks[0]": "4db100ff:33",
+    "derivation_hooks[1]": "d2288a14:51",
+    "derivation_hooks[2]": "92b0f5a8:59"
+   }
+  },
+  "C-registered-prediction-method": {
+   "label": "Pre-registered predictions hit twice (d11, d15)",
+   "statement": "In the pre-registration test, where E_pred is frozen before the run and then compared, d11 and d15 were hits (d11 = discriminating the theorem from phenomenology; d15 = extrapolation accuracy of the theorem).",
+   "counterpoints": "d17 was also a boundary hit (STATU 0050), but the layer extraction is separate. d19 is registered and awaits census confirmation (not yet confirmed as a hit).",
+   "_src": {
+    "label": "0ce972cf:21",
+    "statement": "4feaeb98:68",
+    "counterpoints": "3f87b54c:58"
+   }
+  },
+  "C-thm71-q8-census": {
+   "label": "Thm 7.1 Q8 census: all 23 PASS",
+   "statement": "For all 23, ⟨a_p²−2⟩∈[−1.0071,−1.0005]≈ν=−1. W=+1⟺m_ρ=0 holds throughout.",
+   "_src": {
+    "label": "248d3310:25",
+    "statement": "a507143b:52"
+   }
+  },
+  "E-a1-mobius": {
+   "label": "Σ A_1=(q/e)Σμ(d)(q^d-1) matches",
+   "artifacts[0].role": "proof record (§5A)",
+   "_src": {
+    "label": "44a941a6:26",
+    "artifacts[0].role": "a1e11f88:8"
+   }
+  },
+  "E-boundary-closedform": {
+   "label": "closed form = census match (Theorem 1)",
+   "artifacts[0].role": "written-up proof (Theorem 1)",
+   "_src": {
+    "label": "7b598677:24",
+    "artifacts[0].role": "ab26bafc:15"
+   }
+  },
+  "E-census-d11": {
+   "label": "census d=11 measurement (boundary excess -0.49076650925398013)",
+   "artifacts[0].role": "census aggregate (frozen)",
+   "_src": {
+    "label": "ec75a49f:41",
+    "artifacts[0].role": "9471e908:13"
+   }
+  },
+  "E-census-d13": {
+   "label": "census d=13 measurement (boundary excess -0.4949126864583562)",
+   "artifacts[0].role": "census aggregate (frozen)",
+   "_src": {
+    "label": "d70d205c:40",
+    "artifacts[0].role": "9471e908:13"
+   }
+  },
+  "E-census-d15": {
+   "label": "census d=15 measurement (boundary excess -0.4989715075302701)",
+   "artifacts[0].role": "census aggregate (frozen)",
+   "_src": {
+    "label": "b2b7a762:40",
+    "artifacts[0].role": "9471e908:13"
+   }
+  },
+  "E-census-d17": {
+   "label": "census d=17 measurement (boundary excess -0.4994337)",
+   "artifacts[0].role": "census aggregate (complete, frozen)",
+   "statement": "The d17 census finished (2026-08-24, mdx-01, 152 parallel workers, 4 strata n0/n1/n2/n3). nD=86,093,442 with a full-count match (idfail=0), boundary excess −0.4994337027369984, 261 individuals in the m_D=2 layer.",
+   "_src": {
+    "label": "09c82c83:31",
+    "artifacts[0].role": "db317187:16",
+    "statement": "8189951a:128"
+   }
+  },
+  "E-census-d19": {
+   "label": "census d=19 measurement (Σ-side excess −2.4300e-05, PASS inside the registered band)",
+   "statement": "The per-individual excess, +1.8e-06 at d13–d17, turned negative at d19 (as in the mechanism where −q·Σ_P A_5=+3,132 changes sign at window exponent idx=7). By-product: g=9 was never used in deriving or checking the closed form, so it is fully out-of-sample: dev_j1=2.630862e-05 vs measured 2.630610e-05 (ratio 0.99990). The aggregate sha is recorded-only (to be verified by k4 once mdx is back).",
+   "values.verdict": "PASS (inside the band)",
+   "artifacts[0].role": "O-19 result document (primary)",
+   "_src": {
+    "label": "496921e8:42",
+    "statement": "24d7c830:219",
+    "values.verdict": "81591053:9",
+    "artifacts[0].role": "d5856a00:13"
+   }
+  },
+  "E-d15-regpred": {
+   "label": "d15 registered prediction hit (2nd case) / amplitude law confirmed by h layer",
+   "artifacts[0].role": "d15 census (frozen)",
+   "_src": {
+    "label": "ba6c3748:27",
+    "artifacts[0].role": "3614a760:14"
+   }
+  },
+  "E-ks-duality": {
+   "label": "Family KS symmetry type = dual of the individual FS indicator (5 families + across permutation types)",
+   "statement": "dihedral D3(ν+1)→USp, SSE 1.06 ≪ SO_even 4.41 / order 3 (FS 0)→Unitary, SSE 0.76. Settled for 5 families. Permutation types χ_D/dihedral/S4(W0=0)/A5/S5/S6 all reject SO_even. The apparent symplectic type under naive unfolding is an archimedean artifact. Sym²(EC)→orthogonal is the only exception to the duality.",
+   "_src": {
+    "label": "912f4286:24",
+    "statement": "f94113e2:201"
+   }
+  },
+  "E-middle-e10": {
+   "label": "Counterexample to the middle-coefficient law (-6024≠-5880)",
+   "artifacts[0].role": "record of the self-refutation of the middle-coefficient law",
+   "_src": {
+    "label": "e0cb1349:21",
+    "artifacts[0].role": "09b79d3b:12"
+   }
+  },
+  "E-o18-deltac": {
+   "label": "Δ_C identities = gp measurement, agreement to 2.3e-13; covariance negative",
+   "artifacts[0].role": "O-18 results (PASS 4/5)",
+   "_src": {
+    "label": "5192de03:30",
+    "artifacts[0].role": "4a2d3974:17"
+   }
+  },
+  "E-q8-ks": {
+   "label": "Q8 diagonal law / D4 control 0/970",
+   "artifacts[0].role": "D4 control (frozen)",
+   "_src": {
+    "label": "644689a0:20",
+    "artifacts[0].role": "1f8082a0:9"
+   }
+  },
+  "E-q8-ks-twosided": {
+   "label": "Q8 two-sided KS: USp side 2.3×10⁻⁵ / SO side 0.5134",
+   "artifacts[0].role": "primary record (meta series)",
+   "statement": "Complement to E-q8-ks: two-sided KS test p-values, USp side 2.3×10⁻⁵ and SO side 0.5134 (a gap of 4 orders of magnitude = quantification of the KS duality).",
+   "_src": {
+    "label": "b08e8df0:38",
+    "artifacts[0].role": "d2a6673b:12",
+    "statement": "794afcc7:68"
+   }
+  },
+  "E-q8-note": {
+   "label": "Thm 7.1 Q8 census all 23 PASS + DRH(B) supported",
+   "statement": "For all 23, ⟨a_p²−2⟩∈[−1.0071,−1.0005] (p≤10⁶) ≈ ν=−1, and W=+1⟺m_ρ=0 holds throughout. DRH(B): all 23 at 1e8 + 8 fields at 1e10; Prop. 6.2 sum rule relerr<2%; the Ci fit pins the median at 0.60%. drift=ν master table (3 FS classes × dimensions 2–5 × 7 groups): SL(2,3) drift −1, octahedral ν=0, F21 complex 3-dimensional ν=0. Finding: totally real with W=−1: 5 fields; CM with W=+1: 2 fields (the signature and the analytic rank are independent).",
+   "_src": {
+    "label": "3fecfb60:37",
+    "statement": "9f0d722b:239"
+   }
+  },
+  "E-q8-w-crosstab": {
+   "label": "W×m cross-table of 40,125 Q8 fields (perfectly diagonal)",
+   "artifacts[0].role": "aggregate (frozen)",
+   "artifacts[1].role": "primary data (T-C, frozen at w1)",
+   "_src": {
+    "label": "5a5b1798:27",
+    "artifacts[0].role": "2fa67a7f:6",
+    "artifacts[1].role": "b3bff0d1:16"
+   }
+  },
+  "H-d19-registered": {
+   "label": "Negative bias at d=19 (registered → census PASS inside the band; promoted)",
+   "statement": "Predicted that the O-19 census would show the registered value −2.4253e-05 ± 3e-06 (negative). The all-groups closed form, Σ side −2.4311e-05, lies inside the registered band. → STATU 0059 §1: census of 774,840,978, measured −2.4300e-05, PASS inside the band; the sign reversal confirmed as a hit. (The note at k1-d, ‘confirming STATU not yet received; hit unconfirmed’, contradicted record layer 0059 and was corrected at the meta acceptance review of 2026-08-23.) Promoted to C-d19-sign-reversal.",
+   "_src": {
+    "label": "b674676b:33",
+    "statement": "cfe49b9f:235"
+   }
+  },
+  "H-middle-weil-sum": {
+   "label": "Smoothed Weil sum for the middle coefficient",
+   "statement": "Σ_{deg β=e} S0(β)=-e·N_q(e) (S0 = quadratic character sum over an F_q-subspace, of Gauss/Soto-Andrade type). A candidate for the correct formulation that explains the failure of the middle-coefficient law.",
+   "_src": {
+    "label": "80251ed4:16",
+    "statement": "4840b023:92"
+   }
+  },
+  "H-supersingular-scaling": {
+   "label": "Growth law of the m_D=2 layer (24→72)",
+   "statement": "The number of individuals in the m_D=2 (supersingular) layer grows from d13=24 to d15=72. Registered as a hypothesis that a generation scaling law exists (requires the d17 layer extraction).",
+   "_src": {
+    "label": "f923008f:18",
+    "statement": "3f6bb77e:69"
+   }
+  },
+  "L-byte-fidelity": {
+   "label": "Byte fidelity (CRLF; sha of gz contents)",
+   "statement": "The sha of a frozen artifact changes with the line-ending convention (CRLF/LF) and with gz compression. State in sha_kind whether a sha is of the ‘content’ or of the ‘raw’ bytes, and compare gz files by the sha of the decompressed content. Do not mistake a byte difference for a content difference.",
+   "_src": {
+    "label": "6f3327e9:22",
+    "statement": "d04f2b5a:130"
+   }
+  },
+  "L-deltac-novelty-self-negation": {
+   "label": "Self-negation of the novelty of the general Δ_C form (Aoki–Koyama Thm 3.1) ※ required by ORDER_KB",
+   "statement": "Δ_C(x)=(|C|/|G|)Σ_{ρ≠1}conj(χ_ρ(C))S_ρ(x) is the Artin orthogonality relation applied to the p^{−1/2}-weighted prime count, and is exactly the starting point of Aoki–Koyama (arXiv:2203.12266) Theorem 3.1 / 2.2. The general Δ_C form was about to be presented as a contribution, but a citation search showed it was preceded (by a paper of Prof. Aoki herself), and the novelty claim was withdrawn. ‘A case in which we negated the novelty of our own claim ourselves.’ Lesson: check candidate main results first against Prof. Aoki's own published work. Claim the remaining novelty only for family statistics (split-half covariance) and the concrete consequences for Q8.",
+   "_src": {
+    "label": "72852ea7:49",
+    "statement": "641aacca:294"
+   }
+  },
+  "L-direction-preregistration": {
+   "label": "R11 direction start-up rule: run the first experiment of a direction only after its P-node is frozen",
+   "statement": "Proposed by meta §3 as R11. The first experiment of a research direction (H-dir-*) is run only after its pre-registration P-node (predicted value, decision band and statistical power frozen) is fixed, before anything is submitted to mdx. The kb itself shows that the 5 registered hits (d11/d15/d17/Q8 W-diagonal/d19) are the source of its value. Murmuration-type work must include L-null-design-dry-run (power check before freezing; the lesson of T2) in the registration. Direction H-nodes record their status transitions as they progress, and the readiness in directions.html is updated at the end of every campaign.",
+   "_src": {
+    "label": "1a137122:35",
+    "statement": "c92aeb94:291"
+   }
+  },
+  "L-extraction-vs-record": {
+   "label": "Knowledge capture is transcription from the record layer; a summariser's output must never take precedence over the record",
+   "statement": "In two cases, d19 and E-q8-w-crosstab, the extraction/summary pipeline produced output worse than its own record layer (STATU). For d19, STATU 0059 §1 already recorded the census of 774,840,978 and the sign-reversal hit, yet k1-d marked it ‘unconfirmed’; for E-q8-w-crosstab, the k2 ‘completed’ processing overwrote the authoritative copy with a degraded one (values keys renamed, measures lost, prov replaced). Lesson: the values in knowledge nodes are always transcribed from the primary record layer (STATU / PR / frozen data), and a summariser's output never takes precedence over the record. Changing the body of an accepted node on main requires a meta ruling (R10-2).",
+   "_src": {
+    "label": "cf1c2dc6:37",
+    "statement": "c97b3f4a:324"
+   }
+  },
+  "L-honest-attribution": {
+   "label": "Attribute the main term honestly (Rudnick)",
+   "statement": "The novelty of the boundary closed form is limited to the quadratic n=2g term; the main term and the root number are known from Rudnick. Keep novelty claims provisional, with the searched range stated. Referees look at the attribution of prior work first.",
+   "_src": {
+    "label": "12c02964:18",
+    "statement": "0fe46db9:103"
+   }
+  },
+  "L-middle-law-self-refutation": {
+   "label": "Self-refutation of an extrapolation from few cases (middle-coefficient law) ※ required by ORDER_KB",
+   "statement": "The middle-coefficient law Σ_P A_{e/2}=-N_q(e) was claimed by extrapolating from the two cases e=2,6 to all e≡2 mod 4, and was refuted by direct computation at e=10 (-6024≠-5880). The error was found by ourselves while trying to write up the proof. ‘A case in which we refuted our own claim ourselves.’ Lesson: before registering a generalisation of a closed form, verify it directly up to the smallest possible counterexample.",
+   "_src": {
+    "label": "179595bf:29",
+    "statement": "bd1539c0:157"
+   }
+  },
+  "L-monitor-predicate-fragile": {
+   "label": "Double failure of a monitor predicate (premature launch)",
+   "statement": "O-19 was launched by mistake before O-13 had finished. The cause was a double failure of the monitor predicate (zsh ${=r} executed under a bash shebang, plus pgrep -f matching itself). Lesson R6-9: monitor predicates must exclude self-matches and be consistent with the shell.",
+   "_src": {
+    "label": "45012836:21",
+    "statement": "bc932274:111"
+   }
+  },
+  "L-novelty-search-scope": {
+   "label": "State the searched range in every novelty claim",
+   "statement": "The novelty of the quadratic n=2g boundary term is provisional, within a range of 5 papers found on the web. Meisner (arXiv:2006.16886) explicitly excludes n=2g from the main theorem — the most dangerous near miss. Always state that the systematic MathSciNet survey has not been done. Also record that the source of ε_P=+1 is unidentified and that the body of Aoki–Koyama has not been read closely. Keep novelty provisional and bounded by the range.",
+   "_src": {
+    "label": "af887128:20",
+    "statement": "bb8981e8:180"
+   }
+  },
+  "L-parallel-timeout-headroom": {
+   "label": "Decide the degree of parallelism by timeout headroom",
+   "statement": "36 IQF jobs timed out when O-13 and O-19 competed. The cause was not throughput but insufficient timeout headroom. Decide whether jobs may run in parallel by each job's timeout headroom, not by throughput; recovered by re-running with a 24 h timeout.",
+   "_src": {
+    "label": "fb2bf2ae:18",
+    "statement": "2e494cab:123"
+   }
+  },
+  "L-population-definition": {
+   "label": "State the population definition (T-B) explicitly",
+   "statement": "Confusing the population of a test (T-A / T-B / W layer) changes the meaning of the p-value. The two-sided p=0.002052795540172312 for the T-B population can be interpreted only once the definition of T-B (the subset of 40,125 with m_ρ computed) is stated. Always attach the population definition to the frozen record.",
+   "_src": {
+    "label": "9e306396:13",
+    "statement": "99d207d1:132"
+   }
+  },
+  "L-verify-script-in-repo": {
+   "label": "Put verification scripts in the repo when they are written (no living in /tmp; rule R6-2)",
+   "statement": "If verification and re-run scripts are left in /tmp, they vanish on a node reboot or cleanup, and a later k4 re-run has to rebuild them from the formulas (this happened twice in this repo: X-a1-mobius/X-boundary-closedform and X-o18-deltac). Even when rebuilding is possible, it breeds sign and centring mistakes (the first o18 rebuild lacked centring, dev~22; a1 had a −3/2 bug in the T_e series) — a source of cost and error. **Put the script in the repo when it is written and record its sha.** Made a rule as GOVERNANCE_SHEET R6-2 (meta proposal 2026-08-25).",
+   "_src": {
+    "label": "3a8a68a2:41",
+    "statement": "28a04dbb:304"
+   }
+  },
+  "O-dihedral-artin-family": {
+   "label": "Dihedral / Q8 / higher Artin L research family (new 1)",
+   "statement": "Bias of 2-dimensional Artin representations (D3/D4 orthogonal, Q8 symplectic) and the search for central zeros of order ≥3 (negative). The FS indicator governs both the slope and the parity of the central order.",
+   "_src": {
+    "label": "a64bba4e:25",
+    "statement": "f17b4512:81"
+   }
+  },
+  "O-ff-d13-m2-layer": {
+   "label": "The m_D=2 layer at d=13 (24 individuals; all rows frozen in the repo)",
+   "statement": "The layer of 24 individuals with m_D=2 (supersingular-like) at generation d=13. All rows frozen in m_gt0_rows of ea_d13_aggregates.json. Accepted 24/24.",
+   "artifacts[0].role": "all rows of the 24 individuals (frozen)",
+   "_src": {
+    "label": "e8cdc7f6:32",
+    "statement": "8b87dbb5:86",
+    "artifacts[0].role": "b6b804db:12"
+   }
+  },
+  "O-ff-d15-m2-layer": {
+   "label": "The m_D=2 layer at d=15 (72 individuals; all rows frozen in the repo)",
+   "statement": "The layer of 72 individuals with m_D=2 at generation d=15. All rows frozen in m_gt0_rows of ea_d15_aggregates.json. Accepted 72/72. The increase 24→72 is what H-supersingular-scaling observes.",
+   "artifacts[0].role": "all rows of the 72 individuals (frozen)",
+   "_src": {
+    "label": "b17b66a1:32",
+    "statement": "b0261fea:122",
+    "artifacts[0].role": "674b9e8c:12"
+   }
+  },
+  "O-ff-d17-m2-layer": {
+   "label": "The m_D=2 layer at d=17 (261 individuals; settled by the completed census)",
+   "statement": "The layer of 261 individuals with m_D=2 (supersingular-like) at generation d=17. Settled by the completed census (all 86,093,442). Layer progression d13=24→d15=72→d17=261. All rows frozen in m_gt0_rows of ea_d17_aggregates.json.",
+   "artifacts[0].role": "all rows of the 261 individuals (frozen)",
+   "_src": {
+    "label": "b797c28e:35",
+    "statement": "654baf6e:132",
+    "artifacts[0].role": "7ca81e30:13"
+   }
+  },
+  "O-ff-q3-d11": {
+   "label": "F_3(t) quadratic characters, full family, generation d=11 (g=5, C1=118,098)",
+   "statement": "The full family of squarefree monic polynomials of degree d=11. C1=2·3^10=118098. m_D=2 layer: 0 individuals. Census measurement of the boundary excess A(2g)+1 = -0.49076650925398013.",
+   "artifacts[0].role": "census aggregate (frozen)",
+   "_src": {
+    "label": "7f8b1760:40",
+    "statement": "ef3ff5f0:100",
+    "artifacts[0].role": "9471e908:13"
+   }
+  },
+  "O-ff-q3-d13": {
+   "label": "F_3(t) quadratic characters, full family, generation d=13 (g=6, C1=1,062,882)",
+   "statement": "The full family of squarefree monic polynomials of degree d=13. C1=2·3^12=1062882. m_D=2 layer: 24 individuals. Census measurement of the boundary excess A(2g)+1 = -0.4949126864583562.",
+   "artifacts[0].role": "census aggregate (frozen)",
+   "_src": {
+    "label": "420e77ff:42",
+    "statement": "c9d0fab1:101",
+    "artifacts[0].role": "9471e908:13"
+   }
+  },
+  "O-ff-q3-d15": {
+   "label": "F_3(t) quadratic characters, full family, generation d=15 (g=7, C1=9,565,938)",
+   "statement": "The full family of squarefree monic polynomials of degree d=15. C1=2·3^14=9565938. m_D=2 layer: 72 individuals. Census measurement of the boundary excess A(2g)+1 = -0.4989715075302701.",
+   "artifacts[0].role": "census aggregate (frozen)",
+   "_src": {
+    "label": "e81de7c4:42",
+    "statement": "4678db6a:101",
+    "artifacts[0].role": "9471e908:13"
+   }
+  },
+  "O-ff-q3-d17": {
+   "label": "F_3(t) quadratic characters, full family, generation d=17 (g=8, C1=86,093,442)",
+   "statement": "The full family of squarefree monic polynomials of degree d=17. C1=2·3^16=86093442. m_D=2 layer: 261 individuals (settled by the completed census). Census measurement of the boundary excess = -0.4994337027369984.",
+   "_src": {
+    "label": "544542c4:43",
+    "statement": "19811658:105"
+   }
+  },
+  "O-ff-q3-d19": {
+   "label": "F_3(t) quadratic characters, full family, generation d=19 (g=9, C1=774,840,978)",
+   "statement": "The full family of squarefree monic polynomials of degree d=19. C1=2·3^18=774840978. Census measurement: nD=C1 exactly, idfail=0, m_D odd = 0 (STATU 0059 §1).",
+   "_src": {
+    "label": "cd2c2717:44",
+    "statement": "1b0e52d5:96"
+   }
+  },
+  "O-ff-q3-d5": {
+   "label": "F_3(t) quadratic characters, full family, generation d=5 (g=2, C1=162)",
+   "statement": "The full family of squarefree monic polynomials of degree d=5. C1=2·3^4=162.",
+   "_src": {
+    "label": "68ff42f8:35",
+    "statement": "0d5b8c8f:34"
+   }
+  },
+  "O-ff-q3-d7": {
+   "label": "F_3(t) quadratic characters, full family, generation d=7 (g=3, C1=1,458)",
+   "statement": "The full family of squarefree monic polynomials of degree d=7. C1=2·3^6=1458.",
+   "_src": {
+    "label": "0661e1c8:37",
+    "statement": "2ac3b3ce:35"
+   }
+  },
+  "O-ff-q3-d9": {
+   "label": "F_3(t) quadratic characters, full family, generation d=9 (g=4, C1=13,122)",
+   "statement": "The full family of squarefree monic polynomials of degree d=9. C1=2·3^8=13122.",
+   "_src": {
+    "label": "6cc552f6:38",
+    "statement": "85e6816b:36"
+   }
+  },
+  "O-ff-q3-family": {
+   "label": "Function-field F_3(t) quadratic character family (Rudnick's hyperelliptic ensemble; parent)",
+   "statement": "The family of quadratic characters defined by squarefree monic polynomials D in F_3[t] (deg d=2g+1). Parent of all generations O-ff-q3-d5…d17. Definition = plan v1.1 and EXEC_A_v2.",
+   "_src": {
+    "label": "638a9dab:37",
+    "statement": "b64cd500:87"
+   }
+  },
+  "O-fs-family": {
+   "label": "FS unified law research family (across L-functions)",
+   "statement": "Parent family across L-functions that tests the bias slope = −½·FS(ρ)−m all the way from motives through base change to genuinely automorphic cases. FS = Frobenius–Schur indicator (±1/0), m = ord_{s=½} L.",
+   "_src": {
+    "label": "6e89c4ff:17",
+    "statement": "d3e5aae8:122"
+   }
+  },
+  "O-nf-d4-control": {
+   "label": "D_4 USp control family (970 fields)",
+   "statement": "Control family of 970 D_4 (8T?, USp) fields. Control for the two-sided KS test of Q8 (0/970 for D_4).",
+   "artifacts[0].role": "D4 control aggregate (frozen)",
+   "_src": {
+    "label": "26dc5cd8:18",
+    "statement": "1b6a83c5:51",
+    "artifacts[0].role": "fcf5e226:11"
+   }
+  },
+  "O-nf-q8-8t5": {
+   "label": "Q8 (8T5) master family (50,257 rows; 40,125 analysed)",
+   "statement": "Master family of octic fields with Galois group Q8=8T5. 50,257 data rows in the master table, 40,125 with m_ρ0 computed. T-C frozen (w1). The population of C-q8-w-diagonal.",
+   "artifacts[0].role": "T-C primary data (frozen at w1)",
+   "_src": {
+    "label": "dd4eafcb:33",
+    "statement": "8f381c79:82",
+    "artifacts[0].role": "22b6c9ee:16"
+   }
+  },
+  "O-q8-8t5-census": {
+   "label": "Q8=8T5 census table (~50,000 fields)",
+   "statement": "γ₁₋₂₀ + m_rho_0 + L-values. Primary source for selecting the chebyshev-bias examples.",
+   "_src": {
+    "label": "b9387a92:25",
+    "statement": "276b6ce9:42"
+   }
+  },
+  "P-census-exec-a": {
+   "label": "Full census procedure (EXEC_A_v2)",
+   "definition": "A census over all squarefree monic polynomials of degree d in F_3[t] that aggregates the boundary excess A(2g)+1 and the m_D layers and writes the m>0 rows as frozen output, designed to be resumable: chunks that already have a .stats file are skipped, so it resumes across interruptions.",
+   "frozen.pr": "#(checked against the annex at k1-b)",
+   "_src": {
+    "label": "1fc1cb1e:23",
+    "definition": "3df3cb4d:110",
+    "frozen.pr": "19527f4c:18"
+   }
+  },
+  "P-o19-registration": {
+   "label": "Pre-registration of the decisive O-19 test at d=19 (frozen by ORDER 0008)",
+   "statement": "Registered value −2.4253e-05 ± 3e-06 (negative; derived from the deg 6 family alone), band [−2.7253e-05, −2.1253e-05]. States explicitly: ‘if it stays positive, the mechanism of 0056 §3 is withdrawn’. Run conditions: launch after O-13 has finished, with timeout headroom.",
+   "_src": {
+    "label": "1b15c105:36",
+    "statement": "910f78b3:126"
+   }
+  },
+  "P-q8-step2-w1": {
+   "label": "ORDER_Q8_STEP2 w1: three-layer freeze + pre-registration (decision band [494,556]; W-layer prediction)",
+   "statement": "sha freeze of the three layers T-A/T-B/T-C; deterministic extraction rule for T-B (i≡0 mod 50, first 1000); cross-check decision band = exact binomial, p=0.525, n=1000, α=0.05 → [494,556]; W-layer prediction = central vanishing ⇔ W=−1 for all, and 0 cases of W=+1 with an even double zero. The decision band was independently recomputed by meta in exact rational arithmetic and agreed (DIRECTIVE 0042).",
+   "_src": {
+    "label": "3f656e15:48",
+    "statement": "573bcac6:175"
+   }
+  },
+  "P-registered-prediction": {
+   "label": "Pre-registered prediction protocol (register-then-verify)",
+   "definition": "Before a census or measurement is run, the predicted value E_pred and the decision band are frozen in a registration document, and compared with the measurement after the run. Hits at d11 (discriminating the theorem from phenomenology) and d15 (extrapolation accuracy of the theorem). For null designs, the statistical power is checked by a dry run before freezing (registration lesson no. 4).",
+   "_src": {
+    "label": "b5ed8af0:33",
+    "definition": "68d47374:118"
+   }
+  },
+  "Q-1q-law": {
+   "label": "1/q law (leading asymptotics of the boundary excess)",
+   "definition": "O(g,q) ~ 1/[(q-1)q^g] (from q^{2g}-2g·N_q(2g)=q^g+lower-order terms). A corollary of Q-boundary-oterm.",
+   "_src": {
+    "label": "11d56745:16",
+    "definition": "401eb578:71"
+   }
+  },
+  "Q-a1-mobius": {
+   "label": "Möbius closed form for A_1 (e even)",
+   "definition": "Σ_{deg P=e}A_1(P)=(q/e)·Σ_{d|odd(m)}μ(d)(q^d-1) (e even, m=e/2). Proof: reciprocity → χ_2(P(0))=ψ_e(root) (compatible with norms) → Möbius inversion over subfields. Rigorous in §5A.",
+   "_src": {
+    "label": "eed20234:21",
+    "definition": "0ef09d35:113"
+   }
+  },
+  "Q-avg-ap2-minus2": {
+   "label": "Thm 7.1 average ⟨a_p²−2⟩",
+   "definition": "≈ ν=−1 (symplectic); in [−1.0071,−1.0005] for p≤10⁶.",
+   "_src": {
+    "label": "9eba2448:19",
+    "definition": "f8cac200:44"
+   }
+  },
+  "Q-boundary-oterm": {
+   "label": "Boundary O-term O(g,q) (closed form of the hyperelliptic boundary excess)",
+   "definition": "O(g,q)=Σ_{e|g}[-e·N_q(e)·T_e(2g+1)/C1]·q^{-g} + Σ_{(e,j) non-square, in the window}[-e·q^{e/2}·N_q(e)/C1]·q^{-g}. T_e(d)=[u^d](1-qu²)/((1-qu)(1+u^e)), C1=(q-1)q^{2g}. Uses only Rudnick's top coefficient A_{e-1}=-q^{e/2-1} (functional equation, root number +1) and elementary generating functions. Theorem 1 (rigorous).",
+   "_src": {
+    "label": "d14498e5:26",
+    "definition": "4478e35a:214"
+   }
+  },
+  "Q-census-count": {
+   "label": "Census population size 2·3^{d-1}",
+   "definition": "The number of all squarefree monic polynomials of degree d in F_3[t]: C1=2·3^{d-1}. d5=162, d7=1458, d9=13122, d11=118098, d13=1062882, d15=9565938, d17=86093442.",
+   "_src": {
+    "label": "50c79341:19",
+    "definition": "9ec65073:115"
+   }
+  },
+  "Q-cg-sequence": {
+   "label": "The integer sequence c(g) (symmetric limit of the boundary excess)",
+   "definition": "Exact symbolic evaluation of the limit c(g) gives c(g)=+1,+1,-1,0,0,… (integers; 0 for g≥4). Theorem 2.",
+   "_src": {
+    "label": "4cd0501b:19",
+    "definition": "7dd5d68f:60"
+   }
+  },
+  "Q-d19-registered": {
+   "label": "Registered value for d=19 (O-19) (census PASS inside the band)",
+   "definition": "O-19 registered value −2.4253e-05 ± 3e-06 (negative). The all-groups closed form, Σ side −2.4311e-05, is inside the registered band. Census measurement −2.4300e-05 (STATU 0059 §1, PASS inside the band). ※ The note at k1-d, ‘confirmation not yet received; hit unconfirmed’, contradicted record layer 0059 and was corrected at the meta acceptance review (2026-08-23).",
+   "_src": {
+    "label": "11095ed1:31",
+    "definition": "d8bc5284:173"
+   }
+  },
+  "Q-deltac-identity": {
+   "label": "Exact Δ_C identities for Q8 (O-18)",
+   "definition": "From χ₁χ₂χ₃=1 (the product of the discriminants is a square) the indicator functions expand exactly, and the centring term −|C|/8=−1/4 cancels the constant term, giving Delta_{±i}=(1/4)(T_1−T_2−T_3), Delta_1+Delta_{-1}=(1/4)(T_1+T_2+T_3). The three classes of order 4 are completely determined by congruence conditions alone; the octic field is needed only to separate the centre {1}/{−1}. A Python implementation that never uses the degree-8 polynomial reproduces gp to 2.3e-13 over all 1,775 fields and 200 u-points.",
+   "_src": {
+    "label": "4c8137bf:18",
+    "definition": "ed25d62a:222"
+   }
+  },
+  "Q-ks-duality": {
+   "label": "Family Katz–Sarnak symmetry type = dual of the individual FS indicator",
+   "definition": "ν=−1 (individually symplectic) ↔ orthogonal family / ν=+1 (orthogonal) ↔ symplectic family / ν=0 ↔ unitary. RMT: USp=1−sinc(2x) / SO_even=1+sinc(2x) / U=1.",
+   "_src": {
+    "label": "f8dae526:29",
+    "definition": "147c4ab0:110"
+   }
+  },
+  "Q-m-central": {
+   "label": "Order of the central zero m_ρ(0)",
+   "definition": "The order m_ρ(0) ≥ 0 of the zero of the Artin L-function L(s,ρ) at the central point s=1/2. m≥1 ⇔ central vanishing. Numerically (lfunartin) it is decided by thresholds on the central value and its derivatives; an independent route checks parity consistency with the root number W (W=−1 ⇒ m odd).",
+   "_src": {
+    "label": "37290ea1:13",
+    "definition": "a68c8948:123"
+   }
+  },
+  "Q-middle-law-false": {
+   "label": "Middle-coefficient law (shown false by a counterexample)",
+   "definition": "The hypothesis Σ_P A_{e/2}=-N_q(e) holds only for e=2,6 and fails at e=10 (Σ_P A_5=-6024 ≠ -5880). It reduces to the smoothed Weil sum Σ_{deg β=e}S0(β)=-e·N_q(e) (S0 a quadratic character over an F_q-subspace, of Gauss/Soto-Andrade type). A case of self-refuted extrapolation from few cases.",
+   "_src": {
+    "label": "ade267c4:14",
+    "definition": "73a6069a:166"
+   }
+  },
+  "Q-nonabelian-commutator": {
+   "label": "Condition for a congruence-determined class, |C|=|[G,G]| (non-abelian dictionary, O-30)",
+   "definition": "A class C is determined by congruences ⟺ |C|=|[G,G]|. Q8/D4=3/5, A4=2/4, S4=0/5, A5=0. Three mechanisms: quadratic (Q8/D4), cubic (A4), none (S4). Proved by column orthogonality; confirmed by Chebotarev densities in A4/S4 fields.",
+   "_src": {
+    "label": "2c839f2b:33",
+    "definition": "3e30a172:125"
+   }
+  },
+  "Q-root-number": {
+   "label": "Sign of the functional equation (root number) W",
+   "definition": "The sign W ∈ {+1,−1} in Λ(s)=W·Λ(1−s). W=−1 forces the order of the central zero to be odd (in particular m≥1). In the Q8 (8T5) population the root_number column from LMFDB is the primary value; blank entries are outside the population (40,125 of 50,257 computed).",
+   "_src": {
+    "label": "4c0856e9:20",
+    "definition": "cae676fc:134"
+   }
+  },
+  "Q-theta-unfold": {
+   "definition": "Λ=C^{s/2}∏Γ_ℝ(s+μ_j)L, with μ_j taken from lfunparams. Removes the degree confounding and the archimedean artifact.",
+   "_src": {
+    "definition": "a78caa2d:80"
+   }
+  },
+  "X-a1-mobius": {
+   "label": "Direct check of the Möbius closed form for A_1",
+   "expected[0].tolerance": "exact (4 documented cases)",
+   "env.k4_status": "rebuilt on mdx 2026-08-25: o29 §1 Möbius closed form, 4 documented cases PASS",
+   "_src": {
+    "label": "b6e4f4f8:19",
+    "expected[0].tolerance": "57257098:20",
+    "env.k4_status": "9c1e5c46:55"
+   }
+  },
+  "X-binom-band": {
+   "label": "Check of the W-layer binomial decision band [494,556] (spot)",
+   "expected[0].tolerance": "pre-registered band",
+   "env.k4_status": "offline re-run 2026-09-06 (ORDER 0013 night plan (c), brought forward)",
+   "independence": "the pre-registered binomial band (freeze #109, commit 72ca40cc)",
+   "_src": {
+    "label": "7d01d106:30",
+    "expected[0].tolerance": "9bd22e35:5",
+    "env.k4_status": "8a9d1d6f:51",
+    "independence": "8392991b:38"
+   }
+  },
+  "X-boundary-closedform": {
+   "label": "Symbolic evaluation of the closed form O(g,q)",
+   "expected[0].tolerance": "1/q-law corollary, ratio ~1.0-1.1",
+   "env.k4_status": "rebuilt on mdx 2026-08-25: corollary (1/q law) O=E-M~1/((q-1)q^g) checked against the census, PASS (g=5,6,7); the direct check of the full T_e closed form is separate",
+   "_src": {
+    "label": "81791dfa:16",
+    "expected[0].tolerance": "eb94675d:27",
+    "env.k4_status": "a8dcb788:95"
+   }
+  },
+  "X-census-d11": {
+   "label": "census d=11 (EXEC_A_v2, full)",
+   "entry": "EXEC_A_v2: aggregate A(2g)+1 over all squarefree monic polynomials of degree 11 in F_3[t]",
+   "_src": {
+    "label": "aa4fd576:25",
+    "entry": "616eb431:48"
+   }
+  },
+  "X-census-d11-spot": {
+   "label": "Recompute the boundary excess from the frozen d=11 census aggregate (offline spot)",
+   "independence": "reads the recorded values directly from the frozen JSON (independent of the main census run; no mdx needed)",
+   "_src": {
+    "label": "756cd8b0:41",
+    "independence": "af0190b8:36"
+   }
+  },
+  "X-census-d13": {
+   "label": "census d=13 (EXEC_A_v2, full)",
+   "entry": "EXEC_A_v2: aggregate A(2g)+1 over all squarefree monic polynomials of degree 13 in F_3[t]",
+   "_src": {
+    "label": "5c933d30:25",
+    "entry": "db6d1c93:48"
+   }
+  },
+  "X-census-d13-spot": {
+   "label": "Recompute the boundary excess from the frozen d=13 census aggregate (offline spot)",
+   "independence": "reads the recorded values directly from the frozen JSON (independent of the main census run; no mdx needed)",
+   "_src": {
+    "label": "b08faa22:41",
+    "independence": "af0190b8:36"
+   }
+  },
+  "X-census-d15": {
+   "label": "census d=15 (EXEC_A_v2, full)",
+   "entry": "EXEC_A_v2: aggregate A(2g)+1 over all squarefree monic polynomials of degree 15 in F_3[t]",
+   "_src": {
+    "label": "74311972:25",
+    "entry": "b64d59ad:48"
+   }
+  },
+  "X-census-d15-spot": {
+   "label": "Recompute the boundary excess from the frozen d=15 census aggregate (offline spot)",
+   "independence": "reads the recorded values directly from the frozen JSON (independent of the main census run; no mdx needed)",
+   "_src": {
+    "label": "e13cc544:41",
+    "independence": "af0190b8:36"
+   }
+  },
+  "X-census-d17": {
+   "label": "census d=17 (EXEC_A_v2, full)",
+   "entry": "EXEC_A_v2: aggregate A(2g)+1 over all squarefree monic polynomials of degree 17 in F_3[t]",
+   "_src": {
+    "label": "c6827f9c:25",
+    "entry": "cb3cec0f:48"
+   }
+  },
+  "X-census-d17-spot": {
+   "label": "Recompute the boundary excess from the frozen d=17 census aggregate (offline spot)",
+   "expected[0].tolerance": "exact (census complete)",
+   "independence": "reads the recorded values directly from the frozen JSON (independent of the main census run; no mdx needed)",
+   "_src": {
+    "label": "57d10f86:41",
+    "expected[0].tolerance": "78a4b9e2:15",
+    "independence": "af0190b8:36"
+   }
+  },
+  "X-census-d19": {
+   "label": "d=19 main census run (5,472 chunks, 5 nodes, about 13 hours)",
+   "expected[1].tolerance": "agreement to 4 significant digits (−2.4300e-05)",
+   "env.note": "the full 774M census is not run because of disk limits; the closed form is the deterministic arbiter",
+   "seed": "deterministic",
+   "_src": {
+    "label": "a32384e2:39",
+    "expected[1].tolerance": "8ede3bed:19",
+    "env.note": "d9d1ca5c:47",
+    "seed": "267786c3:3"
+   }
+  },
+  "X-d15-regpred": {
+   "label": "d15 registered prediction test (registered before the run → compared)",
+   "entry": "compare the d15 census with the E_pred registered before the run; measure ρ̄ of the real QF/IQF and the averages by h layer",
+   "env.k4_status": "mdx full-tier re-run 2026-09-05 (batch 2, J10, mdx-01) PARTIAL: m_odd/n6 PASS (sha-verified JSON); ρ̄=0.675 BLOCKED (t2_qf_01.npz is not in a reachable location; 0.812 with 00+02 only); report: t2/k4_rerun_2026-09-05_batch2/REPORT.md",
+   "_src": {
+    "label": "3a510d9e:20",
+    "entry": "e3d0feb2:55",
+    "env.k4_status": "8de4d866:203"
+   }
+  },
+  "X-ks-duality": {
+   "label": "Measurement of the family symmetry type by one-level density",
+   "entry": "measure the one-level density of the family with proper θ unfolding and compare with RMT (USp/SO_even/U)",
+   "expected[0].tolerance": "SSE comparison",
+   "_src": {
+    "label": "7616f72e:24",
+    "entry": "278ea279:66",
+    "expected[0].tolerance": "86c428df:6"
+   }
+  },
+  "X-middle-e10": {
+   "label": "Direct computation of the middle coefficient Σ_P A_5 (e=10)",
+   "entry": "sum A_5(P) directly over all irreducible P of degree 10 over F_3 and compare with -N_q(10)",
+   "_src": {
+    "label": "a7e9a8f3:24",
+    "entry": "8ecba586:48"
+   }
+  },
+  "X-o18-deltac": {
+   "label": "Verification of the Q8 Δ_C identities (1,775 fields, 200 u-points)",
+   "entry": "python3 subprojects/q8_drh/o18/o18_deltac_verify.py  # Q8 114 fields d1,d2,d3, x=1e6",
+   "expected[0].tolerance": "<=1e-9 (same order as the registered 2.304e-13)",
+   "env.k4_status": "mdx full-tier re-run 2026-09-05 PASS 1/1 (ORDER 0013 night plan (c) J4/J5, mdx-01; the recorded field count reproduced with the old qf1/batch_rest; report: t2/k4_rerun_2026-09-05/REPORT.md)",
+   "_src": {
+    "label": "1fd2c95f:27",
+    "entry": "fc662ab8:78",
+    "expected[0].tolerance": "522e51c5:28",
+    "env.k4_status": "6379a8bf:142"
+   }
+  },
+  "X-q8-crosstab-accept": {
+   "label": "Independent recount of the W×m cross-table from the T-C master table",
+   "env.lang": "python3 (standard-library csv only)",
+   "env.runtime_est": "~1 min",
+   "env.k4_status": "offline re-run 2026-09-06 (ORDER 0013 night plan (c), brought forward)",
+   "independence": "reads and tallies the root_number / m_rho_0 columns directly; independent of the lfunartin computation path",
+   "seed": "deterministic",
+   "_src": {
+    "label": "be6a9489:26",
+    "env.lang": "08d59693:18",
+    "env.runtime_est": "42b51cc2:4",
+    "env.k4_status": "8a9d1d6f:51",
+    "independence": "98e08ba3:45",
+    "seed": "267786c3:3"
+   }
+  },
+  "X-q8-ks": {
+   "label": "Two-sided KS test, Q8 vs D4",
+   "_src": {
+    "label": "7b8d424e:15"
+   }
+  },
+  "X-q8-ks-twosided": {
+   "label": "Q8 two-sided KS test (USp/SO)",
+   "entry": "two-sided KS test on the central-vanishing rates, function-field USp side vs number-field SO side",
+   "_src": {
+    "label": "7fc9183b:19",
+    "entry": "605d7973:32"
+   }
+  },
+  "X-q8-note": {
+   "label": "Q8 note census (Thm 7.1 + DRH)",
+   "entry": "verify ⟨a_p²−2⟩ (p≤10⁶), the Prop. 6.2 sum rule and the Ci log-periodic fit on 23 Q8 fields",
+   "independence": "true Frobenius via idealprimedec",
+   "_src": {
+    "label": "3f2c446c:27",
+    "entry": "a964c32b:51",
+    "independence": "2e083f4b:25"
+   }
+  }
+ },
+ "lines": {
+  "O-fs-family": {
+   "label": "① FS unified law",
+   "_src": {
+    "label": "6b19b234:8"
+   }
+  },
+  "O-qec-family": {
+   "label": "② Elliptic curves over Q + WP-A",
+   "_src": {
+    "label": "036ab19f:15"
+   }
+  },
+  "O-ecnf-family": {
+   "label": "③ Elliptic curves over number fields",
+   "_src": {
+    "label": "b92c0494:8"
+   }
+  },
+  "O-dihedral-artin-family": {
+   "label": "④ Dihedral / Q8 / Artin",
+   "_src": {
+    "label": "4f3fe43e:14"
+   }
+  },
+  "O-cubic-family": {
+   "label": "⑤ Cubic fields / Koyama / τ",
+   "_src": {
+    "label": "cb4c442c:14"
+   }
+  },
+  "O-fingerprint-family": {
+   "label": "⑥ Fingerprint / E-AK / T2",
+   "_src": {
+    "label": "d58fc250:12"
+   }
+  },
+  "O-ff-q3-family": {
+   "label": "⑦ Function-field census",
+   "_src": {
+    "label": "b8edf339:12"
+   }
+  },
+  "dir-A": {
+   "label": "Line A — the quadratic-part series",
+   "_src": {
+    "label": "bcc2c825:16"
+   }
+  },
+  "dir-B": {
+   "label": "Line B — the dihedral Dₙ series",
+   "_src": {
+    "label": "c6765f39:17"
+   }
+  },
+  "principles": {
+   "label": "Cross-cutting principles / grand unification",
+   "short": "Principles",
+   "_src": {
+    "label": "1ba5eeea:8",
+    "short": "a189a178:2"
+   }
+  },
+  "program": {
+   "label": "Programme root / research directions",
+   "short": "Root",
+   "_src": {
+    "label": "196c0d7e:11",
+    "short": "3c973bb4:1"
+   }
+  },
+  "unassigned": {
+   "label": "Unassigned",
+   "short": "Unassigned",
+   "_src": {
+    "label": "be042cad:3",
+    "short": "be042cad:3"
+   }
+  }
+ },
+ "k4": {
+  "X-d15-regpred": {
+   "note": "mdx full-tier re-run 2026-09-05 (batch 2, J10, mdx-01) PARTIAL: m_odd/n6 PASS (sha-verified JSON); ρ̄=0.675 BLOCKED (t2_qf_01.npz is not in a reachable location; 0.812 with 00+02 only); report: t2/k4_rerun_2026-09-05_batch2/REPORT.md",
+   "_src": {
+    "note": "8de4d866:203"
+   }
+  },
+  "X-o18-deltac": {
+   "note": "mdx full-tier re-run 2026-09-05 PASS 1/1 (ORDER 0013 night plan (c) J4/J5, mdx-01; the recorded field count reproduced with the old qf1/batch_rest; report: t2/k4_rerun_2026-09-05/REPORT.md)",
+   "_src": {
+    "note": "6379a8bf:142"
+   }
+  }
+ }
+}

@@ -67,6 +67,10 @@ jobs:
       # 機械可読の入口が壊れていないか（context の語が全部宣言されている・PROV が W3C IRI に展開される・dangling 0・双方向ペア・schema・派生ファイルの一致）
       - name: Check the public bundle (context coverage, PROV, dangling links, bidir pairs, schema, derived files)
         run: python3 check_site.py
+      # 英語オーバーレイ（kb/i18n/en.json、表示層）が kb/nodes.json と整合しているか。構造の崩れ（無い id・解決しない path・指紋なし）は FAIL、
+      # 記録が変わって訳が古くなった欄は STALE として印字するだけ（その欄は UI で日本語に戻る。再翻訳は人が PR で行う）。
+      - name: Check the English overlay (kb/i18n/en.json) against kb/nodes.json
+        run: python3 i18n_check.py
       - name: Re-execute offline ExecutionUnits and compare with recorded expected values
         id: rerun
         run: python3 rerun.py --json kb/rerun-latest.json
