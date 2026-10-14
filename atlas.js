@@ -3,8 +3,10 @@
 (function () {
   "use strict";
   // 言語: 優先順は #lang=en|ja（または ?lang=）→ 前回の選択（localStorage）→ ブラウザの言語（日本語なら ja、それ以外は en）。
-  // 英語 UI では 案内・接地・ヘッダ・フィルタ・詳細の見出し・図のラベル が英語になる。ノードの本文（label / statement）は記録層の言語のまま。
-  // 切替はページ再読込（定数を組み直すため）。2026-10-13: 既定をブラウザ言語から決めるようにした（それまでは lang=en のときだけ英語）。
+  // 英語 UI では 案内・接地・ヘッダ・フィルタ・各ビューの見出し・詳細の見出し・図のラベル が英語になる。
+  // ノードの本文（label / statement など）は記録層の言語＝日本語のままだが、公開 repo に kb/i18n/en.json（英語オーバーレイ）があれば表示だけ英語に差し替える
+  // （記録層・生の JSON・n/<id>.json は変えない。原文の指紋が合わない欄＝翻訳後に記録が変わった欄は訳を当てず、日本語のまま出す）。
+  // 切替はページ再読込（定数を組み直すため）。2026-10-13: 既定をブラウザ言語から決めるようにした（それまでは lang=en のときだけ英語）。同日: 英語オーバーレイ。
   const LANG = (() => {
     let l = null;
     try { const h = new URLSearchParams(location.hash.replace(/^#/, "")), q = new URLSearchParams(location.search); l = h.get("lang") || q.get("lang"); } catch (e) { }
@@ -25,7 +27,7 @@
     help_title: "bias-kb Atlas — legend and usage",
     private: "private", stub_t: "exists in the record layer but is outside the public excerpt (only the type is public; the id is the first 10 hex of sha256 of the real id)",
     rail_showing: "showing", rail_nodes: "nodes", rail_type: "Type", rail_status: "Status", rail_line: "Research line", rail_period: "Period", rail_tier: "Execution tier (X only)", rail_actor: "Asserted by", rail_all: "all", rail_none: "none", rail_reset: "reset filters", status_none: "no status",
-    actors: { "統率": "orchestrator AI", meta: "meta-AI", other: "other" },
+    actors: { "統率": "orchestrating AI", meta: "meta-AI", other: "other" },
     deg: "degree", insp_empty_h: "Detail panel", insp_empty: "Click a leaf in the overview, a card, a chip or a search hit to see the whole node, its chain of grounds and its neighbourhood here.",
     chain_h: "Chain of grounds — registration → claim → evidence → execution → lesson", ego_h: "Neighbourhood (click to move)", fields_h: "Fields", out_h: "Outgoing links", in_h: "Incoming links (backlinks)", arts_h: "Artifacts", prov_h: "Provenance (prov)", raw_h: "Raw JSON",
     prov_by: "asserted by", prov_acc: "accepted by", prov_date: "date", prov_vis: "visibility", prov_rec: "record", prov_rec_note: "(inside the private repository; the excerpt is bundled in kb/nodes.json)", prov_page: "standalone page", prov_cite: "URL to cite:",
@@ -60,7 +62,7 @@
       latest_order: (no, d) => ` · latest order/ruling <b>${no}</b> (${d})`, window: "window", all: "all", days: "d", lanes_h: "Lines on a time axis", legend: "◇ registration (dashed = no verdict yet) · ★ predicted and hit · ● verdict · ✗ falsified · ⚠ instrument failed · ▲ claim established · ▽ rejected · ○ other status change · click a mark to open the node",
       quiet: (n) => `Lines with no milestone in this window: ${n}`, cards_h: "Current position and next moves, per line", now: "Now", next: "Next moves", ledger: "Prediction ledger", instr: "instruments", mech: "mechanisms", asof: "as of",
       est: "established / hits", rej: "rejected", openh: "open hypotheses", openp: "registered, not yet judged", lessons: "lessons", none: "—", nothing_open: "nothing pending", claims_line: (n, a, b, c) => `${n} claims: ${a} established · ${b} registered hits · ${c} rejected`, hyps_line: (o) => `${o} open hypotheses`, regs_line: (r, o) => `${r} registrations, ${o} not yet judged`,
-      last_ev: "latest milestone", no_ev: "no milestone recorded", program_h: "Direction layer", program_sub: "The root of the programme, the cross-cutting principles and the six research directions, with their current status.", principles: "Cross-cutting principles", directions: "Research directions", orders_h: "Orders and rulings (human → orchestrator)", orders_sub: "The directive stream in the private repository — what was ordered, when. Titles only.", ruling: "ruling", order: "order",
+      last_ev: "latest milestone", no_ev: "no milestone recorded", program_h: "Direction layer", program_sub: "The root of the programme, the cross-cutting principles and the six research directions, with their current status.", principles: "Cross-cutting principles", directions: "Research directions", orders_h: "Orders and rulings (human → orchestrating AI)", orders_sub: "The directive stream in the private repository — what was ordered, when. Titles only.", ruling: "ruling", order: "order",
       changed_h: "What changed recently", new7: "added in the last 7 days", new30: "added in the last 30 days", trans: "status transitions (30 days)", no_change: "none", private_h: "Private lines (counts only)", private_sub: "These research lines are outside the public excerpt by rule; only their size is shown.", goto_line: "line view", goto_ground: "grounding", last: "last" },
     line_view_t: "go to the research-line view",
   } : {
@@ -112,18 +114,24 @@
   // 図（docs/overview.svg）のラベル: 日本語 → 英語。lang=en のとき <text> の中身を置き換える（SVG 自体は変えない）
   const SVG_EN = { "人間の研究者": "Human researcher", "問題設定・解釈・最終判断（merge）": "problem, interpretation, final decision (merge)", "AI エージェント（統率AI・実行AI）": "AI agents (orchestrator, executor)", "計算して証拠を生み、記録層に書く": "compute evidence, write the record layer", "別の AI（meta-AI）": "A different AI (meta-AI)", "独立に再計算して検収・裁定": "recomputes independently; accepts, arbitrates", "知識基盤 bias-kb": "Knowledge base bias-kb", "8 型のノードと型付きリンク（すべて JSON の記録層）": "8 node types, typed links (all JSON in the record layer)", "知識グラフ": "Knowledge graph", "対象 O": "Object O", "族・体・census 表": "family, field, census table", "計測": "measure", "量 Q ・ 証拠 E": "Quantity Q · Evidence E", "計測値と、その記録": "measured values and their record", "支持": "support", "主張 C": "Claim C", "状態（確立・棄却…）": "status (established, rejected …)", "反証（棄却も残す）": "refutation (rejections kept)", "登録 P ・ 仮説 H": "Protocol P · Hypothesis H", "予測を走行前に凍結": "predictions frozen before the run", "登録": "registers", "教訓 L": "Lesson L", "失敗・修正を規則へ": "failures, corrections → rules", "双方向リンク": "bidirectional links", "証拠 grounded_in ⇄ 実行単位 verifies（両方向を記録層に書く）": "E grounded_in ⇄ X verifies (both written in the record layer)", "再実行可能な研究": "Re-executable research", "記録層": "Record layer", "ノード JSON（private）": "node JSON (private)", "CI: 参照整合・接地律": "CI: references, grounding", "双方向律・凍結律": "bidirectionality, freezing", "公開抜粋は規則で生成": "public excerpt by rule", "実行単位 X（tier で粒度を限定）": "ExecutionUnit X (tier bounds the scope)", "コード": "code", "データ": "data", "inputs＋sha256": "inputs + sha256", "環境": "environment", "来歴": "provenance", "prov・PR": "prov · PR", "成果物・期待値": "artifacts, expected values", "sha256 で凍結、再実行して": "frozen by sha256; re-run and", "一致を記録（k4）": "record the match (k4)", "確かめられること": "What can be checked", "再実行できる": "Can be re-executed", "rerun.py・CI": "rerun.py · CI", "入力 sha256 を照合 →": "check input sha256 →", "実行 → 期待値と比較": "run → compare with expected", "根拠まで辿れる": "Can be traced to its grounds", "主張 → 証拠 → 実行単位": "claim → evidence → execution unit", "→ 再実行結果（接地タブ）": "→ re-run result (Grounding tab)", "別の AI の独立再集計も X": "meta-AI’s recount is also an X", "予測が先に凍結": "Predictions frozen first", "蓄積 → 予測 → 的中・棄却": "accumulate → predict → hit / reject", "後から合わせられない": "cannot be adjusted afterwards", "（登録・判定）": "(Registrations tab)" };
   const tr = (o, k) => (EN && o && o[k + "_en"]) || (o ? o[k] : "");
-  // データは同梱（<script id="atlas-data">）か、外部 JSON（<body data-atlas-src="kb/nodes.json">）から読む
+  // データは同梱（<script id="atlas-data">）か、外部 JSON（<body data-atlas-src="kb/nodes.json">）から読む。
+  // 英語 UI のときは同じ場所の i18n/<lang>.json（英語オーバーレイ。公開 repo だけにあり、無ければ静かに省く）も読む。<body data-atlas-i18n="…"> で場所を上書きできる。
   const inline = document.getElementById("atlas-data");
   const src = document.body.dataset.atlasSrc;
+  const i18nSrc = document.body.dataset.atlasI18n || (src ? src.replace(/[^/]*$/, "") + "i18n/" + LANG + ".json" : "");
   if (!inline && src) {
-    document.getElementById("app").innerHTML = '<div style="padding:40px;font:14px system-ui;color:#5b6577">データ読み込み中 … <code>' + src + '</code></div>';
-    fetch(src).then(r => { if (!r.ok) throw new Error(r.status + " " + r.statusText); return r.json(); }).then(d => boot(d)).catch(e => {
-      document.getElementById("app").innerHTML = '<div style="padding:40px;font:14px system-ui;color:#b91c1c;max-width:720px"><b>データを読み込めませんでした</b>（' + String(e.message) + '）。<br>このページはローカルの file:// では動きません。<code>python3 -m http.server 8000</code> を実行して <code>http://localhost:8000/</code> で開くか、GitHub Pages の URL で開いてください。</div>';
+    document.getElementById("app").innerHTML = '<div style="padding:40px;font:14px system-ui;color:#5b6577">' + (EN ? "Loading data … " : "データ読み込み中 … ") + '<code>' + src + '</code></div>';
+    const pData = fetch(src).then(r => { if (!r.ok) throw new Error(r.status + " " + r.statusText); return r.json(); });
+    const pI18n = (EN && i18nSrc) ? fetch(i18nSrc).then(r => r.ok ? r.json() : null).catch(() => null) : Promise.resolve(null);
+    Promise.all([pData, pI18n]).then(([d, i]) => boot(d, i)).catch(e => {
+      document.getElementById("app").innerHTML = EN
+        ? '<div style="padding:40px;font:14px system-ui;color:#b91c1c;max-width:720px"><b>Could not load the data</b> (' + String(e.message) + ').<br>This page does not work from a local file:// URL. Run <code>python3 -m http.server 8000</code> and open <code>http://localhost:8000/</code>, or open the GitHub Pages URL.</div>'
+        : '<div style="padding:40px;font:14px system-ui;color:#b91c1c;max-width:720px"><b>データを読み込めませんでした</b>（' + String(e.message) + '）。<br>このページはローカルの file:// では動きません。<code>python3 -m http.server 8000</code> を実行して <code>http://localhost:8000/</code> で開くか、GitHub Pages の URL で開いてください。</div>';
     });
     return;
   }
-  boot(JSON.parse(inline.textContent));
-  function boot(DATA) {
+  boot(JSON.parse(inline.textContent), null);
+  function boot(DATA, I18N) {
   // 公開抜粋では、抜粋外の隣接ノードが「型だけのスタブ」（_stub: true、匿名 ID）として同梱される。
   // NODES は実ノードのみ（集計・表・検索の母数）。byId はスタブも含む（リンク表示・近傍のため）。
   const META = DATA.meta, NODES = DATA.nodes.filter(n => !n._stub), STUBS = DATA.nodes.filter(n => n._stub);
@@ -136,6 +144,26 @@
   const STATUSES = ["established", "registered-hit", "supported", "promoted", "provisional", "open", "challenged", "rejected", "rejected-recorded", "superseded"];
   const SJA = EN ? { established: "established", "registered-hit": "registered hit", supported: "supported", promoted: "promoted", provisional: "provisional", open: "open", challenged: "challenged", rejected: "rejected", "rejected-recorded": "rejected (recorded)", superseded: "superseded" } : { established: "確立", "registered-hit": "登録的中", supported: "支持", promoted: "昇格", provisional: "暫定", open: "未決", challenged: "係争", rejected: "棄却", "rejected-recorded": "棄却記録", superseded: "置換済" };
   const REL_JA = EN ? { about: "about", quantities: "quantities", supported_by: "supported by", refuted_by: "refuted by", registered_by: "registered by", derives_from: "derives from", supersedes: "supersedes", superseded_by: "superseded by", promoted_to: "promoted to", related: "related", grounded_in: "grounded in", supports: "supports", refutes: "refutes", verifies: "verifies", taught_by: "taught by", constrains: "constrains" } : { about: "対象", quantities: "量", supported_by: "根拠", refuted_by: "反証", registered_by: "登録", derives_from: "派生元", supersedes: "置換する", superseded_by: "置換された", promoted_to: "昇格先", related: "関連", grounded_in: "接地", supports: "支持する", refutes: "反証する", verifies: "検証する", taught_by: "教えた証拠", constrains: "制約" };
+  // ---- 英語オーバーレイ（kb/i18n/en.json）: 記録層は日本語のまま、表示だけ差し替える。原文の指紋（FNV-1a 32bit + 文字数、i18n_check.py と同じ定義）が一致する欄だけ当てる ----
+  // 原文は n._ja[path] に退避し、詳細パネルの「Original (Japanese)」と生の JSON（stripDerived）はそこから原文を出す。非公開スタブの label（「非公開の主張」）は型から英語化する。
+  const I18N_STAT = applyI18n(DATA, I18N);
+  function i18nFp(s) { let h = 0x811c9dc5, n = 0; for (const ch of String(s)) { h ^= ch.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; n++; } return (h >>> 0).toString(16).padStart(8, "0") + ":" + n; }
+  function i18nResolve(o, path) { const parts = [], re = /([^.\[\]]+)|\[(\d+)\]/g; let m; while ((m = re.exec(path))) parts.push(m[1] !== undefined ? m[1] : +m[2]); let cur = o; for (let i = 0; i < parts.length - 1; i++) { if (cur == null || typeof cur !== "object") return null; cur = cur[parts[i]]; } return (cur != null && typeof cur === "object" && parts.length) ? { parent: cur, key: parts[parts.length - 1] } : null; }
+  function i18nApply(o, t, st) { if (!o || !t) return 0; const fps = t._src || {}; let hit = 0; for (const p of Object.keys(t)) { if (p.startsWith("_") || typeof t[p] !== "string") continue; const r = i18nResolve(o, p); if (!r || typeof r.parent[r.key] !== "string") continue; const cur = r.parent[r.key]; if (fps[p] && fps[p] !== i18nFp(cur)) { st.stale++; continue; } (o._ja || (o._ja = {}))[p] = cur; r.parent[r.key] = t[p]; hit++; } return hit; }
+  function applyI18n(DATA, I) {
+    const st = { on: false, nodes: 0, fields: 0, stale: 0, total: DATA.nodes.filter(n => !n._stub).length };
+    if (EN) for (const n of DATA.nodes) if (n._stub && n.label) { n._ja = { label: n.label }; n.label = "private " + String(TJA[n.type] || n.type).toLowerCase(); }
+    if (!I || !I.nodes) return st;
+    st.on = true;
+    for (const n of DATA.nodes) { if (n._stub) continue; const k = i18nApply(n, I.nodes[n.id], st); if (k) { st.nodes++; st.fields += k; } }
+    const M = DATA.meta || {}, lineT = I.lines || {}, byLabel = new Map();
+    for (const L of (M.lines || [])) { const t = lineT[L.id]; if (t) { byLabel.set(L.label, t); i18nApply(L, t, st); } }
+    const map = M.map || {};
+    for (const L of (map.lanes || [])) { const t = lineT[L.id]; if (t) i18nApply(L, t, st); for (const e of (L.events || [])) { const n = byId.get(e.id); if (n && n._ja && "label" in n._ja && e.label === n._ja.label) e.label = n.label; } }
+    for (const L of (map.private_lanes || [])) { const t = byLabel.get(L.label); if (t) i18nApply(L, t, st); }
+    for (const xid of Object.keys(I.k4 || {})) if (M.k4 && M.k4[xid]) i18nApply(M.k4[xid], I.k4[xid], st);
+    return st;
+  }
   const LINES = META.lines;
   const LINE_COLORS = { "O-fs-family": "#2a78d6", "O-qec-family": "#eb6834", "O-ecnf-family": "#1baf7a", "O-dihedral-artin-family": "#eda100", "O-cubic-family": "#e87ba4", "O-fingerprint-family": "#008300", "O-ff-q3-family": "#4a3aa7", "dir-A": "#e34948", "dir-B": "#0e7490", principles: "#7c3aed", program: "#6b7280", unassigned: "#a3a9b5" };
   const lineById = new Map(LINES.map(l => [l.id, l]));
@@ -157,7 +185,9 @@
   // 「offline」は記録層の宣言、「_bundled」はこの束に凍結入力が全部そろい実際に再実行できるか（生成時に判定）
   const rerunable = (x) => !!((x.env || {}).offline && x._bundled !== false);
   const reciprocal = (a, b) => { const A = byId.get(a), B = byId.get(b); if (!A || !B) return false; return B._out.some(e => e.to === a); };
-  const repoLink = (path) => { if (!path) return ""; const pth = String(path).replace(/^annex:\s*/, ""); if (PUBLIC) { return BUNDLED.has(pth) && PUBREPO ? `<a href="${PUBREPO}/blob/main/${esc(pth)}" target="_blank" rel="noopener"><code>${esc(pth)}</code></a> <span class="badge" style="background:${statusColor("established")}">同梱</span>` : `<code>${esc(pth)}</code> <span class="muted small">（非公開リポジトリ内）</span>`; } return `<a href="${REPO}/blob/main/${esc(pth)}" target="_blank" rel="noopener"><code>${esc(pth)}</code></a>`; };
+  const repoLink = (path) => { if (!path) return ""; const pth = String(path).replace(/^annex:\s*/, ""); if (PUBLIC) { return BUNDLED.has(pth) && PUBREPO ? `<a href="${PUBREPO}/blob/main/${esc(pth)}" target="_blank" rel="noopener"><code>${esc(pth)}</code></a> <span class="badge" style="background:${statusColor("established")}">${EN ? "bundled" : "同梱"}</span>` : `<code>${esc(pth)}</code> <span class="muted small">${EN ? "(in the private repository)" : "（非公開リポジトリ内）"}</span>`; } return `<a href="${REPO}/blob/main/${esc(pth)}" target="_blank" rel="noopener"><code>${esc(pth)}</code></a>`; };
+  // 来歴の表示名（EN のときだけ）: 「統率AI」→ orchestrating AI など。prov そのものは変えない（生の JSON は原文）。
+  const provName = (s) => { s = String(s == null ? "" : s); if (!EN || !s) return s; return s.replace(/\(統率AI 転記\)/g, "(transcribed by the orchestrating AI)").replace(/(STATU \d+(?: §\d+)?) 転記/g, "transcribed from $1").replace(/統率AI/g, "orchestrating AI").replace(/横山/g, "Yokoyama").replace(/検収転記/g, "transcribed at acceptance review").replace(/検収訂正/g, "corrected at acceptance review").replace(/検収/g, "acceptance review").replace(/提案/g, "proposal").replace(/転記/g, "transcribed").replace(/、/g, ", ").replace(/（/g, " (").replace(/）/g, ")").replace(/・/g, " · ").replace(/\s+/g, " ").trim(); };
   const prLink = (p) => { if (p == null || p === "") return ""; const m = String(p).match(/^#?(\d{1,5})$/); return m ? `<a href="${REPO}/pull/${m[1]}" target="_blank" rel="noopener">#${m[1]}</a>` : `<span class="muted">${esc(p)}</span>`; };
 
   // ------------------------------------------------------------------ state & routing
@@ -168,7 +198,7 @@
     f: { types: new Set(TYPES), statuses: new Set([...STATUSES, "none"]), lines: new Set(LINES.map(l => l.id)), tiers: new Set(["full", "accept", "spot", "none"]), d0: 0, d1: allDates.length - 1, actors: new Set(["統率", "meta", "other"]) },
     colorMode: "type", filtersOpen: window.innerWidth > 1100, inspOpen: window.innerWidth > 1100, graphColor: "line", graphFocus: null, graphDepth: 2, tlDay: null, showStubs: false,
   };
-  function actorOf(n) { const a = ((n.prov || {}).asserted_by || ""); return a.startsWith("統率") ? "統率" : a.includes("meta") ? "meta" : "other"; }
+  function actorOf(n) { const a = ((n.prov || {}).asserted_by || ""); return /^(統率|orchestrat)/i.test(a) ? "統率" : a.includes("meta") ? "meta" : "other"; }
   function tierOf(n) { return n.tier || "none"; }
   function passes(n) {
     const f = state.f;
@@ -226,7 +256,7 @@
     <button class="iconbtn" id="btnHelp" title="${T.btn_help_t}">?</button>
   </header>
   <div class="help" id="help" hidden><div class="helpbox"><div class="helphd"><b>${T.help_title}</b><button class="iconbtn" id="helpClose">✕</button></div><div class="helpbd" id="helpBody"></div></div></div>
-  ${META.profile === "public-grounding" ? (EN ? `<div class="banner" id="banner"><b>Public excerpt</b> — ${fmtN(NODES.length)} nodes selected by rule from the knowledge base bias-kb (private repository <code>${esc(META.repo)}</code>, ${fmtN(META.stats.full_n || 0)} nodes as of ${esc((META.generated_at || "").slice(0, 10))}): the nodes that take part in a chain <b>claim → evidence → re-executable execution unit</b> (function-field census line and the Q8 W layer). Neighbours outside the excerpt remain as <b>private stubs</b> (${fmtN(STUBS.length)}, dashed) that carry only their type, so that “evidence exists but is private” is distinguishable from “no evidence”. The frozen inputs of the offline execution units are bundled and can be re-run with <code>python3 rerun.py</code>${META.public_repo ? ` (<a href="https://github.com/${esc(META.public_repo)}" target="_blank" rel="noopener">${esc(META.public_repo)}</a>)` : ""}. Every node also has a standalone page without JavaScript, <code>n/&lt;id&gt;.html</code> / <code>.json</code> (<a href="n/index.html">index</a> · <a href="llms.txt">llms.txt</a>). Node texts are in Japanese (the language of the record layer).</div>` : `<div class="banner" id="banner"><b>公開抜粋</b> — 知識基盤 bias-kb（private リポジトリ <code>${esc(META.repo)}</code>、${esc((META.generated_at || "").slice(0, 10))} 時点 ${fmtN(META.stats.full_n || 0)} ノード）から、<b>主張 → 証拠 → 再実行可能な実行単位</b> の鎖に関わる ${fmtN(NODES.length)} ノードを規則で抜き出したものです（関数体 census 線と Q8 の W 層）。抜粋外の隣接ノードは型だけの<b>非公開スタブ</b>（${fmtN(STUBS.length)} 件、点線）として残し、「証拠はあるが非公開」と「根拠がない」を区別します。offline 実行単位の凍結入力は同梱され、<code>python3 rerun.py</code> で再実行できます${META.public_repo ? `（<a href="https://github.com/${esc(META.public_repo)}" target="_blank" rel="noopener">${esc(META.public_repo)}</a>）` : ""}。各ノードは JS なしの単体ページ <code>n/&lt;id&gt;.html</code>／<code>.json</code> でも読めます（<a href="n/index.html">一覧</a>・<a href="llms.txt">llms.txt</a>）。</div>`) : ""}
+  ${META.profile === "public-grounding" ? (EN ? `<div class="banner" id="banner"><b>Public excerpt</b> — ${fmtN(NODES.length)} nodes selected by rule from the knowledge base bias-kb (private repository <code>${esc(META.repo)}</code>, ${fmtN(META.stats.full_n || 0)} nodes as of ${esc((META.generated_at || "").slice(0, 10))}): the nodes that take part in a chain <b>claim → evidence → re-executable execution unit</b> (function-field census line and the Q8 W layer). Neighbours outside the excerpt remain as <b>private stubs</b> (${fmtN(STUBS.length)}, dashed) that carry only their type, so that “evidence exists but is private” is distinguishable from “no evidence”. The frozen inputs of the offline execution units are bundled and can be re-run with <code>python3 rerun.py</code>${META.public_repo ? ` (<a href="https://github.com/${esc(META.public_repo)}" target="_blank" rel="noopener">${esc(META.public_repo)}</a>)` : ""}. Every node also has a standalone page without JavaScript, <code>n/&lt;id&gt;.html</code> / <code>.json</code> (<a href="n/index.html">index</a> · <a href="llms.txt">llms.txt</a>). ${I18N_STAT.on ? `Node texts are shown in an <b>AI-assisted English translation</b> (${fmtN(I18N_STAT.nodes)} of ${fmtN(I18N_STAT.total)} nodes${I18N_STAT.stale ? `; ${I18N_STAT.stale} field${I18N_STAT.stale > 1 ? "s" : ""} changed in the record after translation and ${I18N_STAT.stale > 1 ? "are" : "is"} shown in Japanese` : ""}); the Japanese record layer is authoritative — each detail panel keeps the original under “Original (Japanese)”, and <code>n/&lt;id&gt;.json</code> is untouched.` : "Node texts are in Japanese (the language of the record layer)."}</div>` : `<div class="banner" id="banner"><b>公開抜粋</b> — 知識基盤 bias-kb（private リポジトリ <code>${esc(META.repo)}</code>、${esc((META.generated_at || "").slice(0, 10))} 時点 ${fmtN(META.stats.full_n || 0)} ノード）から、<b>主張 → 証拠 → 再実行可能な実行単位</b> の鎖に関わる ${fmtN(NODES.length)} ノードを規則で抜き出したものです（関数体 census 線と Q8 の W 層）。抜粋外の隣接ノードは型だけの<b>非公開スタブ</b>（${fmtN(STUBS.length)} 件、点線）として残し、「証拠はあるが非公開」と「根拠がない」を区別します。offline 実行単位の凍結入力は同梱され、<code>python3 rerun.py</code> で再実行できます${META.public_repo ? `（<a href="https://github.com/${esc(META.public_repo)}" target="_blank" rel="noopener">${esc(META.public_repo)}</a>）` : ""}。各ノードは JS なしの単体ページ <code>n/&lt;id&gt;.html</code>／<code>.json</code> でも読めます（<a href="n/index.html">一覧</a>・<a href="llms.txt">llms.txt</a>）。</div>`) : ""}
   <div class="body" id="body"><aside class="rail" id="rail"></aside><main class="stage" id="stage"></main><aside class="insp" id="insp"><div class="splitter" id="split"></div><div id="inspBody"></div></aside></div>
   <div class="tt" id="tt"></div>`;
   const $ = (s, r = document) => r.querySelector(s);
@@ -266,7 +296,7 @@
       <h4>Status</h4><div class="legend">${STATUSES.map(st => `<span class="it"><span class="sw" style="background:${statusColor(st)}"></span>${st}</span>`).join("")}</div>
       <p class="small muted">Rejected claims stay as <code>rejected</code> / <code>rejected-recorded</code>; <code>supersedes</code> links the lineage. <code>registered-hit</code> = a prediction frozen before the run that came true.</p>
       <h4>Links</h4><div class="legend">${Object.keys(REL_JA).map(r => `<span class="it"><code>${r}</code> ${REL_JA[r]}</span>`).join("")}</div>
-      <h4>Usage</h4><ul class="small"><li><b>Guide</b>: the figure of the mechanism, the table figure → implementation → live examples, and a tour of five checks.</li><li><b>Grounding</b>: per claim, evidence → execution unit (tier, k4 re-run) → artifact sha → registration; “trace” opens the detail. The re-run box of an execution-unit card shows the command, input sha256, expected values and the k4 record.</li><li><b>Overview / Lines / Time / Graph / Lessons / Registrations / Table</b>: the other views (labels in Japanese).</li><li><b>Detail panel</b>: node ids in the text are clickable; the chain of grounds is registration → claim → evidence → execution → lesson; ← → history; ⧉ copies the URL (the hash holds the current place, including <code>lang=en</code>).</li><li><b>Keys</b>: <code>/</code> search, <code>Esc</code> close, Enter/Space opens the focused chip or figure element.</li></ul>`; return; }
+      <h4>Usage</h4><ul class="small"><li><b>Guide</b>: the figure of the mechanism, the table figure → implementation → live examples, and a tour of five checks.</li><li><b>Grounding</b>: per claim, evidence → execution unit (tier, k4 re-run) → artifact sha → registration; “trace” opens the detail. The re-run box of an execution-unit card shows the command, input sha256, expected values and the k4 record.</li><li><b>Overview / Lines / Time / Graph / Lessons / Registrations / Table</b>: the other views (node texts in English where a translation exists, otherwise Japanese).</li><li><b>Detail panel</b>: node ids in the text are clickable; the chain of grounds is registration → claim → evidence → execution → lesson; ← → history; ⧉ copies the URL (the hash holds the current place, including <code>lang=en</code>).</li><li><b>Keys</b>: <code>/</code> search, <code>Esc</code> close, Enter/Space opens the focused chip or figure element.</li></ul>`; return; }
     $("#helpBody").innerHTML = `
       <p>このページは、リポジトリ <code>${esc(META.repo)}</code> の <code>knowledge/</code> にある記録層（ノード JSON）から <code>kb_atlas.py</code> が生成した自己完結の閲覧ツールです（生成 ${esc(META.generated_at)}、ソース ${esc(META.source)} ${esc(META.source_ref)}）。記録層は書き換えません。</p>
       <h4>ノードの 8 型</h4><div class="legend">${TYPES.map(t => `<span class="it"><span class="sw" style="background:${typeColor(t)}"></span><b>${TLET[t]}</b> ${TJA[t]}（${t}）</span>`).join("")}</div>
@@ -453,7 +483,7 @@
       <div class="card" style="padding:0;overflow:auto;margin-top:12px"><table class="tbl gtbl"><thead><tr>${T.guide_th.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rowHtml}</tbody></table></div>
       <div class="card tour" style="margin-top:12px"><h3 class="ct">${T.tour_h} <span class="muted small">${T.tour_sub}</span></h3><div id="tsum">${tourSummary()}</div><ol class="gsteps">${STEPS.map(stepHtml).join("")}</ol></div>
       ${growthCard()}
-      <p class="small muted" style="margin-top:8px">${md(T.guide_foot)}${PUBLIC ? ` ${T.guide_foot_pub} <a href="llms.txt">llms.txt</a>・<a href="kb/kb.jsonld">kb/kb.jsonld</a>・<a href="n/index.html">${T.guide_nodepages}</a>${EN ? "" : "。"}` : ""}</p>
+      <p class="small muted" style="margin-top:8px">${md(T.guide_foot)}${PUBLIC ? ` ${T.guide_foot_pub} <a href="llms.txt">llms.txt</a>${EN ? " · " : "・"}<a href="kb/kb.jsonld">kb/kb.jsonld</a>${EN ? " · " : "・"}<a href="n/index.html">${T.guide_nodepages}</a>${EN ? "" : "。"}` : ""}</p>
     </div>`;
     drawGrowth(stage.querySelector("#growth"));
     const svg = stage.querySelector(".gfigure svg");
@@ -552,7 +582,7 @@
   function storyMarkdown(L, ods, ds) {
     const MK = EN ? MARK_EN : MARK_JA; const c = L.claims || {}, nC = Object.values(c).reduce((a, b) => a + b, 0), v = L.verdicts;
     const lab = (i) => plain((byId.get(i) || {}).label || "").slice(0, 110);
-    const o = [`# ${L.label}（${L.short}）`, "", `${EN ? "generated" : "生成"} ${META.map.today} · ${T.map.last} ${L.last} · ${L.n} ${T.rail_nodes}`, "",
+    const o = [`# ${L.label}${EN ? ` (${L.short})` : `（${L.short}）`}`, "", `${EN ? "generated" : "生成"} ${META.map.today} · ${T.map.last} ${L.last} · ${L.n} ${T.rail_nodes}`, "",
       `${T.map.claims_line(nC, c.established || 0, c["registered-hit"] || 0, (c.rejected || 0) + (c["rejected-recorded"] || 0))} · ${T.map.regs_line(v.reg, L.open_p.length)} · ${T.map.hyps_line(L.open_h.length)}`];
     const lastV = [...L.events].reverse().find(e => e.t === "E");
     o.push("", `## ${T.map.now}`, lastV ? `${lastV.date} ${MARK[lastV.mark][0]} ${lastV.name || ""} ${lastV.kn || ""} — \`${lastV.id}\` ${plain(lastV.label).slice(0, 120)}` : T.map.no_ev);
@@ -666,7 +696,7 @@
     const Pfrozen = vis.filter(n => n.type === "Protocol" && n.frozen).length, hits = vis.filter(n => n.status === "registered-hit").length;
     const order = { "registered-hit": 0, established: 1, supported: 2, promoted: 2, provisional: 3, open: 4, challenged: 5, rejected: 6, "rejected-recorded": 6 };
     rows.sort((a, b) => (b.ch.pass - a.ch.pass) || ((order[a.c.status] ?? 9) - (order[b.c.status] ?? 9)) || (b.c._date || "").localeCompare(a.c._date || ""));
-    const kp = (v, l, s = "", def = "") => `<div class="card kpi"${def ? ` title="${esc(def)}"` : ""}><div class="v">${v}</div><div class="l">${l}${def ? ` <span class="def" aria-label="定義">ⓘ</span>` : ""}</div>${s ? `<div class="s">${s}</div>` : ""}</div>`;
+    const kp = (v, l, s = "", def = "") => `<div class="card kpi"${def ? ` title="${esc(def)}"` : ""}><div class="v">${v}</div><div class="l">${l}${def ? ` <span class="def" aria-label="${EN ? "definition" : "定義"}">ⓘ</span>` : ""}</div>${s ? `<div class="s">${s}</div>` : ""}</div>`;
     const cloneCmd = PUBLIC && PUBREPO ? `git clone ${PUBREPO}.git && cd ${esc(META.public_repo.split("/")[1])} && python3 rerun.py` : `git clone git@github.com:${esc(META.repo)}.git && cd ${esc(META.repo.split("/")[1])} && python3 knowledge/tools/kb_k4.py`;
     const rerunBox = RERUN ? (() => { const np = RERUN.results.filter(r => r.status === "PASS").length, nb = RERUN.results.filter(r => r.status === "NOT-BUNDLED").length, nt = RERUN.results.length - nb; return `<div class="small" style="margin-top:8px"><b>${T.ci_h}</b>（<a href="${esc(META.rerun_latest)}">kb/rerun-latest.json</a>、${esc((RERUN.generated_at || "").slice(0, 16).replace("T", " "))} UTC${RERUN.python ? "、Python " + esc(RERUN.python) : ""}${RERUN.commit ? "、commit " + esc(String(RERUN.commit).slice(0, 7)) : ""}）: <b style="color:${np === nt ? "var(--ok, #15803d)" : "var(--bad, #b91c1c)"}">${np}/${nt} PASS</b>${nb ? `、${T.ci_nb} ${nb}` : ""} — ${RERUN.results.map(r => `<code title="${esc(r.status)}${r.got ? " got " + esc(r.got) : ""}">${esc(r.id)}</code> ${r.status === "PASS" ? "✓" : r.status === "NOT-BUNDLED" ? "–" : "✗"}`).join(" ")}</div>`; })() : (PUBLIC ? `<div class="small muted" style="margin-top:8px">${T.ci_wait}</div>` : "");
     stage.innerHTML = `<div class="pad">
@@ -697,35 +727,35 @@
     const grounded = claims.filter(c => (c.supported_by || []).some(e => { const E = byId.get(e); return E && (E.grounded_in || []).some(x => byId.has(x)); })).length;
     const kp = (v, l, s = "") => `<div class="card kpi"><div class="v">${v}</div><div class="l">${l}</div>${s ? `<div class="s">${s}</div>` : ""}</div>`;
     stage.innerHTML = `<div class="pad">
-      <h2 class="vt">俯瞰 — 研究線 × 型 × 状態</h2><p class="vsub">円は研究線 → 型 → ノード。クリックで近づき、葉（ノード）をクリックすると右に詳細。背景クリックで戻る。フィルタ列で絞り込むと全ビューに反映。</p>
+      <h2 class="vt">${EN ? "Overview — research line × type × status" : "俯瞰 — 研究線 × 型 × 状態"}</h2><p class="vsub">${EN ? "Circles are research line → type → node. Click to zoom in; click a leaf (node) for its detail on the right; click the background to go back. The filter column applies to every view." : "円は研究線 → 型 → ノード。クリックで近づき、葉（ノード）をクリックすると右に詳細。背景クリックで戻る。フィルタ列で絞り込むと全ビューに反映。"}</p>
       <div class="grid g4" style="margin-bottom:14px">
-        ${kp(fmtN(vis.length), "表示ノード", (() => { const last = META.stats.date_max; const dn = NODES.filter(n => n._date === last); const st = [...new Set(dn.flatMap(n => (n.prov || {}).statu || []))].sort(); return `全 ${fmtN(NODES.length)} · 最終更新 ${last}（${dn.length} ノード${st.length ? "、STATU " + st[0] + (st.length > 1 ? "–" + st[st.length - 1] : "") : ""}）`; })())}
-        ${kp(`${cS("established")} <span class="muted small">/ ${claims.length}</span>`, "確立した主張（established）", `支持 ${cS("supported")} · 登録的中 ${cS("registered-hit")} · 昇格 ${cS("promoted")}`)}
-        ${kp(`${cS("challenged") + cS("rejected") + cS("rejected-recorded")}`, "係争・棄却された主張", `係争 ${cS("challenged")} · 棄却 ${cS("rejected")} · 棄却記録 ${cS("rejected-recorded")}`)}
-        ${kp(`${claims.length ? Math.round(100 * grounded / claims.length) : 0}%`, "主張 → 証拠 → 実行単位 の接地率", `${grounded}/${claims.length} が E→X の鎖を持つ · 教訓 ${vis.filter(n => n.type === "Lesson").length} · 登録 ${vis.filter(n => n.type === "Protocol").length}`)}
+        ${kp(fmtN(vis.length), EN ? "nodes shown" : "表示ノード", (() => { const last = META.stats.date_max; const dn = NODES.filter(n => n._date === last); const st = [...new Set(dn.flatMap(n => (n.prov || {}).statu || []))].sort(); const sts = st.length ? (EN ? ", STATU " : "、STATU ") + st[0] + (st.length > 1 ? "–" + st[st.length - 1] : "") : ""; return EN ? `${fmtN(NODES.length)} in all · last update ${last} (${dn.length} nodes${sts})` : `全 ${fmtN(NODES.length)} · 最終更新 ${last}（${dn.length} ノード${sts}）`; })())}
+        ${kp(`${cS("established")} <span class="muted small">/ ${claims.length}</span>`, EN ? "established claims" : "確立した主張（established）", EN ? `supported ${cS("supported")} · registered hits ${cS("registered-hit")} · promoted ${cS("promoted")}` : `支持 ${cS("supported")} · 登録的中 ${cS("registered-hit")} · 昇格 ${cS("promoted")}`)}
+        ${kp(`${cS("challenged") + cS("rejected") + cS("rejected-recorded")}`, EN ? "challenged or rejected claims" : "係争・棄却された主張", EN ? `challenged ${cS("challenged")} · rejected ${cS("rejected")} · rejected (recorded) ${cS("rejected-recorded")}` : `係争 ${cS("challenged")} · 棄却 ${cS("rejected")} · 棄却記録 ${cS("rejected-recorded")}`)}
+        ${kp(`${claims.length ? Math.round(100 * grounded / claims.length) : 0}%`, EN ? "grounding rate: claim → evidence → execution unit" : "主張 → 証拠 → 実行単位 の接地率", EN ? `${grounded}/${claims.length} have an E→X chain · lessons ${vis.filter(n => n.type === "Lesson").length} · registrations ${vis.filter(n => n.type === "Protocol").length}` : `${grounded}/${claims.length} が E→X の鎖を持つ · 教訓 ${vis.filter(n => n.type === "Lesson").length} · 登録 ${vis.filter(n => n.type === "Protocol").length}`)}
       </div>
-      <div class="toolbar"><span class="hint">葉の色:</span><span class="seg"><button data-cm="type" class="${state.colorMode === "type" ? "on" : ""}">型</button><button data-cm="status" class="${state.colorMode === "status" ? "on" : ""}">状態</button><button data-cm="date" class="${state.colorMode === "date" ? "on" : ""}">日付</button></span>
-        <span class="legend" id="packLegend"></span><span class="right hint">葉の大きさ = 次数（リンク数）＋1</span></div>
-      <div class="pack" id="pack"><div class="zoomhint" id="zoomhint">全体</div></div>
-      <h3 class="ct" style="margin-top:16px">研究線ごとの状態（クリックで研究線ビュー）</h3>
+      <div class="toolbar"><span class="hint">${EN ? "Leaf colour:" : "葉の色:"}</span><span class="seg"><button data-cm="type" class="${state.colorMode === "type" ? "on" : ""}">${EN ? "type" : "型"}</button><button data-cm="status" class="${state.colorMode === "status" ? "on" : ""}">${EN ? "status" : "状態"}</button><button data-cm="date" class="${state.colorMode === "date" ? "on" : ""}">${EN ? "date" : "日付"}</button></span>
+        <span class="legend" id="packLegend"></span><span class="right hint">${EN ? "leaf size = degree (number of links) + 1" : "葉の大きさ = 次数（リンク数）＋1"}</span></div>
+      <div class="pack" id="pack"><div class="zoomhint" id="zoomhint">${EN ? "whole" : "全体"}</div></div>
+      <h3 class="ct" style="margin-top:16px">${EN ? "Status by research line (click for the line view)" : "研究線ごとの状態（クリックで研究線ビュー）"}</h3>
       <div class="linecards" id="linecards"></div>
-      <h3 class="ct" style="margin-top:16px">横断原理 × 研究線 — 原理がどの線の証拠・主張に接地しているか（セルをクリックで原理の詳細）</h3>
+      <h3 class="ct" style="margin-top:16px">${EN ? "Cross-cutting principles × research lines — in which lines' evidence and claims each principle is grounded (click a cell for the principle)" : "横断原理 × 研究線 — 原理がどの線の証拠・主張に接地しているか（セルをクリックで原理の詳細）"}</h3>
       <div class="card" style="padding:0;overflow:auto" id="matrix"></div></div>`;
     stage.querySelector(".toolbar").onclick = e => { const b = e.target.closest("[data-cm]"); if (b) { state.colorMode = b.dataset.cm; render(); } };
     // legend
     const lg = $("#packLegend");
     if (state.colorMode === "type") lg.innerHTML = TYPES.map(t => `<span class="it"><span class="sw" style="background:${typeColor(t)}"></span>${TLET[t]} ${TJA[t]}</span>`).join("");
-    else if (state.colorMode === "status") lg.innerHTML = [...STATUSES, "none"].map(s => `<span class="it"><span class="sw" style="background:${s === "none" ? css("--s-none") : statusColor(s)}"></span>${s === "none" ? "なし" : SJA[s]}</span>`).join("");
+    else if (state.colorMode === "status") lg.innerHTML = [...STATUSES, "none"].map(s => `<span class="it"><span class="sw" style="background:${s === "none" ? css("--s-none") : statusColor(s)}"></span>${s === "none" ? (EN ? "none" : "なし") : SJA[s]}</span>`).join("");
     else lg.innerHTML = `<span class="it"><span class="sw" style="background:#c7d2fe"></span>${META.stats.date_min}</span><span class="it">→</span><span class="it"><span class="sw" style="background:#1e3a8a"></span>${META.stats.date_max}</span>`;
     // line cards
-    $("#linecards").innerHTML = LINES.map(l => { const ns = vis.filter(n => n._line === l.id); if (!ns.length) return ""; const cl = ns.filter(n => n.type === "Claim"); const last = d3.max(ns, n => n._date) || ""; return `<div class="linecard" data-line="${l.id}"><div class="n"><span class="sw" style="background:${lineColor(l.id)}"></span>${esc(l.label)}<span class="right muted small">${ns.length}</span></div>${statusBar(ns)}<div class="st"><span>主張 ${cl.length}</span><span>証拠 ${ns.filter(n => n.type === "Evidence").length}</span><span>教訓 ${ns.filter(n => n.type === "Lesson").length}</span><span>最終 ${last}</span></div></div>`; }).join("");
+    $("#linecards").innerHTML = LINES.map(l => { const ns = vis.filter(n => n._line === l.id); if (!ns.length) return ""; const cl = ns.filter(n => n.type === "Claim"); const last = d3.max(ns, n => n._date) || ""; return `<div class="linecard" data-line="${l.id}"><div class="n"><span class="sw" style="background:${lineColor(l.id)}"></span>${esc(l.label)}<span class="right muted small">${ns.length}</span></div>${statusBar(ns)}<div class="st"><span>${EN ? "claims" : "主張"} ${cl.length}</span><span>${EN ? "evidence" : "証拠"} ${ns.filter(n => n.type === "Evidence").length}</span><span>${EN ? "lessons" : "教訓"} ${ns.filter(n => n.type === "Lesson").length}</span><span>${EN ? "last" : "最終"} ${last}</span></div></div>`; }).join("");
     drawPack($("#pack"), vis);
     // principle × line matrix
     const prins = NODES.filter(n => n._line === "principles" && n.type === "Claim").sort((a, b) => a.id.localeCompare(b.id));
     const cols = LINES.filter(l => !["principles", "program", "unassigned"].includes(l.id));
     const visSet = new Set(vis.map(n => n.id));
     const touch = (p) => { const ids = new Set([...(p.supported_by || []), ...(p.related || []), ...p._in.filter(e => e.rel === "related" || e.rel === "supports").map(e => e.from)]); const c = new Map(); for (const id of ids) { const m = byId.get(id); if (!m || !visSet.has(id)) continue; c.set(m._line, (c.get(m._line) || []).concat(id)); } return c; };
-    $("#matrix").innerHTML = `<table class="tbl"><thead><tr><th>原理</th>${cols.map(c => `<th style="text-align:center"><span class="sw" style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${lineColor(c.id)};margin-right:4px"></span>${esc(c.short)}</th>`).join("")}</tr></thead><tbody>${prins.map(p => { const t = touch(p); return `<tr><td><span class="chip" data-node="${p.id}"><span class="dot" style="background:${typeColor("Claim")}"></span><span class="t">${esc(short(p.label, 46))}</span></span></td>${cols.map(c => { const arr = t.get(c.id) || []; return `<td style="text-align:center;cursor:${arr.length ? "pointer" : "default"}" data-node="${arr.length ? p.id : ""}" title="${esc(arr.join(", "))}">${arr.length ? `<b>${arr.length}</b>` : '<span class="muted">·</span>'}</td>`; }).join("")}</tr>`; }).join("")}</tbody></table>`;
+    $("#matrix").innerHTML = `<table class="tbl"><thead><tr><th>${EN ? "Principle" : "原理"}</th>${cols.map(c => `<th style="text-align:center"><span class="sw" style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${lineColor(c.id)};margin-right:4px"></span>${esc(c.short)}</th>`).join("")}</tr></thead><tbody>${prins.map(p => { const t = touch(p); return `<tr><td><span class="chip" data-node="${p.id}"><span class="dot" style="background:${typeColor("Claim")}"></span><span class="t">${esc(short(p.label, 46))}</span></span></td>${cols.map(c => { const arr = t.get(c.id) || []; return `<td style="text-align:center;cursor:${arr.length ? "pointer" : "default"}" data-node="${arr.length ? p.id : ""}" title="${esc(arr.join(", "))}">${arr.length ? `<b>${arr.length}</b>` : '<span class="muted">·</span>'}</td>`; }).join("")}</tr>`; }).join("")}</tbody></table>`;
   }
   let packFocus = null; // {line, type} — survives re-renders
   function drawPack(host, vis) {
@@ -744,7 +774,7 @@
       .attr("fill-opacity", d => d.depth === 1 ? 0.08 : d.depth === 2 ? 0.14 : 0.95)
       .attr("stroke", d => d.depth === 1 ? lineColor(d.data.line) : d.depth === 2 ? typeColor(d.data.type) : (d.data.node.id === state.node ? css("--ink") : "none"))
       .attr("stroke-width", d => d.depth === 3 && d.data.node.id === state.node ? 2.5 : 1)
-      .on("mouseover", (e, d) => { if (d.depth === 3) showTT(nodeTT(d.data.node), e); else showTT(`<b>${esc(d.depth === 1 ? lineLabel(d.data.line) : lineLabel(d.data.line) + " › " + TJA[d.data.type] + "（" + d.data.type + "）")}</b>${d.leaves().length} ノード${d.depth === 1 ? "" : "<br><span style=\"opacity:.8\">クリックで近づく</span>"}`, e); })
+      .on("mouseover", (e, d) => { if (d.depth === 3) showTT(nodeTT(d.data.node), e); else showTT(`<b>${esc(d.depth === 1 ? lineLabel(d.data.line) : lineLabel(d.data.line) + " › " + TJA[d.data.type] + (EN ? " (" + d.data.type + ")" : "（" + d.data.type + "）"))}</b>${d.leaves().length} ${EN ? "nodes" : "ノード"}${d.depth === 1 ? "" : "<br><span style=\"opacity:.8\">" + (EN ? "click to zoom in" : "クリックで近づく") + "</span>"}`, e); })
       .on("mousemove", moveTT).on("mouseout", hideTT)
       .on("click", (e, d) => { e.stopPropagation(); if (d.depth === 3) { open(d.data.node.id); if (focus !== d.parent) zoom(d.parent); return; } if (focus !== d) zoom(d); else if (d.parent) zoom(d.parent); });
     // labels: group labels sit at the top of their circle with a halo; leaf labels appear when zoomed into a type group
@@ -765,7 +795,7 @@
     }
     function zoom(d, animate = true) {
       focus = d; packFocus = d === root ? null : d.depth === 1 ? { line: d.data.line } : { line: d.data.line, type: d.data.type };
-      $("#zoomhint").textContent = d === root ? "全体（円をクリックで近づく）" : d.depth === 1 ? lineLabel(d.data.line) + "（背景クリックで戻る）" : `${lineLabel(d.data.line)} › ${TJA[d.data.type]}（背景クリックで戻る）`;
+      $("#zoomhint").textContent = d === root ? (EN ? "whole (click a circle to zoom in)" : "全体（円をクリックで近づく）") : d.depth === 1 ? lineLabel(d.data.line) + (EN ? " (click the background to go back)" : "（背景クリックで戻る）") : `${lineLabel(d.data.line)} › ${TJA[d.data.type]}${EN ? " (click the background to go back)" : "（背景クリックで戻る）"}`;
       const target = [focus.x, focus.y, focus.r * 2 * 1.06];
       if (!animate) { zoomTo(target); return; }
       svg.transition().duration(650).tween("zoom", () => { const i = d3.interpolateZoom(view, target); return tt => zoomTo(i(tt)); });
@@ -774,7 +804,7 @@
     let start = null;
     if (packFocus) { const ln = root.children.find(c => c.data.line === packFocus.line); if (ln) start = packFocus.type ? (ln.children.find(c => c.data.type === packFocus.type) || ln) : ln; }
     else if (state.line && state.view === "atlas" && state.lineJump) { start = root.children.find(c => c.data.line === state.line); state.lineJump = false; }
-    if (start) zoom(start, false); else $("#zoomhint").textContent = "全体（円をクリックで近づく）";
+    if (start) zoom(start, false); else $("#zoomhint").textContent = EN ? "whole (click a circle to zoom in)" : "全体（円をクリックで近づく）";
   }
 
   // ---------- 研究線 ----------
@@ -784,7 +814,7 @@
     const ns = lineNodes(state.line); const L = lineById.get(state.line);
     const claims = ns.filter(n => n.type === "Claim"), hyps = ns.filter(n => n.type === "Hypothesis"), evs = ns.filter(n => n.type === "Evidence"), prots = ns.filter(n => n.type === "Protocol"), qs = ns.filter(n => n.type === "Quantity"), objs = ns.filter(n => n.type === "Object"), xs = ns.filter(n => n.type === "ExecutionUnit");
     const lessons = vis.filter(n => n.type === "Lesson" && (n._line === state.line || (n.taught_by || []).some(t => (byId.get(t) || {})._line === state.line)));
-    const groups = [["established", ["established"]], ["支持・昇格", ["supported", "promoted"]], ["登録的中", ["registered-hit"]], ["暫定・未決", ["provisional", "open"]], ["係争", ["challenged"]], ["棄却", ["rejected", "rejected-recorded", "superseded"]]];
+    const groups = [["established", ["established"]], [EN ? "supported / promoted" : "支持・昇格", ["supported", "promoted"]], [EN ? "registered hit" : "登録的中", ["registered-hit"]], [EN ? "provisional / open" : "暫定・未決", ["provisional", "open"]], [EN ? "challenged" : "係争", ["challenged"]], [EN ? "rejected" : "棄却", ["rejected", "rejected-recorded", "superseded"]]];
     const col = (title, sts) => { const cs = claims.filter(c => sts.includes(c.status)).sort((a, b) => (b._date || "").localeCompare(a._date || "")); return `<div class="col"><h4><span class="sw" style="width:9px;height:9px;border-radius:2px;background:${statusColor(sts[0])};display:inline-block"></span>${title}<span class="n">${cs.length}</span></h4>${cs.map(c => card(c, { line: false, len: 110 })).join("") || '<div class="hint">—</div>'}</div>`; };
     // object tree
     const objIds = new Set(objs.map(o => o.id));
@@ -793,16 +823,16 @@
     const monthly = d3.rollups(ns.filter(n => n._date), v => v.length, n => n._date.slice(0, 7)).sort((a, b) => a[0].localeCompare(b[0]));
     stage.innerHTML = `<div class="pad">
       <div class="pillbar">${LINES.map(l => { const c = lineNodes(l.id).length; return c ? `<span class="chip" data-selline="${l.id}" style="${l.id === state.line ? "border-color:var(--accent);background:var(--sel)" : ""}"><span class="dot" style="background:${lineColor(l.id)}"></span>${esc(l.label)} <span class="muted">${c}</span></span>` : ""; }).join("")}</div>
-      <h2 class="vt"><span class="sw" style="display:inline-block;width:12px;height:12px;border-radius:3px;background:${lineColor(state.line)}"></span> ${esc(L.label)} <button class="iconbtn small" id="toAtlas" style="margin-left:8px">◎ 俯瞰でこの線を見る</button> <button class="iconbtn small" id="toGraphLine">◎ この線だけのグラフ</button></h2>
-      <p class="vsub">ノード ${ns.length}（主張 ${claims.length} · 仮説 ${hyps.length} · 証拠 ${evs.length} · 実行 ${xs.length} · 登録 ${prots.length} · 量 ${qs.length} · 対象 ${objs.length}）· 教訓 ${lessons.length} · 月別: ${monthly.map(m => `${m[0]} <b>${m[1]}</b>`).join("、")}</p>
-      <div class="card" style="margin-bottom:12px"><h3 class="ct">主張の梯子 — 状態別（新しい順）</h3><div class="ladder">${groups.map(g => col(g[0], g[1])).join("")}</div></div>
+      <h2 class="vt"><span class="sw" style="display:inline-block;width:12px;height:12px;border-radius:3px;background:${lineColor(state.line)}"></span> ${esc(L.label)} <button class="iconbtn small" id="toAtlas" style="margin-left:8px">${EN ? "◎ this line in the overview" : "◎ 俯瞰でこの線を見る"}</button> <button class="iconbtn small" id="toGraphLine">${EN ? "◎ graph of this line only" : "◎ この線だけのグラフ"}</button></h2>
+      <p class="vsub">${EN ? `${ns.length} nodes (claims ${claims.length} · hypotheses ${hyps.length} · evidence ${evs.length} · execution units ${xs.length} · registrations ${prots.length} · quantities ${qs.length} · objects ${objs.length}) · lessons ${lessons.length} · by month: ${monthly.map(m => `${m[0]} <b>${m[1]}</b>`).join(", ")}` : `ノード ${ns.length}（主張 ${claims.length} · 仮説 ${hyps.length} · 証拠 ${evs.length} · 実行 ${xs.length} · 登録 ${prots.length} · 量 ${qs.length} · 対象 ${objs.length}）· 教訓 ${lessons.length} · 月別: ${monthly.map(m => `${m[0]} <b>${m[1]}</b>`).join("、")}`}</p>
+      <div class="card" style="margin-bottom:12px"><h3 class="ct">${EN ? "Ladder of claims — by status (newest first)" : "主張の梯子 — 状態別（新しい順）"}</h3><div class="ladder">${groups.map(g => col(g[0], g[1])).join("")}</div></div>
       <div class="grid g2">
-        <div class="card"><h3 class="ct">対象（Object）の派生木 — derives_from</h3><div class="tree"><ul>${treeHtml("__root") || '<li class="hint">—</li>'}</ul></div></div>
-        <div class="card"><h3 class="ct">仮説（Hypothesis）</h3>${hyps.sort((a, b) => (b._date || "").localeCompare(a._date || "")).map(h => card(h, { line: false })).join("") || '<div class="hint">—</div>'}</div>
-        <div class="card"><h3 class="ct">事前登録（Protocol）</h3>${prots.sort((a, b) => (b._date || "").localeCompare(a._date || "")).map(p => card(p, { line: false })).join("") || '<div class="hint">—</div>'}</div>
-        <div class="card"><h3 class="ct">教訓（Lesson）— この線の証拠が教えたもの</h3>${lessons.sort((a, b) => (b._date || "").localeCompare(a._date || "")).map(l => card(l, { line: false })).join("") || '<div class="hint">—</div>'}</div>
-        <div class="card"><h3 class="ct">証拠（Evidence）— 新しい順</h3>${evs.sort((a, b) => (b._date || "").localeCompare(a._date || "")).slice(0, 60).map(e => card(e, { line: false })).join("") || '<div class="hint">—</div>'}${evs.length > 60 ? `<div class="hint">…他 ${evs.length - 60} 件（表ビューで一覧）</div>` : ""}</div>
-        <div class="card"><h3 class="ct">量（Quantity）</h3>${qs.map(q => card(q, { line: false })).join("") || '<div class="hint">—</div>'}</div>
+        <div class="card"><h3 class="ct">${EN ? "Derivation tree of objects — derives_from" : "対象（Object）の派生木 — derives_from"}</h3><div class="tree"><ul>${treeHtml("__root") || '<li class="hint">—</li>'}</ul></div></div>
+        <div class="card"><h3 class="ct">${EN ? "Hypotheses" : "仮説（Hypothesis）"}</h3>${hyps.sort((a, b) => (b._date || "").localeCompare(a._date || "")).map(h => card(h, { line: false })).join("") || '<div class="hint">—</div>'}</div>
+        <div class="card"><h3 class="ct">${EN ? "Pre-registrations (Protocol)" : "事前登録（Protocol）"}</h3>${prots.sort((a, b) => (b._date || "").localeCompare(a._date || "")).map(p => card(p, { line: false })).join("") || '<div class="hint">—</div>'}</div>
+        <div class="card"><h3 class="ct">${EN ? "Lessons — what the evidence of this line taught" : "教訓（Lesson）— この線の証拠が教えたもの"}</h3>${lessons.sort((a, b) => (b._date || "").localeCompare(a._date || "")).map(l => card(l, { line: false })).join("") || '<div class="hint">—</div>'}</div>
+        <div class="card"><h3 class="ct">${EN ? "Evidence — newest first" : "証拠（Evidence）— 新しい順"}</h3>${evs.sort((a, b) => (b._date || "").localeCompare(a._date || "")).slice(0, 60).map(e => card(e, { line: false })).join("") || '<div class="hint">—</div>'}${evs.length > 60 ? `<div class="hint">${EN ? `… ${evs.length - 60} more (see the table view)` : `…他 ${evs.length - 60} 件（表ビューで一覧）`}</div>` : ""}</div>
+        <div class="card"><h3 class="ct">${EN ? "Quantities" : "量（Quantity）"}</h3>${qs.map(q => card(q, { line: false })).join("") || '<div class="hint">—</div>'}</div>
       </div></div>`;
     stage.querySelector(".pillbar").onclick = e => { const c = e.target.closest("[data-selline]"); if (c) { state.line = c.dataset.selline; render(); } };
     $("#toAtlas").onclick = () => { packFocus = { line: state.line }; go("atlas"); };
@@ -812,9 +842,9 @@
   // ---------- 時間 ----------
   function viewTimeline(stage) {
     const vis = VISIBLE.filter(n => n._date);
-    const mode = state.tlMode || "type"; const KEYS = mode === "type" ? TYPES : [...STATUSES, "none"]; const keyOfNode = n => mode === "type" ? n.type : (n.status || "none"); const colorOfKey = k => mode === "type" ? typeColor(k) : (k === "none" ? css("--s-none") : statusColor(k)); const nameOfKey = k => mode === "type" ? TJA[k] : (k === "none" ? "状態なし" : SJA[k]);
-    stage.innerHTML = `<div class="pad"><h2 class="vt">時間 — ノードはいつ生まれたか</h2><p class="vsub">日ごとの新規ノード数。ドラッグで期間を選ぶとフィルタに反映。棒をクリックするとその日の一覧へ。</p>
-      <div class="toolbar"><span class="hint">積み上げ:</span><span class="seg" id="tlmode"><button data-m="type" class="${mode === "type" ? "on" : ""}">型</button><button data-m="status" class="${mode === "status" ? "on" : ""}">状態</button></span><span class="legend">${KEYS.map(k => `<span class="it"><span class="sw" style="background:${colorOfKey(k)}"></span>${nameOfKey(k)}</span>`).join("")}</span></div>
+    const mode = state.tlMode || "type"; const KEYS = mode === "type" ? TYPES : [...STATUSES, "none"]; const keyOfNode = n => mode === "type" ? n.type : (n.status || "none"); const colorOfKey = k => mode === "type" ? typeColor(k) : (k === "none" ? css("--s-none") : statusColor(k)); const nameOfKey = k => mode === "type" ? TJA[k] : (k === "none" ? (EN ? "no status" : "状態なし") : SJA[k]);
+    stage.innerHTML = `<div class="pad"><h2 class="vt">${EN ? "Time — when the nodes were born" : "時間 — ノードはいつ生まれたか"}</h2><p class="vsub">${EN ? "New nodes per day. Drag to select a period (applied to the filters). Click a bar for that day's list." : "日ごとの新規ノード数。ドラッグで期間を選ぶとフィルタに反映。棒をクリックするとその日の一覧へ。"}</p>
+      <div class="toolbar"><span class="hint">${EN ? "Stack by:" : "積み上げ:"}</span><span class="seg" id="tlmode"><button data-m="type" class="${mode === "type" ? "on" : ""}">${EN ? "type" : "型"}</button><button data-m="status" class="${mode === "status" ? "on" : ""}">${EN ? "status" : "状態"}</button></span><span class="legend">${KEYS.map(k => `<span class="it"><span class="sw" style="background:${colorOfKey(k)}"></span>${nameOfKey(k)}</span>`).join("")}</span></div>
       <div class="timeline card" style="padding:8px"><svg id="tl"></svg></div><div class="daylist" id="daylist"></div></div>`;
     $("#tlmode").onclick = e => { const b = e.target.closest("[data-m]"); if (b) { state.tlMode = b.dataset.m; render(); } };
     const days = d3.rollups(vis, v => v, n => n._date).sort((a, b) => a[0].localeCompare(b[0]));
@@ -830,15 +860,15 @@
     svg.selectAll(".domain,.tick line").style("stroke", css("--line"));
     svg.append("g").selectAll("g").data(series).join("g").attr("fill", s => colorOfKey(s.key)).selectAll("rect").data(s => s.map(d => ({ ...d, key: s.key }))).join("rect")
       .attr("x", d => x(d.data.date) - bw / 2).attr("y", d => y(d[1])).attr("height", d => Math.max(0, y(d[0]) - y(d[1]))).attr("width", bw).attr("rx", 1.5)
-      .style("cursor", "pointer").on("mouseover", (e, d) => showTT(`<b>${d.data.key}</b>${nameOfKey(d.key)} ${d[1] - d[0]} · 合計 ${d3.sum(KEYS, t => d.data[t])}`, e)).on("mousemove", moveTT).on("mouseout", hideTT)
+      .style("cursor", "pointer").on("mouseover", (e, d) => showTT(`<b>${d.data.key}</b>${nameOfKey(d.key)} ${d[1] - d[0]} · ${EN ? "total" : "合計"} ${d3.sum(KEYS, t => d.data[t])}`, e)).on("mousemove", moveTT).on("mouseout", hideTT)
       .on("click", (e, d) => { state.tlDay = d.data.key; renderDayList(); document.getElementById("day-" + d.data.key)?.scrollIntoView({ behavior: "smooth", block: "start" }); });
     const brush = d3.brushX().extent([[m.l, m.t], [W - m.r, H - m.b]]).on("end", (e) => { if (!e.selection) return; const [a, b] = e.selection.map(x.invert); const f = d3.timeFormat("%Y-%m-%d"); const i0 = allDates.findIndex(d => d >= f(a)), i1 = (() => { let k = -1; allDates.forEach((d, i) => { if (d <= f(b)) k = i; }); return k; })(); if (i0 >= 0 && i1 >= i0) { state.f.d0 = i0; state.f.d1 = i1; update(); } });
     svg.append("g").call(brush);
     function renderDayList() {
       const list = $("#daylist"); const sel = state.tlDay ? days.filter(d => d[0] === state.tlDay) : days.slice().reverse();
-      list.innerHTML = (state.tlDay ? `<div class="toolbar"><span class="hint">${esc(state.tlDay)} のノード</span><button class="iconbtn" id="tlAll">全日を表示</button></div>` : "") + sel.map(([d, ns]) => {
+      list.innerHTML = (state.tlDay ? `<div class="toolbar"><span class="hint">${EN ? `nodes of ${esc(state.tlDay)}` : `${esc(state.tlDay)} のノード`}</span><button class="iconbtn" id="tlAll">${EN ? "show all days" : "全日を表示"}</button></div>` : "") + sel.map(([d, ns]) => {
         const byStatu = d3.groups(ns, n => ((n.prov || {}).statu || ["—"]).join(",")).sort((a, b) => a[0].localeCompare(b[0]));
-        return `<div class="day" id="day-${d}"><h4>${d}<span class="n">${ns.length} ノード</span>${statusMini(ns)}</h4>${byStatu.map(([s, arr]) => `<div class="statu">STATU ${esc(s)}</div><div class="wrap">${arr.sort((a, b) => a.id.localeCompare(b.id)).map(n => chip(n.id)).join("")}</div>`).join("")}</div>`;
+        return `<div class="day" id="day-${d}"><h4>${d}<span class="n">${ns.length} ${EN ? "nodes" : "ノード"}</span>${statusMini(ns)}</h4>${byStatu.map(([s, arr]) => `<div class="statu">STATU ${esc(s)}</div><div class="wrap">${arr.sort((a, b) => a.id.localeCompare(b.id)).map(n => chip(n.id)).join("")}</div>`).join("")}</div>`;
       }).join("");
       const b = $("#tlAll"); if (b) b.onclick = () => { state.tlDay = null; renderDayList(); };
     }
@@ -849,11 +879,11 @@
   // ---------- グラフ ----------
   function viewGraph(stage) {
     const vis = VISIBLE; const visSet = new Set(vis.map(n => n.id));
-    stage.innerHTML = `<div class="pad"><h2 class="vt">グラフ — リンク構造</h2><p class="vsub">ノード = 円（大きさ = 次数）。ホバーで近傍を強調、クリックで詳細、ダブルクリックでそのノードを中心に近傍だけを表示（深さ ${state.graphDepth}）。ホイールで拡大、ドラッグで移動。</p>
-      <div class="toolbar"><span class="hint">色:</span><span class="seg" id="gcol">${[["line", "研究線"], ["type", "型"], ["status", "状態"]].map(([k, l]) => `<button data-gc="${k}" class="${state.graphColor === k ? "on" : ""}">${l}</button>`).join("")}</span>
-        <span class="hint">近傍の深さ:</span><span class="seg" id="gdep">${[1, 2, 3].map(k => `<button data-gd="${k}" class="${state.graphDepth === k ? "on" : ""}">${k}</button>`).join("")}</span>
-        ${state.graphFocus ? `<span class="chip" id="gclear">中心: <code>${esc(state.graphFocus)}</code> ✕ 解除</span>` : ""}
-        ${STUBS.length ? `<label class="small" style="margin-left:10px;cursor:pointer" title="記録層に存在するが公開抜粋に含まれない隣接ノード（型だけ公開）を点線の円で示す"><input type="checkbox" id="gstubs" ${state.showStubs ? "checked" : ""}> 非公開スタブを表示（${fmtN(STUBS.length)}）</label>` : ""}
+    stage.innerHTML = `<div class="pad"><h2 class="vt">${EN ? "Graph — link structure" : "グラフ — リンク構造"}</h2><p class="vsub">${EN ? `Nodes are circles (size = degree). Hover to highlight the neighbourhood, click for the detail, double-click to show only the neighbourhood of that node (depth ${state.graphDepth}). Wheel to zoom, drag to pan.` : `ノード = 円（大きさ = 次数）。ホバーで近傍を強調、クリックで詳細、ダブルクリックでそのノードを中心に近傍だけを表示（深さ ${state.graphDepth}）。ホイールで拡大、ドラッグで移動。`}</p>
+      <div class="toolbar"><span class="hint">${EN ? "Colour:" : "色:"}</span><span class="seg" id="gcol">${[["line", EN ? "line" : "研究線"], ["type", EN ? "type" : "型"], ["status", EN ? "status" : "状態"]].map(([k, l]) => `<button data-gc="${k}" class="${state.graphColor === k ? "on" : ""}">${l}</button>`).join("")}</span>
+        <span class="hint">${EN ? "Neighbourhood depth:" : "近傍の深さ:"}</span><span class="seg" id="gdep">${[1, 2, 3].map(k => `<button data-gd="${k}" class="${state.graphDepth === k ? "on" : ""}">${k}</button>`).join("")}</span>
+        ${state.graphFocus ? `<span class="chip" id="gclear">${EN ? "centre:" : "中心:"} <code>${esc(state.graphFocus)}</code> ✕ ${EN ? "clear" : "解除"}</span>` : ""}
+        ${STUBS.length ? `<label class="small" style="margin-left:10px;cursor:pointer" title="${EN ? "show neighbours that exist in the record layer but are outside the public excerpt (only their type is public) as dashed circles" : "記録層に存在するが公開抜粋に含まれない隣接ノード（型だけ公開）を点線の円で示す"}"><input type="checkbox" id="gstubs" ${state.showStubs ? "checked" : ""}> ${EN ? `show private stubs (${fmtN(STUBS.length)})` : `非公開スタブを表示（${fmtN(STUBS.length)}）`}</label>` : ""}
         <span class="right legend" id="glegend"></span></div>
       <div class="graphwrap card" style="padding:0"><svg id="gsvg"></svg><div class="ov" id="gov"></div></div></div>`;
     $("#gcol").onclick = e => { const b = e.target.closest("[data-gc]"); if (b) { state.graphColor = b.dataset.gc; render(); } };
@@ -872,7 +902,7 @@
     }
     const colorOf = n => n._stub ? "none" : state.graphColor === "line" ? lineColor(n._line) : state.graphColor === "type" ? typeColor(n.type) : (n.status ? statusColor(n.status) : css("--s-none"));
     const lg = $("#glegend"); lg.innerHTML = state.graphColor === "line" ? LINES.map(l => `<span class="it"><span class="sw" style="background:${lineColor(l.id)}"></span>${esc(l.short)}</span>`).join("") : state.graphColor === "type" ? TYPES.map(t => `<span class="it"><span class="sw" style="background:${typeColor(t)}"></span>${TLET[t]}</span>`).join("") : STATUSES.map(s => `<span class="it"><span class="sw" style="background:${statusColor(s)}"></span>${SJA[s]}</span>`).join("");
-    $("#gov").innerHTML = `<b>${fmtN(nodes.length)}</b> ノード · <b>${fmtN(edgeList.length)}</b> リンク${state.graphFocus ? ` · 中心 <code>${esc(state.graphFocus)}</code>` : ""}`;
+    $("#gov").innerHTML = `<b>${fmtN(nodes.length)}</b> ${EN ? "nodes" : "ノード"} · <b>${fmtN(edgeList.length)}</b> ${EN ? "links" : "リンク"}${state.graphFocus ? ` · ${EN ? "centre" : "中心"} <code>${esc(state.graphFocus)}</code>` : ""}`;
     const host = $("#gsvg"); const W = host.clientWidth || 1000, H = Math.max(500, window.innerHeight - 190);
     const svg = d3.select(host).attr("viewBox", `0 0 ${W} ${H}`); const root = svg.append("g");
     const sim = d3.forceSimulation(nodes.map(n => ({ id: n.id, n, r: 3 + Math.sqrt(n._deg) * 1.6 })));
@@ -900,7 +930,7 @@
   function viewLessons(stage) {
     const ls = VISIBLE.filter(n => n.type === "Lesson").sort((a, b) => (b._date || "").localeCompare(a._date || ""));
     const months = d3.groups(ls, l => (l._date || "").slice(0, 7)).sort((a, b) => b[0].localeCompare(a[0]));
-    stage.innerHTML = `<div class="pad"><h2 class="vt">教訓（Lesson）— 何が失敗し、何が規則になったか</h2><p class="vsub">${ls.length} 件。各教訓は taught_by で証拠・主張に接地している。クリックで詳細（教えた証拠 → その主張へ辿れる）。</p>
+    stage.innerHTML = `<div class="pad"><h2 class="vt">${EN ? "Lessons — what failed, and what became a rule" : "教訓（Lesson）— 何が失敗し、何が規則になったか"}</h2><p class="vsub">${EN ? `${ls.length} lessons. Each is grounded in evidence and claims through taught_by. Click for the detail (the evidence that taught it → its claim).` : `${ls.length} 件。各教訓は taught_by で証拠・主張に接地している。クリックで詳細（教えた証拠 → その主張へ辿れる）。`}</p>
       ${months.map(([m, arr]) => `<h3 class="ct" style="margin-top:14px">${m} <span class="muted">${arr.length}</span></h3><div class="grid g2">${arr.map(l => `<div class="card" style="padding:10px 12px"><div class="nodecard" data-node="${l.id}" style="border:0;padding:0;background:transparent"><div class="h"><span class="id">${esc(l.id)}</span><span class="muted small">${esc(l._date)}</span></div><div class="lbl" style="font-weight:600">${esc(l.label)}</div><div class="stmt small muted" style="margin-top:4px">${esc(short(plain(textOf(l)), 220))}</div></div><div style="margin-top:6px"><span class="hint">taught_by:</span> ${(l.taught_by || []).map(t => chip(t)).join("") || "—"}</div></div>`).join("")}</div>`).join("")}</div>`;
   }
 
@@ -915,17 +945,17 @@
       const fr = p.frozen ? `<code>${esc((p.frozen.sha256 || "").slice(0, 10))}</code> ${esc(p.frozen.frozen_at || "")} ${prLink(p.frozen.pr)}` : "";
       return `<tr data-node="${p.id}" class="${state.node === p.id ? "sel" : ""}"><td><code>${esc(p.id)}</code>${p.direction ? ` <span class="badge" style="background:${lineColor("dir-" + p.direction)}">${p.direction}</span>` : ""}</td><td>${esc(short(p.label, 90))}</td><td class="nowrap">${esc(p._date)}</td><td>${fr}</td><td>${regs.map(r => chip(r.id)).join("") || "—"}</td><td>${verdicts.map(v => `<span class="badge" style="background:${/REJECT|棄却|✗|外れ/.test(v) ? statusColor("rejected") : /PASS|VERIFIED|CONFIRMED|的中|✓/.test(v) ? statusColor("established") : statusColor("open")}">${esc(short(v, 40))}</span>`).join(" ")}</td></tr>`;
     });
-    stage.innerHTML = `<div class="pad"><h2 class="vt">事前登録（Protocol）と判定</h2><p class="vsub">${ps.length} 件の登録。frozen = 凍結 sha（登録は走行前にコードごと凍結）。右列は登録に紐づく証拠ノードの判定（values.verdict）。</p>
-      <div class="card" style="margin-bottom:12px"><h3 class="ct">登録的中（registered-hit）の主張 — ${hits.length}</h3><div class="grid g3">${hits.map(h => card(h)).join("") || '<div class="hint">—</div>'}</div></div>
-      <div class="card" style="padding:0;overflow:auto"><table class="tbl"><thead><tr><th>ID</th><th>ラベル</th><th>日付</th><th>凍結</th><th>登録・関連する主張・証拠</th><th>判定</th></tr></thead><tbody>${rows.join("")}</tbody></table></div></div>`;
+    stage.innerHTML = `<div class="pad"><h2 class="vt">${EN ? "Pre-registrations (Protocol) and verdicts" : "事前登録（Protocol）と判定"}</h2><p class="vsub">${EN ? `${ps.length} registrations. frozen = the frozen sha (a registration is frozen before the run, code included). The right column shows the verdicts (values.verdict) of the evidence nodes tied to the registration.` : `${ps.length} 件の登録。frozen = 凍結 sha（登録は走行前にコードごと凍結）。右列は登録に紐づく証拠ノードの判定（values.verdict）。`}</p>
+      <div class="card" style="margin-bottom:12px"><h3 class="ct">${EN ? "Claims with a registered hit — " : "登録的中（registered-hit）の主張 — "}${hits.length}</h3><div class="grid g3">${hits.map(h => card(h)).join("") || '<div class="hint">—</div>'}</div></div>
+      <div class="card" style="padding:0;overflow:auto"><table class="tbl"><thead><tr><th>ID</th><th>${EN ? "Label" : "ラベル"}</th><th>${EN ? "Date" : "日付"}</th><th>${EN ? "Frozen" : "凍結"}</th><th>${EN ? "Registered / related claims and evidence" : "登録・関連する主張・証拠"}</th><th>${EN ? "Verdict" : "判定"}</th></tr></thead><tbody>${rows.join("")}</tbody></table></div></div>`;
   }
 
   // ---------- 表 ----------
   let sortKey = "_date", sortDir = -1;
   function viewTable(stage) {
     const vis = VISIBLE.slice().sort((a, b) => { const ka = a[sortKey] || "", kb = b[sortKey] || ""; return (ka < kb ? -1 : ka > kb ? 1 : 0) * sortDir || a.id.localeCompare(b.id); });
-    const cols = [["id", "ID"], ["type", "型"], ["status", "状態"], ["_line", "研究線"], ["_date", "日付"], ["_deg", "次数"], ["label", "ラベル"]];
-    stage.innerHTML = `<div class="pad"><h2 class="vt">表 — ${fmtN(vis.length)} ノード</h2><p class="vsub">列見出しで並べ替え。行クリックで詳細。<a id="csv" style="cursor:pointer">CSV を書き出す</a></p>
+    const cols = EN ? [["id", "ID"], ["type", "Type"], ["status", "Status"], ["_line", "Line"], ["_date", "Date"], ["_deg", "Degree"], ["label", "Label"]] : [["id", "ID"], ["type", "型"], ["status", "状態"], ["_line", "研究線"], ["_date", "日付"], ["_deg", "次数"], ["label", "ラベル"]];
+    stage.innerHTML = `<div class="pad"><h2 class="vt">${EN ? `Table — ${fmtN(vis.length)} nodes` : `表 — ${fmtN(vis.length)} ノード`}</h2><p class="vsub">${EN ? "Click a column header to sort, a row for the detail. " : "列見出しで並べ替え。行クリックで詳細。"}<a id="csv" style="cursor:pointer">${EN ? "Export CSV" : "CSV を書き出す"}</a></p>
       <div class="card" style="padding:0;overflow:auto;max-height:calc(100vh - 200px)"><table class="tbl"><thead><tr>${cols.map(c => `<th data-k="${c[0]}">${c[1]}${sortKey === c[0] ? (sortDir > 0 ? " ▲" : " ▼") : ""}</th>`).join("")}</tr></thead><tbody>
       ${vis.map(n => `<tr data-node="${n.id}" class="${state.node === n.id ? "sel" : ""}"><td><code>${esc(n.id)}</code></td><td>${badgeType(n)}</td><td>${badgeStatus(n)}</td><td>${badgeLine(n._line)}</td><td class="nowrap">${esc(n._date)}</td><td>${n._deg}</td><td>${esc(short(n.label, 120))}</td></tr>`).join("")}</tbody></table></div></div>`;
     stage.querySelector("thead").onclick = e => { const th = e.target.closest("th"); if (!th) return; if (sortKey === th.dataset.k) sortDir *= -1; else { sortKey = th.dataset.k; sortDir = th.dataset.k === "_date" || th.dataset.k === "_deg" ? -1 : 1; } render(); };
@@ -940,18 +970,18 @@
     const canBack = state.trailPos > 0, canFwd = state.trailPos < state.trail.length - 1;
     if (n._stub) {  // 非公開スタブ: 型と隣接だけを示す（実 ID・本文は出さない）
       const nb = [...n._out.map(e => ({ id: e.to, rel: e.rel, dir: "out" })), ...n._in.map(e => ({ id: e.from, rel: e.rel, dir: "in" }))];
-      host.innerHTML = `<div class="top"><div class="nav"><button class="iconbtn" id="iBack" ${canBack ? "" : "disabled"} title="戻る">←</button><button class="iconbtn" id="iFwd" ${canFwd ? "" : "disabled"} title="進む">→</button><span class="sp"></span><button class="iconbtn" id="iClose" title="閉じる">✕</button></div>
-        <div class="ident">${badgeType(n)}<span class="badge" style="background:${css("--muted")}">非公開</span><code>${esc(n.id)}</code></div><div class="title">${esc(n.label)}</div></div>
-        <div class="bd"><div class="stmt">このノードは記録層（private リポジトリ）に存在するが、公開抜粋の選択規則に入っていない。<b>型だけを公開</b>し、本文・実 ID は出さない。ID の <code>~</code> 以降は実 ID の sha256 先頭 10 桁で、記録層を持つ側は同じ計算で照合できる。<br><br>スタブを残す理由: 公開ノードから見て「証拠・主張が<b>ある</b>が非公開」なのか「<b>無い</b>」のかを区別できるようにするため。</div>
-        <h5>公開ノードとの関係 <span class="muted">${nb.length}</span></h5>${nb.map(m => `<div style="margin:3px 0"><span class="hint">${m.dir === "out" ? "→" : "←"} ${esc(REL_JA[m.rel] || m.rel)}</span> ${chip(m.id)}</div>`).join("") || '<div class="hint">—</div>'}
-        <details class="sec" style="margin-top:12px"><summary>生の JSON<span class="n"></span></summary><pre class="raw">${esc(JSON.stringify({ id: n.id, type: n.type, stub: true }, null, 1))}</pre></details></div>`;
+      host.innerHTML = `<div class="top"><div class="nav"><button class="iconbtn" id="iBack" ${canBack ? "" : "disabled"} title="${EN ? "back" : "戻る"}">←</button><button class="iconbtn" id="iFwd" ${canFwd ? "" : "disabled"} title="${EN ? "forward" : "進む"}">→</button><span class="sp"></span><button class="iconbtn" id="iClose" title="${EN ? "close" : "閉じる"}">✕</button></div>
+        <div class="ident">${badgeType(n)}<span class="badge" style="background:${css("--muted")}">${EN ? "private" : "非公開"}</span><code>${esc(n.id)}</code></div><div class="title">${esc(n.label)}</div></div>
+        <div class="bd"><div class="stmt">${EN ? `This node exists in the record layer (private repository) but is outside the selection rule of the public excerpt. <b>Only its type is public</b>; its text and real id are not shown. The part of the id after <code>~</code> is the first 10 hex digits of the sha256 of the real id, so anyone holding the record layer can match it with the same computation.<br><br>Why stubs are kept: so that, seen from a public node, “evidence or a claim <b>exists</b> but is private” can be told apart from “there is <b>none</b>”.` : `このノードは記録層（private リポジトリ）に存在するが、公開抜粋の選択規則に入っていない。<b>型だけを公開</b>し、本文・実 ID は出さない。ID の <code>~</code> 以降は実 ID の sha256 先頭 10 桁で、記録層を持つ側は同じ計算で照合できる。<br><br>スタブを残す理由: 公開ノードから見て「証拠・主張が<b>ある</b>が非公開」なのか「<b>無い</b>」のかを区別できるようにするため。`}</div>
+        <h5>${EN ? "Links to public nodes" : "公開ノードとの関係"} <span class="muted">${nb.length}</span></h5>${nb.map(m => `<div style="margin:3px 0"><span class="hint">${m.dir === "out" ? "→" : "←"} ${esc(REL_JA[m.rel] || m.rel)}</span> ${chip(m.id)}</div>`).join("") || '<div class="hint">—</div>'}
+        <details class="sec" style="margin-top:12px"><summary>${T.raw_h}<span class="n"></span></summary><pre class="raw">${esc(JSON.stringify({ id: n.id, type: n.type, stub: true }, null, 1))}</pre></details></div>`;
       $("#iBack").onclick = () => { if (canBack) { state.trailPos--; state.node = state.trail[state.trailPos]; render(); } };
       $("#iFwd").onclick = () => { if (canFwd) { state.trailPos++; state.node = state.trail[state.trailPos]; render(); } };
       $("#iClose").onclick = () => { state.node = null; state.inspOpen = false; render(); };
       host.parentElement.scrollTop = 0; return;
     }
     const outG = d3.groups(n._out, e => e.rel), inG = d3.groups(n._in, e => e.rel);
-    const linksHtml = (groups, dir) => groups.length ? groups.map(([rel, es]) => `<div class="grp"><div class="rel">${dir === "out" ? "→" : "←"} ${esc(REL_JA[rel] || rel)} <code>${esc(rel)}</code> <span class="muted">${es.length}</span></div>${es.map(e => { const other = dir === "out" ? e.to : e.from; const rec = reciprocal(n.id, other); return chip(other, rec ? `<span title="記録層に逆向きのリンクもある（双方向）" style="color:var(--accent);font-weight:700">⇄</span>` : ""); }).join("")}</div>`).join("") : `<div class="hint">—</div>`;
+    const linksHtml = (groups, dir) => groups.length ? groups.map(([rel, es]) => `<div class="grp"><div class="rel">${dir === "out" ? "→" : "←"} ${esc(REL_JA[rel] || rel)} <code>${esc(rel)}</code> <span class="muted">${es.length}</span></div>${es.map(e => { const other = dir === "out" ? e.to : e.from; const rec = reciprocal(n.id, other); return chip(other, rec ? `<span title="${T.bidir_t}" style="color:var(--accent);font-weight:700">⇄</span>` : ""); }).join("")}</div>`).join("") : `<div class="hint">—</div>`;
     const fields = [];
     const kv = (k, v) => fields.push(`<div class="k">${esc(k)}</div><div class="v">${v}</div>`);
     if (n.definition) kv(T.kv_def, `<div class="stmt">${md(n.definition)}</div>`);
@@ -967,7 +997,7 @@
     if (n.verdict) { if (typeof n.verdict === "string") kv(T.kv_verdict, `<div class="stmt">${md(n.verdict)}</div>`); else jsonKv(T.kv_verdict, n.verdict); }
     if (n.ledger) jsonKv(T.kv_ledger, n.ledger);
     if (n.pre_named_killers) kv("pre-named killers", `<div class="stmt">${Array.isArray(n.pre_named_killers) ? n.pre_named_killers.map((k, i) => `${i + 1}. ${md(k)}`).join("<br>") : md(n.pre_named_killers)}</div>`);
-    if (n.derivation_hooks) kv("導出フック", `<div class="stmt">${(Array.isArray(n.derivation_hooks) ? n.derivation_hooks : [n.derivation_hooks]).map((k, i) => `${i + 1}. ${md(k)}`).join("<br>")}</div>`);
+    if (n.derivation_hooks) kv(EN ? "derivation hooks" : "導出フック", `<div class="stmt">${(Array.isArray(n.derivation_hooks) ? n.derivation_hooks : [n.derivation_hooks]).map((k, i) => `${i + 1}. ${md(k)}`).join("<br>")}</div>`);
     if (n.tier) kv("tier", `<code>${esc(n.tier)}</code>`);
     if (n.entry && n.type !== "ExecutionUnit") kv("entry", `<div class="stmt"><code>${esc(n.entry)}</code></div>`);
     if (n.env && n.type !== "ExecutionUnit") kv("env", `<code>${esc(JSON.stringify(n.env))}</code>`);
@@ -986,7 +1016,7 @@
     const other = Object.keys(n).filter(k => !k.startsWith("_") && !KNOWN.has(k));
     if (other.length) kv(T.kv_other, `<div class="vals"><table>${other.flatMap(k => flatten(n[k], k)).map(([a, b]) => `<tr><td>${esc(a)}</td><td>${byId.has(b) ? chip(b) : esc(b)}</td></tr>`).join("")}</table></div>`);
     const histHtml = Array.isArray(n.status_history) && n.status_history.length ? `<h5>${T.hist_h}</h5><div class="hist">${n.status_history.map((h, i) => `<div class="hrow"><span class="badge" style="background:${statusColor(h.status)}">${esc(SJA[h.status] || h.status || "")}</span> <span class="muted small">${esc(h.date || "")}</span>${h.by ? ` <span class="small">${T.hist_by} ${esc(h.by)}</span>` : ""}${h.evidence ? ` <span class="small">${T.hist_ev} ${byId.has(h.evidence) ? chip(h.evidence) : `<code>${esc(h.evidence)}</code>`}</span>` : ""}${h.protocol ? ` ${byId.has(h.protocol) ? chip(h.protocol) : `<code>${esc(h.protocol)}</code>`}` : ""}${h.pr ? ` <span class="small">${T.hist_pr} ${PUBLIC ? esc(h.pr) : prLink(h.pr)}</span>` : ""}${h.reason ? `<div class="small muted">${md(h.reason)}</div>` : ""}${h.derived ? ` <span class="muted small">${T.hist_derived}</span>` : ""}${i < n.status_history.length - 1 ? '<span class="muted"> ↓</span>' : ""}</div>`).join("")}</div>` : "";
-    const arts = (n.artifacts || []).map(a => `<div>${repoLink(a.path || "")} <span class="muted small">${esc(a.role || "")}${a.location ? " · " + esc(a.location) : ""}${a.sha256 ? " · sha256 " + esc(a.sha256.slice(0, 12)) + "…" : ""}</span>${a.sha_verified ? ` <span class="badge" style="background:${a.sha_verified === "verified" ? statusColor("established") : statusColor("provisional")}">${a.sha_verified === "verified" ? "sha 実照合済" : esc(a.sha_verified)}</span>` : ""}</div>`).join("");
+    const arts = (n.artifacts || []).map(a => `<div>${repoLink(a.path || "")} <span class="muted small">${esc(a.role || "")}${a.location ? " · " + esc(a.location) : ""}${a.sha256 ? " · sha256 " + esc(a.sha256.slice(0, 12)) + "…" : ""}</span>${a.sha_verified ? ` <span class="badge" style="background:${a.sha_verified === "verified" ? statusColor("established") : statusColor("provisional")}">${a.sha_verified === "verified" ? (EN ? "sha verified" : "sha 実照合済") : esc(a.sha_verified)}</span>` : ""}</div>`).join("");
     // 再実行ボックス（X）／検証単位一覧（E）
     let reexec = "";
     if (n.type === "ExecutionUnit") {
@@ -1005,12 +1035,12 @@
       const xs = [...new Set([...(n.grounded_in || []), ...n._in.filter(i => i.rel === "verifies").map(i => i.from)])].filter(x => byId.has(x));
       reexec = `<h5>${T.ev_units_h}</h5>${xs.length ? xs.map(x => { const X = byId.get(x); const rec = (n.grounded_in || []).includes(x) && (X.verifies || []).includes(n.id); return `<div style="margin:3px 0">${chip(x)} <span class="badge" style="background:${css("--muted")}">${esc(X.tier || "?")}</span> ${k4Badge(x)} ${rec ? `<span title="${T.bidir_t}" style="color:var(--accent);font-weight:700">${T.bidir}</span>` : ""}</div>`; }).join("") : '<div class="hint">—</div>'}`;
     }
-    const statu = (prov.statu || []).map(s => PUBLIC ? `STATU ${esc(s)}` : `<a href="${REPO}/tree/main/.bus/STATU/outbox" target="_blank" rel="noopener" title="outbox を開く">STATU ${esc(s)}</a>`).join(" ");
+    const statu = (prov.statu || []).map(s => PUBLIC ? `STATU ${esc(s)}` : `<a href="${REPO}/tree/main/.bus/STATU/outbox" target="_blank" rel="noopener" title="${EN ? "open the outbox" : "outbox を開く"}">STATU ${esc(s)}</a>`).join(" ");
     const prs = (prov.pr || []).map(p => prLink(p)).join(" ");
     const lineage = [...(n.supersedes ? [[T.sup_old, n.supersedes]] : []), ...(n.superseded_by ? [[T.sup_new, n.superseded_by]] : []), ...(n.promoted_to ? [[T.promoted, n.promoted_to]] : [])];
-    host.innerHTML = `<div class="top"><div class="nav"><button class="iconbtn" id="iBack" ${canBack ? "" : "disabled"} title="戻る">←</button><button class="iconbtn" id="iFwd" ${canFwd ? "" : "disabled"} title="進む">→</button><span class="sp"></span>
-        <button class="iconbtn" id="iGraph" title="このノードを中心にグラフ">◎ グラフ</button><button class="iconbtn" id="iLine" title="研究線ビュー">≡ 研究線</button><button class="iconbtn" id="iCopy" title="このノードへのリンクをコピー">⧉</button><button class="iconbtn" id="iClose" title="閉じる">✕</button></div>
-      <div class="ident">${badgeType(n)}${badgeStatus(n)}${badgeLine(n._line)}<code>${esc(n.id)}</code><span>${esc(n._date)}</span></div><div class="title">${esc(n.label)}</div>
+    host.innerHTML = `<div class="top"><div class="nav"><button class="iconbtn" id="iBack" ${canBack ? "" : "disabled"} title="${EN ? "back" : "戻る"}">←</button><button class="iconbtn" id="iFwd" ${canFwd ? "" : "disabled"} title="${EN ? "forward" : "進む"}">→</button><span class="sp"></span>
+        <button class="iconbtn" id="iGraph" title="${EN ? "graph centred on this node" : "このノードを中心にグラフ"}">${EN ? "◎ graph" : "◎ グラフ"}</button><button class="iconbtn" id="iLine" title="${EN ? "line view" : "研究線ビュー"}">${EN ? "≡ line" : "≡ 研究線"}</button><button class="iconbtn" id="iCopy" title="${EN ? "copy the link to this node" : "このノードへのリンクをコピー"}">⧉</button><button class="iconbtn" id="iClose" title="${EN ? "close" : "閉じる"}">✕</button></div>
+      <div class="ident">${badgeType(n)}${badgeStatus(n)}${badgeLine(n._line)}<code>${esc(n.id)}</code><span>${esc(n._date)}</span>${n._ja ? `<span class="badge" style="background:${css("--muted")}" title="AI-assisted English translation of the Japanese record; the Japanese text is authoritative (see “Original (Japanese)” below)">EN · translated</span>` : ""}</div><div class="title">${esc(n.label)}</div>
       <div class="trail">${state.trail.map((t, i) => `<a data-node="${t}" style="${i === state.trailPos ? "color:var(--ink);font-weight:700" : ""}">${esc(t)}</a>${i < state.trail.length - 1 ? '<span class="sep">›</span>' : ""}`).join("")}</div></div>
     <div class="bd">
       ${n.statement ? `<div class="stmt${n.statement.length > 700 ? " clamp" : ""}" id="stmt">${md(n.statement)}</div>${n.statement.length > 700 ? `<button class="iconbtn small" id="stmtMore" style="margin-top:4px">${T.more}（${fmtN(n.statement.length)} ${T.chars}）</button>` : ""}` : ""}
@@ -1023,7 +1053,8 @@
       ${fields.length ? `<h5>${T.fields_h}</h5><div class="kv">${fields.join("")}</div>` : ""}
       <div class="links"><h5>${T.out_h} <span class="muted">${n._out.length}</span></h5>${linksHtml(outG, "out")}<h5>${T.in_h} <span class="muted">${n._in.length}</span></h5>${linksHtml(inG, "in")}</div>
       ${arts ? `<h5>${T.arts_h}</h5>${arts}` : ""}
-      <h5>${T.prov_h}</h5><div class="kv"><div class="k">${T.prov_by}</div><div class="v">${esc(prov.asserted_by || "")}</div><div class="k">${T.prov_acc}</div><div class="v">${esc(prov.accepted_by || "—")}</div><div class="k">${T.prov_date}</div><div class="v">${esc(prov.date || "")}</div>${statu ? `<div class="k">STATU</div><div class="v">${statu}</div>` : ""}${prs ? `<div class="k">PR</div><div class="v">${prs}</div>` : ""}<div class="k">${T.prov_vis}</div><div class="v">${esc(prov.visibility || "")}</div><div class="k">${T.prov_rec}</div><div class="v">${PUBLIC ? `<code>${esc(n._src)}</code> <span class="muted small">${T.prov_rec_note}</span>` : `<a href="${REPO}/blob/main/${esc(n._src)}" target="_blank" rel="noopener"><code>${esc(n._src)}</code></a>`}</div>${PUBLIC ? `<div class="k">${T.prov_page}</div><div class="v"><a href="n/${esc(n.id)}.html" target="_blank" rel="noopener">n/${esc(n.id)}.html</a> · <a href="n/${esc(n.id)}.json" target="_blank" rel="noopener">JSON-LD</a>${SITE ? ` · <span class="muted small">${T.prov_cite}</span> <code class="small">${esc(SITE)}/n/${esc(n.id)}.html</code>` : ""}</div>` : ""}</div>
+      <h5>${T.prov_h}</h5><div class="kv"><div class="k">${T.prov_by}</div><div class="v">${esc(provName(prov.asserted_by || ""))}</div><div class="k">${T.prov_acc}</div><div class="v">${esc(provName(prov.accepted_by || "—"))}</div><div class="k">${T.prov_date}</div><div class="v">${esc(prov.date || "")}</div>${statu ? `<div class="k">STATU</div><div class="v">${statu}</div>` : ""}${prs ? `<div class="k">PR</div><div class="v">${prs}</div>` : ""}<div class="k">${T.prov_vis}</div><div class="v">${esc(prov.visibility || "")}</div><div class="k">${T.prov_rec}</div><div class="v">${PUBLIC ? `<code>${esc(n._src)}</code> <span class="muted small">${T.prov_rec_note}</span>` : `<a href="${REPO}/blob/main/${esc(n._src)}" target="_blank" rel="noopener"><code>${esc(n._src)}</code></a>`}</div>${PUBLIC ? `<div class="k">${T.prov_page}</div><div class="v"><a href="n/${esc(n.id)}.html" target="_blank" rel="noopener">n/${esc(n.id)}.html</a> · <a href="n/${esc(n.id)}.json" target="_blank" rel="noopener">JSON-LD</a>${SITE ? ` · <span class="muted small">${T.prov_cite}</span> <code class="small">${esc(SITE)}/n/${esc(n.id)}.html</code>` : ""}</div>` : ""}</div>
+      ${n._ja ? `<details class="sec" style="margin-top:12px"><summary>Original (Japanese) — the record layer<span class="n"></span></summary><div class="small muted" style="margin:4px 0 6px">The English texts of this node are an AI-assisted translation; the Japanese record below is authoritative. Fields: ${Object.keys(n._ja).map(p => `<code>${esc(p)}</code>`).join(" ")}</div><div class="kv">${Object.keys(n._ja).map(p => `<div class="k">${esc(p)}</div><div class="v"><div class="stmt" lang="ja">${md(n._ja[p])}</div></div>`).join("")}</div></details>` : ""}
       <details class="sec" style="margin-top:12px"><summary>${T.raw_h}<span class="n"></span></summary><pre class="raw">${esc(JSON.stringify(stripDerived(n), null, 1))}</pre></details>
     </div>`;
     const cc = $("#copyCmd"); if (cc) cc.onclick = () => { const t = $("#cmdbox").textContent; const done = () => { cc.textContent = T.copied; setTimeout(() => { cc.textContent = T.copy; }, 1200); }; if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, () => window.prompt(EN ? "command:" : "コマンド:", t)); else window.prompt(EN ? "command:" : "コマンド:", t); };
@@ -1037,7 +1068,7 @@
     drawEgo($("#ego"), n); const ch = $("#chain"); if (ch) drawChain(ch, n);
     host.parentElement.scrollTop = 0;
   }
-  function stripDerived(n) { const o = {}; for (const k of Object.keys(n)) if (!k.startsWith("_")) o[k] = n[k]; return o; }
+  function stripDerived(n) { const o = {}; for (const k of Object.keys(n)) if (!k.startsWith("_")) o[k] = n[k]; const c = JSON.parse(JSON.stringify(o)); if (n._ja) for (const p of Object.keys(n._ja)) { const r = i18nResolve(c, p); if (r) r.parent[r.key] = n._ja[p]; } return c; }  // 英語オーバーレイを外した原文（記録層のとおり）
   function flatten(v, pre = "", out = []) { if (v && typeof v === "object" && !Array.isArray(v)) { for (const k of Object.keys(v)) flatten(v[k], pre ? pre + "." + k : k, out); } else out.push([pre, Array.isArray(v) ? JSON.stringify(v) : String(v)]); return out; }
   function drawEgo(host, n) {
     const W = host.clientWidth || 400, H = 260, cx = W / 2, cy = H / 2;
@@ -1052,11 +1083,11 @@
     const g = svg.append("g").selectAll("g").data(show).join("g").attr("transform", d => `translate(${d.x},${d.y})`).style("cursor", "pointer").on("click", (e, d) => open(d.id)).on("mouseover", (e, d) => showTT(nodeTT(byId.get(d.id)) + `<br><span style="opacity:.8">${d.dir === "out" ? "→" : "←"} ${esc(REL_JA[d.rel] || d.rel)}</span>`, e)).on("mousemove", moveTT).on("mouseout", hideTT);
     g.append("circle").attr("r", 6).attr("fill", d => byId.get(d.id)._stub ? "none" : typeColor(byId.get(d.id).type)).attr("stroke", d => byId.get(d.id)._stub ? typeColor(byId.get(d.id).type) : "#fff").attr("stroke-dasharray", d => byId.get(d.id)._stub ? "2,2" : null);
     if (show.length <= 24) g.append("text").text(d => short(d.id, 22)).attr("x", d => Math.cos(d.a) >= 0 ? 9 : -9).attr("y", 3).attr("text-anchor", d => Math.cos(d.a) >= 0 ? "start" : "end").style("font-size", "9.5px").style("fill", css("--muted")).style("font-family", css("--mono"));
-    else svg.append("text").attr("x", 8).attr("y", H - 8).style("font-size", "10px").style("fill", css("--muted")).text(`${show.length} 件（ホバーで名前）`);
+    else svg.append("text").attr("x", 8).attr("y", H - 8).style("font-size", "10px").style("fill", css("--muted")).text(EN ? `${show.length} (hover for names)` : `${show.length} 件（ホバーで名前）`);
     svg.append("circle").attr("cx", cx).attr("cy", cy).attr("r", 11).attr("fill", typeColor(n.type)).attr("stroke", css("--ink")).attr("stroke-width", 1.5);
     svg.append("text").attr("x", cx).attr("y", cy + 24).attr("text-anchor", "middle").style("font-size", "10px").style("fill", css("--ink")).style("font-family", css("--mono")).text(short(n.id, 30));
-    if (more > 0) svg.append("text").attr("x", W - 8).attr("y", H - 8).attr("text-anchor", "end").style("font-size", "10px").style("fill", css("--muted")).text(`+${more} 件はリンク一覧で`);
-    if (!show.length) svg.append("text").attr("x", cx).attr("y", cy - 20).attr("text-anchor", "middle").style("font-size", "11px").style("fill", css("--muted")).text("リンクなし");
+    if (more > 0) svg.append("text").attr("x", W - 8).attr("y", H - 8).attr("text-anchor", "end").style("font-size", "10px").style("fill", css("--muted")).text(EN ? `+${more} more in the link list` : `+${more} 件はリンク一覧で`);
+    if (!show.length) svg.append("text").attr("x", cx).attr("y", cy - 20).attr("text-anchor", "middle").style("font-size", "11px").style("fill", css("--muted")).text(EN ? "no links" : "リンクなし");
   }
   function drawChain(host, n) {
     // columns: P | C/H | E | X | L
